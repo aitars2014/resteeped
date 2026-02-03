@@ -1,6 +1,6 @@
 // Auto-generated from The Steeping Room scraper
-// Generated: 2026-02-03T01:27:16.397Z
-// Total teas: 24
+// Generated: 2026-02-03T03:53:40.616Z
+// Total teas: 48
 
 export const scrapedTeas = [
   {
@@ -19,8 +19,8 @@ export const scrapedTeas = [
       "smooth",
       "berry"
     ],
-    "avgRating": 4.7,
-    "ratingCount": 4
+    "avgRating": 4.2,
+    "ratingCount": 1
   },
   {
     "name": "Kajihara's Black Tea with Yuzu",
@@ -39,8 +39,8 @@ export const scrapedTeas = [
       "smooth",
       "citrus"
     ],
-    "avgRating": 4,
-    "ratingCount": 11
+    "avgRating": 4.1,
+    "ratingCount": 5
   },
   {
     "name": "Cindy Chen's 2025 Wild Lapsang Souchong (Unsmoked)",
@@ -58,8 +58,8 @@ export const scrapedTeas = [
       "honey",
       "spice"
     ],
-    "avgRating": 4.5,
-    "ratingCount": 3
+    "avgRating": 4.8,
+    "ratingCount": 14
   },
   {
     "name": "Taiwanese Buddha's Hand Black Tea",
@@ -79,8 +79,8 @@ export const scrapedTeas = [
       "fruity",
       "citrus"
     ],
-    "avgRating": 4.1,
-    "ratingCount": 11
+    "avgRating": 4.6,
+    "ratingCount": 10
   },
   {
     "name": "2025 Nilgiri Spring Black Tea from India",
@@ -101,8 +101,8 @@ export const scrapedTeas = [
       "honey",
       "apple"
     ],
-    "avgRating": 4.8,
-    "ratingCount": 10
+    "avgRating": 4.6,
+    "ratingCount": 3
   },
   {
     "name": "2025 Latumoni Assam Handmade Signature Black Tea from India",
@@ -120,8 +120,8 @@ export const scrapedTeas = [
       "smooth",
       "mineral"
     ],
-    "avgRating": 4.5,
-    "ratingCount": 1
+    "avgRating": 4.2,
+    "ratingCount": 11
   },
   {
     "name": "Cindy Chen's 2022 Old Bush Lapsang Souchong (Unsmoked)",
@@ -141,8 +141,8 @@ export const scrapedTeas = [
       "fruity",
       "honey"
     ],
-    "avgRating": 4.7,
-    "ratingCount": 10
+    "avgRating": 4,
+    "ratingCount": 2
   },
   {
     "name": "2025 Benifuki Japanese Black Tea from Tsushima Island",
@@ -162,8 +162,166 @@ export const scrapedTeas = [
       "honey",
       "peach"
     ],
-    "avgRating": 4.4,
+    "avgRating": 4.8,
+    "ratingCount": 3
+  },
+  {
+    "name": "2025 Purple Bamboo Shoot Green Tea from China",
+    "brandName": "The Steeping Room",
+    "teaType": "green",
+    "description": "This green tea from Zhejiang Province steeps to an almost clear liquor with a flavor that's genuinely exceptional and hard to pin down. It's uniquely herbal with light floral touches and a vegetal character that brings bok choy to mind, along with a clean, watery deliciousness that's wonderfully refreshing. Notes of sugar snap pea emerge under wildflower aromatics, finishing with lingering sweetness. The wet leaf aroma is exceptionally interesting: a little floral, a little herby, and entirely compelling.Made by tea master Pei Hongfeng from old heirloom tea bushes growing in a bamboo forest behind her home. The bushes share their hillside with bamboo and native trees between 3,300 and 4,300 feet, growing largely untended and naturally fertilized by falling leaves.Early spring 2025 harvest. Free from agrochemical inputs.",
+    "origin": "Zhejiang Province",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/PurpleBambooChineseGreenTeasm.jpg?v=1760654893&width=1200",
+    "pricePerOz": null,
+    "id": "108",
+    "steepTempF": 175,
+    "steepTimeMin": 2,
+    "steepTimeMax": 3,
+    "flavorNotes": [
+      "sweet",
+      "floral",
+      "vegetal",
+      "refreshing"
+    ],
+    "avgRating": 4.1,
+    "ratingCount": 1
+  },
+  {
+    "name": "Sekiya's Organically Grown Kamairi‑cha from Miyazaki",
+    "brandName": "The Steeping Room",
+    "teaType": "green",
+    "description": "Sekiya's Kamairi-cha has a golden tone and a flavor unlike most Japanese green teas. Pan-firing gives it a toasty, nutty quality with notes of edamame, cooked spinach, and toasted almond. There's a sweetness that lingers, very little astringency, and lovely light floral quality reminiscent of oolong. This organically grown Japanese tea comes from Sekiya Hirotsugu, one of only about a dozen people in Japan to hold a 10th dan in tea appraisal. That's the highest grade, earned through annual examinations that test a taster's ability to identify cultivars, picking seasons, and origins by appearance and taste alone. Sekiya was one of the youngest to achieve the rank, and he works with the JA Miyazaki cooperative to create distinctive teas that have earned attention from tea merchants across Japan. Kamairicha accounts for less than 2% of Japanese tea production. This pan-fired green tea technique came from China in the 15th century and took hold in Kyushu, where it was popular during the Edo",
+    "origin": "Sekiya Hirotsugu",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/Sekiya_sOrganicKamairi-chafromMiyazaki.webp?v=1764119313&width=1200",
+    "pricePerOz": null,
+    "id": "109",
+    "steepTempF": 175,
+    "steepTimeMin": 2,
+    "steepTimeMax": 3,
+    "flavorNotes": [
+      "sweet",
+      "floral",
+      "nutty",
+      "toasty"
+    ],
+    "avgRating": 4.8,
+    "ratingCount": 14
+  },
+  {
+    "name": "Organically Grown Pine Needles Chinese Green Tea",
+    "brandName": "The Steeping Room",
+    "teaType": "green",
+    "description": "An organically grown green tea from northwestern Hunan, harvested in early spring 2025. The dry leaf smells like dried mango and sweet fruit. In the cup, it's fruity with notes of hard candy, a tingly brightness, gentle persistent umami, and soft astringency in the finish. Pine needles (song zhen) is a traditional Hunan green tea style with a history stretching back several centuries. The name comes from the shape of the finished leaves, which are pressed and rolled into long, straight needles during the final stage of processing.",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/OrganicPineNeedleGreenTeafromChina.webp?v=1770071872&width=1200",
+    "pricePerOz": null,
+    "id": "110",
+    "steepTempF": 175,
+    "steepTimeMin": 2,
+    "steepTimeMax": 3,
+    "flavorNotes": [
+      "sweet",
+      "fruity",
+      "bright"
+    ],
+    "avgRating": 4.1,
+    "ratingCount": 7
+  },
+  {
+    "name": "Sakura Sencha - Japanese Green Tea with Cherry Blossoms",
+    "brandName": "The Steeping Room",
+    "teaType": "green",
+    "description": "Sakura Sencha is one of the most tasty celebrations of springtime in the tea world. Ours is a blend of sencha, sakura flowers and sugar preserved sakura leaves. The flavor is green, creamy and light. An uplifting, delicate tea. Ingredients:Japanese green tea, sugar preserved sakura leaf and sugar bits, dried sakura flower",
+    "origin": "Japan",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/SakuraSenchaJapaneseGreenTea30gramsm.jpg?v=1741713679&width=1200",
+    "pricePerOz": null,
+    "id": "111",
+    "steepTempF": 175,
+    "steepTimeMin": 2,
+    "steepTimeMax": 3,
+    "flavorNotes": [
+      "creamy"
+    ],
+    "avgRating": 4.6,
+    "ratingCount": 1
+  },
+  {
+    "name": "Glorious Green Tea Sampler Set",
+    "brandName": "The Steeping Room",
+    "teaType": "green",
+    "description": "This Glorious Green Tea Sampler Set is a delicious introduction to some of our most popular unblended single origin green teas. We've selected four teas, each from a different region, so that you can enjoy and get to know different expressions of green tea.Each set includes 25 grams each of Organic AMBA Slow Withered Green Tea from Sri Lanka, Lao Cai Snow Shan Green from Vietnam, Sae Midori Sencha from Japan, and Bi Luo Chun Green Tea from Taiwan. The Green Tea Sampler Set is attractively packaged and includes a postcard with a short introduction to green tea.",
+    "origin": "Sri Lanka, Lao",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/GreenTeaSamplerSetPhotosm.jpg?v=1722178633&width=1200",
+    "pricePerOz": null,
+    "id": "112",
+    "steepTempF": 175,
+    "steepTimeMin": 2,
+    "steepTimeMax": 3,
+    "flavorNotes": [],
+    "avgRating": 4.7,
     "ratingCount": 10
+  },
+  {
+    "name": "2025 Wild Orchid Green Tea from Vietnam",
+    "brandName": "The Steeping Room",
+    "teaType": "green",
+    "description": "We couldn't be more pleased to be offering this very small batch of high mountain hand-picked Vietnamese green tea scented and blended with white orchid blossoms. Orchid Green is one of the traditional green teas of Vietnam and is considered both a tea and a medicine there. This tea steeps a gorgeous pale yellow with a sweet, almost haunting florality from the white orchid. It's quite smooth and light-bodied. On the nose you can pick up just an edge of spice. What really stands out to me about this tea is how relaxing and restful it is. It's got a very mellow and chill energy to it that is quite enjoyable. No agrochemicals were used in the production of this tea.This tea comes from our friends Nguyen Viet Hung and Vu Thi Hai Yen. Ingredients: green tea, orchid petal",
+    "origin": "Vietnam",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/orchidgreensm.jpg?v=1686000040&width=1200",
+    "pricePerOz": null,
+    "id": "113",
+    "steepTempF": 175,
+    "steepTimeMin": 2,
+    "steepTimeMax": 3,
+    "flavorNotes": [
+      "sweet",
+      "smooth",
+      "floral",
+      "spice",
+      "orchid"
+    ],
+    "avgRating": 4.2,
+    "ratingCount": 13
+  },
+  {
+    "name": "Osada Everyday Matcha 100g",
+    "brandName": "The Steeping Room",
+    "teaType": "green",
+    "description": "Osada Everyday Matcha is a versatile blend that is suitable for lattes and other matcha based beverages and even makes a fine bowl of usucha. With an easy to make microfoam and a deep green color, this matcha is creamy with a light astringency and a pleasant \"green\" flavor without marine or mineral notes. As a latte, we noticed a slight lime peel quality underlying the sweet creamy flavor that helps maintain the persistence of the \"matcha flavor\" even with milk. Adding sweetener brings out some cocoa and chocolate notes and makes the matcha a bit on the addictive side. While not certified organic, this product meets the EU requirements for being under the maximum residue threshold of pesticides allowed in EU member countries. This product is packaged in a nitrogen flushed silver foil bag inside one our branded stand up pouches.",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/OsadaCulinaryMatchaPhotosmall.jpg?v=1743774019&width=1200",
+    "pricePerOz": null,
+    "id": "114",
+    "steepTempF": 175,
+    "steepTimeMin": 2,
+    "steepTimeMax": 3,
+    "flavorNotes": [
+      "sweet",
+      "chocolate",
+      "mineral",
+      "creamy"
+    ],
+    "avgRating": 4.2,
+    "ratingCount": 10
+  },
+  {
+    "name": "2025 Lung Vai Snow Shan Green Tea from Vietnam",
+    "brandName": "The Steeping Room",
+    "teaType": "green",
+    "description": "From Lùng Vài Village in Hà Giang Province near Vietnam's border with China, this green tea is made from Snow Shan variety trees. Snow Shan translates to \"Snow Mountain\" and refers to ancient tea trees native to Vietnam that can tower over 20 meters tall and live for centuries. This particular tea comes from newer garden plantings in the same area where 200-300 year old Snow Shan trees grow. The region has more wild Snow Shan trees than any other province in Vietnam, and the tea is harvested by local ethnic minority communities who have lived among those ancient trees for generations. The dry leaves offer aromatics of sweet meadows, honey, and sweet rice. The tea brews to a gentle cup with fresh sweet meadow flavors and a touch of umami richness. It has good structure while remaining approachable and stays enjoyable even as it cools.",
+    "origin": "Snow Shan",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2025LungVaiSnowShanGreenTeafromVietnamsm.jpg?v=1749849312&width=1200",
+    "pricePerOz": null,
+    "id": "115",
+    "steepTempF": 175,
+    "steepTimeMin": 2,
+    "steepTimeMax": 3,
+    "flavorNotes": [
+      "sweet",
+      "honey"
+    ],
+    "avgRating": 4.1,
+    "ratingCount": 1
   },
   {
     "name": "Yu Lan Xiang Dancong Oolong (Magnolia Fragrance)",
@@ -173,7 +331,7 @@ export const scrapedTeas = [
     "origin": "Phoenix Mountain",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/MagnoliaDancongPhoenixOolongsm.jpg?v=1758990052&width=1200",
     "pricePerOz": null,
-    "id": "108",
+    "id": "116",
     "steepTempF": 195,
     "steepTimeMin": 3,
     "steepTimeMax": 5,
@@ -182,8 +340,8 @@ export const scrapedTeas = [
       "smooth",
       "grape"
     ],
-    "avgRating": 4.5,
-    "ratingCount": 1
+    "avgRating": 4.8,
+    "ratingCount": 13
   },
   {
     "name": "Oolong Tea Explorer",
@@ -193,15 +351,15 @@ export const scrapedTeas = [
     "origin": "Taiwan",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/OolongPostcardPhotosm.jpg?v=1730394004&width=1200",
     "pricePerOz": null,
-    "id": "109",
+    "id": "117",
     "steepTempF": 195,
     "steepTimeMin": 3,
     "steepTimeMax": 5,
     "flavorNotes": [
       "floral"
     ],
-    "avgRating": 4.7,
-    "ratingCount": 8
+    "avgRating": 4.2,
+    "ratingCount": 7
   },
   {
     "name": "2025 Tie Luo Han Wuyi Oolong",
@@ -211,7 +369,7 @@ export const scrapedTeas = [
     "origin": null,
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2025TieLuoHanWuyiOolongsm.jpg?v=1759858179&width=1200",
     "pricePerOz": null,
-    "id": "110",
+    "id": "118",
     "steepTempF": 195,
     "steepTimeMin": 3,
     "steepTimeMax": 5,
@@ -220,7 +378,7 @@ export const scrapedTeas = [
       "mineral"
     ],
     "avgRating": 4.3,
-    "ratingCount": 9
+    "ratingCount": 15
   },
   {
     "name": "Huang Zhi Xiang Dancong Oolong (\"Yellow Sprig\")",
@@ -230,7 +388,7 @@ export const scrapedTeas = [
     "origin": "Guangdong",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/HuangZhiXiangPhoenixOolongsm.jpg?v=1758992160&width=1200",
     "pricePerOz": null,
-    "id": "111",
+    "id": "119",
     "steepTempF": 195,
     "steepTimeMin": 3,
     "steepTimeMax": 5,
@@ -242,7 +400,7 @@ export const scrapedTeas = [
       "peach"
     ],
     "avgRating": 4.7,
-    "ratingCount": 7
+    "ratingCount": 10
   },
   {
     "name": "Miyazaki Sabou Organically Grown Japanese Oolong Hojicha",
@@ -252,7 +410,7 @@ export const scrapedTeas = [
     "origin": "Japan",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/MiyazakiSabouOrganicOolongHojicha_e1be4e62-ea19-4229-b1b6-d41aecdee0d9.webp?v=1764173376&width=1200",
     "pricePerOz": null,
-    "id": "112",
+    "id": "120",
     "steepTempF": 195,
     "steepTimeMin": 3,
     "steepTimeMax": 5,
@@ -263,8 +421,8 @@ export const scrapedTeas = [
       "toasty",
       "jasmine"
     ],
-    "avgRating": 4.1,
-    "ratingCount": 7
+    "avgRating": 4.3,
+    "ratingCount": 10
   },
   {
     "name": "2025 Lao Cong Shui Xian Wuyi Oolong",
@@ -274,7 +432,7 @@ export const scrapedTeas = [
     "origin": null,
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/LaoCongShuiXianWuyiOolongsm.jpg?v=1746517951&width=1200",
     "pricePerOz": null,
-    "id": "113",
+    "id": "121",
     "steepTempF": 195,
     "steepTimeMin": 3,
     "steepTimeMax": 5,
@@ -284,7 +442,7 @@ export const scrapedTeas = [
       "floral"
     ],
     "avgRating": 4.1,
-    "ratingCount": 4
+    "ratingCount": 14
   },
   {
     "name": "2025 Jin Xuan High Mountain Oolong from Ali Shan",
@@ -294,7 +452,7 @@ export const scrapedTeas = [
     "origin": "Taiwan",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2024-jin-xuan-high-mountain-oolong-from-ali-shan-466412.jpg?v=1720131068&width=1200",
     "pricePerOz": null,
-    "id": "114",
+    "id": "122",
     "steepTempF": 195,
     "steepTimeMin": 3,
     "steepTimeMax": 5,
@@ -304,8 +462,8 @@ export const scrapedTeas = [
       "floral",
       "bright"
     ],
-    "avgRating": 4.1,
-    "ratingCount": 3
+    "avgRating": 4.8,
+    "ratingCount": 2
   },
   {
     "name": "2025 Traditional Roasted Organically Grown Dong Ding Oolong from Taiwan",
@@ -315,7 +473,7 @@ export const scrapedTeas = [
     "origin": "Taiwan",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/MediumRoastOrganicDongDingOolongfromTaiwansm.jpg?v=1755889889&width=1200",
     "pricePerOz": null,
-    "id": "115",
+    "id": "123",
     "steepTempF": 195,
     "steepTimeMin": 3,
     "steepTimeMax": 5,
@@ -325,8 +483,8 @@ export const scrapedTeas = [
       "roasted",
       "plum"
     ],
-    "avgRating": 4.6,
-    "ratingCount": 8
+    "avgRating": 4.8,
+    "ratingCount": 13
   },
   {
     "name": "2025 Organically Grown Himalayan White Tea from Jun Chiyabari",
@@ -336,7 +494,7 @@ export const scrapedTeas = [
     "origin": "Nepal",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/JunChiyabariHimalayanOrganicWhiteTeafromNepalsm.jpg?v=1759437013&width=1200",
     "pricePerOz": null,
-    "id": "116",
+    "id": "124",
     "steepTempF": 185,
     "steepTimeMin": 4,
     "steepTimeMax": 5,
@@ -344,8 +502,8 @@ export const scrapedTeas = [
       "sweet",
       "floral"
     ],
-    "avgRating": 4.2,
-    "ratingCount": 13
+    "avgRating": 4.1,
+    "ratingCount": 1
   },
   {
     "name": "2025 Autumnal White Moonlight (Yue Guang Bai)",
@@ -355,7 +513,7 @@ export const scrapedTeas = [
     "origin": "Ba Wai Zhai",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2025AutumnalWhiteMoonlightWhiteTea.webp?v=1764184764&width=1200",
     "pricePerOz": null,
-    "id": "117",
+    "id": "125",
     "steepTempF": 185,
     "steepTimeMin": 4,
     "steepTimeMax": 5,
@@ -364,8 +522,8 @@ export const scrapedTeas = [
       "smooth",
       "honey"
     ],
-    "avgRating": 4.7,
-    "ratingCount": 15
+    "avgRating": 4.4,
+    "ratingCount": 14
   },
   {
     "name": "2024 Bada Mountain Yunnan White Tea",
@@ -375,7 +533,7 @@ export const scrapedTeas = [
     "origin": null,
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/BulangWhiteTeafromYunnansm.jpg?v=1759342163&width=1200",
     "pricePerOz": null,
-    "id": "118",
+    "id": "126",
     "steepTempF": 185,
     "steepTimeMin": 4,
     "steepTimeMax": 5,
@@ -383,8 +541,8 @@ export const scrapedTeas = [
       "sweet",
       "floral"
     ],
-    "avgRating": 4.4,
-    "ratingCount": 15
+    "avgRating": 4.3,
+    "ratingCount": 5
   },
   {
     "name": "White Tea Explorer",
@@ -394,12 +552,12 @@ export const scrapedTeas = [
     "origin": "China Nyot Ou Ancient Forest White Tea",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/WhiteTeaExplorerSamplerSetsm_90f5ce4f-e3ae-4a9e-869a-1c0f0e673e54.jpg?v=1722892202&width=1200",
     "pricePerOz": null,
-    "id": "119",
+    "id": "127",
     "steepTempF": 185,
     "steepTimeMin": 4,
     "steepTimeMax": 5,
     "flavorNotes": [],
-    "avgRating": 4,
+    "avgRating": 4.4,
     "ratingCount": 12
   },
   {
@@ -410,7 +568,7 @@ export const scrapedTeas = [
     "origin": "Fujian",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/FudingSilverNeedlesWhiteTeafromChina.webp?v=1770073417&width=1200",
     "pricePerOz": null,
-    "id": "120",
+    "id": "128",
     "steepTempF": 185,
     "steepTimeMin": 4,
     "steepTimeMax": 5,
@@ -418,8 +576,8 @@ export const scrapedTeas = [
       "sweet",
       "refreshing"
     ],
-    "avgRating": 4.4,
-    "ratingCount": 2
+    "avgRating": 4.2,
+    "ratingCount": 13
   },
   {
     "name": "2020 Tong Mu Guan White Tea Cake from Cindy Chen",
@@ -429,7 +587,7 @@ export const scrapedTeas = [
     "origin": "Tong Mu",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/CindyChen2020TongMuGuanAgedWhiteTeaCake2sm.jpg?v=1743887442&width=1200",
     "pricePerOz": null,
-    "id": "121",
+    "id": "129",
     "steepTempF": 185,
     "steepTimeMin": 4,
     "steepTimeMax": 5,
@@ -438,8 +596,8 @@ export const scrapedTeas = [
       "floral",
       "apricot"
     ],
-    "avgRating": 4,
-    "ratingCount": 8
+    "avgRating": 4.2,
+    "ratingCount": 2
   },
   {
     "name": "2025 Organically Grown Bai Mu Dan Chinese White Tea",
@@ -449,7 +607,7 @@ export const scrapedTeas = [
     "origin": null,
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/BaiMuDanChineseWhitePeonyTeasm.jpg?v=1722783500&width=1200",
     "pricePerOz": null,
-    "id": "122",
+    "id": "130",
     "steepTempF": 185,
     "steepTimeMin": 4,
     "steepTimeMax": 5,
@@ -458,8 +616,8 @@ export const scrapedTeas = [
       "fruity",
       "buttery"
     ],
-    "avgRating": 4.8,
-    "ratingCount": 12
+    "avgRating": 4.7,
+    "ratingCount": 6
   },
   {
     "name": "2025 Shou Mei Chinese White Tea",
@@ -469,7 +627,7 @@ export const scrapedTeas = [
     "origin": "Fujian Province, China",
     "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/ShouMeiChineseOrganicWhiteTeasm.jpg?v=1722787027&width=1200",
     "pricePerOz": null,
-    "id": "123",
+    "id": "131",
     "steepTempF": 185,
     "steepTimeMin": 4,
     "steepTimeMax": 5,
@@ -477,7 +635,305 @@ export const scrapedTeas = [
       "sweet",
       "smooth"
     ],
-    "avgRating": 4.4,
+    "avgRating": 4.6,
+    "ratingCount": 6
+  },
+  {
+    "name": "2015 Zi Dayi (\"Purple Dayi\") Raw Puerh",
+    "brandName": "The Steeping Room",
+    "teaType": "puerh",
+    "description": "The Purple Dayi is a special release from Dayi (aka Menghai Tea Factory), not part of their regular annual lineup. It's an homage to the original 1996 Zi Dayi, a historically significant cake that marked the debut of the Dayi brand name (previously, the factory used the state-run CNNP's Zhong Cha logo). That '96 original is now a serious collector's item. The 2015 version uses early spring arbor leaf from high-elevation Menghai county, reportedly with some Bulang material in the blend. The wet leaf carries a light smokiness. In the cup: sweet plum notes come through immediately and linger, backed by light smoke, a touch of raw wood, and leather. The texture is silky, with plenty of presence and personality but nothing harsh or rough. Everything feels extremely well-integrated for its age. Absolutely delicious right now, and a fantastic candidate for further aging. 357g cake, natural Taiwan storage till early 2025. Some of the wrappers have some light tearing, but they're in pretty dece",
+    "origin": "Taiwan",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2015PurpleDayiRawPuerh.webp?v=1769798831&width=1200",
+    "pricePerOz": null,
+    "id": "132",
+    "steepTempF": 212,
+    "steepTimeMin": 3,
+    "steepTimeMax": 5,
+    "flavorNotes": [
+      "sweet",
+      "plum"
+    ],
+    "avgRating": 4.2,
+    "ratingCount": 9
+  },
+  {
+    "name": "2009 Dayi Tuan Cha Ripe Puerh",
+    "brandName": "The Steeping Room",
+    "teaType": "puerh",
+    "description": "This 2009 DaYi ripe puerh offers an approachable introduction to mid-aged shou and an excellent daily drinker. Made with medium-fermented leaves from Menghai, the tea shows persistent notes of chocolate with a creamy aroma, a pleasant sweetness, and less earthiness than many ripe puerhs. The finish is clean and sweet with a crisp quality that lingers. The tuan cha shape (compressed into a round ball rather than the more common cake, brick, or tuo) is relatively uncommon in puerh production. Each 357g ball has been dry stored in Guangzhou until early 2025. When purchased as a full ball, the tea comes packaged in a fancy decorative gift box.",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2009DayiTuanChaRipePuerh.jpg?v=1769292277&width=1200",
+    "pricePerOz": null,
+    "id": "133",
+    "steepTempF": 212,
+    "steepTimeMin": 3,
+    "steepTimeMax": 5,
+    "flavorNotes": [
+      "sweet",
+      "chocolate",
+      "creamy",
+      "crisp"
+    ],
+    "avgRating": 4.6,
+    "ratingCount": 10
+  },
+  {
+    "name": "2018 Xiaguan Xiao Fa Ripe Tuo (250 grams)",
+    "brandName": "The Steeping Room",
+    "teaType": "puerh",
+    "description": "The Xiao Fa Tuo is a classic Xiaguan production that's been around since 1975, when it became China's first puerh export to France (hence the name, which literally means \"Sell to France\"). This 2018 pressing follows the traditional 7663 recipe—the same tea that typically comes in Xiaguan's iconic round boxes, though this particular vintage comes in a special decorative box.Our tasting notes indicate this is distinctly cherry-forward ripe with fragrant tree bark notes and a smooth, light-bodied character that makes it a very easy drinker. This is a reliable workhorse, not hugely complex, but solid and quite affordable. Each whole tuo is 250 grams.",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2018XiaguanXiaoFaRipePuerhTuo_c89cbc8e-b3dc-4e0e-90d7-0e653b299e89.webp?v=1762197251&width=1200",
+    "pricePerOz": null,
+    "id": "134",
+    "steepTempF": 212,
+    "steepTimeMin": 3,
+    "steepTimeMax": 5,
+    "flavorNotes": [
+      "smooth"
+    ],
+    "avgRating": 4.5,
+    "ratingCount": 7
+  },
+  {
+    "name": "2025 White2Tea Glass House Ripe Puerh",
+    "brandName": "The Steeping Room",
+    "teaType": "puerh",
+    "description": "White2Tea's description of their cake says, \"The return of our sold out Glass House, a blend of small batch shou Puer from Yunnan province. Excellent balance of value and quality, Glass House is a milky shou with plenty of body and nuanced notes of creme brulee. This shou could use a few months to calm down, but is right on the edge of being ready to drink.\" Each cake is 200 grams.",
+    "origin": "Yunnan",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2025White2TeaGlassHouseRipePuerh.webp?v=1764085269&width=1200",
+    "pricePerOz": null,
+    "id": "135",
+    "steepTempF": 212,
+    "steepTimeMin": 3,
+    "steepTimeMax": 5,
+    "flavorNotes": [],
+    "avgRating": 4.7,
+    "ratingCount": 12
+  },
+  {
+    "name": "2025 White2Tea Glass House Ripe Puerh Minis",
+    "brandName": "The Steeping Room",
+    "teaType": "puerh",
+    "description": "White2Tea's description of Alazani says, \"The return of our sold out Glass House, a blend of small batch shou Puer from Yunnan province. Excellent balance of value and quality, Glass House is a milky shou with plenty of body and nuanced notes of creme brulee. This shou could use a few months to calm down, but is right on the edge of being ready to drink.\" Each mini is ~7 grams.",
+    "origin": "Yunnan",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2025White2TeaGlassHouseRipePuerhMinis.webp?v=1764085841&width=1200",
+    "pricePerOz": null,
+    "id": "136",
+    "steepTempF": 212,
+    "steepTimeMin": 3,
+    "steepTimeMax": 5,
+    "flavorNotes": [],
+    "avgRating": 4.5,
+    "ratingCount": 5
+  },
+  {
+    "name": "2010 Dayi Pu Zhi Wei Ripe Puerh",
+    "brandName": "The Steeping Room",
+    "teaType": "puerh",
+    "description": "The 2010 Menghai Dayi \"Pu Zhi Wei\" Ripe Puerh comes from the second year of this recipe, which Dayi introduced in 2009 as an approachable ripe puerh for those new to the category. The tea is persistently sweet and easy going, with aromatic notes of vanilla and fragrant woods. Ginseng and Chinese dried fruit notes come up in middle to later steeps. The mouthfeel is light and flowing - quite easy to drink yet still very engaging. Highly recommended - a great value! Taiwan stored until 2025.",
+    "origin": "Taiwan",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2010DayiPuZhiWeiRipePuerh_1.jpg?v=1758837088&width=1200",
+    "pricePerOz": null,
+    "id": "137",
+    "steepTempF": 212,
+    "steepTimeMin": 3,
+    "steepTimeMax": 5,
+    "flavorNotes": [
+      "sweet",
+      "vanilla"
+    ],
+    "avgRating": 4.7,
+    "ratingCount": 4
+  },
+  {
+    "name": "2001 Yee On Raw Liu Bao Tea",
+    "brandName": "The Steeping Room",
+    "teaType": "puerh",
+    "description": "This 2001 Raw Liu Bao from Yee On is thick, rich, and warming with an intriguing light herbal and camphor quality. Yee On is famous for their Hong Kong storage, which is very well integrated in this aged tea. The earthy component stays relatively light, the finish is persistently sweet. This tea is super comforting and easy to drink. Liu Bao is related in many respects to ripe puerh tea, but it uses medium-leaf material from Guangxi, not Yunnan large-leaf material. Liu Bao is known to have a betel nut character (hard to say what that is if you haven't happened to have had betel nut!) and an herbal sweetness. Liu Bao's processing methods actually inspired ripe puerh's development in the 1970s. In Traditional Chinese Medicine, Liu Bao is valued for dispelling dampness and regulating digestion. It's considered both warming and cooling depending on what your body needs.",
+    "origin": "Yee On",
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/2001YeeOnRawLiuBaoTea.webp?v=1762546261&width=1200",
+    "pricePerOz": null,
+    "id": "138",
+    "steepTempF": 212,
+    "steepTimeMin": 3,
+    "steepTimeMax": 5,
+    "flavorNotes": [
+      "sweet",
+      "earthy"
+    ],
+    "avgRating": 4.2,
     "ratingCount": 2
+  },
+  {
+    "name": "1999 Kunming 7581 Ripe Puerh Tea Brick",
+    "brandName": "The Steeping Room",
+    "teaType": "puerh",
+    "description": "This 7581 recipe from the Kunming Tea Factory offers a tasty glimpse into the past, a time when shou puerh was often fermented for a shorter period of time than is commonly done now. This lighter touch makes the tea more lively, reminiscent of a well-aged raw puerh.The liquor is a gorgeous deep red (rather than dark brown or black) with lots of clarity and has warming tasting notes of cacao, spice, and wood. It's exceptionally smooth and vibrant. While this recipe is still being made in the modern era, this recipe changed after 1999 so this selection is among the last of the original technique. Each brick is approximately 250 grams.",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/1999-kunming-7581-ripe-puerh-tea-brick-141928.jpg?v=1720131008&width=1200",
+    "pricePerOz": null,
+    "id": "139",
+    "steepTempF": 212,
+    "steepTimeMin": 3,
+    "steepTimeMax": 5,
+    "flavorNotes": [
+      "smooth",
+      "spice"
+    ],
+    "avgRating": 4.5,
+    "ratingCount": 15
+  },
+  {
+    "name": "Starry Night Herbal Blend",
+    "brandName": "The Steeping Room",
+    "teaType": "herbal",
+    "description": "A well-balanced winter herbal blend of organic apple and aromatic orange with hints of clove and allspice. The addition of hops and rosemary give a subtle herbal undertone that creates a satisfying structural finish. Caffeine-free, so it works well after dinner as it does during a cold afternoon. Ingredients: organic apple, organic rosehip, organic orange peel, organic hibiscus, organic allspice, organic clove, cranberry (cane sugar and sunflower oil), organic rosemary, hops, natural flavor",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/StarryNightHerbalHolidayTeasm.jpg?v=1761417206&width=1200",
+    "pricePerOz": null,
+    "id": "140",
+    "steepTempF": 212,
+    "steepTimeMin": 5,
+    "steepTimeMax": 7,
+    "flavorNotes": [
+      "spice",
+      "berry",
+      "apple",
+      "rose"
+    ],
+    "avgRating": 4.3,
+    "ratingCount": 8
+  },
+  {
+    "name": "Organically Grown Chamomile Tea",
+    "brandName": "The Steeping Room",
+    "teaType": "herbal",
+    "description": "Our Organic Chamomile Tea features pure, unblended Egyptian chamomile flowers, yielding a gentle golden-toned herbal infusion. The taste evokes honey and fruit blossoms, delightful on its own but also welcoming a touch of honey or other natural sweetener. Chamomile has long been a staple in both Eastern and Western traditional herbal medicine, renowned particularly for its sedative effects.",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/OrganicChamomileTeasm.jpg?v=1722108042&width=1200",
+    "pricePerOz": null,
+    "id": "141",
+    "steepTempF": 212,
+    "steepTimeMin": 5,
+    "steepTimeMax": 7,
+    "flavorNotes": [
+      "sweet",
+      "honey"
+    ],
+    "avgRating": 4.3,
+    "ratingCount": 3
+  },
+  {
+    "name": "Mandarin Sunset Rooibos (Caffeine-Free)",
+    "brandName": "The Steeping Room",
+    "teaType": "herbal",
+    "description": "Our Mandarin Sunset Rooibos herbal tea is a naturally sweet and smooth non-caffeinated tea with loads of juicy mandarin orange aromatics. It's a refreshing and satisfying tisane, packed with all the healthy goodness that rooibos offer (it's high in antioxidants). Ingredients: South African rooibos, mandarin flavoring",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/MandarinSunsetRooibossm.jpg?v=1739474815&width=1200",
+    "pricePerOz": null,
+    "id": "142",
+    "steepTempF": 212,
+    "steepTimeMin": 5,
+    "steepTimeMax": 7,
+    "flavorNotes": [
+      "sweet",
+      "smooth",
+      "refreshing"
+    ],
+    "avgRating": 4.1,
+    "ratingCount": 1
+  },
+  {
+    "name": "Wellness Collection Sampler Set",
+    "brandName": "The Steeping Room",
+    "teaType": "herbal",
+    "description": "Our wellness collection sampler set includes four of our very favorites health supportive teas. Each set includes 25 grams of Organic Turmeric Ginger Refresh, Organic On the Mend, and our Life Support Herbal Blend plus three packets of our Eight Treasures Herbal Blend. The teas come attractively packaged together with a short guide to steeping tea. The Wellness Collection Sampler Set makes a great gift for a friend or loved one, or a special treat for yourself.",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/WellnessCollectionImagesm.webp?v=1762191480&width=1200",
+    "pricePerOz": null,
+    "id": "143",
+    "steepTempF": 212,
+    "steepTimeMin": 5,
+    "steepTimeMax": 7,
+    "flavorNotes": [],
+    "avgRating": 4,
+    "ratingCount": 2
+  },
+  {
+    "name": "Organically Grown Peppermint Leaf",
+    "brandName": "The Steeping Room",
+    "teaType": "herbal",
+    "description": "Our Organically Grown Peppermint Leaf offers the refreshing, aromatic qualities of this beloved herb in its purest form. This versatile herb makes an excellent tea for daily enjoyment and has been traditionally valued for its soothing properties for both digestive and respiratory wellness. Peppermint leaf is naturally caffeine free.Ingredients: USDA organic certified US grown peppermintThis information and product is not intended to diagnose, treat, cure or prevent any disease and has not been evaluated by the FDA.",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/OrganicPeppermintHerbalTeasm.jpg?v=1755879016&width=1200",
+    "pricePerOz": null,
+    "id": "144",
+    "steepTempF": 212,
+    "steepTimeMin": 5,
+    "steepTimeMax": 7,
+    "flavorNotes": [
+      "refreshing"
+    ],
+    "avgRating": 4.8,
+    "ratingCount": 3
+  },
+  {
+    "name": "Strawberry Guava Breeze Fruit Tea (Non-Caffeinated)",
+    "brandName": "The Steeping Room",
+    "teaType": "herbal",
+    "description": "Strawberry Guava Breeze is an all fruit tea with a gentle, luscious sweetness. It's a perfect beverage for relaxing and enjoying the breeze. The enticing aromatics of guava are simply hard to resist.Ingredients: pear bits, rose petals, sunflower blossoms, lemongrass, strawberry, natural flavor",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/strawberry-guava-breeze-fruit-tea-non-caffeinated-194576.jpg?v=1720131494&width=1200",
+    "pricePerOz": null,
+    "id": "145",
+    "steepTempF": 212,
+    "steepTimeMin": 5,
+    "steepTimeMax": 7,
+    "flavorNotes": [
+      "sweet",
+      "berry",
+      "rose"
+    ],
+    "avgRating": 4.6,
+    "ratingCount": 1
+  },
+  {
+    "name": "French Lavender Flowers",
+    "brandName": "The Steeping Room",
+    "teaType": "herbal",
+    "description": "Incredibly aromatic, our French lavender has a citrus-like taste, with hints of sweetness and rosemary. It's bright and rich. It's perfect as a stand alone herbal tea or for blending your own creative infusions. It also makes an excellent culinary ingredient for baking, cocktails, ice creams, you name it!Ingredients: lavender flowers from France (super grade)",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/FrenchLavendersm.jpg?v=1760567940&width=1200",
+    "pricePerOz": null,
+    "id": "146",
+    "steepTempF": 212,
+    "steepTimeMin": 5,
+    "steepTimeMax": 7,
+    "flavorNotes": [
+      "sweet",
+      "citrus",
+      "rose",
+      "bright"
+    ],
+    "avgRating": 4.4,
+    "ratingCount": 6
+  },
+  {
+    "name": "Organic Khartoum Hibiscus Flowers",
+    "brandName": "The Steeping Room",
+    "teaType": "herbal",
+    "description": "Organic Khartoum Hibiscus Flowers offer a tangy flavor with a deep red infusion, sourced straight from the Nile River Delta in Khartoum. With zero caffeine, this tea is rich in vitamin C and has many reported health benefits. Many people drink hibiscus as is - steeped plain in water at a boil for five or more minutes, but it is also nice to prepare on the stovetop with a couple of cinnamon sticks added and maybe just a touch of sugar to round out the natural tartness of the flowers.",
+    "origin": null,
+    "imageUrl": "https://www.thesteepingroom.com/cdn/shop/files/organic-khartoum-hibiscus-flowers-643649.jpg?v=1720131293&width=1200",
+    "pricePerOz": null,
+    "id": "147",
+    "steepTempF": 212,
+    "steepTimeMin": 5,
+    "steepTimeMax": 7,
+    "flavorNotes": [],
+    "avgRating": 4.8,
+    "ratingCount": 11
   }
 ];

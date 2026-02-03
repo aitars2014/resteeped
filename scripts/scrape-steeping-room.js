@@ -9,11 +9,11 @@ const path = require('path');
 
 const TEA_CATEGORIES = [
   { url: 'https://www.thesteepingroom.com/collections/black-tea', type: 'black' },
-  { url: 'https://www.thesteepingroom.com/collections/green-and-yellow-tea', type: 'green' },
+  { url: 'https://www.thesteepingroom.com/collections/green-tea', type: 'green' },
   { url: 'https://www.thesteepingroom.com/collections/oolong-tea', type: 'oolong' },
   { url: 'https://www.thesteepingroom.com/collections/white-tea', type: 'white' },
-  { url: 'https://www.thesteepingroom.com/collections/puerh-and-heicha', type: 'puerh' },
-  { url: 'https://www.thesteepingroom.com/collections/herbal-teas-fruit-teas-and-decaf-teas', type: 'herbal' },
+  { url: 'https://www.thesteepingroom.com/collections/puerh-tea', type: 'puerh' },
+  { url: 'https://www.thesteepingroom.com/collections/fruit-teas-herbal-teas-decaf-teas', type: 'herbal' },
 ];
 
 const DELAY_MS = 1500;
