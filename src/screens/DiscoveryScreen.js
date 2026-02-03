@@ -6,39 +6,25 @@ import {
   FlatList, 
   SafeAreaView,
   Dimensions,
+  ActivityIndicator,
+  RefreshControl,
 } from 'react-native';
 import { colors, typography, spacing } from '../constants';
 import { SearchBar, FilterPills, TeaCard } from '../components';
-import { teas } from '../data/teas';
+import { useTeas } from '../hooks';
+import { teaTypes } from '../data/teas';
 
 const { width } = Dimensions.get('window');
 const cardWidth = (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2;
 
 export const DiscoveryScreen = ({ navigation }) => {
+  const { teas, loading, refreshTeas, searchTeas } = useTeas();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedType, setSelectedType] = useState('all');
   
   const filteredTeas = useMemo(() => {
-    let result = teas;
-    
-    // Filter by type
-    if (selectedType !== 'all') {
-      result = result.filter(tea => tea.teaType === selectedType);
-    }
-    
-    // Filter by search query
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter(tea => 
-        tea.name.toLowerCase().includes(query) ||
-        tea.brandName.toLowerCase().includes(query) ||
-        tea.teaType.toLowerCase().includes(query) ||
-        tea.flavorNotes?.some(note => note.toLowerCase().includes(query))
-      );
-    }
-    
-    return result;
-  }, [searchQuery, selectedType]);
+    return searchTeas(searchQuery, selectedType);
+  }, [searchQuery, selectedType, searchTeas]);
   
   const renderTeaCard = ({ item, index }) => (
     <View style={[styles.cardContainer, index % 2 === 0 ? styles.cardLeft : styles.cardRight]}>
@@ -51,17 +37,19 @@ export const DiscoveryScreen = ({ navigation }) => {
   
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <Text style={styles.emptyTitle}>No teas found</Text>
-      <Text style={styles.emptySubtitle}>Try a different search or filter</Text>
+      {loading ? (
+        <ActivityIndicator size="large" color={colors.accent.primary} />
+      ) : (
+        <>
+          <Text style={styles.emptyTitle}>No teas found</Text>
+          <Text style={styles.emptySubtitle}>Try a different search or filter</Text>
+        </>
+      )}
     </View>
   );
   
-  return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Discover</Text>
-      </View>
-      
+  const renderHeader = () => (
+    <>
       <View style={styles.searchContainer}>
         <SearchBar 
           value={searchQuery}
@@ -76,6 +64,20 @@ export const DiscoveryScreen = ({ navigation }) => {
         />
       </View>
       
+      <View style={styles.resultCount}>
+        <Text style={styles.resultText}>
+          {filteredTeas.length} tea{filteredTeas.length !== 1 ? 's' : ''}
+        </Text>
+      </View>
+    </>
+  );
+  
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Discover</Text>
+      </View>
+      
       <FlatList
         data={filteredTeas}
         renderItem={renderTeaCard}
@@ -83,7 +85,15 @@ export const DiscoveryScreen = ({ navigation }) => {
         numColumns={2}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
+        ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmptyState}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={refreshTeas}
+            tintColor={colors.accent.primary}
+          />
+        }
       />
     </SafeAreaView>
   );
@@ -109,6 +119,14 @@ const styles = StyleSheet.create({
   },
   filtersContainer: {
     paddingBottom: spacing.elementSpacing,
+  },
+  resultCount: {
+    paddingHorizontal: spacing.screenHorizontal,
+    paddingBottom: spacing.elementSpacing,
+  },
+  resultText: {
+    ...typography.bodySmall,
+    color: colors.text.secondary,
   },
   listContent: {
     paddingHorizontal: spacing.screenHorizontal,
