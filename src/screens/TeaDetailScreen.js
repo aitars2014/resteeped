@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { 
   View, 
   Text, 
@@ -9,13 +9,14 @@ import {
   Image,
   Alert,
   FlatList,
+  Linking,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
-import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal } from '../components';
+import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard } from '../components';
 import { useAuth, useCollection } from '../context';
-import { useReviews, useCompanies } from '../hooks';
+import { useReviews, useCompanies, useTeas } from '../hooks';
 
 const { width, height } = Dimensions.get('window');
 const HERO_HEIGHT = height * 0.32;
@@ -28,6 +29,15 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, updateInCollection } = useCollection();
   const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
   const { companies } = useCompanies();
+  const { teas } = useTeas();
+  
+  // Find similar teas (same type, excluding current tea)
+  const similarTeas = useMemo(() => {
+    return teas
+      .filter(t => t.id !== tea.id && t.teaType === tea.teaType)
+      .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0))
+      .slice(0, 6);
+  }, [teas, tea.id, tea.teaType]);
   
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showTastingNotes, setShowTastingNotes] = useState(false);
@@ -101,6 +111,27 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     await updateInCollection(tea.id, updates);
     setShowTastingNotes(false);
   };
+  
+  const handleBuyTea = async () => {
+    const url = tea.productUrl || tea.product_url;
+    if (url) {
+      try {
+        await Linking.openURL(url);
+      } catch (error) {
+        Alert.alert('Error', 'Could not open the product page.');
+      }
+    } else if (company?.website_url) {
+      // Fallback to company website
+      try {
+        await Linking.openURL(company.website_url);
+      } catch (error) {
+        Alert.alert('Error', 'Could not open the shop website.');
+      }
+    }
+  };
+  
+  // Check if tea is available (has product URL or is not marked discontinued)
+  const isAvailable = !tea.discontinued && (tea.productUrl || tea.product_url || company?.website_url);
   
   const formatSteepTime = () => {
     if (tea.steepTimeMin && tea.steepTimeMax) {
@@ -292,6 +323,60 @@ export const TeaDetailScreen = ({ route, navigation }) => {
               </TouchableOpacity>
             )}
           </View>
+          
+          {/* Buy This Tea */}
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>Buy This Tea</Text>
+            {isAvailable ? (
+              <TouchableOpacity 
+                style={styles.buyCard}
+                onPress={handleBuyTea}
+                activeOpacity={0.7}
+              >
+                <View style={styles.buyCardContent}>
+                  <View style={styles.buyIconContainer}>
+                    <ShoppingCart size={24} color={colors.accent.primary} />
+                  </View>
+                  <View style={styles.buyCardText}>
+                    <Text style={styles.buyCardTitle}>
+                      Available at {tea.brandName}
+                    </Text>
+                    <Text style={styles.buyCardSubtitle}>
+                      Tap to visit their website
+                    </Text>
+                  </View>
+                  <ExternalLink size={20} color={colors.text.secondary} />
+                </View>
+              </TouchableOpacity>
+            ) : (
+              <View style={styles.unavailableCard}>
+                <Text style={styles.unavailableText}>
+                  This tea is currently not available for purchase
+                </Text>
+              </View>
+            )}
+          </View>
+          
+          {/* You Might Also Like */}
+          {similarTeas.length > 0 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>You Might Also Like</Text>
+              <ScrollView 
+                horizontal 
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.similarTeaList}
+              >
+                {similarTeas.map((similarTea) => (
+                  <View key={similarTea.id} style={styles.similarTeaCard}>
+                    <TeaCard 
+                      tea={similarTea}
+                      onPress={() => navigation.push('TeaDetail', { tea: similarTea })}
+                    />
+                  </View>
+                ))}
+              </ScrollView>
+            </View>
+          )}
           
           <View style={{ height: 140 }} />
         </View>
@@ -573,5 +658,55 @@ const styles = StyleSheet.create({
   },
   inCollectionButton: {
     backgroundColor: colors.accent.secondary,
+  },
+  buyCard: {
+    backgroundColor: colors.background.secondary,
+    borderRadius: spacing.cardBorderRadius,
+    overflow: 'hidden',
+  },
+  buyCardContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: spacing.cardPadding,
+  },
+  buyIconContainer: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: colors.accent.primary + '15',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.md,
+  },
+  buyCardText: {
+    flex: 1,
+  },
+  buyCardTitle: {
+    ...typography.body,
+    fontWeight: '600',
+    color: colors.text.primary,
+    marginBottom: 2,
+  },
+  buyCardSubtitle: {
+    ...typography.caption,
+    color: colors.text.secondary,
+  },
+  unavailableCard: {
+    backgroundColor: colors.background.secondary,
+    borderRadius: spacing.cardBorderRadius,
+    padding: spacing.cardPadding,
+    alignItems: 'center',
+  },
+  unavailableText: {
+    ...typography.body,
+    color: colors.text.secondary,
+    textAlign: 'center',
+  },
+  similarTeaList: {
+    paddingRight: spacing.screenHorizontal,
+    gap: spacing.cardGap,
+  },
+  similarTeaCard: {
+    width: 160,
   },
 });
