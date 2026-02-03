@@ -8,6 +8,7 @@ import {
   TextInput,
   Dimensions,
   RefreshControl,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -163,15 +164,11 @@ export const HomeScreen = ({ navigation }) => {
       >
         {/* Header with Logo */}
         <View style={styles.header}>
-          <View style={styles.logoRow}>
-            <View style={[styles.logoIcon, { backgroundColor: theme.accent.primary }]}>
-              <Coffee size={28} color={theme.text.inverse} />
-            </View>
-            <View>
-              <Text style={[styles.appName, { color: theme.accent.primary }]}>Resteeped</Text>
-              <Text style={[styles.tagline, { color: theme.text.secondary }]}>Discover your next favorite tea</Text>
-            </View>
-          </View>
+          <Image 
+            source={require('../../assets/resteeped-logo.png')} 
+            style={styles.headerLogo}
+            resizeMode="contain"
+          />
         </View>
 
         {/* Search Bar */}
@@ -361,33 +358,13 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing.screenHorizontal,
-    paddingTop: spacing.xl,
-    paddingBottom: spacing.lg,
-  },
-  logoRow: {
-    flexDirection: 'row',
+    paddingTop: spacing.md,
+    paddingBottom: spacing.md,
     alignItems: 'center',
-    gap: spacing.md,
   },
-  logoIcon: {
-    width: 52,
-    height: 52,
-    borderRadius: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 8,
-    elevation: 4,
-  },
-  appName: {
-    fontSize: 28,
-    fontWeight: '700',
-    letterSpacing: -0.5,
-  },
-  tagline: {
-    ...typography.caption,
-    marginTop: 2,
+  headerLogo: {
+    width: width * 0.5,
+    height: 60,
   },
   searchContainer: {
     paddingHorizontal: spacing.screenHorizontal,

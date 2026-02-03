@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   FlatList,
   Animated,
+  Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -109,17 +110,26 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
     handleComplete();
   };
 
-  const renderSlide = ({ item }) => {
+  const renderSlide = ({ item, index }) => {
     const Icon = item.icon;
+    const isFirstSlide = index === 0;
     
     return (
       <View style={styles.slide}>
-        <LinearGradient
-          colors={item.gradientColors}
-          style={styles.iconContainer}
-        >
-          <Icon size={64} color={item.iconColor} strokeWidth={1.5} />
-        </LinearGradient>
+        {isFirstSlide ? (
+          <Image 
+            source={require('../../assets/resteeped-logo.png')} 
+            style={styles.welcomeLogo}
+            resizeMode="contain"
+          />
+        ) : (
+          <LinearGradient
+            colors={item.gradientColors}
+            style={styles.iconContainer}
+          >
+            <Icon size={64} color={item.iconColor} strokeWidth={1.5} />
+          </LinearGradient>
+        )}
         
         <View style={styles.textContainer}>
           <Text style={[styles.title, { color: theme.text.primary }]}>{item.title}</Text>
@@ -271,6 +281,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 16,
     elevation: 4,
+  },
+  welcomeLogo: {
+    width: width * 0.7,
+    height: 140,
+    marginBottom: spacing.xxl,
   },
   textContainer: {
     alignItems: 'center',
