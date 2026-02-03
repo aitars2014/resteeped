@@ -7,15 +7,18 @@ import {
   TouchableOpacity,
   Alert,
   ActivityIndicator,
+  ScrollView,
 } from 'react-native';
-import { User, Settings, LogOut, ChevronRight, Coffee } from 'lucide-react-native';
+import { User, Settings, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock } from 'lucide-react-native';
 import { colors, typography, spacing } from '../constants';
 import { Button } from '../components';
 import { useAuth, useCollection } from '../context';
+import { useBrewHistory } from '../hooks';
 
 export const ProfileScreen = ({ navigation }) => {
   const { user, profile, loading, signInWithGoogle, signOut, isConfigured } = useAuth();
   const { collection } = useCollection();
+  const { brewSessions, todayBrewCount, weekBrewCount } = useBrewHistory();
   
   const handleSignIn = async () => {
     if (!isConfigured) {
@@ -66,28 +69,57 @@ export const ProfileScreen = ({ navigation }) => {
   const wantCount = collection.filter(item => item.status === 'want_to_try').length;
   
   const renderLoggedOut = () => (
-    <View style={styles.authContainer}>
-      <View style={styles.avatarPlaceholder}>
-        <Coffee size={48} color={colors.accent.primary} />
+    <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+      <View style={styles.authContainer}>
+        <View style={styles.avatarPlaceholder}>
+          <Coffee size={48} color={colors.accent.primary} />
+        </View>
+        <Text style={styles.authTitle}>Welcome to Resteeped</Text>
+        <Text style={styles.authSubtitle}>
+          Sign in to save your tea collection, track what you've tried, and sync across devices.
+        </Text>
+        <Button 
+          title="Sign in with Google"
+          onPress={handleSignIn}
+          variant="primary"
+          style={styles.authButton}
+        />
       </View>
-      <Text style={styles.authTitle}>Welcome to Resteeped</Text>
-      <Text style={styles.authSubtitle}>
-        Sign in to save your tea collection, track what you've tried, and sync across devices.
-      </Text>
-      <Button 
-        title="Sign in with Google"
-        onPress={handleSignIn}
-        variant="primary"
-        style={styles.authButton}
-      />
+      
+      {/* Show brew stats even when logged out */}
+      {brewSessions.length > 0 && (
+        <View style={styles.statsSection}>
+          <Text style={styles.statsSectionTitle}>Your Brew Activity</Text>
+          <View style={styles.statsRow}>
+            <View style={styles.stat}>
+              <Coffee size={24} color={colors.accent.primary} />
+              <Text style={styles.statNumber}>{todayBrewCount}</Text>
+              <Text style={styles.statLabel}>Today</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.stat}>
+              <Clock size={24} color={colors.accent.primary} />
+              <Text style={styles.statNumber}>{weekBrewCount}</Text>
+              <Text style={styles.statLabel}>This Week</Text>
+            </View>
+            <View style={styles.statDivider} />
+            <View style={styles.stat}>
+              <Star size={24} color={colors.accent.primary} />
+              <Text style={styles.statNumber}>{brewSessions.length}</Text>
+              <Text style={styles.statLabel}>All Time</Text>
+            </View>
+          </View>
+        </View>
+      )}
+      
       <Text style={styles.browseNote}>
-        Or keep browsing — you can still explore teas and use the brew timer without an account.
+        Keep browsing — you can explore teas and use the brew timer without an account.
       </Text>
-    </View>
+    </ScrollView>
   );
   
   const renderLoggedIn = () => (
-    <View style={styles.profileContainer}>
+    <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.profileHeader}>
         <View style={styles.avatar}>
           <User size={32} color={colors.text.inverse} />
@@ -100,23 +132,52 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
       </View>
       
-      <View style={styles.statsRow}>
-        <View style={styles.stat}>
-          <Text style={styles.statNumber}>{triedCount}</Text>
-          <Text style={styles.statLabel}>Teas tried</Text>
-        </View>
-        <View style={styles.statDivider} />
-        <View style={styles.stat}>
-          <Text style={styles.statNumber}>{wantCount}</Text>
-          <Text style={styles.statLabel}>Want to try</Text>
-        </View>
-        <View style={styles.statDivider} />
-        <View style={styles.stat}>
-          <Text style={styles.statNumber}>{profile?.reviews_count || 0}</Text>
-          <Text style={styles.statLabel}>Reviews</Text>
+      {/* Collection Stats */}
+      <View style={styles.statsSection}>
+        <Text style={styles.statsSectionTitle}>My Collection</Text>
+        <View style={styles.statsRow}>
+          <View style={styles.stat}>
+            <Star size={24} color={colors.accent.primary} />
+            <Text style={styles.statNumber}>{triedCount}</Text>
+            <Text style={styles.statLabel}>Tried</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.stat}>
+            <Bookmark size={24} color={colors.accent.primary} />
+            <Text style={styles.statNumber}>{wantCount}</Text>
+            <Text style={styles.statLabel}>Want to Try</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.stat}>
+            <Text style={styles.statNumber}>{profile?.reviews_count || 0}</Text>
+            <Text style={styles.statLabel}>Reviews</Text>
+          </View>
         </View>
       </View>
       
+      {/* Brew Stats */}
+      <View style={styles.statsSection}>
+        <Text style={styles.statsSectionTitle}>Brew Activity</Text>
+        <View style={styles.statsRow}>
+          <View style={styles.stat}>
+            <Coffee size={24} color={colors.accent.primary} />
+            <Text style={styles.statNumber}>{todayBrewCount}</Text>
+            <Text style={styles.statLabel}>Today</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.stat}>
+            <Text style={styles.statNumber}>{weekBrewCount}</Text>
+            <Text style={styles.statLabel}>This Week</Text>
+          </View>
+          <View style={styles.statDivider} />
+          <View style={styles.stat}>
+            <Text style={styles.statNumber}>{brewSessions.length}</Text>
+            <Text style={styles.statLabel}>All Time</Text>
+          </View>
+        </View>
+      </View>
+      
+      {/* Menu */}
       <View style={styles.menuSection}>
         <TouchableOpacity style={styles.menuItem}>
           <Settings size={20} color={colors.text.secondary} />
@@ -132,7 +193,7 @@ export const ProfileScreen = ({ navigation }) => {
           <Text style={[styles.menuItemText, styles.logoutText]}>Sign out</Text>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
   
   return (
@@ -145,10 +206,7 @@ export const ProfileScreen = ({ navigation }) => {
       
       <View style={styles.footer}>
         <Text style={styles.footerText}>Resteeped v1.0.0</Text>
-        <Text style={styles.footerText}>Made with 🍵 for tea lovers</Text>
-        {!isConfigured && (
-          <Text style={styles.footerNote}>Backend not connected — running in demo mode</Text>
-        )}
+        <Text style={styles.footerSubtext}>Made with 🍵 for tea lovers</Text>
       </View>
     </SafeAreaView>
   );
@@ -159,6 +217,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background.primary,
   },
+  scrollView: {
+    flex: 1,
+  },
   loadingContainer: {
     flex: 1,
     alignItems: 'center',
@@ -167,17 +228,17 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: spacing.screenHorizontal,
     paddingTop: 16,
-    paddingBottom: spacing.sectionSpacing,
+    paddingBottom: 8,
   },
   title: {
     ...typography.headingLarge,
     color: colors.text.primary,
   },
   authContainer: {
-    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
     paddingHorizontal: spacing.screenHorizontal,
+    paddingTop: 40,
+    paddingBottom: 24,
   },
   avatarPlaceholder: {
     width: 100,
@@ -208,17 +269,14 @@ const styles = StyleSheet.create({
     ...typography.bodySmall,
     color: colors.text.secondary,
     textAlign: 'center',
-    marginTop: 24,
-    paddingHorizontal: 20,
-  },
-  profileContainer: {
-    flex: 1,
     paddingHorizontal: spacing.screenHorizontal,
+    paddingBottom: 24,
   },
   profileHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.sectionSpacing,
+    paddingHorizontal: spacing.screenHorizontal,
+    paddingVertical: spacing.sectionSpacing,
   },
   avatar: {
     width: 64,
@@ -240,33 +298,47 @@ const styles = StyleSheet.create({
     ...typography.bodySmall,
     color: colors.text.secondary,
   },
+  statsSection: {
+    paddingHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.sectionSpacing,
+  },
+  statsSectionTitle: {
+    ...typography.bodySmall,
+    color: colors.text.secondary,
+    marginBottom: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
   statsRow: {
     flexDirection: 'row',
     backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.cardPadding,
-    marginBottom: spacing.sectionSpacing,
   },
   stat: {
     flex: 1,
     alignItems: 'center',
+    gap: 4,
   },
   statDivider: {
     width: 1,
     backgroundColor: colors.border.light,
+    marginVertical: 4,
   },
   statNumber: {
-    ...typography.headingLarge,
-    color: colors.accent.primary,
+    ...typography.headingMedium,
+    color: colors.text.primary,
   },
   statLabel: {
     ...typography.caption,
     color: colors.text.secondary,
   },
   menuSection: {
+    marginHorizontal: spacing.screenHorizontal,
     backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     overflow: 'hidden',
+    marginBottom: spacing.sectionSpacing,
   },
   menuItem: {
     flexDirection: 'row',
@@ -289,15 +361,17 @@ const styles = StyleSheet.create({
   },
   footer: {
     alignItems: 'center',
-    paddingVertical: spacing.sectionSpacing,
+    paddingVertical: 16,
+    borderTopWidth: 1,
+    borderTopColor: colors.border.light,
   },
   footerText: {
     ...typography.caption,
     color: colors.text.secondary,
+    fontWeight: '600',
   },
-  footerNote: {
+  footerSubtext: {
     ...typography.caption,
-    color: colors.accent.secondary,
-    marginTop: 8,
+    color: colors.text.secondary,
   },
 });
