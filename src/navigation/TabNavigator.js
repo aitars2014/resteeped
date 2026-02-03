@@ -8,25 +8,28 @@ import {
   TeaDetailScreen, 
   TimerScreen, 
   CollectionScreen, 
-  ProfileScreen 
+  ProfileScreen,
+  CompanyProfileScreen,
 } from '../screens';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-// Discovery Stack (includes Tea Detail)
+// Discovery Stack (includes Tea Detail and Company Profile)
 const DiscoveryStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="DiscoveryHome" component={DiscoveryScreen} />
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
+    <Stack.Screen name="CompanyProfile" component={CompanyProfileScreen} />
   </Stack.Navigator>
 );
 
-// Collection Stack (includes Tea Detail)
+// Collection Stack (includes Tea Detail and Company Profile)
 const CollectionStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="CollectionHome" component={CollectionScreen} />
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
+    <Stack.Screen name="CompanyProfile" component={CompanyProfileScreen} />
   </Stack.Navigator>
 );
 

@@ -15,7 +15,7 @@ import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare } f
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal } from '../components';
 import { useAuth, useCollection } from '../context';
-import { useReviews } from '../hooks';
+import { useReviews, useCompanies } from '../hooks';
 
 const { width, height } = Dimensions.get('window');
 const HERO_HEIGHT = height * 0.32;
@@ -27,8 +27,14 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { user } = useAuth();
   const { isInCollection, addToCollection, removeFromCollection, getCollectionItem } = useCollection();
   const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
+  const { companies } = useCompanies();
   
   const [showReviewModal, setShowReviewModal] = useState(false);
+  
+  // Find company by brand name or company_id
+  const company = tea.companyId 
+    ? companies.find(c => c.id === tea.companyId)
+    : companies.find(c => c.name === tea.brandName);
   
   const inCollection = isInCollection(tea.id);
   const collectionItem = getCollectionItem(tea.id);
@@ -135,7 +141,14 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         {/* Content */}
         <View style={styles.content}>
           <Text style={styles.teaName}>{tea.name}</Text>
-          <Text style={styles.brandName}>{tea.brandName}</Text>
+          <TouchableOpacity 
+            onPress={() => company && navigation.navigate('CompanyProfile', { company })}
+            disabled={!company}
+          >
+            <Text style={[styles.brandName, company && styles.brandNameTappable]}>
+              {tea.brandName}
+            </Text>
+          </TouchableOpacity>
           
           <View style={styles.badgeRow}>
             <TeaTypeBadge teaType={tea.teaType} size="large" />
@@ -316,6 +329,10 @@ const styles = StyleSheet.create({
     ...typography.bodySmall,
     color: colors.text.secondary,
     marginBottom: 12,
+  },
+  brandNameTappable: {
+    color: colors.accent.primary,
+    textDecorationLine: 'underline',
   },
   badgeRow: {
     flexDirection: 'row',

@@ -3,14 +3,17 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
 
 export const useReviews = (teaId) => {
-  const { user } = useAuth();
+  const { user, isDevMode } = useAuth();
   const [reviews, setReviews] = useState([]);
   const [userReview, setUserReview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Check if we should use local-only mode (no Supabase calls)
+  const isLocalMode = !isSupabaseConfigured() || isDevMode;
+
   const fetchReviews = useCallback(async () => {
-    if (!teaId || !isSupabaseConfigured()) {
+    if (!teaId || isLocalMode) {
       setLoading(false);
       return;
     }
@@ -53,8 +56,8 @@ export const useReviews = (teaId) => {
       return { error: { message: 'Must be signed in' } };
     }
 
-    if (!isSupabaseConfigured()) {
-      // Demo mode - just update local state
+    if (isLocalMode) {
+      // Dev/demo mode - just update local state
       const fakeReview = {
         id: Date.now().toString(),
         user_id: user.id,
@@ -62,7 +65,7 @@ export const useReviews = (teaId) => {
         rating,
         review_text: reviewText,
         created_at: new Date().toISOString(),
-        profile: { display_name: 'You' },
+        profile: { display_name: user.user_metadata?.full_name || 'You' },
       };
       setReviews(prev => [fakeReview, ...prev.filter(r => r.user_id !== user.id)]);
       setUserReview(fakeReview);
@@ -102,7 +105,7 @@ export const useReviews = (teaId) => {
       return { error: { message: 'No review to delete' } };
     }
 
-    if (!isSupabaseConfigured()) {
+    if (isLocalMode) {
       setReviews(prev => prev.filter(r => r.user_id !== user.id));
       setUserReview(null);
       return { error: null };

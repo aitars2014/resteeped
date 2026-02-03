@@ -7,14 +7,18 @@ const CollectionContext = createContext({});
 export const useCollection = () => useContext(CollectionContext);
 
 export const CollectionProvider = ({ children }) => {
-  const { user } = useAuth();
+  const { user, isDevMode } = useAuth();
   const [collection, setCollection] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  // Check if we should use local-only mode (no Supabase calls for user data)
+  const isLocalMode = isLocalMode || isDevMode;
+
   // Fetch user's tea collection
   const fetchCollection = useCallback(async () => {
-    if (!user || !isSupabaseConfigured()) {
-      setCollection([]);
+    if (!user || isLocalMode) {
+      // In dev mode, keep whatever is in local state
+      if (!user) setCollection([]);
       return;
     }
 
@@ -48,7 +52,7 @@ export const CollectionProvider = ({ children }) => {
       return { error: { message: 'Must be signed in' } };
     }
 
-    if (!isSupabaseConfigured()) {
+    if (isLocalMode) {
       // Local-only mode: just update state
       setCollection(prev => [
         ...prev,
@@ -85,7 +89,7 @@ export const CollectionProvider = ({ children }) => {
       return { error: { message: 'Must be signed in' } };
     }
 
-    if (!isSupabaseConfigured()) {
+    if (isLocalMode) {
       setCollection(prev => prev.filter(item => item.tea_id !== teaId));
       return { error: null };
     }
@@ -113,7 +117,7 @@ export const CollectionProvider = ({ children }) => {
       return { error: { message: 'Must be signed in' } };
     }
 
-    if (!isSupabaseConfigured()) {
+    if (isLocalMode) {
       setCollection(prev => 
         prev.map(item => 
           item.tea_id === teaId ? { ...item, ...updates } : item
