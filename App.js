@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import { TabNavigator } from './src/navigation/TabNavigator';
+import { AppNavigator } from './src/navigation/AppNavigator';
 import { AuthProvider, CollectionProvider } from './src/context';
 
 export default function App() {
@@ -10,7 +10,7 @@ export default function App() {
       <CollectionProvider>
         <NavigationContainer>
           <StatusBar style="dark" />
-          <TabNavigator />
+          <AppNavigator />
         </NavigationContainer>
       </CollectionProvider>
     </AuthProvider>

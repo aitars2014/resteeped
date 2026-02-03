@@ -12,10 +12,10 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
 import { TeaCard, TeaTypeBadge } from '../components';
-import { useTeas, useCompanies } from '../hooks';
+import { useTeas, useCompanies, useRecommendations } from '../hooks';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.42;
@@ -33,6 +33,7 @@ const TEA_TYPES = [
 export const HomeScreen = ({ navigation }) => {
   const { teas, loading: teasLoading, refreshTeas } = useTeas();
   const { companies, loading: companiesLoading } = useCompanies();
+  const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -180,6 +181,41 @@ export const HomeScreen = ({ navigation }) => {
             {TEA_TYPES.map(renderTeaTypeButton)}
           </View>
         </View>
+
+        {/* For You - Personalized Recommendations */}
+        {hasPreferences && forYou.length > 0 && (
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <View style={styles.sectionTitleRow}>
+                <Sparkles size={18} color={colors.accent.primary} />
+                <Text style={styles.sectionTitle}>For You</Text>
+              </View>
+              <TouchableOpacity onPress={() => handleSeeAll('forYou')}>
+                <Text style={styles.seeAllText}>See All</Text>
+              </TouchableOpacity>
+            </View>
+            <Text style={styles.recommendationHint}>
+              Based on your love of {preferences.types.slice(0, 2).join(' & ')} teas
+            </Text>
+            {renderHorizontalTeaList(forYou, 'Rate more teas to get personalized recommendations')}
+          </View>
+        )}
+
+        {/* Explore Something New */}
+        {hasPreferences && explore.length > 0 && (
+          <View style={styles.section}>
+            <View style={styles.sectionHeader}>
+              <View style={styles.sectionTitleRow}>
+                <Search size={18} color={colors.accent.primary} />
+                <Text style={styles.sectionTitle}>Try Something New</Text>
+              </View>
+            </View>
+            <Text style={styles.recommendationHint}>
+              Different from your usual — expand your palate
+            </Text>
+            {renderHorizontalTeaList(explore.slice(0, 6), 'Start rating teas to unlock recommendations')}
+          </View>
+        )}
 
         {/* Featured Teas */}
         <View style={styles.section}>
@@ -354,6 +390,13 @@ const styles = StyleSheet.create({
     ...typography.bodySmall,
     color: colors.accent.primary,
     fontWeight: '500',
+  },
+  recommendationHint: {
+    ...typography.caption,
+    color: colors.text.secondary,
+    paddingHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.sm,
+    fontStyle: 'italic',
   },
   teaTypeGrid: {
     flexDirection: 'row',

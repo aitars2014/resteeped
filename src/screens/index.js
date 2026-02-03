@@ -6,3 +6,4 @@ export { CollectionScreen } from './CollectionScreen';
 export { ProfileScreen } from './ProfileScreen';
 export { default as CompanyProfileScreen } from './CompanyProfileScreen';
 export { default as BrewHistoryScreen } from './BrewHistoryScreen';
+export { OnboardingScreen, isOnboardingComplete, resetOnboarding } from './OnboardingScreen';
