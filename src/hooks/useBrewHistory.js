@@ -3,12 +3,15 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
 
 export const useBrewHistory = () => {
-  const { user } = useAuth();
+  const { user, isDevMode } = useAuth();
   const [brewSessions, setBrewSessions] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Check if we should use local-only mode
+  const isLocalMode = !isSupabaseConfigured() || isDevMode;
+
   const fetchBrewHistory = useCallback(async () => {
-    if (!user || !isSupabaseConfigured()) {
+    if (!user || isLocalMode) {
       setLoading(false);
       return;
     }
@@ -38,28 +41,17 @@ export const useBrewHistory = () => {
     fetchBrewHistory();
   }, [fetchBrewHistory]);
 
-  const logBrewSession = async ({ teaId, steepTimeSeconds, temperatureF }) => {
-    if (!user) {
-      // Store locally for non-logged-in users
+  const logBrewSession = async ({ teaId, steepTimeSeconds, temperatureF, teaData = null }) => {
+    if (!user || isLocalMode) {
+      // Store locally for dev mode or non-logged-in users
       const session = {
         id: Date.now().toString(),
+        user_id: user?.id,
         tea_id: teaId,
         steep_time_seconds: steepTimeSeconds,
         temperature_f: temperatureF,
         created_at: new Date().toISOString(),
-      };
-      setBrewSessions(prev => [session, ...prev]);
-      return { data: session, error: null };
-    }
-
-    if (!isSupabaseConfigured()) {
-      const session = {
-        id: Date.now().toString(),
-        user_id: user.id,
-        tea_id: teaId,
-        steep_time_seconds: steepTimeSeconds,
-        temperature_f: temperatureF,
-        created_at: new Date().toISOString(),
+        tea: teaData, // Store tea data for display in dev mode
       };
       setBrewSessions(prev => [session, ...prev]);
       return { data: session, error: null };
@@ -102,6 +94,58 @@ export const useBrewHistory = () => {
     ).length;
   };
 
+  // Get most brewed teas
+  const getMostBrewedTeas = (limit = 5) => {
+    const teaCounts = {};
+    const teaData = {};
+    
+    brewSessions.forEach(session => {
+      if (session.tea_id) {
+        teaCounts[session.tea_id] = (teaCounts[session.tea_id] || 0) + 1;
+        if (session.tea) {
+          teaData[session.tea_id] = session.tea;
+        }
+      }
+    });
+    
+    return Object.entries(teaCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, limit)
+      .map(([teaId, count]) => ({
+        teaId,
+        count,
+        tea: teaData[teaId] || null,
+      }));
+  };
+
+  // Get brew stats
+  const getBrewStats = () => {
+    const totalBrews = brewSessions.length;
+    const totalSteepTime = brewSessions.reduce((sum, s) => sum + (s.steep_time_seconds || 0), 0);
+    const avgSteepTime = totalBrews > 0 ? Math.round(totalSteepTime / totalBrews) : 0;
+    const uniqueTeas = new Set(brewSessions.map(s => s.tea_id).filter(Boolean)).size;
+    
+    return {
+      totalBrews,
+      totalSteepTime,
+      avgSteepTime,
+      uniqueTeas,
+    };
+  };
+
+  // Get brews grouped by date
+  const getBrewsByDate = () => {
+    const grouped = {};
+    brewSessions.forEach(session => {
+      const date = new Date(session.created_at).toDateString();
+      if (!grouped[date]) {
+        grouped[date] = [];
+      }
+      grouped[date].push(session);
+    });
+    return grouped;
+  };
+
   return {
     brewSessions,
     loading,
@@ -109,5 +153,8 @@ export const useBrewHistory = () => {
     refreshBrewHistory: fetchBrewHistory,
     todayBrewCount: getTodayBrewCount(),
     weekBrewCount: getWeekBrewCount(),
+    getMostBrewedTeas,
+    getBrewStats,
+    getBrewsByDate,
   };
 };

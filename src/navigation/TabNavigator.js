@@ -11,6 +11,7 @@ import {
   CollectionScreen, 
   ProfileScreen,
   CompanyProfileScreen,
+  BrewHistoryScreen,
 } from '../screens';
 
 const Tab = createBottomTabNavigator();
@@ -54,6 +55,8 @@ const TimerStack = () => (
 const ProfileStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="ProfileHome" component={ProfileScreen} />
+    <Stack.Screen name="BrewHistory" component={BrewHistoryScreen} />
+    <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
   </Stack.Navigator>
 );
 

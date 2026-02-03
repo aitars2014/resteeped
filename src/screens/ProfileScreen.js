@@ -88,8 +88,18 @@ export const ProfileScreen = ({ navigation }) => {
       
       {/* Show brew stats even when logged out */}
       {brewSessions.length > 0 && (
-        <View style={styles.statsSection}>
-          <Text style={styles.statsSectionTitle}>Your Brew Activity</Text>
+        <TouchableOpacity 
+          style={styles.statsSection}
+          onPress={() => navigation.navigate('BrewHistory')}
+          activeOpacity={0.7}
+        >
+          <View style={styles.statsSectionHeader}>
+            <Text style={styles.statsSectionTitle}>Your Brew Activity</Text>
+            <View style={styles.viewHistoryLink}>
+              <Text style={styles.viewHistoryText}>View History</Text>
+              <ChevronRight size={16} color={colors.accent.primary} />
+            </View>
+          </View>
           <View style={styles.statsRow}>
             <View style={styles.stat}>
               <Coffee size={24} color={colors.accent.primary} />
@@ -109,7 +119,7 @@ export const ProfileScreen = ({ navigation }) => {
               <Text style={styles.statLabel}>All Time</Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       )}
       
       <Text style={styles.browseNote}>
@@ -179,6 +189,15 @@ export const ProfileScreen = ({ navigation }) => {
       
       {/* Menu */}
       <View style={styles.menuSection}>
+        <TouchableOpacity 
+          style={styles.menuItem}
+          onPress={() => navigation.navigate('BrewHistory')}
+        >
+          <Coffee size={20} color={colors.accent.primary} />
+          <Text style={styles.menuItemText}>Brew History</Text>
+          <ChevronRight size={20} color={colors.text.secondary} />
+        </TouchableOpacity>
+        
         <TouchableOpacity style={styles.menuItem}>
           <Settings size={20} color={colors.text.secondary} />
           <Text style={styles.menuItemText}>Settings</Text>
@@ -302,12 +321,26 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screenHorizontal,
     marginBottom: spacing.sectionSpacing,
   },
+  statsSectionHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
   statsSectionTitle: {
     ...typography.bodySmall,
     color: colors.text.secondary,
-    marginBottom: 12,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+  },
+  viewHistoryLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  viewHistoryText: {
+    ...typography.caption,
+    color: colors.accent.primary,
+    fontWeight: '500',
   },
   statsRow: {
     flexDirection: 'row',

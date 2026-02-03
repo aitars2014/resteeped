@@ -193,6 +193,7 @@ export const TimerScreen = ({ route }) => {
         teaId: tea?.id,
         steepTimeSeconds: totalSeconds,
         temperatureF: tea?.steepTempF,
+        teaData: tea, // Pass full tea data for dev mode
       });
     }
   }, [isComplete, hasLogged, tea, totalSeconds, logBrewSession]);
