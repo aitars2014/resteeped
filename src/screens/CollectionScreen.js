@@ -11,9 +11,10 @@ import {
 import { Bookmark } from 'lucide-react-native';
 import { colors, typography, spacing } from '../constants';
 import { TeaCard, Button } from '../components';
-import { useAuth, useCollection } from '../context';
+import { useAuth, useCollection, useTheme } from '../context';
 
 export const CollectionScreen = ({ navigation }) => {
+  const { theme } = useTheme();
   const { user } = useAuth();
   const { collection, loading, refreshCollection } = useCollection();
   const [filter, setFilter] = useState('all');
@@ -88,11 +89,11 @@ export const CollectionScreen = ({ navigation }) => {
   };
   
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>My Teas</Text>
+        <Text style={[styles.title, { color: theme.text.primary }]}>My Teas</Text>
         {user && collection.length > 0 && (
-          <Text style={styles.count}>{collection.length} teas</Text>
+          <Text style={[styles.count, { color: theme.text.secondary }]}>{collection.length} teas</Text>
         )}
       </View>
       

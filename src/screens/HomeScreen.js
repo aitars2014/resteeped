@@ -13,9 +13,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee } from 'lucide-react-native';
-import { colors, typography, spacing, getTeaTypeColor } from '../constants';
+import { colors, typography, spacing } from '../constants';
 import { TeaCard, TeaTypeBadge, TeaOfTheDay, SeasonalHighlights } from '../components';
 import { useTeas, useCompanies, useRecommendations } from '../hooks';
+import { useTheme } from '../context';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.42;
@@ -31,11 +32,27 @@ const TEA_TYPES = [
 ];
 
 export const HomeScreen = ({ navigation }) => {
+  const { theme, getTeaTypeColor } = useTheme();
   const { teas, loading: teasLoading, refreshTeas } = useTeas();
   const { companies, loading: companiesLoading } = useCompanies();
   const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Dynamic theme styles
+  const themedStyles = {
+    container: { backgroundColor: theme.background.primary },
+    searchBar: { 
+      backgroundColor: theme.background.secondary,
+      borderColor: theme.border.light,
+    },
+    searchInput: { color: theme.text.primary },
+    text: { color: theme.text.primary },
+    textSecondary: { color: theme.text.secondary },
+    accent: { color: theme.accent.primary },
+    card: { backgroundColor: theme.background.secondary },
+    logoIcon: { backgroundColor: theme.accent.primary },
+  };
 
   // Get featured teas (highest rated)
   const featuredTeas = teas
@@ -140,22 +157,26 @@ export const HomeScreen = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={[styles.container, themedStyles.container]} edges={['top']}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          <RefreshControl 
+            refreshing={refreshing} 
+            onRefresh={onRefresh}
+            tintColor={theme.accent.primary}
+          />
         }
       >
         {/* Header with Logo */}
         <View style={styles.header}>
           <View style={styles.logoRow}>
-            <View style={styles.logoIcon}>
-              <Coffee size={28} color={colors.text.inverse} />
+            <View style={[styles.logoIcon, themedStyles.logoIcon]}>
+              <Coffee size={28} color={theme.text.inverse} />
             </View>
             <View>
-              <Text style={styles.appName}>Resteeped</Text>
-              <Text style={styles.tagline}>Discover your next favorite tea</Text>
+              <Text style={[styles.appName, { color: theme.accent.primary }]}>Resteeped</Text>
+              <Text style={[styles.tagline, themedStyles.textSecondary]}>Discover your next favorite tea</Text>
             </View>
           </View>
         </View>
@@ -166,12 +187,12 @@ export const HomeScreen = ({ navigation }) => {
           onPress={handleSearch}
           activeOpacity={0.8}
         >
-          <View style={styles.searchBar}>
-            <Search size={20} color={colors.text.secondary} />
+          <View style={[styles.searchBar, themedStyles.searchBar]}>
+            <Search size={20} color={theme.text.secondary} />
             <TextInput
-              style={styles.searchInput}
+              style={[styles.searchInput, themedStyles.searchInput]}
               placeholder="Search teas, brands, flavors..."
-              placeholderTextColor={colors.text.secondary}
+              placeholderTextColor={theme.text.secondary}
               value={searchQuery}
               onChangeText={setSearchQuery}
               onSubmitEditing={handleSearch}

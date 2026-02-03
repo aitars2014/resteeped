@@ -21,7 +21,7 @@ export const ProfileScreen = ({ navigation }) => {
   const { user, profile, loading, signInWithGoogle, signOut, isConfigured } = useAuth();
   const { collection } = useCollection();
   const { brewSessions, todayBrewCount, weekBrewCount } = useBrewHistory();
-  const { isDark, themePreference, setThemePreference } = useTheme();
+  const { theme, isDark, themePreference, setThemePreference } = useTheme();
   
   const handleSignIn = async () => {
     if (!isConfigured) {
@@ -293,16 +293,16 @@ export const ProfileScreen = ({ navigation }) => {
   );
   
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Profile</Text>
+        <Text style={[styles.title, { color: theme.text.primary }]}>Profile</Text>
       </View>
       
       {user ? renderLoggedIn() : renderLoggedOut()}
       
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>Resteeped v1.0.0</Text>
-        <Text style={styles.footerSubtext}>Made with 🍵 for tea lovers</Text>
+      <View style={[styles.footer, { borderTopColor: theme.border.light }]}>
+        <Text style={[styles.footerText, { color: theme.text.secondary }]}>Resteeped v1.0.0</Text>
+        <Text style={[styles.footerSubtext, { color: theme.text.secondary }]}>Made with 🍵 for tea lovers</Text>
       </View>
     </SafeAreaView>
   );

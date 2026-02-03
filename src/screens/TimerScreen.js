@@ -13,10 +13,10 @@ import {
 import { Minus, Plus, Coffee, Bell, BellOff } from 'lucide-react-native';
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
-import { colors, typography, spacing, getTeaTypeColor } from '../constants';
+import { colors, typography, spacing } from '../constants';
 import { Button, TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
-import { useAuth } from '../context';
+import { useAuth, useTheme } from '../context';
 
 // Configure notification handler
 Notifications.setNotificationHandler({
@@ -33,6 +33,7 @@ const RADIUS = (CIRCLE_SIZE - STROKE_WIDTH) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
 export const TimerScreen = ({ route }) => {
+  const { theme, getTeaTypeColor } = useTheme();
   const tea = route?.params?.tea;
   const teaColor = tea ? getTeaTypeColor(tea.teaType) : null;
   
@@ -244,24 +245,24 @@ export const TimerScreen = ({ route }) => {
   const isCustomTime = totalSeconds !== defaultTimeSeconds;
   
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
       {/* Header with brew count */}
       <View style={styles.header}>
         <View style={styles.headerLeft}>
-          <Text style={styles.headerTitle}>Brew Timer</Text>
+          <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Brew Timer</Text>
           {/* Notification status indicator */}
           <View style={[styles.notificationBadge, !notificationsEnabled && styles.notificationBadgeOff]}>
             {notificationsEnabled ? (
-              <Bell size={12} color={colors.accent.primary} />
+              <Bell size={12} color={theme.accent.primary} />
             ) : (
-              <BellOff size={12} color={colors.text.secondary} />
+              <BellOff size={12} color={theme.text.secondary} />
             )}
           </View>
         </View>
         {todayBrewCount > 0 && (
           <View style={styles.brewCount}>
-            <Coffee size={14} color={colors.accent.primary} />
-            <Text style={styles.brewCountText}>{todayBrewCount} today</Text>
+            <Coffee size={14} color={theme.accent.primary} />
+            <Text style={[styles.brewCountText, { color: theme.text.secondary }]}>{todayBrewCount} today</Text>
           </View>
         )}
       </View>

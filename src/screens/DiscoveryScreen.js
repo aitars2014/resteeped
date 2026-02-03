@@ -14,11 +14,13 @@ import { SlidersHorizontal } from 'lucide-react-native';
 import { colors, typography, spacing } from '../constants';
 import { SearchBar, FilterPills, FilterModal, TeaCard } from '../components';
 import { useTeas } from '../hooks';
+import { useTheme } from '../context';
 
 const { width } = Dimensions.get('window');
 const cardWidth = (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2;
 
 export const DiscoveryScreen = ({ navigation, route }) => {
+  const { theme } = useTheme();
   const { teas, loading, refreshTeas, filterTeas } = useTeas();
   
   // Accept initial values from navigation params (e.g., from Home screen)
@@ -141,9 +143,9 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   );
   
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Discover</Text>
+        <Text style={[styles.title, { color: theme.text.primary }]}>Discover</Text>
       </View>
       
       <FlatList
@@ -159,7 +161,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
           <RefreshControl
             refreshing={loading}
             onRefresh={refreshTeas}
-            tintColor={colors.accent.primary}
+            tintColor={theme.accent.primary}
           />
         }
       />
