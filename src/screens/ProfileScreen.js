@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing.screenHorizontal,
-    paddingTop: 16,
-    paddingBottom: 8,
+    paddingTop: spacing.headerPaddingTop,
+    paddingBottom: spacing.headerPaddingBottom,
   },
   title: {
     ...typography.headingLarge,
@@ -255,9 +255,9 @@ const styles = StyleSheet.create({
   },
   authContainer: {
     alignItems: 'center',
-    paddingHorizontal: spacing.screenHorizontal,
-    paddingTop: 40,
-    paddingBottom: 24,
+    paddingHorizontal: spacing.xl,
+    paddingTop: spacing.xxl,
+    paddingBottom: spacing.lg,
   },
   avatarPlaceholder: {
     width: 100,
@@ -266,19 +266,19 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background.secondary,
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 24,
+    marginBottom: spacing.lg,
   },
   authTitle: {
     ...typography.headingMedium,
     color: colors.text.primary,
     textAlign: 'center',
-    marginBottom: 8,
+    marginBottom: spacing.sm,
   },
   authSubtitle: {
     ...typography.body,
     color: colors.text.secondary,
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: spacing.lg,
     lineHeight: 24,
   },
   authButton: {
@@ -295,16 +295,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: spacing.screenHorizontal,
-    paddingVertical: spacing.sectionSpacing,
+    paddingVertical: spacing.lg,
   },
   avatar: {
-    width: 64,
-    height: 64,
-    borderRadius: 32,
+    width: 68,
+    height: 68,
+    borderRadius: 34,
     backgroundColor: colors.accent.primary,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 16,
+    marginRight: spacing.md,
   },
   profileInfo: {
     flex: 1,
@@ -376,7 +376,8 @@ const styles = StyleSheet.create({
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 16,
+    paddingVertical: spacing.listItemPadding,
+    paddingHorizontal: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border.light,
   },

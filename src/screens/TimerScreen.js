@@ -121,8 +121,9 @@ export const TimerScreen = ({ route }) => {
         priority: Notifications.AndroidNotificationPriority.HIGH,
       },
       trigger: {
-        seconds,
-        channelId: 'tea-timer',
+        type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+        seconds: Math.max(1, seconds), // Ensure at least 1 second
+        repeats: false,
       },
     });
     

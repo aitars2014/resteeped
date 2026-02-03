@@ -291,12 +291,13 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingHorizontal: spacing.screenHorizontal,
-    paddingTop: spacing.lg,
-    paddingBottom: spacing.md,
+    paddingTop: spacing.xl,
+    paddingBottom: spacing.lg,
   },
   greeting: {
     ...typography.body,
     color: colors.text.secondary,
+    marginBottom: 4,
   },
   appName: {
     fontSize: 32,
@@ -307,19 +308,19 @@ const styles = StyleSheet.create({
   tagline: {
     ...typography.body,
     color: colors.text.secondary,
-    marginTop: 4,
+    marginTop: 6,
   },
   searchContainer: {
     paddingHorizontal: spacing.screenHorizontal,
-    marginBottom: spacing.lg,
+    marginBottom: spacing.xl,
   },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: colors.background.secondary,
-    borderRadius: 12,
-    paddingHorizontal: 16,
-    paddingVertical: 14,
+    borderRadius: spacing.searchBarBorderRadius,
+    paddingHorizontal: spacing.searchBarPaddingH,
+    height: spacing.searchBarHeight,
     borderWidth: 1,
     borderColor: colors.border.light,
   },
@@ -330,14 +331,14 @@ const styles = StyleSheet.create({
     color: colors.text.primary,
   },
   section: {
-    marginBottom: spacing.xl,
+    marginBottom: spacing.sectionSpacing,
   },
   sectionHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: spacing.screenHorizontal,
-    marginBottom: spacing.sm,
+    marginBottom: spacing.md,
   },
   sectionTitleRow: {
     flexDirection: 'row',
@@ -358,22 +359,22 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingHorizontal: spacing.screenHorizontal,
-    gap: 12,
+    gap: spacing.md,
   },
   teaTypeButton: {
     alignItems: 'center',
-    width: (width - (spacing.screenHorizontal * 2) - 60) / 6,
+    width: (width - (spacing.screenHorizontal * 2) - 80) / 6,
   },
   teaTypeGradient: {
-    width: 48,
-    height: 48,
-    borderRadius: 16,
+    width: 52,
+    height: 52,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 6,
+    marginBottom: 8,
   },
   teaTypeEmoji: {
-    fontSize: 22,
+    fontSize: 24,
   },
   teaTypeName: {
     ...typography.caption,
@@ -383,7 +384,7 @@ const styles = StyleSheet.create({
   },
   horizontalList: {
     paddingHorizontal: spacing.screenHorizontal,
-    gap: 12,
+    gap: spacing.cardGap,
   },
   horizontalTeaCard: {
     width: CARD_WIDTH,
@@ -399,11 +400,11 @@ const styles = StyleSheet.create({
   },
   featuredShopCard: {
     marginHorizontal: spacing.screenHorizontal,
-    borderRadius: 16,
+    borderRadius: spacing.cardBorderRadius,
     overflow: 'hidden',
   },
   featuredShopGradient: {
-    padding: spacing.lg,
+    padding: spacing.cardPaddingLarge,
   },
   featuredShopContent: {
     flexDirection: 'row',
@@ -444,13 +445,14 @@ const styles = StyleSheet.create({
   statsSection: {
     flexDirection: 'row',
     paddingHorizontal: spacing.screenHorizontal,
-    gap: 12,
+    gap: spacing.cardGap,
+    marginTop: spacing.md,
   },
   statCard: {
     flex: 1,
     backgroundColor: colors.background.secondary,
-    borderRadius: 12,
-    padding: spacing.md,
+    borderRadius: spacing.cardBorderRadius,
+    padding: spacing.cardPaddingLarge,
     alignItems: 'center',
   },
   statNumber: {
@@ -461,7 +463,7 @@ const styles = StyleSheet.create({
   statLabel: {
     ...typography.caption,
     color: colors.text.secondary,
-    marginTop: 4,
+    marginTop: 6,
   },
 });
 

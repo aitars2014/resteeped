@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageContainer: {
-    height: 100,
+    height: 110,
     position: 'relative',
   },
   image: {
@@ -84,21 +84,24 @@ const styles = StyleSheet.create({
   },
   badgeContainer: {
     position: 'absolute',
-    bottom: 8,
-    right: 8,
+    bottom: 10,
+    right: 10,
   },
   textArea: {
     padding: spacing.cardPadding,
+    paddingTop: 14,
+    paddingBottom: 14,
   },
   teaName: {
     ...typography.bodySmall,
     fontWeight: '600',
     color: colors.text.primary,
-    marginBottom: 4,
+    marginBottom: 6,
+    lineHeight: 20,
   },
   brandName: {
     ...typography.caption,
     color: colors.text.secondary,
-    marginBottom: 6,
+    marginBottom: 8,
   },
 });

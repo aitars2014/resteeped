@@ -21,8 +21,9 @@ export const CollectionScreen = ({ navigation }) => {
   const filteredCollection = collection.filter(item => {
     if (filter === 'all') return true;
     if (filter === 'tried') return item.status === 'tried';
-    if (filter === 'want') return item.status === 'want_to_try';
-    return true;
+    // 'want_to_try' is default, so include items without a status too
+    if (filter === 'want') return item.status === 'want_to_try' || !item.status;
+    return false;
   });
   
   const renderEmptyState = () => (
@@ -146,8 +147,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: spacing.screenHorizontal,
-    paddingTop: 16,
-    paddingBottom: 8,
+    paddingTop: spacing.headerPaddingTop,
+    paddingBottom: spacing.headerPaddingBottom,
   },
   title: {
     ...typography.headingLarge,
@@ -160,14 +161,14 @@ const styles = StyleSheet.create({
   filterTabs: {
     flexDirection: 'row',
     paddingHorizontal: spacing.screenHorizontal,
-    marginBottom: spacing.elementSpacing,
+    marginBottom: spacing.md,
     borderBottomWidth: 1,
     borderBottomColor: colors.border.light,
   },
   tab: {
-    paddingVertical: 12,
-    paddingHorizontal: 16,
-    marginRight: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 18,
+    marginRight: spacing.sm,
   },
   tabActive: {
     borderBottomWidth: 2,
@@ -183,7 +184,8 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: spacing.screenHorizontal,
-    paddingBottom: 100,
+    paddingTop: spacing.sm,
+    paddingBottom: 120,
   },
   teaItem: {
     marginBottom: spacing.cardGap,
@@ -191,12 +193,12 @@ const styles = StyleSheet.create({
   },
   ratingBadge: {
     position: 'absolute',
-    top: 8,
-    right: 8,
+    top: 10,
+    right: 10,
     backgroundColor: colors.accent.primary,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-    borderRadius: 12,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 14,
   },
   ratingText: {
     ...typography.caption,
@@ -207,23 +209,23 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: spacing.screenHorizontal,
+    paddingHorizontal: spacing.xl,
   },
   emptyIconContainer: {
-    marginBottom: 24,
+    marginBottom: spacing.lg,
     opacity: 0.5,
   },
   emptyTitle: {
     ...typography.headingMedium,
     color: colors.text.primary,
-    marginBottom: 8,
+    marginBottom: spacing.sm,
     textAlign: 'center',
   },
   emptySubtitle: {
     ...typography.body,
     color: colors.text.secondary,
     textAlign: 'center',
-    marginBottom: 24,
+    marginBottom: spacing.lg,
     lineHeight: 24,
   },
   emptyButton: {
