@@ -97,20 +97,19 @@ async function importTeas(jsonFile) {
       // Get company ID
       const companyId = await getCompanyId(tea.brandName);
       
-      // Prepare tea record
+      // Prepare tea record (matching actual teas table schema)
       const teaRecord = {
         name: tea.name,
         brand_name: tea.brandName,
         tea_type: tea.teaType,
-        description: tea.description?.substring(0, 2000) || null, // Truncate long descriptions
+        description: tea.description?.substring(0, 2000) || null,
         image_url: tea.imageUrl,
-        product_url: tea.productUrl,
-        price_usd: tea.priceUsd,
+        product_url: tea.productUrl || null,
         company_id: companyId,
-        // Optional fields based on what we scraped
+        // Optional fields
         steep_time_min: tea.steepTimeMin || null,
         steep_temp_f: tea.steepTempF || null,
-        caffeine_level: tea.caffeineLevel || null,
+        price_per_oz: tea.priceUsd ? tea.priceUsd / 4 : null, // Estimate price per oz
       };
       
       // Upsert by name + brand (avoid duplicates)
