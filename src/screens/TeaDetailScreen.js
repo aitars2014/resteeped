@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2 } from 'lucide-react-native';
-import { colors, typography, spacing, getTeaTypeColor } from '../constants';
+import { colors, typography, spacing, getTeaTypeColor, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar } from '../components';
 import { shareTea } from '../utils/sharing';
 import { useAuth, useCollection } from '../context';
@@ -149,20 +149,11 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Hero Image */}
         <View style={styles.heroContainer}>
-          {tea.imageUrl ? (
-            <Image 
-              source={{ uri: tea.imageUrl }} 
-              style={styles.heroImage}
-              resizeMode="cover"
-            />
-          ) : (
-            <LinearGradient
-              colors={[teaColor.primary, teaColor.gradient]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.heroGradient}
-            />
-          )}
+          <Image 
+            source={tea.imageUrl ? { uri: tea.imageUrl } : getPlaceholderImage(tea.teaType)} 
+            style={styles.heroImage}
+            resizeMode="cover"
+          />
           <LinearGradient
             colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.4)']}
             style={styles.heroOverlay}

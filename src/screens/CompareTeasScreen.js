@@ -10,8 +10,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeft, Plus, X, Thermometer, Clock, Zap } from 'lucide-react-native';
-import { colors, typography, spacing, getTeaTypeColor } from '../constants';
-import { StarRating, TeaTypeBadge, CaffeineIndicator } from '../components';
+import { colors, typography, spacing, getTeaTypeColor, getPlaceholderImage } from '../constants';
+import { StarRating, TeaTypeBadge, CaffeineIndicator, TeaPickerModal } from '../components';
 
 const ComparisonRow = ({ label, values, highlight = false }) => (
   <View style={[styles.comparisonRow, highlight && styles.highlightRow]}>
@@ -33,25 +33,20 @@ const ComparisonRow = ({ label, values, highlight = false }) => (
 export const CompareTeasScreen = ({ route, navigation }) => {
   const { initialTeas = [] } = route.params || {};
   const [teas, setTeas] = useState(initialTeas.slice(0, 3));
+  const [showPicker, setShowPicker] = useState(false);
   
   const removeTea = (index) => {
     setTeas(prev => prev.filter((_, i) => i !== index));
   };
   
   const addTea = () => {
-    // Navigate to a tea picker
-    navigation.navigate('Discover', {
-      screen: 'DiscoveryHome',
-      params: { 
-        selectMode: true,
-        onSelect: (tea) => {
-          if (!teas.find(t => t.id === tea.id)) {
-            setTeas(prev => [...prev, tea].slice(0, 3));
-          }
-          navigation.goBack();
-        }
-      }
-    });
+    setShowPicker(true);
+  };
+  
+  const handleSelectTea = (tea) => {
+    if (!teas.find(t => t.id === tea.id)) {
+      setTeas(prev => [...prev, tea].slice(0, 3));
+    }
   };
   
   const renderTeaHeader = (tea, index) => {
@@ -76,14 +71,10 @@ export const CompareTeasScreen = ({ route, navigation }) => {
         </TouchableOpacity>
         
         <View style={styles.teaImageContainer}>
-          {tea.imageUrl ? (
-            <Image source={{ uri: tea.imageUrl }} style={styles.teaImage} />
-          ) : (
-            <LinearGradient
-              colors={[teaColor.primary, teaColor.gradient]}
-              style={styles.teaImagePlaceholder}
-            />
-          )}
+          <Image 
+            source={tea.imageUrl ? { uri: tea.imageUrl } : getPlaceholderImage(tea.teaType)} 
+            style={styles.teaImage} 
+          />
         </View>
         
         <Text style={styles.teaName} numberOfLines={2}>{tea.name}</Text>
@@ -196,6 +187,15 @@ export const CompareTeasScreen = ({ route, navigation }) => {
         
         <View style={{ height: 40 }} />
       </ScrollView>
+      
+      {/* Tea Picker Modal */}
+      <TeaPickerModal
+        visible={showPicker}
+        onClose={() => setShowPicker(false)}
+        onSelect={handleSelectTea}
+        excludeIds={teas.map(t => t.id)}
+        title="Add Tea to Compare"
+      />
     </SafeAreaView>
   );
 };

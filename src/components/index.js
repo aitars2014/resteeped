@@ -14,3 +14,4 @@ export { CaffeineIndicator } from './CaffeineIndicator';
 export { FlavorRadar } from './FlavorRadar';
 export { TeaOfTheDay } from './TeaOfTheDay';
 export { SeasonalHighlights } from './SeasonalHighlights';
+export { TeaPickerModal } from './TeaPickerModal';

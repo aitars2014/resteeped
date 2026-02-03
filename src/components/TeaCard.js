@@ -1,12 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
-import { colors, typography, spacing, getTeaTypeColor } from '../constants';
+import { colors, typography, spacing, getTeaTypeColor, getPlaceholderImage } from '../constants';
 import { StarRating } from './StarRating';
 import { TeaTypeBadge } from './TeaTypeBadge';
 
 export const TeaCard = ({ tea, onPress }) => {
   const teaColor = getTeaTypeColor(tea.teaType);
+  const placeholderImage = getPlaceholderImage(tea.teaType);
   
   return (
     <TouchableOpacity 
@@ -18,18 +18,12 @@ export const TeaCard = ({ tea, onPress }) => {
       <View style={[styles.accentBar, { backgroundColor: teaColor.primary }]} />
       
       <View style={styles.content}>
-        {/* Image area with gradient placeholder */}
+        {/* Image area with placeholder fallback */}
         <View style={styles.imageContainer}>
-          {tea.imageUrl ? (
-            <Image source={{ uri: tea.imageUrl }} style={styles.image} />
-          ) : (
-            <LinearGradient
-              colors={[teaColor.primary, teaColor.gradient]}
-              start={{ x: 0, y: 0 }}
-              end={{ x: 1, y: 1 }}
-              style={styles.imagePlaceholder}
-            />
-          )}
+          <Image 
+            source={tea.imageUrl ? { uri: tea.imageUrl } : placeholderImage} 
+            style={styles.image} 
+          />
           {/* Tea type badge */}
           <View style={styles.badgeContainer}>
             <TeaTypeBadge teaType={tea.teaType} size="small" />
@@ -77,10 +71,6 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
-  },
-  imagePlaceholder: {
-    width: '100%',
-    height: '100%',
   },
   badgeContainer: {
     position: 'absolute',
