@@ -13,7 +13,7 @@ import {
 import { Minus, Plus, Coffee, Bell, BellOff } from 'lucide-react-native';
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
 import { Button, TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
 import { useAuth, useTheme } from '../context';
@@ -251,7 +251,7 @@ export const TimerScreen = ({ route }) => {
         <View style={styles.headerLeft}>
           <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Brew Timer</Text>
           {/* Notification status indicator */}
-          <View style={[styles.notificationBadge, !notificationsEnabled && styles.notificationBadgeOff]}>
+          <View style={[styles.notificationBadge, { backgroundColor: theme.background.secondary }, !notificationsEnabled && styles.notificationBadgeOff]}>
             {notificationsEnabled ? (
               <Bell size={12} color={theme.accent.primary} />
             ) : (
@@ -260,9 +260,9 @@ export const TimerScreen = ({ route }) => {
           </View>
         </View>
         {todayBrewCount > 0 && (
-          <View style={styles.brewCount}>
+          <View style={[styles.brewCount, { backgroundColor: theme.background.secondary }]}>
             <Coffee size={14} color={theme.accent.primary} />
-            <Text style={[styles.brewCountText, { color: theme.text.secondary }]}>{todayBrewCount} today</Text>
+            <Text style={[styles.brewCountText, { color: theme.accent.primary }]}>{todayBrewCount} today</Text>
           </View>
         )}
       </View>
@@ -270,7 +270,7 @@ export const TimerScreen = ({ route }) => {
       {/* Tea info if available */}
       {tea && (
         <View style={styles.teaInfo}>
-          <Text style={styles.teaName} numberOfLines={1}>{tea.name}</Text>
+          <Text style={[styles.teaName, { color: theme.text.primary }]} numberOfLines={1}>{tea.name}</Text>
           <TeaTypeBadge teaType={tea.teaType} size="small" />
         </View>
       )}
@@ -282,15 +282,15 @@ export const TimerScreen = ({ route }) => {
             cx={CIRCLE_SIZE / 2}
             cy={CIRCLE_SIZE / 2}
             r={RADIUS}
-            stroke={colors.border.light}
+            stroke={theme.border.light}
             strokeWidth={STROKE_WIDTH}
-            fill={colors.background.secondary}
+            fill={theme.background.secondary}
           />
           <Circle
             cx={CIRCLE_SIZE / 2}
             cy={CIRCLE_SIZE / 2}
             r={RADIUS}
-            stroke={teaColor?.primary || colors.accent.primary}
+            stroke={teaColor?.primary || theme.accent.primary}
             strokeWidth={STROKE_WIDTH}
             fill="transparent"
             strokeLinecap="round"
@@ -305,17 +305,17 @@ export const TimerScreen = ({ route }) => {
           {isComplete ? (
             <>
               <Text style={styles.completeEmoji}>☕</Text>
-              <Text style={styles.completeText}>Ready!</Text>
+              <Text style={[styles.completeText, { color: theme.accent.primary }]}>Ready!</Text>
             </>
           ) : (
-            <Text style={styles.timeText}>{formatTime(remainingSeconds)}</Text>
+            <Text style={[styles.timeText, { color: theme.text.primary }]}>{formatTime(remainingSeconds)}</Text>
           )}
         </View>
       </View>
       
       {/* Recommended time label */}
       {recommendedTime && !isComplete && (
-        <Text style={styles.recommendedLabel}>
+        <Text style={[styles.recommendedLabel, { color: theme.text.secondary }]}>
           Recommended: {recommendedTime}
           {isCustomTime && ' • Custom'}
         </Text>
@@ -325,24 +325,24 @@ export const TimerScreen = ({ route }) => {
       {!isComplete && (
         <View style={styles.adjustControls}>
           <TouchableOpacity 
-            style={[styles.adjustButton, isRunning && styles.adjustButtonDisabled]}
+            style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
             onPress={() => adjustTime(-30)}
             disabled={isRunning}
           >
-            <Minus size={24} color={isRunning ? colors.text.secondary : colors.text.primary} />
+            <Minus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
           </TouchableOpacity>
           
           <View style={styles.adjustTimeContainer}>
-            <Text style={styles.adjustTimeText}>{formatTime(totalSeconds)}</Text>
-            <Text style={styles.adjustTimeLabel}>total</Text>
+            <Text style={[styles.adjustTimeText, { color: theme.text.primary }]}>{formatTime(totalSeconds)}</Text>
+            <Text style={[styles.adjustTimeLabel, { color: theme.text.secondary }]}>total</Text>
           </View>
           
           <TouchableOpacity 
-            style={[styles.adjustButton, isRunning && styles.adjustButtonDisabled]}
+            style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
             onPress={() => adjustTime(30)}
             disabled={isRunning}
           >
-            <Plus size={24} color={isRunning ? colors.text.secondary : colors.text.primary} />
+            <Plus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
           </TouchableOpacity>
         </View>
       )}
@@ -350,7 +350,7 @@ export const TimerScreen = ({ route }) => {
       {/* Temperature display */}
       {tea?.steepTempF && !isComplete && (
         <View style={styles.tempContainer}>
-          <Text style={styles.tempText}>🌡️ {tea.steepTempF}°F</Text>
+          <Text style={[styles.tempText, { color: theme.text.secondary }]}>🌡️ {tea.steepTempF}°F</Text>
         </View>
       )}
       
@@ -374,7 +374,7 @@ export const TimerScreen = ({ route }) => {
       
       {/* Tip for no tea selected */}
       {!tea && (
-        <Text style={styles.tipText}>
+        <Text style={[styles.tipText, { color: theme.text.secondary }]}>
           Tip: Start a timer from a tea's detail page to track your brews
         </Text>
       )}
@@ -385,7 +385,6 @@ export const TimerScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
   },
   header: {
     flexDirection: 'row',
@@ -402,13 +401,11 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     ...typography.headingLarge,
-    color: colors.text.primary,
   },
   notificationBadge: {
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: colors.background.secondary,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -419,14 +416,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-    backgroundColor: colors.background.secondary,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
   },
   brewCountText: {
     ...typography.bodySmall,
-    color: colors.accent.primary,
     fontWeight: '500',
   },
   teaInfo: {
@@ -438,7 +433,6 @@ const styles = StyleSheet.create({
   teaName: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.text.primary,
     textAlign: 'center',
   },
   timerContainer: {
@@ -456,7 +450,6 @@ const styles = StyleSheet.create({
   timeText: {
     fontSize: 52,
     fontWeight: '300',
-    color: colors.text.primary,
     fontVariant: ['tabular-nums'],
   },
   completeEmoji: {
@@ -465,11 +458,9 @@ const styles = StyleSheet.create({
   },
   completeText: {
     ...typography.headingMedium,
-    color: colors.accent.primary,
   },
   recommendedLabel: {
     ...typography.caption,
-    color: colors.text.secondary,
     textAlign: 'center',
     marginBottom: 16,
   },
@@ -485,12 +476,8 @@ const styles = StyleSheet.create({
     height: 48,
     borderRadius: 24,
     borderWidth: 2,
-    borderColor: colors.text.primary,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  adjustButtonDisabled: {
-    borderColor: colors.text.secondary,
   },
   adjustTimeContainer: {
     alignItems: 'center',
@@ -498,12 +485,10 @@ const styles = StyleSheet.create({
   },
   adjustTimeText: {
     ...typography.body,
-    color: colors.text.primary,
     fontWeight: '600',
   },
   adjustTimeLabel: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   tempContainer: {
     alignItems: 'center',
@@ -511,7 +496,6 @@ const styles = StyleSheet.create({
   },
   tempText: {
     ...typography.body,
-    color: colors.text.secondary,
   },
   buttonContainer: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -524,7 +508,6 @@ const styles = StyleSheet.create({
   },
   tipText: {
     ...typography.caption,
-    color: colors.text.secondary,
     textAlign: 'center',
     paddingHorizontal: spacing.screenHorizontal,
     marginBottom: 24,
