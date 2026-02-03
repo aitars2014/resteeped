@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TabNavigator } from './TabNavigator';
 import { OnboardingScreen, isOnboardingComplete } from '../screens';
-import { colors } from '../constants';
+import { useTheme } from '../context';
 
 const Stack = createNativeStackNavigator();
+const { width } = Dimensions.get('window');
 
 export const AppNavigator = () => {
+  const { theme } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
 
@@ -27,8 +29,12 @@ export const AppNavigator = () => {
 
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.accent.primary} />
+      <View style={[styles.loadingContainer, { backgroundColor: theme.background.primary }]}>
+        <Image 
+          source={require('../../assets/resteeped-logo.png')} 
+          style={styles.logo}
+          resizeMode="contain"
+        />
       </View>
     );
   }
@@ -53,7 +59,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.background.primary,
+  },
+  logo: {
+    width: width * 0.7,
+    height: width * 0.5,
   },
 });
 
