@@ -7,13 +7,25 @@ import {
   SafeAreaView,
   Vibration,
   Alert,
+  Platform,
+  AppState,
 } from 'react-native';
-import { Minus, Plus, Coffee } from 'lucide-react-native';
+import { Minus, Plus, Coffee, Bell, BellOff } from 'lucide-react-native';
 import Svg, { Circle } from 'react-native-svg';
+import * as Notifications from 'expo-notifications';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
 import { Button, TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
 import { useAuth } from '../context';
+
+// Configure notification handler
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
 
 const CIRCLE_SIZE = 260;
 const STROKE_WIDTH = 12;
@@ -36,8 +48,95 @@ export const TimerScreen = ({ route }) => {
   const [isRunning, setIsRunning] = useState(false);
   const [isComplete, setIsComplete] = useState(false);
   const [hasLogged, setHasLogged] = useState(false);
+  const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   
   const intervalRef = useRef(null);
+  const notificationIdRef = useRef(null);
+  const appStateRef = useRef(AppState.currentState);
+  const timerEndTimeRef = useRef(null);
+  
+  // Request notification permissions on mount
+  useEffect(() => {
+    const requestPermissions = async () => {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      
+      setNotificationsEnabled(finalStatus === 'granted');
+    };
+    
+    requestPermissions();
+    
+    // Listen for app state changes to handle background timer
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
+    return () => subscription?.remove();
+  }, []);
+  
+  // Handle app coming back to foreground - update timer based on elapsed time
+  const handleAppStateChange = (nextAppState) => {
+    if (
+      appStateRef.current.match(/inactive|background/) &&
+      nextAppState === 'active' &&
+      timerEndTimeRef.current
+    ) {
+      // App came back to foreground - recalculate remaining time
+      const now = Date.now();
+      const endTime = timerEndTimeRef.current;
+      const remaining = Math.max(0, Math.ceil((endTime - now) / 1000));
+      
+      if (remaining <= 0) {
+        // Timer finished while in background
+        setRemainingSeconds(0);
+        setIsRunning(false);
+        setIsComplete(true);
+        Vibration.vibrate([500, 200, 500, 200, 500]);
+      } else {
+        setRemainingSeconds(remaining);
+      }
+    }
+    appStateRef.current = nextAppState;
+  };
+  
+  // Schedule a notification for when the timer ends
+  const scheduleNotification = async (seconds) => {
+    if (!notificationsEnabled) return;
+    
+    // Cancel any existing notification
+    await cancelNotification();
+    
+    // Store when timer will end
+    timerEndTimeRef.current = Date.now() + (seconds * 1000);
+    
+    const teaName = tea?.name || 'Your tea';
+    
+    const id = await Notifications.scheduleNotificationAsync({
+      content: {
+        title: '☕ Tea is Ready!',
+        body: `${teaName} has finished steeping. Enjoy!`,
+        sound: true,
+        priority: Notifications.AndroidNotificationPriority.HIGH,
+      },
+      trigger: {
+        seconds,
+        channelId: 'tea-timer',
+      },
+    });
+    
+    notificationIdRef.current = id;
+  };
+  
+  // Cancel scheduled notification
+  const cancelNotification = async () => {
+    if (notificationIdRef.current) {
+      await Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
+      notificationIdRef.current = null;
+    }
+    timerEndTimeRef.current = null;
+  };
   
   // Reset when tea changes
   useEffect(() => {
@@ -48,10 +147,17 @@ export const TimerScreen = ({ route }) => {
     setRemainingSeconds(newDefault);
     setIsComplete(false);
     setHasLogged(false);
+    // Cancel any pending notification when switching teas
+    cancelNotification();
   }, [tea?.id]);
   
   useEffect(() => {
     if (isRunning && remainingSeconds > 0) {
+      // Schedule notification when timer starts
+      if (notificationsEnabled) {
+        scheduleNotification(remainingSeconds);
+      }
+      
       intervalRef.current = setInterval(() => {
         setRemainingSeconds(prev => {
           if (prev <= 1) {
@@ -59,11 +165,17 @@ export const TimerScreen = ({ route }) => {
             setIsRunning(false);
             setIsComplete(true);
             Vibration.vibrate([500, 200, 500, 200, 500]);
+            // Notification should have fired, clear the ref
+            notificationIdRef.current = null;
+            timerEndTimeRef.current = null;
             return 0;
           }
           return prev - 1;
         });
       }, 1000);
+    } else if (!isRunning) {
+      // Cancel notification when paused
+      cancelNotification();
     }
     
     return () => {
@@ -112,11 +224,12 @@ export const TimerScreen = ({ route }) => {
     }
   };
   
-  const handleReset = () => {
+  const handleReset = async () => {
     setIsRunning(false);
     setRemainingSeconds(totalSeconds);
     setIsComplete(false);
     setHasLogged(false);
+    await cancelNotification();
   };
   
   const progress = remainingSeconds / totalSeconds;
@@ -132,7 +245,17 @@ export const TimerScreen = ({ route }) => {
     <SafeAreaView style={styles.container}>
       {/* Header with brew count */}
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Brew Timer</Text>
+        <View style={styles.headerLeft}>
+          <Text style={styles.headerTitle}>Brew Timer</Text>
+          {/* Notification status indicator */}
+          <View style={[styles.notificationBadge, !notificationsEnabled && styles.notificationBadgeOff]}>
+            {notificationsEnabled ? (
+              <Bell size={12} color={colors.accent.primary} />
+            ) : (
+              <BellOff size={12} color={colors.text.secondary} />
+            )}
+          </View>
+        </View>
         {todayBrewCount > 0 && (
           <View style={styles.brewCount}>
             <Coffee size={14} color={colors.accent.primary} />
@@ -269,9 +392,25 @@ const styles = StyleSheet.create({
     paddingTop: 16,
     paddingBottom: 8,
   },
+  headerLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
   headerTitle: {
     ...typography.headingLarge,
     color: colors.text.primary,
+  },
+  notificationBadge: {
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    backgroundColor: colors.background.secondary,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notificationBadgeOff: {
+    opacity: 0.5,
   },
   brewCount: {
     flexDirection: 'row',
