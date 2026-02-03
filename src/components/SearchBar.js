@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Search, SlidersHorizontal } from 'lucide-react-native';
-import { colors, spacing } from '../constants';
+import { spacing } from '../constants';
+import { useTheme } from '../context';
 
 export const SearchBar = ({ 
   value, 
@@ -9,23 +10,29 @@ export const SearchBar = ({
   placeholder = 'Search teas, types, or shops...',
   onFilterPress,
 }) => {
+  const { theme } = useTheme();
+  
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {
+      backgroundColor: theme.background.secondary,
+      borderColor: theme.border.light,
+      shadowColor: theme.shadow?.searchBar || '#000',
+    }]}>
       <Search 
         size={20} 
-        color={colors.text.secondary} 
+        color={theme.text.secondary} 
         style={styles.searchIcon} 
       />
       <TextInput
-        style={styles.input}
+        style={[styles.input, { color: theme.text.primary }]}
         value={value}
         onChangeText={onChangeText}
         placeholder={placeholder}
-        placeholderTextColor={colors.text.secondary}
+        placeholderTextColor={theme.text.secondary}
       />
       {onFilterPress && (
         <TouchableOpacity onPress={onFilterPress} style={styles.filterButton}>
-          <SlidersHorizontal size={20} color={colors.text.secondary} />
+          <SlidersHorizontal size={20} color={theme.text.secondary} />
         </TouchableOpacity>
       )}
     </View>
@@ -36,15 +43,12 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.background.secondary,
     height: spacing.searchBarHeight,
     borderRadius: spacing.searchBarBorderRadius,
     borderWidth: 1,
-    borderColor: colors.border.light,
     paddingHorizontal: 16,
-    shadowColor: colors.shadow.searchBar,
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
+    shadowOpacity: 0.06,
     shadowRadius: 8,
     elevation: 2,
   },
@@ -54,7 +58,6 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: colors.text.primary,
   },
   filterButton: {
     marginLeft: 12,

@@ -1,10 +1,13 @@
 import React from 'react';
 import { ScrollView, TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { colors, typography, spacing, getTeaTypeColor } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 import { teaTypes } from '../data/teas';
 
 export const FilterPills = ({ selectedType, onSelectType }) => {
+  const { theme, getTeaTypeColor } = useTheme();
+  
   return (
     <ScrollView 
       horizontal 
@@ -28,19 +31,22 @@ export const FilterPills = ({ selectedType, onSelectType }) => {
                 end={{ x: 1, y: 0 }}
                 style={styles.pill}
               >
-                <Text style={[styles.pillText, styles.selectedText]}>
+                <Text style={[styles.pillText, { color: theme.text.inverse }]}>
                   {type.label}
                 </Text>
               </LinearGradient>
             ) : isSelected ? (
-              <View style={[styles.pill, styles.selectedAll]}>
-                <Text style={[styles.pillText, styles.selectedText]}>
+              <View style={[styles.pill, { backgroundColor: theme.accent.primary }]}>
+                <Text style={[styles.pillText, { color: theme.text.inverse }]}>
                   {type.label}
                 </Text>
               </View>
             ) : (
-              <View style={[styles.pill, styles.unselected]}>
-                <Text style={[styles.pillText, styles.unselectedText]}>
+              <View style={[styles.pill, { 
+                backgroundColor: theme.background.secondary,
+                borderColor: theme.border.medium,
+              }]}>
+                <Text style={[styles.pillText, { color: theme.text.primary }]}>
                   {type.label}
                 </Text>
               </View>
@@ -64,23 +70,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: spacing.filterPillGap,
-  },
-  selectedAll: {
-    backgroundColor: colors.accent.primary,
-  },
-  unselected: {
-    backgroundColor: colors.background.secondary,
     borderWidth: 1,
-    borderColor: colors.border.medium,
+    borderColor: 'transparent',
   },
   pillText: {
     ...typography.bodySmall,
     fontWeight: '500',
-  },
-  selectedText: {
-    color: colors.text.inverse,
-  },
-  unselectedText: {
-    color: colors.text.primary,
   },
 });
