@@ -9,6 +9,9 @@ export const SearchBar = ({
   onChangeText, 
   placeholder = 'Search teas, types, or shops...',
   onFilterPress,
+  onFocus,
+  onBlur,
+  onSubmitEditing,
 }) => {
   const { theme } = useTheme();
   
@@ -29,6 +32,10 @@ export const SearchBar = ({
         onChangeText={onChangeText}
         placeholder={placeholder}
         placeholderTextColor={theme.text.secondary}
+        onFocus={onFocus}
+        onBlur={onBlur}
+        onSubmitEditing={onSubmitEditing}
+        returnKeyType="search"
       />
       {onFilterPress && (
         <TouchableOpacity onPress={onFilterPress} style={styles.filterButton}>
