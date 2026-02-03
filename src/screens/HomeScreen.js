@@ -31,7 +31,7 @@ const TEA_TYPES = [
 ];
 
 export const HomeScreen = ({ navigation }) => {
-  const { theme, getTeaTypeColor } = useTheme();
+  const { theme, isDark, getTeaTypeColor } = useTheme();
   const { teas, loading: teasLoading, refreshTeas } = useTeas();
   const { companies } = useCompanies();
   const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
@@ -165,7 +165,10 @@ export const HomeScreen = ({ navigation }) => {
         {/* Header with Logo */}
         <View style={styles.header}>
           <Image 
-            source={require('../../assets/resteeped-logo.png')} 
+            source={isDark 
+              ? require('../../assets/resteeped-logo-dark.png')
+              : require('../../assets/resteeped-logo.png')
+            } 
             style={styles.headerLogo}
             resizeMode="contain"
           />

@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 const { width } = Dimensions.get('window');
 
 export const AppNavigator = () => {
-  const { theme } = useTheme();
+  const { theme, isDark } = useTheme();
   const [isLoading, setIsLoading] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
 
@@ -31,7 +31,10 @@ export const AppNavigator = () => {
     return (
       <View style={[styles.loadingContainer, { backgroundColor: theme.background.primary }]}>
         <Image 
-          source={require('../../assets/resteeped-logo.png')} 
+          source={isDark 
+            ? require('../../assets/resteeped-logo-dark.png')
+            : require('../../assets/resteeped-logo.png')
+          } 
           style={styles.logo}
           resizeMode="contain"
         />

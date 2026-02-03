@@ -76,7 +76,7 @@ const ONBOARDING_SLIDES = [
 const ONBOARDING_COMPLETE_KEY = '@resteeped:onboarding_complete';
 
 export const OnboardingScreen = ({ navigation, onComplete }) => {
-  const { theme } = useTheme();
+  const { theme, isDark } = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -118,7 +118,10 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
       <View style={styles.slide}>
         {isFirstSlide ? (
           <Image 
-            source={require('../../assets/resteeped-logo.png')} 
+            source={isDark 
+              ? require('../../assets/resteeped-logo-dark.png')
+              : require('../../assets/resteeped-logo.png')
+            } 
             style={styles.welcomeLogo}
             resizeMode="contain"
           />
