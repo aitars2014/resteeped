@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { 
   View, 
   Text, 
@@ -8,26 +8,30 @@ import {
   Dimensions,
   Image,
   Alert,
+  FlatList,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
-import { Button, TeaTypeBadge, StarRating, FactCard } from '../components';
+import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal } from '../components';
 import { useAuth, useCollection } from '../context';
+import { useReviews } from '../hooks';
 
 const { width, height } = Dimensions.get('window');
-const HERO_HEIGHT = height * 0.35;
+const HERO_HEIGHT = height * 0.32;
 
 export const TeaDetailScreen = ({ route, navigation }) => {
   const { tea } = route.params;
   const teaColor = getTeaTypeColor(tea.teaType);
   
   const { user } = useAuth();
-  const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, rateTea } = useCollection();
+  const { isInCollection, addToCollection, removeFromCollection, getCollectionItem } = useCollection();
+  const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
+  
+  const [showReviewModal, setShowReviewModal] = useState(false);
   
   const inCollection = isInCollection(tea.id);
   const collectionItem = getCollectionItem(tea.id);
-  const userRating = collectionItem?.user_rating;
   
   const handleToggleCollection = async () => {
     if (!user) {
@@ -49,13 +53,28 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     }
   };
   
-  const handleRate = async (rating) => {
+  const handleWriteReview = () => {
     if (!user) {
-      Alert.alert('Sign In Required', 'Please sign in to rate teas.');
+      Alert.alert(
+        'Sign In Required',
+        'Please sign in to write a review.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Sign In', onPress: () => navigation.navigate('Profile') },
+        ]
+      );
       return;
     }
-    
-    await rateTea(tea.id, rating);
+    setShowReviewModal(true);
+  };
+  
+  const handleSubmitReview = async ({ rating, reviewText }) => {
+    const { error } = await submitReview({ rating, reviewText });
+    if (error) {
+      Alert.alert('Error', 'Could not submit review. Please try again.');
+    } else {
+      setShowReviewModal(false);
+    }
   };
   
   const handleBrewTea = () => {
@@ -67,10 +86,13 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   
   const formatSteepTime = () => {
     if (tea.steepTimeMin && tea.steepTimeMax) {
-      return `${tea.steepTimeMin}-${tea.steepTimeMax} minutes`;
+      return `${tea.steepTimeMin}-${tea.steepTimeMax} min`;
     }
-    return tea.steepTimeMin ? `${tea.steepTimeMin} minutes` : 'Not specified';
+    return tea.steepTimeMin ? `${tea.steepTimeMin} min` : '—';
   };
+  
+  const displayRating = reviewCount > 0 ? averageRating : (tea.avgRating || 0);
+  const displayCount = reviewCount > 0 ? reviewCount : (tea.ratingCount || 0);
   
   return (
     <View style={styles.container}>
@@ -91,13 +113,11 @@ export const TeaDetailScreen = ({ route, navigation }) => {
               style={styles.heroGradient}
             />
           )}
-          {/* Overlay for text legibility */}
           <LinearGradient
             colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.4)']}
             style={styles.heroOverlay}
           />
           
-          {/* Back button */}
           <TouchableOpacity 
             style={styles.backButton}
             onPress={() => navigation.goBack()}
@@ -105,7 +125,6 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             <ChevronLeft size={24} color={colors.text.primary} />
           </TouchableOpacity>
           
-          {/* Collection indicator */}
           {inCollection && (
             <View style={styles.collectionBadge}>
               <Check size={16} color={colors.text.inverse} />
@@ -115,64 +134,45 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         
         {/* Content */}
         <View style={styles.content}>
-          {/* Tea Name and Brand */}
           <Text style={styles.teaName}>{tea.name}</Text>
           <Text style={styles.brandName}>{tea.brandName}</Text>
           
-          {/* Tea Type Badge */}
           <View style={styles.badgeRow}>
             <TeaTypeBadge teaType={tea.teaType} size="large" />
+            <View style={styles.ratingPill}>
+              <Star size={14} color={colors.rating.star} fill={colors.rating.star} />
+              <Text style={styles.ratingText}>
+                {displayRating.toFixed(1)} ({displayCount})
+              </Text>
+            </View>
           </View>
           
-          {/* User Rating (if in collection) */}
-          {inCollection && (
-            <View style={styles.userRatingSection}>
-              <Text style={styles.ratingLabel}>Your rating:</Text>
-              <StarRating 
-                rating={userRating || 0} 
-                size={28} 
-                onRate={handleRate}
-              />
-            </View>
-          )}
-          
-          {/* Fact Cards */}
-          <View style={styles.factsContainer}>
+          {/* Quick Facts Row */}
+          <View style={styles.quickFacts}>
             {tea.steepTempF && (
-              <FactCard 
-                icon={<Thermometer size={24} color={colors.accent.primary} />}
-                value={`${tea.steepTempF}°F`}
-                label="Recommended temperature"
-              />
+              <View style={styles.quickFact}>
+                <Thermometer size={18} color={colors.accent.primary} />
+                <Text style={styles.quickFactText}>{tea.steepTempF}°F</Text>
+              </View>
             )}
-            
             {tea.steepTimeMin && (
-              <FactCard 
-                icon={<Clock size={24} color={colors.accent.primary} />}
-                value={formatSteepTime()}
-                label="Recommended steep time"
-              />
+              <View style={styles.quickFact}>
+                <Clock size={18} color={colors.accent.primary} />
+                <Text style={styles.quickFactText}>{formatSteepTime()}</Text>
+              </View>
             )}
-            
             {tea.origin && (
-              <FactCard 
-                icon={<MapPin size={24} color={colors.accent.primary} />}
-                value={tea.origin}
-                label="Origin"
-              />
+              <View style={styles.quickFact}>
+                <MapPin size={18} color={colors.accent.primary} />
+                <Text style={styles.quickFactText} numberOfLines={1}>{tea.origin}</Text>
+              </View>
             )}
-            
-            <FactCard 
-              icon={<Star size={24} color={colors.rating.star} fill={colors.rating.star} />}
-              value={`${tea.avgRating?.toFixed(1) || '—'} out of 5`}
-              label={`Based on ${tea.ratingCount || 0} review${tea.ratingCount !== 1 ? 's' : ''}`}
-            />
           </View>
           
           {/* Description */}
           {tea.description && (
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>About this tea</Text>
+              <Text style={styles.sectionTitle}>About</Text>
               <Text style={styles.description}>{tea.description}</Text>
             </View>
           )}
@@ -180,7 +180,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           {/* Flavor Notes */}
           {tea.flavorNotes && tea.flavorNotes.length > 0 && (
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Flavor notes</Text>
+              <Text style={styles.sectionTitle}>Flavor Notes</Text>
               <View style={styles.flavorTags}>
                 {tea.flavorNotes.map((note, index) => (
                   <View key={index} style={styles.flavorTag}>
@@ -191,7 +191,39 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             </View>
           )}
           
-          {/* Spacer for buttons */}
+          {/* Reviews Section */}
+          <View style={styles.section}>
+            <View style={styles.reviewsHeader}>
+              <Text style={styles.sectionTitle}>
+                Reviews {reviewCount > 0 && `(${reviewCount})`}
+              </Text>
+              <TouchableOpacity onPress={handleWriteReview} style={styles.writeReviewButton}>
+                <MessageSquare size={16} color={colors.accent.primary} />
+                <Text style={styles.writeReviewText}>
+                  {userReview ? 'Edit Review' : 'Write Review'}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            
+            {reviews.length > 0 ? (
+              reviews.slice(0, 3).map((review) => (
+                <ReviewCard key={review.id} review={review} />
+              ))
+            ) : (
+              <View style={styles.noReviews}>
+                <Text style={styles.noReviewsText}>
+                  No reviews yet. Be the first to review this tea!
+                </Text>
+              </View>
+            )}
+            
+            {reviews.length > 3 && (
+              <TouchableOpacity style={styles.seeAllButton}>
+                <Text style={styles.seeAllText}>See all {reviews.length} reviews</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          
           <View style={{ height: 140 }} />
         </View>
       </ScrollView>
@@ -202,10 +234,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           title={inCollection ? "In My Collection ✓" : "Add to My Teas"}
           onPress={handleToggleCollection}
           variant="primary"
-          style={[
-            styles.button,
-            inCollection && styles.inCollectionButton,
-          ]}
+          style={[styles.button, inCollection && styles.inCollectionButton]}
         />
         <Button 
           title="Brew This Tea"
@@ -214,6 +243,16 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           style={styles.button}
         />
       </View>
+      
+      {/* Review Modal */}
+      <WriteReviewModal
+        visible={showReviewModal}
+        onClose={() => setShowReviewModal(false)}
+        onSubmit={handleSubmitReview}
+        teaName={tea.name}
+        initialRating={userReview?.rating || 0}
+        initialText={userReview?.review_text || ''}
+      />
     </View>
   );
 };
@@ -279,24 +318,39 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   badgeRow: {
-    marginBottom: spacing.elementSpacing,
-  },
-  userRatingSection: {
     flexDirection: 'row',
     alignItems: 'center',
+    gap: 12,
     marginBottom: spacing.sectionSpacing,
-    padding: spacing.cardPadding,
+  },
+  ratingPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
     backgroundColor: colors.background.secondary,
-    borderRadius: spacing.cardBorderRadius,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 12,
   },
-  ratingLabel: {
-    ...typography.body,
-    color: colors.text.secondary,
-    marginRight: 12,
+  ratingText: {
+    ...typography.bodySmall,
+    color: colors.text.primary,
+    fontWeight: '500',
   },
-  factsContainer: {
-    gap: spacing.elementSpacing,
+  quickFacts: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 16,
     marginBottom: spacing.sectionSpacing,
+  },
+  quickFact: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  quickFactText: {
+    ...typography.bodySmall,
+    color: colors.text.primary,
   },
   section: {
     marginBottom: spacing.sectionSpacing,
@@ -305,7 +359,7 @@ const styles = StyleSheet.create({
     ...typography.body,
     fontWeight: '600',
     color: colors.text.primary,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   description: {
     ...typography.body,
@@ -330,6 +384,42 @@ const styles = StyleSheet.create({
     color: colors.text.secondary,
     textTransform: 'capitalize',
   },
+  reviewsHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  writeReviewButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  writeReviewText: {
+    ...typography.bodySmall,
+    color: colors.accent.primary,
+    fontWeight: '500',
+  },
+  noReviews: {
+    backgroundColor: colors.background.secondary,
+    borderRadius: spacing.cardBorderRadius,
+    padding: spacing.cardPadding,
+    alignItems: 'center',
+  },
+  noReviewsText: {
+    ...typography.body,
+    color: colors.text.secondary,
+    textAlign: 'center',
+  },
+  seeAllButton: {
+    alignItems: 'center',
+    paddingVertical: 12,
+  },
+  seeAllText: {
+    ...typography.bodySmall,
+    color: colors.accent.primary,
+    fontWeight: '500',
+  },
   buttonContainer: {
     position: 'absolute',
     bottom: 0,
@@ -337,11 +427,11 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: colors.background.primary,
     paddingHorizontal: spacing.screenHorizontal,
-    paddingTop: 16,
+    paddingTop: 12,
     paddingBottom: 34,
     borderTopWidth: 1,
     borderTopColor: colors.border.light,
-    gap: spacing.elementSpacing,
+    gap: 10,
   },
   button: {
     width: '100%',

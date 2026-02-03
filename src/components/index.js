@@ -5,3 +5,5 @@ export { StarRating } from './StarRating';
 export { TeaTypeBadge } from './TeaTypeBadge';
 export { TeaCard } from './TeaCard';
 export { FactCard } from './FactCard';
+export { ReviewCard } from './ReviewCard';
+export { WriteReviewModal } from './WriteReviewModal';
