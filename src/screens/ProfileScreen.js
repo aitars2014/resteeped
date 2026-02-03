@@ -10,8 +10,8 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-import { User, Settings, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare } from 'lucide-react-native';
-import { colors, typography, spacing } from '../constants';
+import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare } from 'lucide-react-native';
+import { typography, spacing } from '../constants';
 import { Button } from '../components';
 import { useAuth, useCollection, useTheme } from '../context';
 import { useBrewHistory } from '../hooks';
@@ -92,16 +92,15 @@ export const ProfileScreen = ({ navigation }) => {
     } else if (themePreference === 'light') {
       setThemePreference('dark');
     } else {
-      // System -> Dark
       setThemePreference('dark');
     }
   };
   
   if (loading) {
     return (
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={colors.accent.primary} />
+          <ActivityIndicator size="large" color={theme.accent.primary} />
         </View>
       </SafeAreaView>
     );
@@ -113,11 +112,11 @@ export const ProfileScreen = ({ navigation }) => {
   const renderLoggedOut = () => (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.authContainer}>
-        <View style={styles.avatarPlaceholder}>
-          <Coffee size={48} color={colors.accent.primary} />
+        <View style={[styles.avatarPlaceholder, { backgroundColor: theme.background.secondary }]}>
+          <Coffee size={48} color={theme.accent.primary} />
         </View>
-        <Text style={styles.authTitle}>Welcome to Resteeped</Text>
-        <Text style={styles.authSubtitle}>
+        <Text style={[styles.authTitle, { color: theme.text.primary }]}>Welcome to Resteeped</Text>
+        <Text style={[styles.authSubtitle, { color: theme.text.secondary }]}>
           Sign in to save your tea collection, track what you've tried, and sync across devices.
         </Text>
         <Button 
@@ -128,7 +127,6 @@ export const ProfileScreen = ({ navigation }) => {
         />
       </View>
       
-      {/* Show brew stats even when logged out */}
       {brewSessions.length > 0 && (
         <TouchableOpacity 
           style={styles.statsSection}
@@ -136,35 +134,38 @@ export const ProfileScreen = ({ navigation }) => {
           activeOpacity={0.7}
         >
           <View style={styles.statsSectionHeader}>
-            <Text style={styles.statsSectionTitle}>Your Brew Activity</Text>
+            <Text style={[styles.statsSectionTitle, { color: theme.text.secondary }]}>Your Brew Activity</Text>
             <View style={styles.viewHistoryLink}>
-              <Text style={styles.viewHistoryText}>View History</Text>
-              <ChevronRight size={16} color={colors.accent.primary} />
+              <Text style={[styles.viewHistoryText, { color: theme.accent.primary }]}>View History</Text>
+              <ChevronRight size={16} color={theme.accent.primary} />
             </View>
           </View>
-          <View style={styles.statsRow}>
+          <View style={[styles.statsRow, { 
+            backgroundColor: theme.background.secondary,
+            borderColor: theme.border.medium,
+          }]}>
             <View style={styles.stat}>
-              <Coffee size={24} color={colors.accent.primary} />
-              <Text style={styles.statNumber}>{todayBrewCount}</Text>
-              <Text style={styles.statLabel}>Today</Text>
+              <Coffee size={24} color={theme.accent.primary} />
+              <Text style={[styles.statNumber, { color: theme.text.primary }]}>{todayBrewCount}</Text>
+              <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Today</Text>
             </View>
-            <View style={styles.statDivider} />
+            <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
             <View style={styles.stat}>
-              <Clock size={24} color={colors.accent.primary} />
-              <Text style={styles.statNumber}>{weekBrewCount}</Text>
-              <Text style={styles.statLabel}>This Week</Text>
+              <Clock size={24} color={theme.accent.primary} />
+              <Text style={[styles.statNumber, { color: theme.text.primary }]}>{weekBrewCount}</Text>
+              <Text style={[styles.statLabel, { color: theme.text.secondary }]}>This Week</Text>
             </View>
-            <View style={styles.statDivider} />
+            <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
             <View style={styles.stat}>
-              <Star size={24} color={colors.accent.primary} />
-              <Text style={styles.statNumber}>{brewSessions.length}</Text>
-              <Text style={styles.statLabel}>All Time</Text>
+              <Star size={24} color={theme.accent.primary} />
+              <Text style={[styles.statNumber, { color: theme.text.primary }]}>{brewSessions.length}</Text>
+              <Text style={[styles.statLabel, { color: theme.text.secondary }]}>All Time</Text>
             </View>
           </View>
         </TouchableOpacity>
       )}
       
-      <Text style={styles.browseNote}>
+      <Text style={[styles.browseNote, { color: theme.text.secondary }]}>
         Keep browsing — you can explore teas and use the brew timer without an account.
       </Text>
     </ScrollView>
@@ -173,120 +174,135 @@ export const ProfileScreen = ({ navigation }) => {
   const renderLoggedIn = () => (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.profileHeader}>
-        <View style={styles.avatar}>
-          <User size={32} color={colors.text.inverse} />
+        <View style={[styles.avatar, { backgroundColor: theme.accent.primary }]}>
+          <User size={32} color={theme.text.inverse} />
         </View>
         <View style={styles.profileInfo}>
-          <Text style={styles.username}>
+          <Text style={[styles.username, { color: theme.text.primary }]}>
             {profile?.display_name || profile?.username || 'Tea Lover'}
           </Text>
-          <Text style={styles.email}>{user?.email}</Text>
+          <Text style={[styles.email, { color: theme.text.secondary }]}>{user?.email}</Text>
         </View>
       </View>
       
       {/* Collection Stats */}
       <View style={styles.statsSection}>
-        <Text style={styles.statsSectionTitle}>My Collection</Text>
-        <View style={styles.statsRow}>
+        <Text style={[styles.statsSectionTitle, { color: theme.text.secondary }]}>My Collection</Text>
+        <View style={[styles.statsRow, { 
+          backgroundColor: theme.background.secondary,
+          borderColor: theme.border.medium,
+        }]}>
           <View style={styles.stat}>
-            <Star size={24} color={colors.accent.primary} />
-            <Text style={styles.statNumber}>{triedCount}</Text>
-            <Text style={styles.statLabel}>Tried</Text>
+            <Star size={24} color={theme.accent.primary} />
+            <Text style={[styles.statNumber, { color: theme.text.primary }]}>{triedCount}</Text>
+            <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Tried</Text>
           </View>
-          <View style={styles.statDivider} />
+          <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
           <View style={styles.stat}>
-            <Bookmark size={24} color={colors.accent.primary} />
-            <Text style={styles.statNumber}>{wantCount}</Text>
-            <Text style={styles.statLabel}>Want to Try</Text>
+            <Bookmark size={24} color={theme.accent.primary} />
+            <Text style={[styles.statNumber, { color: theme.text.primary }]}>{wantCount}</Text>
+            <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Want to Try</Text>
           </View>
-          <View style={styles.statDivider} />
+          <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
           <View style={styles.stat}>
-            <Text style={styles.statNumber}>{profile?.reviews_count || 0}</Text>
-            <Text style={styles.statLabel}>Reviews</Text>
+            <Text style={[styles.statNumber, { color: theme.text.primary }]}>{profile?.reviews_count || 0}</Text>
+            <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Reviews</Text>
           </View>
         </View>
       </View>
       
       {/* Brew Stats */}
       <View style={styles.statsSection}>
-        <Text style={styles.statsSectionTitle}>Brew Activity</Text>
-        <View style={styles.statsRow}>
+        <Text style={[styles.statsSectionTitle, { color: theme.text.secondary }]}>Brew Activity</Text>
+        <View style={[styles.statsRow, { 
+          backgroundColor: theme.background.secondary,
+          borderColor: theme.border.medium,
+        }]}>
           <View style={styles.stat}>
-            <Coffee size={24} color={colors.accent.primary} />
-            <Text style={styles.statNumber}>{todayBrewCount}</Text>
-            <Text style={styles.statLabel}>Today</Text>
+            <Coffee size={24} color={theme.accent.primary} />
+            <Text style={[styles.statNumber, { color: theme.text.primary }]}>{todayBrewCount}</Text>
+            <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Today</Text>
           </View>
-          <View style={styles.statDivider} />
+          <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
           <View style={styles.stat}>
-            <Text style={styles.statNumber}>{weekBrewCount}</Text>
-            <Text style={styles.statLabel}>This Week</Text>
+            <Text style={[styles.statNumber, { color: theme.text.primary }]}>{weekBrewCount}</Text>
+            <Text style={[styles.statLabel, { color: theme.text.secondary }]}>This Week</Text>
           </View>
-          <View style={styles.statDivider} />
+          <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
           <View style={styles.stat}>
-            <Text style={styles.statNumber}>{brewSessions.length}</Text>
-            <Text style={styles.statLabel}>All Time</Text>
+            <Text style={[styles.statNumber, { color: theme.text.primary }]}>{brewSessions.length}</Text>
+            <Text style={[styles.statLabel, { color: theme.text.secondary }]}>All Time</Text>
           </View>
         </View>
       </View>
       
       {/* Menu */}
-      <View style={styles.menuSection}>
+      <View style={[styles.menuSection, { 
+        backgroundColor: theme.background.secondary,
+        borderColor: theme.border.medium,
+      }]}>
         <TouchableOpacity 
-          style={styles.menuItem}
+          style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
           onPress={() => navigation.navigate('BrewHistory')}
         >
-          <Coffee size={20} color={colors.accent.primary} />
-          <Text style={styles.menuItemText}>Brew History</Text>
-          <ChevronRight size={20} color={colors.text.secondary} />
+          <Coffee size={20} color={theme.accent.primary} />
+          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Brew History</Text>
+          <ChevronRight size={20} color={theme.text.secondary} />
         </TouchableOpacity>
         
         <TouchableOpacity 
-          style={styles.menuItem}
+          style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
           onPress={() => navigation.navigate('CompareTeas', { initialTeas: [] })}
         >
-          <GitCompare size={20} color={colors.accent.primary} />
-          <Text style={styles.menuItemText}>Compare Teas</Text>
-          <ChevronRight size={20} color={colors.text.secondary} />
+          <GitCompare size={20} color={theme.accent.primary} />
+          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Compare Teas</Text>
+          <ChevronRight size={20} color={theme.text.secondary} />
         </TouchableOpacity>
         
         {collection.length > 0 && (
           <TouchableOpacity 
-            style={styles.menuItem}
+            style={[styles.menuItem, styles.menuItemLast]}
             onPress={handleExport}
           >
-            <Download size={20} color={colors.accent.primary} />
-            <Text style={styles.menuItemText}>Export Collection</Text>
-            <ChevronRight size={20} color={colors.text.secondary} />
+            <Download size={20} color={theme.accent.primary} />
+            <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Export Collection</Text>
+            <ChevronRight size={20} color={theme.text.secondary} />
           </TouchableOpacity>
         )}
       </View>
       
       {/* Appearance */}
-      <View style={styles.menuSection}>
-        <View style={styles.menuItem}>
+      <View style={[styles.menuSection, { 
+        backgroundColor: theme.background.secondary,
+        borderColor: theme.border.medium,
+      }]}>
+        <View style={[styles.menuItem, styles.menuItemLast]}>
           {isDark ? (
-            <Moon size={20} color={colors.accent.primary} />
+            <Moon size={20} color={theme.accent.primary} />
           ) : (
-            <Sun size={20} color={colors.accent.primary} />
+            <Sun size={20} color={theme.accent.primary} />
           )}
-          <Text style={styles.menuItemText}>Dark Mode</Text>
+          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Dark Mode</Text>
           <Switch
             value={isDark}
             onValueChange={toggleDarkMode}
-            trackColor={{ false: colors.border.medium, true: colors.accent.primary }}
-            thumbColor={colors.text.inverse}
+            trackColor={{ false: theme.border.medium, true: theme.accent.primary }}
+            thumbColor={theme.text.inverse}
           />
         </View>
       </View>
       
       {/* Account */}
-      <View style={styles.menuSection}>
+      <View style={[styles.menuSection, { 
+        backgroundColor: theme.background.secondary,
+        borderColor: theme.border.medium,
+      }]}>
         <TouchableOpacity 
           style={[styles.menuItem, styles.menuItemLast]}
           onPress={handleSignOut}
         >
-          <LogOut size={20} color={colors.status.error} />
-          <Text style={[styles.menuItemText, styles.logoutText]}>Sign out</Text>
+          <LogOut size={20} color={theme.status.error} />
+          <Text style={[styles.menuItemText, { color: theme.status.error }]}>Sign out</Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -302,7 +318,7 @@ export const ProfileScreen = ({ navigation }) => {
       
       <View style={[styles.footer, { borderTopColor: theme.border.light }]}>
         <Text style={[styles.footerText, { color: theme.text.secondary }]}>Resteeped v1.0.0</Text>
-        <Text style={[styles.footerSubtext, { color: theme.text.secondary }]}>Made with 🍵 for tea lovers</Text>
+        <Text style={[styles.footerSubtext, { color: theme.text.tertiary }]}>Made with 🍵 for tea lovers</Text>
       </View>
     </SafeAreaView>
   );
@@ -311,7 +327,6 @@ export const ProfileScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
   },
   scrollView: {
     flex: 1,
@@ -328,7 +343,6 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.headingLarge,
-    color: colors.text.primary,
   },
   authContainer: {
     alignItems: 'center',
@@ -340,20 +354,17 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: colors.background.secondary,
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: spacing.lg,
   },
   authTitle: {
     ...typography.headingMedium,
-    color: colors.text.primary,
     textAlign: 'center',
     marginBottom: spacing.sm,
   },
   authSubtitle: {
     ...typography.body,
-    color: colors.text.secondary,
     textAlign: 'center',
     marginBottom: spacing.lg,
     lineHeight: 24,
@@ -363,7 +374,6 @@ const styles = StyleSheet.create({
   },
   browseNote: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
     textAlign: 'center',
     paddingHorizontal: spacing.screenHorizontal,
     paddingBottom: 24,
@@ -378,7 +388,6 @@ const styles = StyleSheet.create({
     width: 68,
     height: 68,
     borderRadius: 34,
-    backgroundColor: colors.accent.primary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: spacing.md,
@@ -388,11 +397,9 @@ const styles = StyleSheet.create({
   },
   username: {
     ...typography.headingMedium,
-    color: colors.text.primary,
   },
   email: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
   },
   statsSection: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -406,9 +413,9 @@ const styles = StyleSheet.create({
   },
   statsSectionTitle: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+    marginBottom: 12,
   },
   viewHistoryLink: {
     flexDirection: 'row',
@@ -416,14 +423,13 @@ const styles = StyleSheet.create({
   },
   viewHistoryText: {
     ...typography.caption,
-    color: colors.accent.primary,
     fontWeight: '500',
   },
   statsRow: {
     flexDirection: 'row',
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.cardPadding,
+    borderWidth: 1,
   },
   stat: {
     flex: 1,
@@ -432,23 +438,20 @@ const styles = StyleSheet.create({
   },
   statDivider: {
     width: 1,
-    backgroundColor: colors.border.light,
     marginVertical: 4,
   },
   statNumber: {
     ...typography.headingMedium,
-    color: colors.text.primary,
   },
   statLabel: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   menuSection: {
     marginHorizontal: spacing.screenHorizontal,
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     overflow: 'hidden',
     marginBottom: spacing.sectionSpacing,
+    borderWidth: 1,
   },
   menuItem: {
     flexDirection: 'row',
@@ -456,33 +459,25 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.listItemPadding,
     paddingHorizontal: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   menuItemLast: {
     borderBottomWidth: 0,
   },
   menuItemText: {
     ...typography.body,
-    color: colors.text.primary,
     flex: 1,
     marginLeft: 12,
-  },
-  logoutText: {
-    color: colors.status.error,
   },
   footer: {
     alignItems: 'center',
     paddingVertical: 16,
     borderTopWidth: 1,
-    borderTopColor: colors.border.light,
   },
   footerText: {
     ...typography.caption,
-    color: colors.text.secondary,
     fontWeight: '600',
   },
   footerSubtext: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
 });

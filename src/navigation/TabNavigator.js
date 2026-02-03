@@ -2,7 +2,8 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Home, Search, Bookmark, Clock, User } from 'lucide-react-native';
-import { colors, typography } from '../constants';
+import { typography } from '../constants';
+import { useTheme } from '../context';
 import { 
   HomeScreen,
   DiscoveryScreen, 
@@ -65,15 +66,18 @@ const ProfileStack = () => (
 );
 
 export const TabNavigator = () => {
+  const { theme } = useTheme();
+  
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarActiveTintColor: colors.accent.primary,
-        tabBarInactiveTintColor: colors.text.secondary,
+        tabBarActiveTintColor: theme.tabBar.active,
+        tabBarInactiveTintColor: theme.tabBar.inactive,
         tabBarStyle: {
-          backgroundColor: colors.background.secondary,
-          borderTopColor: colors.border.light,
+          backgroundColor: theme.tabBar.background,
+          borderTopColor: theme.tabBar.border,
+          borderTopWidth: 1,
           paddingTop: 8,
           height: 85,
         },

@@ -45,53 +45,69 @@ export const lightTheme = {
   border: {
     light: 'rgba(44, 62, 80, 0.12)',
     medium: 'rgba(44, 62, 80, 0.25)',
+    strong: 'rgba(44, 62, 80, 0.35)',
+  },
+  // Tab bar specific
+  tabBar: {
+    background: '#FAF9F6',
+    border: 'rgba(44, 62, 80, 0.12)',
+    active: '#2D5016',
+    inactive: '#7F8C8D',
   },
 };
 
 export const darkTheme = {
   background: {
-    primary: '#1A1A1A',    // Deep charcoal
-    secondary: '#252525',  // Slightly lighter
-    tertiary: '#2F2F2F',   // Card backgrounds
+    primary: '#121212',    // True dark
+    secondary: '#1E1E1E',  // Elevated surfaces
+    tertiary: '#2A2A2A',   // Card backgrounds
   },
   text: {
-    primary: '#F5F1E8',    // Warm cream (inverted from light)
-    secondary: '#A0A0A0',  // Medium gray
-    tertiary: '#707070',   // Darker gray
-    inverse: '#1A1A1A',
+    primary: '#FFFFFF',    // Pure white for max contrast
+    secondary: '#B0B0B0',  // Lighter gray for better readability
+    tertiary: '#808080',   // Medium gray
+    inverse: '#121212',
   },
   accent: {
-    primary: '#7CB89D',    // Sage green (brighter for dark mode)
+    primary: '#8FD4B0',    // Brighter sage green for dark mode
     secondary: '#A8D5BA',  // Light sage
-    tertiary: '#2D5016',   // Forest green (muted in dark)
+    tertiary: '#5A9A7A',   // Muted green
   },
   status: {
-    error: '#E74C3C',
-    success: '#2ECC71',
-    warning: '#F1C40F',
-    info: '#5DADE2',
+    error: '#FF6B6B',
+    success: '#51CF66',
+    warning: '#FFD43B',
+    info: '#74C0FC',
   },
   rating: {
-    star: '#F4A460',
+    star: '#FFB347',       // Brighter orange
     starEmpty: '#4A4A4A',
   },
   teaType: {
-    black: { primary: '#D2691E', gradient: '#8B4513' },
+    black: { primary: '#E8A060', gradient: '#C07830' },
     green: { primary: '#A8D5BA', gradient: '#7CB89D' },
-    oolong: { primary: '#F4A460', gradient: '#E8952D' },
+    oolong: { primary: '#FFB860', gradient: '#E89030' },
     white: { primary: '#E8E8E8', gradient: '#C8C8C8' },
-    puerh: { primary: '#A08060', gradient: '#6B4423' },
-    herbal: { primary: '#D4A5C7', gradient: '#B565A7' },
+    puerh: { primary: '#C0A080', gradient: '#8B6F47' },
+    herbal: { primary: '#E0B0D8', gradient: '#C080B0' },
   },
   shadow: {
-    card: 'rgba(0, 0, 0, 0.3)',
-    searchBar: 'rgba(0, 0, 0, 0.2)',
-    primaryButton: 'rgba(124, 184, 157, 0.30)',
-    elevated: 'rgba(0, 0, 0, 0.4)',
+    card: 'rgba(0, 0, 0, 0.4)',
+    searchBar: 'rgba(0, 0, 0, 0.3)',
+    primaryButton: 'rgba(143, 212, 176, 0.25)',
+    elevated: 'rgba(0, 0, 0, 0.5)',
   },
   border: {
-    light: 'rgba(255, 255, 255, 0.1)',
-    medium: 'rgba(255, 255, 255, 0.2)',
+    light: 'rgba(255, 255, 255, 0.15)',
+    medium: 'rgba(255, 255, 255, 0.25)',
+    strong: 'rgba(255, 255, 255, 0.35)',
+  },
+  // Tab bar specific
+  tabBar: {
+    background: '#1E1E1E',
+    border: 'rgba(255, 255, 255, 0.15)',
+    active: '#8FD4B0',
+    inactive: '#808080',
   },
 };
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -6,22 +6,20 @@ import {
   ScrollView,
   TouchableOpacity,
   TextInput,
-  Image,
   Dimensions,
   RefreshControl,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee } from 'lucide-react-native';
-import { colors, typography, spacing } from '../constants';
-import { TeaCard, TeaTypeBadge, TeaOfTheDay, SeasonalHighlights } from '../components';
+import { typography, spacing } from '../constants';
+import { TeaCard, TeaOfTheDay, SeasonalHighlights } from '../components';
 import { useTeas, useCompanies, useRecommendations } from '../hooks';
 import { useTheme } from '../context';
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.42;
 
-// Tea type categories for browsing
 const TEA_TYPES = [
   { type: 'black', name: 'Black', emoji: '🫖' },
   { type: 'green', name: 'Green', emoji: '🍃' },
@@ -34,44 +32,25 @@ const TEA_TYPES = [
 export const HomeScreen = ({ navigation }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const { teas, loading: teasLoading, refreshTeas } = useTeas();
-  const { companies, loading: companiesLoading } = useCompanies();
+  const { companies } = useCompanies();
   const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  
-  // Dynamic theme styles
-  const themedStyles = {
-    container: { backgroundColor: theme.background.primary },
-    searchBar: { 
-      backgroundColor: theme.background.secondary,
-      borderColor: theme.border.light,
-    },
-    searchInput: { color: theme.text.primary },
-    text: { color: theme.text.primary },
-    textSecondary: { color: theme.text.secondary },
-    accent: { color: theme.accent.primary },
-    card: { backgroundColor: theme.background.secondary },
-    logoIcon: { backgroundColor: theme.accent.primary },
-  };
 
-  // Get featured teas (highest rated)
   const featuredTeas = teas
     .filter(t => t.avgRating >= 4.0 || t.avg_rating >= 4.0)
     .sort((a, b) => (b.avgRating || b.avg_rating || 0) - (a.avgRating || a.avg_rating || 0))
     .slice(0, 8);
 
-  // Get trending teas (most reviews/recent activity - for now, random selection with good ratings)
   const trendingTeas = teas
     .filter(t => (t.ratingCount || t.rating_count || 0) > 0)
     .sort((a, b) => (b.ratingCount || b.rating_count || 0) - (a.ratingCount || a.rating_count || 0))
     .slice(0, 8);
 
-  // Get new arrivals (most recently added)
   const newTeas = [...teas]
     .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
     .slice(0, 8);
 
-  // Featured company (highest rated or most teas)
   const featuredCompany = companies
     .sort((a, b) => (b.avg_rating || 0) - (a.avg_rating || 0))[0];
 
@@ -123,7 +102,7 @@ export const HomeScreen = ({ navigation }) => {
         >
           <Text style={styles.teaTypeEmoji}>{emoji}</Text>
         </LinearGradient>
-        <Text style={styles.teaTypeName}>{name}</Text>
+        <Text style={[styles.teaTypeName, { color: theme.text.primary }]}>{name}</Text>
       </TouchableOpacity>
     );
   };
@@ -132,7 +111,7 @@ export const HomeScreen = ({ navigation }) => {
     if (teaList.length === 0) {
       return (
         <View style={styles.emptySection}>
-          <Text style={styles.emptyText}>{emptyMessage}</Text>
+          <Text style={[styles.emptyText, { color: theme.text.secondary }]}>{emptyMessage}</Text>
         </View>
       );
     }
@@ -156,8 +135,22 @@ export const HomeScreen = ({ navigation }) => {
     );
   };
 
+  const renderSectionHeader = (icon, title, onSeeAll) => (
+    <View style={styles.sectionHeader}>
+      <View style={styles.sectionTitleRow}>
+        {icon}
+        <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>{title}</Text>
+      </View>
+      {onSeeAll && (
+        <TouchableOpacity onPress={onSeeAll}>
+          <Text style={[styles.seeAllText, { color: theme.accent.primary }]}>See All</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+
   return (
-    <SafeAreaView style={[styles.container, themedStyles.container]} edges={['top']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]} edges={['top']}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={
@@ -171,12 +164,12 @@ export const HomeScreen = ({ navigation }) => {
         {/* Header with Logo */}
         <View style={styles.header}>
           <View style={styles.logoRow}>
-            <View style={[styles.logoIcon, themedStyles.logoIcon]}>
+            <View style={[styles.logoIcon, { backgroundColor: theme.accent.primary }]}>
               <Coffee size={28} color={theme.text.inverse} />
             </View>
             <View>
               <Text style={[styles.appName, { color: theme.accent.primary }]}>Resteeped</Text>
-              <Text style={[styles.tagline, themedStyles.textSecondary]}>Discover your next favorite tea</Text>
+              <Text style={[styles.tagline, { color: theme.text.secondary }]}>Discover your next favorite tea</Text>
             </View>
           </View>
         </View>
@@ -187,10 +180,13 @@ export const HomeScreen = ({ navigation }) => {
           onPress={handleSearch}
           activeOpacity={0.8}
         >
-          <View style={[styles.searchBar, themedStyles.searchBar]}>
+          <View style={[styles.searchBar, { 
+            backgroundColor: theme.background.secondary,
+            borderColor: theme.border.medium,
+          }]}>
             <Search size={20} color={theme.text.secondary} />
             <TextInput
-              style={[styles.searchInput, themedStyles.searchInput]}
+              style={[styles.searchInput, { color: theme.text.primary }]}
               placeholder="Search teas, brands, flavors..."
               placeholderTextColor={theme.text.secondary}
               value={searchQuery}
@@ -220,7 +216,7 @@ export const HomeScreen = ({ navigation }) => {
 
         {/* Browse by Tea Type */}
         <View style={styles.section}>
-          <Text style={styles.browseTitle}>Browse by Type</Text>
+          <Text style={[styles.browseTitle, { color: theme.text.primary }]}>Browse by Type</Text>
           <View style={styles.teaTypeGrid}>
             {TEA_TYPES.map(renderTeaTypeButton)}
           </View>
@@ -229,16 +225,12 @@ export const HomeScreen = ({ navigation }) => {
         {/* For You - Personalized Recommendations */}
         {hasPreferences && forYou.length > 0 && (
           <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <View style={styles.sectionTitleRow}>
-                <Sparkles size={18} color={colors.accent.primary} />
-                <Text style={styles.sectionTitle}>For You</Text>
-              </View>
-              <TouchableOpacity onPress={() => handleSeeAll('forYou')}>
-                <Text style={styles.seeAllText}>See All</Text>
-              </TouchableOpacity>
-            </View>
-            <Text style={styles.recommendationHint}>
+            {renderSectionHeader(
+              <Sparkles size={18} color={theme.accent.primary} />,
+              'For You',
+              () => handleSeeAll('forYou')
+            )}
+            <Text style={[styles.recommendationHint, { color: theme.text.secondary }]}>
               Based on your love of {preferences.types.slice(0, 2).join(' & ')} teas
             </Text>
             {renderHorizontalTeaList(forYou, 'Rate more teas to get personalized recommendations')}
@@ -248,13 +240,12 @@ export const HomeScreen = ({ navigation }) => {
         {/* Explore Something New */}
         {hasPreferences && explore.length > 0 && (
           <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <View style={styles.sectionTitleRow}>
-                <Search size={18} color={colors.accent.primary} />
-                <Text style={styles.sectionTitle}>Try Something New</Text>
-              </View>
-            </View>
-            <Text style={styles.recommendationHint}>
+            {renderSectionHeader(
+              <Search size={18} color={theme.accent.primary} />,
+              'Try Something New',
+              null
+            )}
+            <Text style={[styles.recommendationHint, { color: theme.text.secondary }]}>
               Different from your usual — expand your palate
             </Text>
             {renderHorizontalTeaList(explore.slice(0, 6), 'Start rating teas to unlock recommendations')}
@@ -263,72 +254,63 @@ export const HomeScreen = ({ navigation }) => {
 
         {/* Featured Teas */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <View style={styles.sectionTitleRow}>
-              <Star size={18} color={colors.accent.primary} />
-              <Text style={styles.sectionTitle}>Featured Teas</Text>
-            </View>
-            <TouchableOpacity onPress={() => handleSeeAll('featured')}>
-              <Text style={styles.seeAllText}>See All</Text>
-            </TouchableOpacity>
-          </View>
+          {renderSectionHeader(
+            <Star size={18} color={theme.accent.primary} />,
+            'Featured Teas',
+            () => handleSeeAll('featured')
+          )}
           {renderHorizontalTeaList(featuredTeas, 'No featured teas yet')}
         </View>
 
         {/* Trending Now */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <View style={styles.sectionTitleRow}>
-              <TrendingUp size={18} color={colors.accent.primary} />
-              <Text style={styles.sectionTitle}>Trending Now</Text>
-            </View>
-            <TouchableOpacity onPress={() => handleSeeAll('trending')}>
-              <Text style={styles.seeAllText}>See All</Text>
-            </TouchableOpacity>
-          </View>
+          {renderSectionHeader(
+            <TrendingUp size={18} color={theme.accent.primary} />,
+            'Trending Now',
+            () => handleSeeAll('trending')
+          )}
           {renderHorizontalTeaList(trendingTeas, 'Check back for trending teas')}
         </View>
 
         {/* Featured Tea Shop */}
         {featuredCompany && (
           <View style={styles.section}>
-            <View style={styles.sectionHeader}>
-              <View style={styles.sectionTitleRow}>
-                <Award size={18} color={colors.accent.primary} />
-                <Text style={styles.sectionTitle}>Featured Shop</Text>
-              </View>
-            </View>
+            {renderSectionHeader(
+              <Award size={18} color={theme.accent.primary} />,
+              'Featured Shop',
+              null
+            )}
             <TouchableOpacity
               style={styles.featuredShopCard}
               onPress={() => navigation.navigate('CompanyProfile', { company: featuredCompany })}
               activeOpacity={0.8}
             >
               <LinearGradient
-                colors={[colors.accent.primary, colors.accent.secondary]}
+                colors={[theme.accent.primary, theme.accent.secondary]}
                 style={styles.featuredShopGradient}
                 start={{ x: 0, y: 0 }}
                 end={{ x: 1, y: 1 }}
               >
                 <View style={styles.featuredShopContent}>
                   <View style={styles.featuredShopInfo}>
-                    <Text style={styles.featuredShopName}>{featuredCompany.name}</Text>
+                    <Text style={[styles.featuredShopName, { color: theme.text.inverse }]}>{featuredCompany.name}</Text>
                     <Text style={styles.featuredShopDescription} numberOfLines={2}>
                       {featuredCompany.short_description || featuredCompany.description}
                     </Text>
                     <View style={styles.featuredShopStats}>
                       <View style={styles.featuredShopStat}>
                         <Star size={14} color="#FFD700" fill="#FFD700" />
-                        <Text style={styles.featuredShopStatText}>
+                        <Text style={[styles.featuredShopStatText, { color: theme.text.inverse }]}>
                           {(featuredCompany.avg_rating || 0).toFixed(1)}
                         </Text>
                       </View>
                       <Text style={styles.featuredShopStatDivider}>•</Text>
-                      <Text style={styles.featuredShopStatText}>
+                      <Text style={[styles.featuredShopStatText, { color: theme.text.inverse }]}>
                         {featuredCompany.tea_count || 0} teas
                       </Text>
                     </View>
                   </View>
-                  <ChevronRight size={24} color={colors.text.inverse} />
+                  <ChevronRight size={24} color={theme.text.inverse} />
                 </View>
               </LinearGradient>
             </TouchableOpacity>
@@ -337,32 +319,33 @@ export const HomeScreen = ({ navigation }) => {
 
         {/* New Arrivals */}
         <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>New Arrivals</Text>
-            <TouchableOpacity onPress={() => handleSeeAll('new')}>
-              <Text style={styles.seeAllText}>See All</Text>
-            </TouchableOpacity>
-          </View>
+          {renderSectionHeader(null, 'New Arrivals', () => handleSeeAll('new'))}
           {renderHorizontalTeaList(newTeas, 'New teas coming soon')}
         </View>
 
         {/* Quick Stats */}
         <View style={styles.statsSection}>
           <TouchableOpacity 
-            style={styles.statCard}
+            style={[styles.statCard, { 
+              backgroundColor: theme.background.secondary,
+              borderColor: theme.border.medium,
+            }]}
             onPress={() => navigation.navigate('Discover')}
             activeOpacity={0.7}
           >
-            <Text style={styles.statNumber}>{teas.length}</Text>
-            <Text style={styles.statLabel}>Teas to Explore</Text>
+            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{teas.length}</Text>
+            <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Teas to Explore</Text>
           </TouchableOpacity>
           <TouchableOpacity 
-            style={styles.statCard}
+            style={[styles.statCard, { 
+              backgroundColor: theme.background.secondary,
+              borderColor: theme.border.medium,
+            }]}
             onPress={() => navigation.navigate('TeaShops')}
             activeOpacity={0.7}
           >
-            <Text style={styles.statNumber}>{companies.length}</Text>
-            <Text style={styles.statLabel}>Tea Shops</Text>
+            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{companies.length}</Text>
+            <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Tea Shops</Text>
           </TouchableOpacity>
         </View>
 
@@ -375,7 +358,6 @@ export const HomeScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
   },
   header: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -391,10 +373,8 @@ const styles = StyleSheet.create({
     width: 52,
     height: 52,
     borderRadius: 14,
-    backgroundColor: colors.accent.primary,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: colors.accent.primary,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 8,
@@ -403,12 +383,10 @@ const styles = StyleSheet.create({
   appName: {
     fontSize: 28,
     fontWeight: '700',
-    color: colors.accent.primary,
     letterSpacing: -0.5,
   },
   tagline: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginTop: 2,
   },
   searchContainer: {
@@ -418,18 +396,15 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.searchBarBorderRadius,
     paddingHorizontal: spacing.searchBarPaddingH,
     height: spacing.searchBarHeight,
     borderWidth: 1,
-    borderColor: colors.border.light,
   },
   searchInput: {
     flex: 1,
     marginLeft: 12,
     ...typography.body,
-    color: colors.text.primary,
   },
   section: {
     marginBottom: spacing.sectionSpacing,
@@ -449,23 +424,19 @@ const styles = StyleSheet.create({
   sectionTitle: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.text.primary,
   },
   browseTitle: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.text.primary,
     paddingHorizontal: spacing.screenHorizontal,
     marginBottom: spacing.md,
   },
   seeAllText: {
     ...typography.bodySmall,
-    color: colors.accent.primary,
     fontWeight: '500',
   },
   recommendationHint: {
     ...typography.caption,
-    color: colors.text.secondary,
     paddingHorizontal: spacing.screenHorizontal,
     marginBottom: spacing.sm,
     fontStyle: 'italic',
@@ -495,7 +466,6 @@ const styles = StyleSheet.create({
   },
   teaTypeName: {
     ...typography.caption,
-    color: colors.text.primary,
     fontWeight: '500',
     textAlign: 'center',
   },
@@ -512,7 +482,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     ...typography.body,
-    color: colors.text.secondary,
     textAlign: 'center',
   },
   featuredShopCard: {
@@ -532,7 +501,6 @@ const styles = StyleSheet.create({
   },
   featuredShopName: {
     ...typography.headingSmall,
-    color: colors.text.inverse,
     marginBottom: 4,
   },
   featuredShopDescription: {
@@ -551,7 +519,6 @@ const styles = StyleSheet.create({
   },
   featuredShopStatText: {
     ...typography.caption,
-    color: colors.text.inverse,
     fontWeight: '500',
   },
   featuredShopStatDivider: {
@@ -567,19 +534,17 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.cardPaddingLarge,
     alignItems: 'center',
+    borderWidth: 1,
   },
   statNumber: {
     fontSize: 28,
     fontWeight: '700',
-    color: colors.accent.primary,
   },
   statLabel: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginTop: 6,
   },
 });

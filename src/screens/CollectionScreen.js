@@ -9,7 +9,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { Bookmark } from 'lucide-react-native';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
 import { TeaCard, Button } from '../components';
 import { useAuth, useCollection, useTheme } from '../context';
 
@@ -22,7 +22,6 @@ export const CollectionScreen = ({ navigation }) => {
   const filteredCollection = collection.filter(item => {
     if (filter === 'all') return true;
     if (filter === 'tried') return item.status === 'tried';
-    // 'want_to_try' is default, so include items without a status too
     if (filter === 'want') return item.status === 'want_to_try' || !item.status;
     return false;
   });
@@ -30,12 +29,12 @@ export const CollectionScreen = ({ navigation }) => {
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
       <View style={styles.emptyIconContainer}>
-        <Bookmark size={64} color={colors.text.secondary} />
+        <Bookmark size={64} color={theme.text.secondary} />
       </View>
       {!user ? (
         <>
-          <Text style={styles.emptyTitle}>Sign in to track your teas</Text>
-          <Text style={styles.emptySubtitle}>
+          <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>Sign in to track your teas</Text>
+          <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
             Create an account to save teas, rate them, and build your collection.
           </Text>
           <Button 
@@ -47,8 +46,8 @@ export const CollectionScreen = ({ navigation }) => {
         </>
       ) : (
         <>
-          <Text style={styles.emptyTitle}>Your collection is empty</Text>
-          <Text style={styles.emptySubtitle}>
+          <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>Your collection is empty</Text>
+          <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
             Start exploring teas and save the ones you love!
           </Text>
           <Button 
@@ -63,8 +62,6 @@ export const CollectionScreen = ({ navigation }) => {
   );
   
   const renderTeaItem = ({ item }) => {
-    // For now, we're using local tea data
-    // When Supabase is connected, item.tea will contain the full tea object
     const tea = item.tea || {
       id: item.tea_id,
       name: 'Tea',
@@ -80,11 +77,33 @@ export const CollectionScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('TeaDetail', { tea })}
         />
         {item.user_rating && (
-          <View style={styles.ratingBadge}>
-            <Text style={styles.ratingText}>★ {item.user_rating}</Text>
+          <View style={[styles.ratingBadge, { backgroundColor: theme.accent.primary }]}>
+            <Text style={[styles.ratingText, { color: theme.text.inverse }]}>★ {item.user_rating}</Text>
           </View>
         )}
       </View>
+    );
+  };
+
+  const renderTab = (tab) => {
+    const isActive = filter === tab.id;
+    return (
+      <TouchableOpacity
+        key={tab.id}
+        style={[
+          styles.tab, 
+          isActive && { borderBottomColor: theme.accent.primary, borderBottomWidth: 2 }
+        ]}
+        onPress={() => setFilter(tab.id)}
+      >
+        <Text style={[
+          styles.tabText, 
+          { color: isActive ? theme.accent.primary : theme.text.secondary },
+          isActive && { fontWeight: '600' }
+        ]}>
+          {tab.label}
+        </Text>
+      </TouchableOpacity>
     );
   };
   
@@ -98,22 +117,12 @@ export const CollectionScreen = ({ navigation }) => {
       </View>
       
       {/* Filter tabs */}
-      <View style={styles.filterTabs}>
+      <View style={[styles.filterTabs, { borderBottomColor: theme.border.light }]}>
         {[
           { id: 'all', label: 'All' },
           { id: 'tried', label: 'Tried' },
           { id: 'want', label: 'Want to Try' },
-        ].map((tab) => (
-          <TouchableOpacity
-            key={tab.id}
-            style={[styles.tab, filter === tab.id && styles.tabActive]}
-            onPress={() => setFilter(tab.id)}
-          >
-            <Text style={[styles.tabText, filter === tab.id && styles.tabTextActive]}>
-              {tab.label}
-            </Text>
-          </TouchableOpacity>
-        ))}
+        ].map(renderTab)}
       </View>
       
       {filteredCollection.length === 0 ? (
@@ -129,7 +138,7 @@ export const CollectionScreen = ({ navigation }) => {
             <RefreshControl
               refreshing={loading}
               onRefresh={refreshCollection}
-              tintColor={colors.accent.primary}
+              tintColor={theme.accent.primary}
             />
           }
         />
@@ -141,7 +150,6 @@ export const CollectionScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
   },
   header: {
     flexDirection: 'row',
@@ -153,35 +161,23 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.headingLarge,
-    color: colors.text.primary,
   },
   count: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
   },
   filterTabs: {
     flexDirection: 'row',
     paddingHorizontal: spacing.screenHorizontal,
     marginBottom: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   tab: {
     paddingVertical: 14,
     paddingHorizontal: 18,
     marginRight: spacing.sm,
   },
-  tabActive: {
-    borderBottomWidth: 2,
-    borderBottomColor: colors.accent.primary,
-  },
   tabText: {
     ...typography.body,
-    color: colors.text.secondary,
-  },
-  tabTextActive: {
-    color: colors.accent.primary,
-    fontWeight: '600',
   },
   listContent: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -196,14 +192,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 10,
     right: 10,
-    backgroundColor: colors.accent.primary,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 14,
   },
   ratingText: {
     ...typography.caption,
-    color: colors.text.inverse,
     fontWeight: '600',
   },
   emptyState: {
@@ -218,13 +212,11 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     ...typography.headingMedium,
-    color: colors.text.primary,
     marginBottom: spacing.sm,
     textAlign: 'center',
   },
   emptySubtitle: {
     ...typography.body,
-    color: colors.text.secondary,
     textAlign: 'center',
     marginBottom: spacing.lg,
     lineHeight: 24,

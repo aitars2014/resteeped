@@ -15,6 +15,8 @@ export const TeaCard = ({ tea, onPress }) => {
       style={[styles.card, { 
         backgroundColor: theme.background.secondary,
         shadowColor: theme.shadow?.card || '#000',
+        borderColor: theme.border.light,
+        borderWidth: 1,
       }]} 
       onPress={onPress}
       activeOpacity={0.9}
