@@ -13,16 +13,17 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2 } from 'lucide-react-native';
-import { colors, typography, spacing, getTeaTypeColor, getPlaceholderImage } from '../constants';
+import { colors, typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar } from '../components';
 import { shareTea } from '../utils/sharing';
-import { useAuth, useCollection } from '../context';
+import { useAuth, useCollection, useTheme } from '../context';
 import { useReviews, useCompanies, useTeas } from '../hooks';
 
 const { width, height } = Dimensions.get('window');
 const HERO_HEIGHT = height * 0.32;
 
 export const TeaDetailScreen = ({ route, navigation }) => {
+  const { theme, getTeaTypeColor } = useTheme();
   const { tea } = route.params;
   const teaColor = getTeaTypeColor(tea.teaType);
   
@@ -145,7 +146,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const displayCount = reviewCount > 0 ? reviewCount : (tea.ratingCount || 0);
   
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background.primary }]}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Hero Image */}
         <View style={styles.heroContainer}>

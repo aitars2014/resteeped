@@ -1,16 +1,21 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { colors, typography, spacing, getTeaTypeColor, getPlaceholderImage } from '../constants';
+import { typography, spacing, getPlaceholderImage } from '../constants';
+import { useTheme } from '../context';
 import { StarRating } from './StarRating';
 import { TeaTypeBadge } from './TeaTypeBadge';
 
 export const TeaCard = ({ tea, onPress }) => {
+  const { theme, getTeaTypeColor } = useTheme();
   const teaColor = getTeaTypeColor(tea.teaType);
   const placeholderImage = getPlaceholderImage(tea.teaType);
   
   return (
     <TouchableOpacity 
-      style={styles.card} 
+      style={[styles.card, { 
+        backgroundColor: theme.background.secondary,
+        shadowColor: theme.shadow?.card || '#000',
+      }]} 
       onPress={onPress}
       activeOpacity={0.9}
     >
@@ -32,10 +37,10 @@ export const TeaCard = ({ tea, onPress }) => {
         
         {/* Text area */}
         <View style={styles.textArea}>
-          <Text style={styles.teaName} numberOfLines={2}>
+          <Text style={[styles.teaName, { color: theme.text.primary }]} numberOfLines={2}>
             {tea.name}
           </Text>
-          <Text style={styles.brandName} numberOfLines={1}>
+          <Text style={[styles.brandName, { color: theme.text.secondary }]} numberOfLines={1}>
             {tea.brandName}
           </Text>
           <StarRating rating={tea.avgRating} size={12} />
@@ -47,13 +52,11 @@ export const TeaCard = ({ tea, onPress }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     overflow: 'hidden',
     flexDirection: 'row',
-    shadowColor: colors.shadow.card,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 1,
+    shadowOpacity: 0.08,
     shadowRadius: 12,
     elevation: 3,
   },
@@ -85,13 +88,11 @@ const styles = StyleSheet.create({
   teaName: {
     ...typography.bodySmall,
     fontWeight: '600',
-    color: colors.text.primary,
     marginBottom: 6,
     lineHeight: 20,
   },
   brandName: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginBottom: 8,
   },
 });

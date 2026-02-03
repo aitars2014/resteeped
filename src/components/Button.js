@@ -1,6 +1,7 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 
 export const Button = ({ 
   title, 
@@ -10,14 +11,32 @@ export const Button = ({
   icon = null,
   style = {},
 }) => {
+  const { theme } = useTheme();
   const isPrimary = variant === 'primary';
+  
+  const dynamicStyles = {
+    primary: {
+      backgroundColor: theme.accent.primary,
+      shadowColor: theme.shadow?.primaryButton || theme.accent.primary,
+    },
+    secondary: {
+      borderColor: theme.text.primary,
+    },
+    disabled: {
+      backgroundColor: theme.accent.secondary,
+      borderColor: theme.text.secondary,
+    },
+    primaryText: { color: theme.text.inverse },
+    secondaryText: { color: theme.text.primary },
+    disabledText: { color: theme.text.secondary },
+  };
   
   return (
     <TouchableOpacity
       style={[
         styles.button,
-        isPrimary ? styles.primary : styles.secondary,
-        disabled && styles.disabled,
+        isPrimary ? [styles.primary, dynamicStyles.primary] : [styles.secondary, dynamicStyles.secondary],
+        disabled && [styles.disabled, dynamicStyles.disabled],
         style,
       ]}
       onPress={onPress}
@@ -28,8 +47,8 @@ export const Button = ({
         {icon && <View style={styles.icon}>{icon}</View>}
         <Text style={[
           styles.text,
-          isPrimary ? styles.primaryText : styles.secondaryText,
-          disabled && styles.disabledText,
+          isPrimary ? dynamicStyles.primaryText : dynamicStyles.secondaryText,
+          disabled && dynamicStyles.disabledText,
         ]}>
           {title}
         </Text>
@@ -45,11 +64,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   primary: {
-    backgroundColor: colors.accent.primary,
     height: spacing.buttonHeightPrimary,
-    shadowColor: colors.shadow.primaryButton,
     shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 1,
+    shadowOpacity: 0.3,
     shadowRadius: 12,
     elevation: 4,
   },
@@ -57,11 +74,9 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     height: spacing.buttonHeightSecondary,
     borderWidth: 2,
-    borderColor: colors.text.primary,
   },
   disabled: {
-    backgroundColor: colors.accent.secondary,
-    borderColor: colors.text.secondary,
+    // Colors applied dynamically
   },
   content: {
     flexDirection: 'row',
@@ -72,15 +87,5 @@ const styles = StyleSheet.create({
   },
   text: {
     ...typography.buttonLarge,
-  },
-  primaryText: {
-    color: colors.text.inverse,
-  },
-  secondaryText: {
-    color: colors.text.primary,
-    ...typography.buttonSmall,
-  },
-  disabledText: {
-    color: colors.text.secondary,
   },
 });
