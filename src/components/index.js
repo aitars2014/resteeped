@@ -1,6 +1,7 @@
 export { Button } from './Button';
 export { SearchBar } from './SearchBar';
 export { FilterPills } from './FilterPills';
+export { FilterModal } from './FilterModal';
 export { StarRating } from './StarRating';
 export { TeaTypeBadge } from './TeaTypeBadge';
 export { TeaCard } from './TeaCard';

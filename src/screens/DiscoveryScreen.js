@@ -8,33 +8,57 @@ import {
   Dimensions,
   ActivityIndicator,
   RefreshControl,
+  TouchableOpacity,
 } from 'react-native';
+import { SlidersHorizontal } from 'lucide-react-native';
 import { colors, typography, spacing } from '../constants';
-import { SearchBar, FilterPills, TeaCard } from '../components';
+import { SearchBar, FilterPills, FilterModal, TeaCard } from '../components';
 import { useTeas } from '../hooks';
-import { teaTypes } from '../data/teas';
 
 const { width } = Dimensions.get('window');
 const cardWidth = (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2;
 
 export const DiscoveryScreen = ({ navigation, route }) => {
-  const { teas, loading, refreshTeas, searchTeas } = useTeas();
+  const { teas, loading, refreshTeas, filterTeas } = useTeas();
   
   // Accept initial values from navigation params (e.g., from Home screen)
   const { initialSearch, initialFilter } = route.params || {};
   
   const [searchQuery, setSearchQuery] = useState(initialSearch || '');
-  const [selectedType, setSelectedType] = useState(initialFilter || 'all');
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [filters, setFilters] = useState({
+    teaType: initialFilter || 'all',
+    company: 'all',
+    minRating: 'all',
+    sortBy: 'rating',
+  });
   
   // Update filters when navigating from Home with new params
   useEffect(() => {
     if (initialSearch !== undefined) setSearchQuery(initialSearch);
-    if (initialFilter !== undefined) setSelectedType(initialFilter);
+    if (initialFilter !== undefined) {
+      setFilters(prev => ({ ...prev, teaType: initialFilter }));
+    }
   }, [initialSearch, initialFilter]);
   
   const filteredTeas = useMemo(() => {
-    return searchTeas(searchQuery, selectedType);
-  }, [searchQuery, selectedType, searchTeas]);
+    return filterTeas(searchQuery, filters);
+  }, [searchQuery, filters, filterTeas]);
+
+  const handleApplyFilters = (newFilters) => {
+    setFilters(newFilters);
+  };
+
+  const handleTypeChange = (type) => {
+    setFilters(prev => ({ ...prev, teaType: type }));
+  };
+
+  // Count active filters (excluding default values)
+  const activeFilterCount = [
+    filters.teaType !== 'all',
+    filters.company !== 'all',
+    filters.minRating !== 'all',
+  ].filter(Boolean).length;
   
   const renderTeaCard = ({ item, index }) => (
     <View style={[styles.cardContainer, index % 2 === 0 ? styles.cardLeft : styles.cardRight]}>
@@ -60,24 +84,58 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   
   const renderHeader = () => (
     <>
-      <View style={styles.searchContainer}>
-        <SearchBar 
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-        />
+      {/* Search Bar Row */}
+      <View style={styles.searchRow}>
+        <View style={styles.searchContainer}>
+          <SearchBar 
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+          />
+        </View>
+        <TouchableOpacity 
+          style={[
+            styles.filterButton,
+            activeFilterCount > 0 && styles.filterButtonActive
+          ]}
+          onPress={() => setShowFilterModal(true)}
+        >
+          <SlidersHorizontal 
+            size={20} 
+            color={activeFilterCount > 0 ? colors.text.inverse : colors.text.primary} 
+          />
+          {activeFilterCount > 0 && (
+            <View style={styles.filterBadge}>
+              <Text style={styles.filterBadgeText}>{activeFilterCount}</Text>
+            </View>
+          )}
+        </TouchableOpacity>
       </View>
       
+      {/* Tea Type Pills */}
       <View style={styles.filtersContainer}>
         <FilterPills 
-          selectedType={selectedType}
-          onSelectType={setSelectedType}
+          selectedType={filters.teaType}
+          onSelectType={handleTypeChange}
         />
       </View>
       
+      {/* Result Count */}
       <View style={styles.resultCount}>
         <Text style={styles.resultText}>
           {filteredTeas.length} tea{filteredTeas.length !== 1 ? 's' : ''}
         </Text>
+        {activeFilterCount > 0 && (
+          <TouchableOpacity 
+            onPress={() => setFilters({
+              teaType: 'all',
+              company: 'all',
+              minRating: 'all',
+              sortBy: 'rating',
+            })}
+          >
+            <Text style={styles.clearFiltersText}>Clear filters</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </>
   );
@@ -105,6 +163,14 @@ export const DiscoveryScreen = ({ navigation, route }) => {
           />
         }
       />
+
+      {/* Filter Modal */}
+      <FilterModal
+        visible={showFilterModal}
+        onClose={() => setShowFilterModal(false)}
+        filters={filters}
+        onApplyFilters={handleApplyFilters}
+      />
     </SafeAreaView>
   );
 };
@@ -123,20 +189,65 @@ const styles = StyleSheet.create({
     ...typography.headingLarge,
     color: colors.text.primary,
   },
-  searchContainer: {
+  searchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: spacing.screenHorizontal,
     paddingBottom: spacing.elementSpacing,
+    gap: 12,
+  },
+  searchContainer: {
+    flex: 1,
+  },
+  filterButton: {
+    width: 48,
+    height: 48,
+    borderRadius: 12,
+    backgroundColor: colors.background.secondary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: colors.border.light,
+  },
+  filterButtonActive: {
+    backgroundColor: colors.accent.primary,
+    borderColor: colors.accent.primary,
+  },
+  filterBadge: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    backgroundColor: colors.status.error,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  filterBadgeText: {
+    ...typography.caption,
+    fontSize: 10,
+    color: colors.text.inverse,
+    fontWeight: '700',
   },
   filtersContainer: {
     paddingBottom: spacing.elementSpacing,
   },
   resultCount: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: spacing.screenHorizontal,
     paddingBottom: spacing.elementSpacing,
   },
   resultText: {
     ...typography.bodySmall,
     color: colors.text.secondary,
+  },
+  clearFiltersText: {
+    ...typography.bodySmall,
+    color: colors.accent.primary,
+    fontWeight: '500',
   },
   listContent: {
     paddingHorizontal: spacing.screenHorizontal,

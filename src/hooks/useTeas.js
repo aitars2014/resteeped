@@ -42,6 +42,8 @@ export const useTeas = () => {
         pricePerOz: tea.price_per_oz,
         avgRating: tea.avg_rating,
         ratingCount: tea.rating_count,
+        companyId: tea.company_id,
+        createdAt: tea.created_at,
       }));
 
       setTeas(formattedTeas);
@@ -59,21 +61,67 @@ export const useTeas = () => {
     fetchTeas();
   }, [fetchTeas]);
 
+  // Basic search with type filter (backward compatible)
   const searchTeas = useCallback((query, typeFilter = 'all') => {
-    let result = teas;
+    return filterTeas(query, { teaType: typeFilter });
+  }, [teas]);
 
-    if (typeFilter !== 'all') {
-      result = result.filter(tea => tea.teaType === typeFilter);
+  // Advanced filtering with multiple criteria
+  const filterTeas = useCallback((query, filters = {}) => {
+    let result = [...teas];
+    
+    const {
+      teaType = 'all',
+      company = 'all',
+      minRating = 'all',
+      sortBy = 'rating',
+    } = filters;
+
+    // Filter by tea type
+    if (teaType !== 'all') {
+      result = result.filter(tea => tea.teaType === teaType);
     }
 
-    if (query.trim()) {
+    // Filter by company
+    if (company !== 'all') {
+      result = result.filter(tea => tea.companyId === company);
+    }
+
+    // Filter by minimum rating
+    if (minRating !== 'all') {
+      const min = parseInt(minRating, 10);
+      result = result.filter(tea => (tea.avgRating || 0) >= min);
+    }
+
+    // Search query
+    if (query && query.trim()) {
       const q = query.toLowerCase();
       result = result.filter(tea =>
         tea.name.toLowerCase().includes(q) ||
         tea.brandName.toLowerCase().includes(q) ||
         tea.teaType.toLowerCase().includes(q) ||
-        tea.flavorNotes?.some(note => note.toLowerCase().includes(q))
+        tea.flavorNotes?.some(note => note.toLowerCase().includes(q)) ||
+        tea.origin?.toLowerCase().includes(q) ||
+        tea.description?.toLowerCase().includes(q)
       );
+    }
+
+    // Sort results
+    switch (sortBy) {
+      case 'rating':
+        result.sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0));
+        break;
+      case 'name':
+        result.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      case 'newest':
+        result.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
+        break;
+      case 'reviews':
+        result.sort((a, b) => (b.ratingCount || 0) - (a.ratingCount || 0));
+        break;
+      default:
+        break;
     }
 
     return result;
@@ -89,6 +137,7 @@ export const useTeas = () => {
     error,
     refreshTeas: fetchTeas,
     searchTeas,
+    filterTeas,
     getTeaById,
   };
 };
