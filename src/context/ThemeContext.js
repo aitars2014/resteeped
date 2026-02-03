@@ -6,9 +6,9 @@ import { lightTheme, darkTheme, getTeaTypeColor as getTeaColor } from '../consta
 const THEME_STORAGE_KEY = '@resteeped:theme_preference';
 
 const ThemeContext = createContext({
-  theme: lightTheme,
-  isDark: false,
-  themePreference: 'system', // 'light', 'dark', 'system'
+  theme: darkTheme,
+  isDark: true,
+  themePreference: 'dark', // 'light', 'dark', 'system'
   setThemePreference: () => {},
   getTeaTypeColor: () => {},
 });
@@ -17,7 +17,8 @@ export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
   const systemColorScheme = useColorScheme();
-  const [themePreference, setThemePreferenceState] = useState('system');
+  // Default to dark mode - looks better and most users prefer it
+  const [themePreference, setThemePreferenceState] = useState('dark');
   const [isLoading, setIsLoading] = useState(true);
 
   // Load saved preference on mount

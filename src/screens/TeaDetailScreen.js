@@ -2,7 +2,6 @@ import React, { useState, useMemo } from 'react';
 import { 
   View, 
   Text, 
-  StyleSheet, 
   ScrollView, 
   TouchableOpacity,
   Dimensions,
@@ -13,7 +12,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2 } from 'lucide-react-native';
-import { colors, typography, spacing, getPlaceholderImage } from '../constants';
+import { typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar } from '../components';
 import { shareTea } from '../utils/sharing';
 import { useAuth, useCollection, useTheme } from '../context';
@@ -26,6 +25,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const { tea } = route.params;
   const teaColor = getTeaTypeColor(tea.teaType);
+  const styles = createStyles(theme);
   
   const { user } = useAuth();
   const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, updateInCollection } = useCollection();
@@ -164,19 +164,19 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             style={styles.backButton}
             onPress={() => navigation.goBack()}
           >
-            <ChevronLeft size={24} color={colors.text.primary} />
+            <ChevronLeft size={24} color={theme.text.primary} />
           </TouchableOpacity>
           
           <TouchableOpacity 
             style={styles.shareButton}
             onPress={() => shareTea(tea)}
           >
-            <Share2 size={20} color={colors.text.primary} />
+            <Share2 size={20} color={theme.text.primary} />
           </TouchableOpacity>
           
           {inCollection && (
             <View style={styles.collectionBadge}>
-              <Check size={16} color={colors.text.inverse} />
+              <Check size={16} color={theme.text.inverse} />
             </View>
           )}
         </View>
@@ -196,7 +196,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <View style={styles.badgeRow}>
             <TeaTypeBadge teaType={tea.teaType} size="large" />
             <View style={styles.ratingPill}>
-              <Star size={14} color={colors.rating.star} fill={colors.rating.star} />
+              <Star size={14} color={theme.rating.star} fill={theme.rating.star} />
               <Text style={styles.ratingText}>
                 {displayRating.toFixed(1)} ({displayCount})
               </Text>
@@ -207,19 +207,19 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <View style={styles.quickFacts}>
             {tea.steepTempF && (
               <View style={styles.quickFact}>
-                <Thermometer size={18} color={colors.accent.primary} />
+                <Thermometer size={18} color={theme.accent.primary} />
                 <Text style={styles.quickFactText}>{tea.steepTempF}°F</Text>
               </View>
             )}
             {tea.steepTimeMin && (
               <View style={styles.quickFact}>
-                <Clock size={18} color={colors.accent.primary} />
+                <Clock size={18} color={theme.accent.primary} />
                 <Text style={styles.quickFactText}>{formatSteepTime()}</Text>
               </View>
             )}
             {tea.origin && (
               <View style={styles.quickFact}>
-                <MapPin size={18} color={colors.accent.primary} />
+                <MapPin size={18} color={theme.accent.primary} />
                 <Text style={styles.quickFactText} numberOfLines={1}>{tea.origin}</Text>
               </View>
             )}
@@ -271,7 +271,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
                   onPress={() => setShowTastingNotes(true)} 
                   style={styles.editNotesButton}
                 >
-                  <NotebookPen size={16} color={colors.accent.primary} />
+                  <NotebookPen size={16} color={theme.accent.primary} />
                   <Text style={styles.editNotesText}>
                     {collectionItem?.notes ? 'Edit' : 'Add Notes'}
                   </Text>
@@ -297,7 +297,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
                   style={styles.addNotesPrompt}
                   onPress={() => setShowTastingNotes(true)}
                 >
-                  <NotebookPen size={24} color={colors.text.secondary} />
+                  <NotebookPen size={24} color={theme.text.secondary} />
                   <Text style={styles.addNotesText}>
                     Tap to add your tasting notes
                   </Text>
@@ -313,7 +313,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
                 Reviews {reviewCount > 0 && `(${reviewCount})`}
               </Text>
               <TouchableOpacity onPress={handleWriteReview} style={styles.writeReviewButton}>
-                <MessageSquare size={16} color={colors.accent.primary} />
+                <MessageSquare size={16} color={theme.accent.primary} />
                 <Text style={styles.writeReviewText}>
                   {userReview ? 'Edit Review' : 'Write Review'}
                 </Text>
@@ -350,7 +350,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
               >
                 <View style={styles.buyCardContent}>
                   <View style={styles.buyIconContainer}>
-                    <ShoppingCart size={24} color={colors.accent.primary} />
+                    <ShoppingCart size={24} color={theme.accent.primary} />
                   </View>
                   <View style={styles.buyCardText}>
                     <Text style={styles.buyCardTitle}>
@@ -360,7 +360,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
                       Tap to visit their website
                     </Text>
                   </View>
-                  <ExternalLink size={20} color={colors.text.secondary} />
+                  <ExternalLink size={20} color={theme.text.secondary} />
                 </View>
               </TouchableOpacity>
             ) : (
@@ -436,10 +436,10 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const createStyles = (theme) => ({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
+    backgroundColor: theme.background.primary,
   },
   heroContainer: {
     height: HERO_HEIGHT,
@@ -450,10 +450,18 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   heroGradient: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   heroOverlay: {
-    ...StyleSheet.absoluteFillObject,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
   },
   backButton: {
     position: 'absolute',
@@ -462,12 +470,12 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.background.secondary,
+    backgroundColor: theme.background.secondary,
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: colors.shadow.elevated,
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
+    shadowOpacity: 0.15,
     shadowRadius: 8,
     elevation: 4,
   },
@@ -478,7 +486,7 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: colors.accent.primary,
+    backgroundColor: theme.accent.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -488,16 +496,16 @@ const styles = StyleSheet.create({
   },
   teaName: {
     ...typography.headingMedium,
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: 4,
   },
   brandName: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     marginBottom: 12,
   },
   brandNameTappable: {
-    color: colors.accent.primary,
+    color: theme.accent.primary,
     textDecorationLine: 'underline',
   },
   badgeRow: {
@@ -510,14 +518,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    backgroundColor: colors.background.secondary,
+    backgroundColor: theme.background.secondary,
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 12,
   },
   ratingText: {
     ...typography.bodySmall,
-    color: colors.text.primary,
+    color: theme.text.primary,
     fontWeight: '500',
   },
   quickFacts: {
@@ -533,7 +541,7 @@ const styles = StyleSheet.create({
   },
   quickFactText: {
     ...typography.bodySmall,
-    color: colors.text.primary,
+    color: theme.text.primary,
   },
   caffeineRow: {
     marginBottom: spacing.sectionSpacing,
@@ -549,7 +557,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: colors.background.primary,
+    backgroundColor: theme.background.secondary,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',
@@ -564,12 +572,12 @@ const styles = StyleSheet.create({
   sectionTitle: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: 12,
   },
   description: {
     ...typography.body,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     lineHeight: 24,
   },
   flavorTags: {
@@ -578,16 +586,16 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   flavorTag: {
-    backgroundColor: colors.background.secondary,
+    backgroundColor: theme.background.secondary,
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
     borderWidth: 1,
-    borderColor: colors.border.light,
+    borderColor: theme.border.light,
   },
   flavorTagText: {
     ...typography.caption,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textTransform: 'capitalize',
   },
   tastingNotesHeader: {
@@ -603,7 +611,7 @@ const styles = StyleSheet.create({
   },
   editNotesText: {
     ...typography.bodySmall,
-    color: colors.accent.primary,
+    color: theme.accent.primary,
     fontWeight: '500',
   },
   myRating: {
@@ -614,33 +622,33 @@ const styles = StyleSheet.create({
   },
   myRatingLabel: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   notesCard: {
-    backgroundColor: colors.background.secondary,
+    backgroundColor: theme.background.secondary,
     borderRadius: 12,
     padding: spacing.md,
     borderWidth: 1,
-    borderColor: colors.border.light,
+    borderColor: theme.border.light,
   },
   notesText: {
     ...typography.body,
-    color: colors.text.primary,
+    color: theme.text.primary,
     lineHeight: 22,
   },
   addNotesPrompt: {
-    backgroundColor: colors.background.secondary,
+    backgroundColor: theme.background.secondary,
     borderRadius: 12,
     padding: spacing.lg,
     alignItems: 'center',
     gap: 8,
     borderWidth: 1,
-    borderColor: colors.border.light,
+    borderColor: theme.border.light,
     borderStyle: 'dashed',
   },
   addNotesText: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   reviewsHeader: {
     flexDirection: 'row',
@@ -655,18 +663,20 @@ const styles = StyleSheet.create({
   },
   writeReviewText: {
     ...typography.bodySmall,
-    color: colors.accent.primary,
+    color: theme.accent.primary,
     fontWeight: '500',
   },
   noReviews: {
-    backgroundColor: colors.background.secondary,
+    backgroundColor: theme.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.cardPadding,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: theme.border.light,
   },
   noReviewsText: {
     ...typography.body,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
   },
   seeAllButton: {
@@ -675,7 +685,7 @@ const styles = StyleSheet.create({
   },
   seeAllText: {
     ...typography.bodySmall,
-    color: colors.accent.primary,
+    color: theme.accent.primary,
     fontWeight: '500',
   },
   buttonContainer: {
@@ -683,24 +693,26 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: colors.background.primary,
+    backgroundColor: theme.background.primary,
     paddingHorizontal: spacing.screenHorizontal,
     paddingTop: 12,
     paddingBottom: 34,
     borderTopWidth: 1,
-    borderTopColor: colors.border.light,
+    borderTopColor: theme.border.medium,
     gap: 10,
   },
   button: {
     width: '100%',
   },
   inCollectionButton: {
-    backgroundColor: colors.accent.secondary,
+    backgroundColor: theme.accent.secondary,
   },
   buyCard: {
-    backgroundColor: colors.background.secondary,
+    backgroundColor: theme.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: theme.border.light,
   },
   buyCardContent: {
     flexDirection: 'row',
@@ -711,7 +723,7 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 12,
-    backgroundColor: colors.accent.primary + '15',
+    backgroundColor: theme.accent.primary + '20',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: spacing.md,
@@ -722,22 +734,24 @@ const styles = StyleSheet.create({
   buyCardTitle: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.text.primary,
+    color: theme.text.primary,
     marginBottom: 2,
   },
   buyCardSubtitle: {
     ...typography.caption,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
   },
   unavailableCard: {
-    backgroundColor: colors.background.secondary,
+    backgroundColor: theme.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.cardPadding,
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: theme.border.light,
   },
   unavailableText: {
     ...typography.body,
-    color: colors.text.secondary,
+    color: theme.text.secondary,
     textAlign: 'center',
   },
   similarTeaList: {
