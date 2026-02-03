@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -17,10 +17,20 @@ import { teaTypes } from '../data/teas';
 const { width } = Dimensions.get('window');
 const cardWidth = (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2;
 
-export const DiscoveryScreen = ({ navigation }) => {
+export const DiscoveryScreen = ({ navigation, route }) => {
   const { teas, loading, refreshTeas, searchTeas } = useTeas();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedType, setSelectedType] = useState('all');
+  
+  // Accept initial values from navigation params (e.g., from Home screen)
+  const { initialSearch, initialFilter } = route.params || {};
+  
+  const [searchQuery, setSearchQuery] = useState(initialSearch || '');
+  const [selectedType, setSelectedType] = useState(initialFilter || 'all');
+  
+  // Update filters when navigating from Home with new params
+  useEffect(() => {
+    if (initialSearch !== undefined) setSearchQuery(initialSearch);
+    if (initialFilter !== undefined) setSelectedType(initialFilter);
+  }, [initialSearch, initialFilter]);
   
   const filteredTeas = useMemo(() => {
     return searchTeas(searchQuery, selectedType);

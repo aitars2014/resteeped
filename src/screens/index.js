@@ -1,3 +1,4 @@
+export { default as HomeScreen } from './HomeScreen';
 export { DiscoveryScreen } from './DiscoveryScreen';
 export { TeaDetailScreen } from './TeaDetailScreen';
 export { TimerScreen } from './TimerScreen';
