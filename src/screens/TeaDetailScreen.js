@@ -55,7 +55,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     if (inCollection) {
       await removeFromCollection(tea.id);
     } else {
-      await addToCollection(tea.id, 'want_to_try');
+      await addToCollection(tea.id, 'want_to_try', tea);
     }
   };
   

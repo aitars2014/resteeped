@@ -12,7 +12,7 @@ export const CollectionProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   // Check if we should use local-only mode (no Supabase calls for user data)
-  const isLocalMode = isLocalMode || isDevMode;
+  const isLocalMode = !isSupabaseConfigured() || isDevMode;
 
   // Fetch user's tea collection
   const fetchCollection = useCallback(async () => {
@@ -47,16 +47,24 @@ export const CollectionProvider = ({ children }) => {
   }, [fetchCollection]);
 
   // Add tea to collection
-  const addToCollection = async (teaId, status = 'want_to_try') => {
+  // In dev mode, pass the full tea object so we can display it properly
+  const addToCollection = async (teaId, status = 'want_to_try', teaData = null) => {
     if (!user) {
       return { error: { message: 'Must be signed in' } };
     }
 
     if (isLocalMode) {
-      // Local-only mode: just update state
+      // Local-only mode: store tea data alongside the collection item
       setCollection(prev => [
-        ...prev,
-        { tea_id: teaId, status, added_at: new Date().toISOString() }
+        { 
+          id: `local-${Date.now()}`,
+          tea_id: teaId, 
+          user_id: user.id,
+          status, 
+          added_at: new Date().toISOString(),
+          tea: teaData, // Store the full tea object for display
+        },
+        ...prev.filter(item => item.tea_id !== teaId), // Remove if already exists
       ]);
       return { error: null };
     }
