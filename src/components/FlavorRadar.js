@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet, Dimensions } from 'react-native';
 import Svg, { Polygon, Line, Circle, Text as SvgText } from 'react-native-svg';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -71,10 +72,14 @@ export const FlavorRadar = ({
   size = SCREEN_WIDTH - (spacing.screenHorizontal * 2) - 40,
   showLabels = true,
 }) => {
+  const { theme, isDark } = useTheme();
   const profile = computeFlavorProfile(flavorNotes);
   const center = size / 2;
   const maxRadius = (size / 2) - 30; // Leave room for labels
   const levels = 5;
+  
+  // Grid color - more visible in dark mode
+  const gridColor = isDark ? 'rgba(255, 255, 255, 0.3)' : theme.border.light;
   
   // Calculate points for each dimension
   const angleStep = (2 * Math.PI) / FLAVOR_DIMENSIONS.length;
@@ -113,7 +118,7 @@ export const FlavorRadar = ({
           key={`grid-${level}`}
           points={points}
           fill="none"
-          stroke={colors.border.light}
+          stroke={gridColor}
           strokeWidth={1}
         />
       );
@@ -132,7 +137,7 @@ export const FlavorRadar = ({
           y1={center}
           x2={endX}
           y2={endY}
-          stroke={colors.border.light}
+          stroke={gridColor}
           strokeWidth={1}
         />
       );
@@ -155,7 +160,7 @@ export const FlavorRadar = ({
           x={x}
           y={y}
           fontSize={11}
-          fill={colors.text.secondary}
+          fill={theme.text.secondary}
           textAnchor="middle"
           alignmentBaseline="middle"
         >
@@ -171,7 +176,7 @@ export const FlavorRadar = ({
     return (
       <View style={[styles.container, { width: size, height: size }]}>
         <View style={styles.noData}>
-          <Text style={styles.noDataText}>No flavor profile available</Text>
+          <Text style={[styles.noDataText, { color: theme.text.secondary }]}>No flavor profile available</Text>
         </View>
       </View>
     );
@@ -186,8 +191,8 @@ export const FlavorRadar = ({
         {/* Data polygon */}
         <Polygon
           points={dataPoints}
-          fill={colors.accent.primary + '30'}
-          stroke={colors.accent.primary}
+          fill={theme.accent.primary + '40'}
+          stroke={theme.accent.primary}
           strokeWidth={2}
         />
         
@@ -203,7 +208,7 @@ export const FlavorRadar = ({
               cx={point.x}
               cy={point.y}
               r={4}
-              fill={colors.accent.primary}
+              fill={theme.accent.primary}
             />
           );
         })}
@@ -227,7 +232,6 @@ const styles = StyleSheet.create({
   },
   noDataText: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
 });
 

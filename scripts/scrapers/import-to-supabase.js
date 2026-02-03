@@ -51,6 +51,27 @@ async function getCompanyId(brandName) {
   return data.id;
 }
 
+// Valid tea types to filter non-tea items
+const VALID_TEA_TYPES = ['black', 'green', 'oolong', 'white', 'puerh', 'herbal', 'rooibos', 'mate', 'chai'];
+
+// Non-tea keywords to filter out
+const NON_TEA_KEYWORDS = ['cup', 'mug', 'teapot', 'infuser', 'kettle', 'coffee', 'accessory', 'gift set', 'sampler box'];
+
+function isTea(item) {
+  // Check tea type
+  if (!item.teaType || !VALID_TEA_TYPES.includes(item.teaType.toLowerCase())) {
+    return false;
+  }
+  
+  // Check for non-tea keywords in name
+  const nameLower = item.name.toLowerCase();
+  if (NON_TEA_KEYWORDS.some(kw => nameLower.includes(kw))) {
+    return false;
+  }
+  
+  return true;
+}
+
 async function importTeas(jsonFile) {
   console.log(`\nImporting from ${jsonFile}...`);
   
@@ -60,8 +81,12 @@ async function importTeas(jsonFile) {
     return { imported: 0, skipped: 0, errors: 0 };
   }
   
-  const teas = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
-  console.log(`Found ${teas.length} teas to import`);
+  let allItems = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
+  console.log(`Found ${allItems.length} items total`);
+  
+  // Filter to only teas
+  const teas = allItems.filter(isTea);
+  console.log(`Filtered to ${teas.length} actual teas`);
   
   let imported = 0;
   let skipped = 0;
