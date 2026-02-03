@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -6,11 +6,14 @@ import {
   ScrollView, 
   TouchableOpacity,
   Dimensions,
+  Image,
+  Alert,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard } from '../components';
+import { useAuth, useCollection } from '../context';
 
 const { width, height } = Dimensions.get('window');
 const HERO_HEIGHT = height * 0.35;
@@ -18,15 +21,48 @@ const HERO_HEIGHT = height * 0.35;
 export const TeaDetailScreen = ({ route, navigation }) => {
   const { tea } = route.params;
   const teaColor = getTeaTypeColor(tea.teaType);
-  const [isInCollection, setIsInCollection] = useState(false);
   
-  const handleAddToCollection = () => {
-    setIsInCollection(!isInCollection);
-    // TODO: Save to Supabase
+  const { user } = useAuth();
+  const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, rateTea } = useCollection();
+  
+  const inCollection = isInCollection(tea.id);
+  const collectionItem = getCollectionItem(tea.id);
+  const userRating = collectionItem?.user_rating;
+  
+  const handleToggleCollection = async () => {
+    if (!user) {
+      Alert.alert(
+        'Sign In Required',
+        'Please sign in to save teas to your collection.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Sign In', onPress: () => navigation.navigate('Profile') },
+        ]
+      );
+      return;
+    }
+    
+    if (inCollection) {
+      await removeFromCollection(tea.id);
+    } else {
+      await addToCollection(tea.id, 'want_to_try');
+    }
+  };
+  
+  const handleRate = async (rating) => {
+    if (!user) {
+      Alert.alert('Sign In Required', 'Please sign in to rate teas.');
+      return;
+    }
+    
+    await rateTea(tea.id, rating);
   };
   
   const handleBrewTea = () => {
-    navigation.navigate('Timer', { tea });
+    navigation.navigate('Timer', { 
+      screen: 'TimerHome',
+      params: { tea } 
+    });
   };
   
   const formatSteepTime = () => {
@@ -41,15 +77,23 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Hero Image */}
         <View style={styles.heroContainer}>
-          <LinearGradient
-            colors={[teaColor.primary, teaColor.gradient]}
-            start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
-            style={styles.heroGradient}
-          />
+          {tea.imageUrl ? (
+            <Image 
+              source={{ uri: tea.imageUrl }} 
+              style={styles.heroImage}
+              resizeMode="cover"
+            />
+          ) : (
+            <LinearGradient
+              colors={[teaColor.primary, teaColor.gradient]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.heroGradient}
+            />
+          )}
           {/* Overlay for text legibility */}
           <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.3)']}
+            colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.4)']}
             style={styles.heroOverlay}
           />
           
@@ -60,6 +104,13 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           >
             <ChevronLeft size={24} color={colors.text.primary} />
           </TouchableOpacity>
+          
+          {/* Collection indicator */}
+          {inCollection && (
+            <View style={styles.collectionBadge}>
+              <Check size={16} color={colors.text.inverse} />
+            </View>
+          )}
         </View>
         
         {/* Content */}
@@ -72,6 +123,18 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <View style={styles.badgeRow}>
             <TeaTypeBadge teaType={tea.teaType} size="large" />
           </View>
+          
+          {/* User Rating (if in collection) */}
+          {inCollection && (
+            <View style={styles.userRatingSection}>
+              <Text style={styles.ratingLabel}>Your rating:</Text>
+              <StarRating 
+                rating={userRating || 0} 
+                size={28} 
+                onRate={handleRate}
+              />
+            </View>
+          )}
           
           {/* Fact Cards */}
           <View style={styles.factsContainer}>
@@ -101,8 +164,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             
             <FactCard 
               icon={<Star size={24} color={colors.rating.star} fill={colors.rating.star} />}
-              value={`${tea.avgRating.toFixed(1)} out of 5`}
-              label={`Based on ${tea.ratingCount} review${tea.ratingCount !== 1 ? 's' : ''}`}
+              value={`${tea.avgRating?.toFixed(1) || '—'} out of 5`}
+              label={`Based on ${tea.ratingCount || 0} review${tea.ratingCount !== 1 ? 's' : ''}`}
             />
           </View>
           
@@ -136,12 +199,12 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       {/* Sticky Action Buttons */}
       <View style={styles.buttonContainer}>
         <Button 
-          title={isInCollection ? "In My Collection ✓" : "Add to My Teas"}
-          onPress={handleAddToCollection}
+          title={inCollection ? "In My Collection ✓" : "Add to My Teas"}
+          onPress={handleToggleCollection}
           variant="primary"
           style={[
             styles.button,
-            isInCollection && styles.inCollectionButton,
+            inCollection && styles.inCollectionButton,
           ]}
         />
         <Button 
@@ -163,6 +226,10 @@ const styles = StyleSheet.create({
   heroContainer: {
     height: HERO_HEIGHT,
     position: 'relative',
+  },
+  heroImage: {
+    width: '100%',
+    height: '100%',
   },
   heroGradient: {
     ...StyleSheet.absoluteFillObject,
@@ -186,6 +253,17 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 4,
   },
+  collectionBadge: {
+    position: 'absolute',
+    top: 50,
+    right: 16,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: colors.accent.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   content: {
     paddingHorizontal: spacing.screenHorizontal,
     paddingTop: spacing.sectionSpacing,
@@ -201,7 +279,20 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   badgeRow: {
+    marginBottom: spacing.elementSpacing,
+  },
+  userRatingSection: {
+    flexDirection: 'row',
+    alignItems: 'center',
     marginBottom: spacing.sectionSpacing,
+    padding: spacing.cardPadding,
+    backgroundColor: colors.background.secondary,
+    borderRadius: spacing.cardBorderRadius,
+  },
+  ratingLabel: {
+    ...typography.body,
+    color: colors.text.secondary,
+    marginRight: 12,
   },
   factsContainer: {
     gap: spacing.elementSpacing,
