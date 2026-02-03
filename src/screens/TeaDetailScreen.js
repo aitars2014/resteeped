@@ -11,9 +11,9 @@ import {
   FlatList,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
-import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal } from '../components';
+import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal } from '../components';
 import { useAuth, useCollection } from '../context';
 import { useReviews, useCompanies } from '../hooks';
 
@@ -25,11 +25,12 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const teaColor = getTeaTypeColor(tea.teaType);
   
   const { user } = useAuth();
-  const { isInCollection, addToCollection, removeFromCollection, getCollectionItem } = useCollection();
+  const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, updateInCollection } = useCollection();
   const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
   const { companies } = useCompanies();
   
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showTastingNotes, setShowTastingNotes] = useState(false);
   
   // Find company by brand name or company_id
   const company = tea.companyId 
@@ -88,6 +89,17 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       screen: 'TimerHome',
       params: { tea } 
     });
+  };
+  
+  const handleSaveTastingNotes = async ({ notes, rating }) => {
+    const updates = { notes };
+    if (rating > 0) {
+      updates.user_rating = rating;
+      updates.status = 'tried';
+      updates.tried_at = new Date().toISOString();
+    }
+    await updateInCollection(tea.id, updates);
+    setShowTastingNotes(false);
   };
   
   const formatSteepTime = () => {
@@ -204,6 +216,50 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             </View>
           )}
           
+          {/* Personal Tasting Notes (only if in collection) */}
+          {inCollection && (
+            <View style={styles.section}>
+              <View style={styles.tastingNotesHeader}>
+                <Text style={styles.sectionTitle}>My Tasting Notes</Text>
+                <TouchableOpacity 
+                  onPress={() => setShowTastingNotes(true)} 
+                  style={styles.editNotesButton}
+                >
+                  <NotebookPen size={16} color={colors.accent.primary} />
+                  <Text style={styles.editNotesText}>
+                    {collectionItem?.notes ? 'Edit' : 'Add Notes'}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              
+              {collectionItem?.user_rating > 0 && (
+                <View style={styles.myRating}>
+                  <Text style={styles.myRatingLabel}>My Rating:</Text>
+                  <StarRating rating={collectionItem.user_rating} size={18} />
+                </View>
+              )}
+              
+              {collectionItem?.notes ? (
+                <TouchableOpacity 
+                  style={styles.notesCard}
+                  onPress={() => setShowTastingNotes(true)}
+                >
+                  <Text style={styles.notesText}>{collectionItem.notes}</Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity 
+                  style={styles.addNotesPrompt}
+                  onPress={() => setShowTastingNotes(true)}
+                >
+                  <NotebookPen size={24} color={colors.text.secondary} />
+                  <Text style={styles.addNotesText}>
+                    Tap to add your tasting notes
+                  </Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
+          
           {/* Reviews Section */}
           <View style={styles.section}>
             <View style={styles.reviewsHeader}>
@@ -265,6 +321,16 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         teaName={tea.name}
         initialRating={userReview?.rating || 0}
         initialText={userReview?.review_text || ''}
+      />
+      
+      {/* Tasting Notes Modal */}
+      <TastingNotesModal
+        visible={showTastingNotes}
+        onClose={() => setShowTastingNotes(false)}
+        onSave={handleSaveTastingNotes}
+        teaName={tea.name}
+        initialNotes={collectionItem?.notes || ''}
+        initialRating={collectionItem?.user_rating || 0}
       />
     </View>
   );
@@ -400,6 +466,58 @@ const styles = StyleSheet.create({
     ...typography.caption,
     color: colors.text.secondary,
     textTransform: 'capitalize',
+  },
+  tastingNotesHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  editNotesButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  editNotesText: {
+    ...typography.bodySmall,
+    color: colors.accent.primary,
+    fontWeight: '500',
+  },
+  myRating: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 12,
+  },
+  myRatingLabel: {
+    ...typography.bodySmall,
+    color: colors.text.secondary,
+  },
+  notesCard: {
+    backgroundColor: colors.background.secondary,
+    borderRadius: 12,
+    padding: spacing.md,
+    borderWidth: 1,
+    borderColor: colors.border.light,
+  },
+  notesText: {
+    ...typography.body,
+    color: colors.text.primary,
+    lineHeight: 22,
+  },
+  addNotesPrompt: {
+    backgroundColor: colors.background.secondary,
+    borderRadius: 12,
+    padding: spacing.lg,
+    alignItems: 'center',
+    gap: 8,
+    borderWidth: 1,
+    borderColor: colors.border.light,
+    borderStyle: 'dashed',
+  },
+  addNotesText: {
+    ...typography.bodySmall,
+    color: colors.text.secondary,
   },
   reviewsHeader: {
     flexDirection: 'row',

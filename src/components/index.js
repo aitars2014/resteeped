@@ -8,3 +8,4 @@ export { TeaCard } from './TeaCard';
 export { FactCard } from './FactCard';
 export { ReviewCard } from './ReviewCard';
 export { WriteReviewModal } from './WriteReviewModal';
+export { TastingNotesModal } from './TastingNotesModal';
