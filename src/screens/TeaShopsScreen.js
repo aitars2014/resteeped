@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -14,31 +14,49 @@ import { ChevronLeft, Star, MapPin, Globe, ChevronRight } from 'lucide-react-nat
 import { colors, typography, spacing } from '../constants';
 import { StarRating } from '../components';
 import { useCompanies } from '../hooks';
+import { useTheme } from '../context';
+
+// Component for company logo with fallback
+const CompanyLogo = ({ company, size = 56 }) => {
+  const { theme } = useTheme();
+  const [imageError, setImageError] = useState(false);
+  
+  if (!company.logo_url || imageError) {
+    return (
+      <LinearGradient
+        colors={[theme.accent.primary, theme.accent.secondary]}
+        style={[styles.logoPlaceholder, { width: size, height: size, borderRadius: size / 4 }]}
+      >
+        <Text style={[styles.logoText, { fontSize: size * 0.4 }]}>
+          {company.name.charAt(0)}
+        </Text>
+      </LinearGradient>
+    );
+  }
+  
+  return (
+    <Image 
+      source={{ uri: company.logo_url }} 
+      style={[styles.logo, { width: size, height: size }]}
+      onError={() => setImageError(true)}
+    />
+  );
+};
 
 export const TeaShopsScreen = ({ navigation }) => {
+  const { theme } = useTheme();
   const { companies, loading, refreshCompanies } = useCompanies();
 
   const renderShopCard = ({ item: company }) => (
     <TouchableOpacity
-      style={styles.shopCard}
+      style={[styles.shopCard, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}
       onPress={() => navigation.navigate('CompanyProfile', { company })}
       activeOpacity={0.7}
     >
       <View style={styles.shopContent}>
         {/* Logo or Placeholder */}
         <View style={styles.logoContainer}>
-          {company.logo_url ? (
-            <Image source={{ uri: company.logo_url }} style={styles.logo} />
-          ) : (
-            <LinearGradient
-              colors={[colors.accent.primary, colors.accent.secondary]}
-              style={styles.logoPlaceholder}
-            >
-              <Text style={styles.logoText}>
-                {company.name.charAt(0)}
-              </Text>
-            </LinearGradient>
-          )}
+          <CompanyLogo company={company} size={56} />
         </View>
 
         {/* Info */}

@@ -10,12 +10,13 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare } from 'lucide-react-native';
+import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { Button } from '../components';
 import { useAuth, useCollection, useTheme } from '../context';
 import { useBrewHistory } from '../hooks';
 import { exportCollectionToJSON, exportCollectionToCSV } from '../utils/exportCollection';
+import { resetOnboarding } from './OnboardingScreen';
 
 export const ProfileScreen = ({ navigation }) => {
   const { user, profile, loading, signInWithGoogle, signOut, isConfigured } = useAuth();
@@ -276,7 +277,7 @@ export const ProfileScreen = ({ navigation }) => {
         backgroundColor: theme.background.secondary,
         borderColor: theme.border.medium,
       }]}>
-        <View style={[styles.menuItem, styles.menuItemLast]}>
+        <View style={[styles.menuItem, { borderBottomColor: theme.border.light }]}>
           {isDark ? (
             <Moon size={20} color={theme.accent.primary} />
           ) : (
@@ -290,6 +291,30 @@ export const ProfileScreen = ({ navigation }) => {
             thumbColor={theme.text.inverse}
           />
         </View>
+        
+        <TouchableOpacity 
+          style={[styles.menuItem, styles.menuItemLast]}
+          onPress={() => {
+            Alert.alert(
+              'Reset Onboarding',
+              'This will show the welcome screens again next time you open the app.',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                { 
+                  text: 'Reset', 
+                  onPress: async () => {
+                    await resetOnboarding();
+                    Alert.alert('Done', 'Restart the app to see onboarding again.');
+                  }
+                },
+              ]
+            );
+          }}
+        >
+          <RotateCcw size={20} color={theme.accent.primary} />
+          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Reset Onboarding</Text>
+          <ChevronRight size={20} color={theme.text.secondary} />
+        </TouchableOpacity>
       </View>
       
       {/* Account */}
