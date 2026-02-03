@@ -1,9 +1,11 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { colors, typography, getTeaTypeColor } from '../constants';
+import { typography } from '../constants';
+import { useTheme } from '../context';
 
 export const TeaTypeBadge = ({ teaType, size = 'small' }) => {
+  const { theme, getTeaTypeColor } = useTheme();
   const teaColor = getTeaTypeColor(teaType);
   const isSmall = size === 'small';
   
@@ -16,7 +18,7 @@ export const TeaTypeBadge = ({ teaType, size = 'small' }) => {
       end={{ x: 1, y: 0 }}
       style={[styles.badge, isSmall ? styles.small : styles.large]}
     >
-      <Text style={[styles.text, isSmall ? styles.smallText : styles.largeText]}>
+      <Text style={[styles.text, { color: theme.text.inverse }, isSmall ? styles.smallText : styles.largeText]}>
         {label}
       </Text>
     </LinearGradient>
@@ -37,7 +39,6 @@ const styles = StyleSheet.create({
     paddingVertical: 6,
   },
   text: {
-    color: colors.text.inverse,
     fontWeight: '600',
   },
   smallText: {

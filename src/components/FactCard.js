@@ -1,16 +1,22 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 
 export const FactCard = ({ icon, value, label }) => {
+  const { theme } = useTheme();
+  
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { 
+      backgroundColor: theme.background.secondary,
+      shadowColor: theme.shadow.card,
+    }]}>
       <View style={styles.iconContainer}>
         {icon}
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.value}>{value}</Text>
-        <Text style={styles.label}>{label}</Text>
+        <Text style={[styles.value, { color: theme.text.primary }]}>{value}</Text>
+        <Text style={[styles.label, { color: theme.text.secondary }]}>{label}</Text>
       </View>
     </View>
   );
@@ -18,12 +24,10 @@ export const FactCard = ({ icon, value, label }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.cardPadding,
     flexDirection: 'row',
     alignItems: 'center',
-    shadowColor: colors.shadow.card,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 1,
     shadowRadius: 8,
@@ -38,11 +42,9 @@ const styles = StyleSheet.create({
   value: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.text.primary,
   },
   label: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginTop: 2,
   },
 });

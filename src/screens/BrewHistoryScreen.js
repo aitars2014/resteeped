@@ -9,11 +9,13 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ChevronLeft, Coffee, Clock, Thermometer, Award } from 'lucide-react-native';
-import { colors, typography, spacing, getTeaTypeColor } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 import { TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
 
 const BrewHistoryScreen = ({ navigation }) => {
+  const { theme, getTeaTypeColor } = useTheme();
   const { 
     brewSessions, 
     loading, 
@@ -29,7 +31,6 @@ const BrewHistoryScreen = ({ navigation }) => {
   const mostBrewed = getMostBrewedTeas(3);
   const brewsByDate = getBrewsByDate();
 
-  // Convert brewsByDate to sections for SectionList
   const sections = Object.entries(brewsByDate)
     .sort((a, b) => new Date(b[0]) - new Date(a[0]))
     .map(([date, brews]) => ({
@@ -66,31 +67,31 @@ const BrewHistoryScreen = ({ navigation }) => {
   }
 
   const renderStatsCard = () => (
-    <View style={styles.statsSection}>
-      <Text style={styles.sectionTitle}>Your Brewing Stats</Text>
+    <View style={[styles.statsSection, { borderBottomColor: theme.border.light }]}>
+      <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Your Brewing Stats</Text>
       <View style={styles.statsGrid}>
-        <View style={styles.statCard}>
-          <Text style={styles.statNumber}>{stats.totalBrews}</Text>
-          <Text style={styles.statLabel}>Total Brews</Text>
+        <View style={[styles.statCard, { backgroundColor: theme.background.secondary }]}>
+          <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{stats.totalBrews}</Text>
+          <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Total Brews</Text>
         </View>
-        <View style={styles.statCard}>
-          <Text style={styles.statNumber}>{todayBrewCount}</Text>
-          <Text style={styles.statLabel}>Today</Text>
+        <View style={[styles.statCard, { backgroundColor: theme.background.secondary }]}>
+          <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{todayBrewCount}</Text>
+          <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Today</Text>
         </View>
-        <View style={styles.statCard}>
-          <Text style={styles.statNumber}>{weekBrewCount}</Text>
-          <Text style={styles.statLabel}>This Week</Text>
+        <View style={[styles.statCard, { backgroundColor: theme.background.secondary }]}>
+          <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{weekBrewCount}</Text>
+          <Text style={[styles.statLabel, { color: theme.text.secondary }]}>This Week</Text>
         </View>
-        <View style={styles.statCard}>
-          <Text style={styles.statNumber}>{stats.uniqueTeas}</Text>
-          <Text style={styles.statLabel}>Unique Teas</Text>
+        <View style={[styles.statCard, { backgroundColor: theme.background.secondary }]}>
+          <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{stats.uniqueTeas}</Text>
+          <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Unique Teas</Text>
         </View>
       </View>
 
       {stats.avgSteepTime > 0 && (
-        <View style={styles.avgSteepTime}>
-          <Clock size={16} color={colors.text.secondary} />
-          <Text style={styles.avgSteepText}>
+        <View style={[styles.avgSteepTime, { borderTopColor: theme.border.light }]}>
+          <Clock size={16} color={theme.text.secondary} />
+          <Text style={[styles.avgSteepText, { color: theme.text.secondary }]}>
             Average steep time: {formatTime(stats.avgSteepTime)}
           </Text>
         </View>
@@ -102,30 +103,30 @@ const BrewHistoryScreen = ({ navigation }) => {
     if (mostBrewed.length === 0) return null;
 
     return (
-      <View style={styles.mostBrewedSection}>
+      <View style={[styles.mostBrewedSection, { borderBottomColor: theme.border.light }]}>
         <View style={styles.sectionHeader}>
-          <Award size={18} color={colors.accent.primary} />
-          <Text style={styles.sectionTitle}>Most Brewed</Text>
+          <Award size={18} color={theme.accent.primary} />
+          <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Most Brewed</Text>
         </View>
         {mostBrewed.map(({ teaId, count, tea }, index) => (
           <TouchableOpacity
             key={teaId}
-            style={styles.mostBrewedItem}
+            style={[styles.mostBrewedItem, { backgroundColor: theme.background.secondary }]}
             onPress={() => tea && navigation.navigate('TeaDetail', { tea })}
             disabled={!tea}
           >
-            <View style={styles.mostBrewedRank}>
-              <Text style={styles.rankNumber}>{index + 1}</Text>
+            <View style={[styles.mostBrewedRank, { backgroundColor: theme.accent.primary }]}>
+              <Text style={[styles.rankNumber, { color: theme.text.inverse }]}>{index + 1}</Text>
             </View>
             <View style={styles.mostBrewedInfo}>
-              <Text style={styles.mostBrewedName} numberOfLines={1}>
+              <Text style={[styles.mostBrewedName, { color: theme.text.primary }]} numberOfLines={1}>
                 {tea?.name || 'Unknown Tea'}
               </Text>
               {tea?.tea_type && (
                 <TeaTypeBadge teaType={tea.tea_type} size="small" />
               )}
             </View>
-            <Text style={styles.mostBrewedCount}>{count} brews</Text>
+            <Text style={[styles.mostBrewedCount, { color: theme.text.secondary }]}>{count} brews</Text>
           </TouchableOpacity>
         ))}
       </View>
@@ -138,34 +139,34 @@ const BrewHistoryScreen = ({ navigation }) => {
 
     return (
       <TouchableOpacity
-        style={styles.brewItem}
+        style={[styles.brewItem, { backgroundColor: theme.background.secondary }]}
         onPress={() => tea && navigation.navigate('TeaDetail', { tea })}
         disabled={!tea}
       >
         <View 
           style={[
             styles.brewColorBar, 
-            { backgroundColor: teaColor?.primary || colors.text.secondary }
+            { backgroundColor: teaColor?.primary || theme.text.secondary }
           ]} 
         />
         <View style={styles.brewContent}>
           <View style={styles.brewMain}>
-            <Text style={styles.brewTeaName} numberOfLines={1}>
+            <Text style={[styles.brewTeaName, { color: theme.text.primary }]} numberOfLines={1}>
               {tea?.name || 'Quick Brew'}
             </Text>
-            <Text style={styles.brewTime}>{formatTimestamp(item.created_at)}</Text>
+            <Text style={[styles.brewTime, { color: theme.text.secondary }]}>{formatTimestamp(item.created_at)}</Text>
           </View>
           <View style={styles.brewDetails}>
             <View style={styles.brewDetail}>
-              <Clock size={12} color={colors.text.secondary} />
-              <Text style={styles.brewDetailText}>
+              <Clock size={12} color={theme.text.secondary} />
+              <Text style={[styles.brewDetailText, { color: theme.text.secondary }]}>
                 {formatTime(item.steep_time_seconds)}
               </Text>
             </View>
             {item.temperature_f && (
               <View style={styles.brewDetail}>
-                <Thermometer size={12} color={colors.text.secondary} />
-                <Text style={styles.brewDetailText}>{item.temperature_f}°F</Text>
+                <Thermometer size={12} color={theme.text.secondary} />
+                <Text style={[styles.brewDetailText, { color: theme.text.secondary }]}>{item.temperature_f}°F</Text>
               </View>
             )}
           </View>
@@ -176,8 +177,8 @@ const BrewHistoryScreen = ({ navigation }) => {
 
   const renderSectionHeader = ({ section }) => (
     <View style={styles.sectionHeaderRow}>
-      <Text style={styles.sectionHeaderText}>{section.title}</Text>
-      <Text style={styles.sectionHeaderCount}>{section.data.length} brews</Text>
+      <Text style={[styles.sectionHeaderText, { color: theme.text.primary }]}>{section.title}</Text>
+      <Text style={[styles.sectionHeaderCount, { color: theme.text.secondary }]}>{section.data.length} brews</Text>
     </View>
   );
 
@@ -187,8 +188,8 @@ const BrewHistoryScreen = ({ navigation }) => {
       {renderMostBrewed()}
       {sections.length > 0 && (
         <View style={styles.historyHeader}>
-          <Coffee size={18} color={colors.accent.primary} />
-          <Text style={styles.sectionTitle}>Brew History</Text>
+          <Coffee size={18} color={theme.accent.primary} />
+          <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Brew History</Text>
         </View>
       )}
     </>
@@ -196,24 +197,24 @@ const BrewHistoryScreen = ({ navigation }) => {
 
   const renderEmpty = () => (
     <View style={styles.emptyState}>
-      <Coffee size={64} color={colors.text.secondary} />
-      <Text style={styles.emptyTitle}>No brews yet</Text>
-      <Text style={styles.emptySubtitle}>
+      <Coffee size={64} color={theme.text.secondary} />
+      <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>No brews yet</Text>
+      <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
         Start brewing teas to build your history!
       </Text>
     </View>
   );
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
-      <View style={styles.header}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]} edges={['top']}>
+      <View style={[styles.header, { borderBottomColor: theme.border.light }]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <ChevronLeft size={24} color={colors.text.primary} />
+          <ChevronLeft size={24} color={theme.text.primary} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Brew History</Text>
+        <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Brew History</Text>
         <View style={{ width: 40 }} />
       </View>
 
@@ -231,7 +232,7 @@ const BrewHistoryScreen = ({ navigation }) => {
           <RefreshControl
             refreshing={loading}
             onRefresh={refreshBrewHistory}
-            tintColor={colors.accent.primary}
+            tintColor={theme.accent.primary}
           />
         }
       />
@@ -242,7 +243,6 @@ const BrewHistoryScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
   },
   header: {
     flexDirection: 'row',
@@ -251,7 +251,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screenHorizontal,
     paddingVertical: spacing.sm,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   backButton: {
     width: 40,
@@ -261,7 +260,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     ...typography.headingSmall,
-    color: colors.text.primary,
   },
   listContent: {
     paddingBottom: 20,
@@ -269,12 +267,10 @@ const styles = StyleSheet.create({
   statsSection: {
     padding: spacing.screenHorizontal,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   sectionTitle: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.text.primary,
   },
   statsGrid: {
     flexDirection: 'row',
@@ -285,7 +281,6 @@ const styles = StyleSheet.create({
   statCard: {
     flex: 1,
     minWidth: '45%',
-    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     padding: spacing.md,
     alignItems: 'center',
@@ -293,11 +288,9 @@ const styles = StyleSheet.create({
   statNumber: {
     fontSize: 28,
     fontWeight: '700',
-    color: colors.accent.primary,
   },
   statLabel: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginTop: 4,
   },
   avgSteepTime: {
@@ -308,16 +301,13 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
     paddingTop: spacing.md,
     borderTopWidth: 1,
-    borderTopColor: colors.border.light,
   },
   avgSteepText: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
   },
   mostBrewedSection: {
     padding: spacing.screenHorizontal,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -328,7 +318,6 @@ const styles = StyleSheet.create({
   mostBrewedItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     padding: spacing.sm,
     marginBottom: spacing.xs,
@@ -337,7 +326,6 @@ const styles = StyleSheet.create({
     width: 28,
     height: 28,
     borderRadius: 14,
-    backgroundColor: colors.accent.primary,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: spacing.sm,
@@ -345,7 +333,6 @@ const styles = StyleSheet.create({
   rankNumber: {
     ...typography.bodySmall,
     fontWeight: '700',
-    color: colors.text.inverse,
   },
   mostBrewedInfo: {
     flex: 1,
@@ -355,12 +342,10 @@ const styles = StyleSheet.create({
   },
   mostBrewedName: {
     ...typography.body,
-    color: colors.text.primary,
     flex: 1,
   },
   mostBrewedCount: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   historyHeader: {
     flexDirection: 'row',
@@ -381,15 +366,12 @@ const styles = StyleSheet.create({
   sectionHeaderText: {
     ...typography.bodySmall,
     fontWeight: '600',
-    color: colors.text.primary,
   },
   sectionHeaderCount: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   brewItem: {
     flexDirection: 'row',
-    backgroundColor: colors.background.secondary,
     marginHorizontal: spacing.screenHorizontal,
     marginBottom: spacing.xs,
     borderRadius: 12,
@@ -410,13 +392,11 @@ const styles = StyleSheet.create({
   },
   brewTeaName: {
     ...typography.body,
-    color: colors.text.primary,
     flex: 1,
     marginRight: spacing.sm,
   },
   brewTime: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   brewDetails: {
     flexDirection: 'row',
@@ -429,7 +409,6 @@ const styles = StyleSheet.create({
   },
   brewDetailText: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   emptyState: {
     alignItems: 'center',
@@ -439,12 +418,10 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     ...typography.headingSmall,
-    color: colors.text.primary,
     marginTop: spacing.md,
   },
   emptySubtitle: {
     ...typography.body,
-    color: colors.text.secondary,
     textAlign: 'center',
     marginTop: spacing.xs,
   },

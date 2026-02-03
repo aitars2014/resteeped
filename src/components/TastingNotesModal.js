@@ -12,7 +12,8 @@ import {
   ScrollView,
 } from 'react-native';
 import { X, Lightbulb } from 'lucide-react-native';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 import { Button } from './Button';
 import { StarRating } from './StarRating';
 
@@ -31,6 +32,7 @@ export const TastingNotesModal = ({
   initialNotes = '',
   initialRating = 0,
 }) => {
+  const { theme } = useTheme();
   const [notes, setNotes] = useState(initialNotes);
   const [rating, setRating] = useState(initialRating);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -69,13 +71,16 @@ export const TastingNotesModal = ({
         style={styles.keyboardView}
       >
         <Pressable style={styles.overlay} onPress={onClose}>
-          <Pressable style={styles.container} onPress={e => e.stopPropagation()}>
+          <Pressable 
+            style={[styles.container, { backgroundColor: theme.background.primary }]} 
+            onPress={e => e.stopPropagation()}
+          >
             {/* Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, { borderBottomColor: theme.border.light }]}>
               <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                <X size={24} color={colors.text.primary} />
+                <X size={24} color={theme.text.primary} />
               </TouchableOpacity>
-              <Text style={styles.title}>Tasting Notes</Text>
+              <Text style={[styles.title, { color: theme.text.primary }]}>Tasting Notes</Text>
               <View style={{ width: 40 }} />
             </View>
 
@@ -85,11 +90,11 @@ export const TastingNotesModal = ({
               keyboardShouldPersistTaps="handled"
             >
               {/* Tea Name */}
-              <Text style={styles.teaName}>{teaName}</Text>
+              <Text style={[styles.teaName, { color: theme.accent.primary }]}>{teaName}</Text>
 
               {/* Your Rating */}
               <View style={styles.section}>
-                <Text style={styles.sectionLabel}>Your Rating</Text>
+                <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Your Rating</Text>
                 <View style={styles.ratingContainer}>
                   <StarRating 
                     rating={rating} 
@@ -98,7 +103,7 @@ export const TastingNotesModal = ({
                     onRate={setRating}
                   />
                   {rating > 0 && (
-                    <Text style={styles.ratingText}>{rating}/5</Text>
+                    <Text style={[styles.ratingText, { color: theme.text.secondary }]}>{rating}/5</Text>
                   )}
                 </View>
               </View>
@@ -106,22 +111,26 @@ export const TastingNotesModal = ({
               {/* Notes Input */}
               <View style={styles.section}>
                 <View style={styles.labelRow}>
-                  <Text style={styles.sectionLabel}>Your Notes</Text>
+                  <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Your Notes</Text>
                   <TouchableOpacity 
                     style={styles.suggestionsToggle}
                     onPress={() => setShowSuggestions(!showSuggestions)}
                   >
-                    <Lightbulb size={16} color={colors.accent.primary} />
-                    <Text style={styles.suggestionsToggleText}>
+                    <Lightbulb size={16} color={theme.accent.primary} />
+                    <Text style={[styles.suggestionsToggleText, { color: theme.accent.primary }]}>
                       {showSuggestions ? 'Hide suggestions' : 'Show suggestions'}
                     </Text>
                   </TouchableOpacity>
                 </View>
                 
                 <TextInput
-                  style={styles.notesInput}
+                  style={[styles.notesInput, { 
+                    backgroundColor: theme.background.secondary,
+                    color: theme.text.primary,
+                    borderColor: theme.border.light,
+                  }]}
                   placeholder="How does this tea taste to you? What do you notice about the aroma, flavor, and finish?"
-                  placeholderTextColor={colors.text.secondary}
+                  placeholderTextColor={theme.text.secondary}
                   value={notes}
                   onChangeText={setNotes}
                   multiline
@@ -133,35 +142,40 @@ export const TastingNotesModal = ({
               {/* Flavor Suggestions */}
               {showSuggestions && (
                 <View style={styles.section}>
-                  <Text style={styles.sectionLabel}>Quick Add Flavors</Text>
+                  <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Quick Add Flavors</Text>
                   <View style={styles.suggestionsGrid}>
-                    {FLAVOR_SUGGESTIONS.map(flavor => (
-                      <TouchableOpacity
-                        key={flavor}
-                        style={[
-                          styles.suggestionPill,
-                          notes.toLowerCase().includes(flavor.toLowerCase()) && 
-                            styles.suggestionPillActive
-                        ]}
-                        onPress={() => addFlavorTag(flavor)}
-                      >
-                        <Text style={[
-                          styles.suggestionText,
-                          notes.toLowerCase().includes(flavor.toLowerCase()) && 
-                            styles.suggestionTextActive
-                        ]}>
-                          {flavor}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
+                    {FLAVOR_SUGGESTIONS.map(flavor => {
+                      const isActive = notes.toLowerCase().includes(flavor.toLowerCase());
+                      return (
+                        <TouchableOpacity
+                          key={flavor}
+                          style={[
+                            styles.suggestionPill,
+                            { 
+                              backgroundColor: isActive ? theme.accent.primary : theme.background.secondary,
+                              borderColor: isActive ? theme.accent.primary : theme.border.light,
+                            }
+                          ]}
+                          onPress={() => addFlavorTag(flavor)}
+                        >
+                          <Text style={[
+                            styles.suggestionText,
+                            { color: isActive ? theme.text.inverse : theme.text.primary },
+                            isActive && { fontWeight: '600' },
+                          ]}>
+                            {flavor}
+                          </Text>
+                        </TouchableOpacity>
+                      );
+                    })}
                   </View>
                 </View>
               )}
 
               {/* Tips */}
-              <View style={styles.tipsSection}>
-                <Text style={styles.tipsTitle}>💡 Tasting Tips</Text>
-                <Text style={styles.tipsText}>
+              <View style={[styles.tipsSection, { backgroundColor: theme.background.secondary }]}>
+                <Text style={[styles.tipsTitle, { color: theme.text.primary }]}>💡 Tasting Tips</Text>
+                <Text style={[styles.tipsText, { color: theme.text.secondary }]}>
                   • Note the aroma before your first sip{'\n'}
                   • Pay attention to how the flavor evolves{'\n'}
                   • Describe the finish (short, medium, long){'\n'}
@@ -173,7 +187,10 @@ export const TastingNotesModal = ({
             </ScrollView>
 
             {/* Save Button */}
-            <View style={styles.footer}>
+            <View style={[styles.footer, { 
+              backgroundColor: theme.background.primary,
+              borderTopColor: theme.border.light,
+            }]}>
               <Button
                 title={hasChanges ? "Save Notes" : "Close"}
                 onPress={hasChanges ? handleSave : onClose}
@@ -197,7 +214,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   container: {
-    backgroundColor: colors.background.primary,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     maxHeight: '90%',
@@ -209,7 +225,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screenHorizontal,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   closeButton: {
     width: 40,
@@ -219,7 +234,6 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.headingSmall,
-    color: colors.text.primary,
   },
   content: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -227,7 +241,6 @@ const styles = StyleSheet.create({
   teaName: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.accent.primary,
     textAlign: 'center',
     marginVertical: spacing.md,
   },
@@ -243,7 +256,6 @@ const styles = StyleSheet.create({
   sectionLabel: {
     ...typography.bodySmall,
     fontWeight: '600',
-    color: colors.text.secondary,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: spacing.sm,
@@ -256,7 +268,6 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     ...typography.body,
-    color: colors.text.secondary,
   },
   suggestionsToggle: {
     flexDirection: 'row',
@@ -265,17 +276,13 @@ const styles = StyleSheet.create({
   },
   suggestionsToggleText: {
     ...typography.caption,
-    color: colors.accent.primary,
   },
   notesInput: {
-    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     padding: spacing.md,
     ...typography.body,
-    color: colors.text.primary,
     minHeight: 120,
     borderWidth: 1,
-    borderColor: colors.border.light,
   },
   suggestionsGrid: {
     flexDirection: 'row',
@@ -286,24 +293,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 16,
-    backgroundColor: colors.background.secondary,
     borderWidth: 1,
-    borderColor: colors.border.light,
-  },
-  suggestionPillActive: {
-    backgroundColor: colors.accent.primary,
-    borderColor: colors.accent.primary,
   },
   suggestionText: {
     ...typography.caption,
-    color: colors.text.primary,
-  },
-  suggestionTextActive: {
-    color: colors.text.inverse,
-    fontWeight: '600',
   },
   tipsSection: {
-    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     padding: spacing.md,
     marginBottom: spacing.lg,
@@ -311,12 +306,10 @@ const styles = StyleSheet.create({
   tipsTitle: {
     ...typography.bodySmall,
     fontWeight: '600',
-    color: colors.text.primary,
     marginBottom: spacing.xs,
   },
   tipsText: {
     ...typography.caption,
-    color: colors.text.secondary,
     lineHeight: 20,
   },
   footer: {
@@ -326,9 +319,7 @@ const styles = StyleSheet.create({
     right: 0,
     padding: spacing.screenHorizontal,
     paddingBottom: 34,
-    backgroundColor: colors.background.primary,
     borderTopWidth: 1,
-    borderTopColor: colors.border.light,
   },
 });
 

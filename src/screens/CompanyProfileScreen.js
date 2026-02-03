@@ -8,27 +8,26 @@ import {
   TouchableOpacity,
   Linking,
   ActivityIndicator,
-  FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
   ChevronLeft,
   MapPin,
-  Globe,
-  Star,
   ExternalLink,
   Instagram,
   Award,
   Package,
   MessageSquare,
 } from 'lucide-react-native';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 import { Button, StarRating, TeaCard } from '../components';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
 
 const CompanyProfileScreen = ({ route, navigation }) => {
+  const { theme } = useTheme();
   const { companyId, company: passedCompany } = route.params || {};
   const { user, isDevMode } = useAuth();
   
@@ -121,16 +120,16 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
   if (loading) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={colors.accent.primary} />
+      <View style={[styles.loadingContainer, { backgroundColor: theme.background.primary }]}>
+        <ActivityIndicator size="large" color={theme.accent.primary} />
       </View>
     );
   }
 
   if (!company) {
     return (
-      <View style={styles.errorContainer}>
-        <Text style={styles.errorText}>Company not found</Text>
+      <View style={[styles.errorContainer, { backgroundColor: theme.background.primary }]}>
+        <Text style={[styles.errorText, { color: theme.text.secondary }]}>Company not found</Text>
       </View>
     );
   }
@@ -142,7 +141,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   ].filter(Boolean).join(', ');
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { backgroundColor: theme.background.primary }]}>
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
@@ -150,7 +149,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
             <Image source={{ uri: company.banner_url }} style={styles.banner} />
           ) : (
             <LinearGradient
-              colors={[company.primary_color || colors.accent.primary, colors.background.secondary]}
+              colors={[company.primary_color || theme.accent.primary, theme.background.secondary]}
               style={styles.banner}
             />
           )}
@@ -160,16 +159,16 @@ const CompanyProfileScreen = ({ route, navigation }) => {
               style={styles.backButton}
               onPress={() => navigation.goBack()}
             >
-              <ChevronLeft size={28} color={colors.text.primary} />
+              <ChevronLeft size={28} color={theme.text.primary} />
             </TouchableOpacity>
           </SafeAreaView>
 
-          <View style={styles.logoContainer}>
+          <View style={[styles.logoContainer, { borderColor: theme.background.primary }]}>
             {company.logo_url ? (
-              <Image source={{ uri: company.logo_url }} style={styles.logo} />
+              <Image source={{ uri: company.logo_url }} style={[styles.logo, { borderColor: theme.background.primary }]} />
             ) : (
-              <View style={[styles.logo, styles.logoPlaceholder]}>
-                <Text style={styles.logoPlaceholderText}>
+              <View style={[styles.logo, styles.logoPlaceholder, { backgroundColor: theme.background.secondary, borderColor: theme.background.primary }]}>
+                <Text style={[styles.logoPlaceholderText, { color: theme.text.secondary }]}>
                   {company.name.charAt(0)}
                 </Text>
               </View>
@@ -178,17 +177,17 @@ const CompanyProfileScreen = ({ route, navigation }) => {
         </View>
 
         {/* Company Info */}
-        <View style={styles.infoSection}>
-          <Text style={styles.companyName}>{company.name}</Text>
+        <View style={[styles.infoSection, { borderBottomColor: theme.border.light }]}>
+          <Text style={[styles.companyName, { color: theme.text.primary }]}>{company.name}</Text>
           
           {company.short_description && (
-            <Text style={styles.shortDescription}>{company.short_description}</Text>
+            <Text style={[styles.shortDescription, { color: theme.text.secondary }]}>{company.short_description}</Text>
           )}
 
           {/* Rating */}
           <View style={styles.ratingRow}>
             <StarRating rating={company.avg_rating || 0} size={18} />
-            <Text style={styles.ratingText}>
+            <Text style={[styles.ratingText, { color: theme.text.secondary }]}>
               {company.avg_rating?.toFixed(1) || '0.0'} ({company.rating_count || 0} reviews)
             </Text>
           </View>
@@ -196,28 +195,28 @@ const CompanyProfileScreen = ({ route, navigation }) => {
           {/* Location */}
           {locationString && (
             <View style={styles.metaRow}>
-              <MapPin size={16} color={colors.text.secondary} />
-              <Text style={styles.metaText}>{locationString}</Text>
+              <MapPin size={16} color={theme.text.secondary} />
+              <Text style={[styles.metaText, { color: theme.text.secondary }]}>{locationString}</Text>
             </View>
           )}
 
           {/* Stats Row */}
-          <View style={styles.statsRow}>
+          <View style={[styles.statsRow, { backgroundColor: theme.background.secondary }]}>
             <View style={styles.stat}>
-              <Text style={styles.statNumber}>{company.tea_count || 0}</Text>
-              <Text style={styles.statLabel}>Teas</Text>
+              <Text style={[styles.statNumber, { color: theme.text.primary }]}>{company.tea_count || 0}</Text>
+              <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Teas</Text>
             </View>
-            <View style={styles.statDivider} />
+            <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
             <View style={styles.stat}>
-              <Text style={styles.statNumber}>{company.founded_year || '—'}</Text>
-              <Text style={styles.statLabel}>Founded</Text>
+              <Text style={[styles.statNumber, { color: theme.text.primary }]}>{company.founded_year || '—'}</Text>
+              <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Founded</Text>
             </View>
-            <View style={styles.statDivider} />
+            <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
             <View style={styles.stat}>
-              <Text style={styles.statNumber}>
+              <Text style={[styles.statNumber, { color: theme.text.primary }]}>
                 {company.price_range?.charAt(0).toUpperCase() + company.price_range?.slice(1) || '—'}
               </Text>
-              <Text style={styles.statLabel}>Price Range</Text>
+              <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Price Range</Text>
             </View>
           </View>
 
@@ -226,12 +225,12 @@ const CompanyProfileScreen = ({ route, navigation }) => {
             <Button
               title="Visit Website"
               onPress={openWebsite}
-              icon={<ExternalLink size={16} color={colors.text.inverse} />}
+              icon={<ExternalLink size={16} color={theme.text.inverse} />}
               style={styles.actionButton}
             />
             {company.instagram_handle && (
-              <TouchableOpacity style={styles.socialButton} onPress={openInstagram}>
-                <Instagram size={20} color={colors.accent.primary} />
+              <TouchableOpacity style={[styles.socialButton, { backgroundColor: theme.background.secondary }]} onPress={openInstagram}>
+                <Instagram size={20} color={theme.accent.primary} />
               </TouchableOpacity>
             )}
           </View>
@@ -239,20 +238,20 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
         {/* Description */}
         {company.description && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>About</Text>
-            <Text style={styles.description}>{company.description}</Text>
+          <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+            <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>About</Text>
+            <Text style={[styles.description, { color: theme.text.secondary }]}>{company.description}</Text>
           </View>
         )}
 
         {/* Specialties */}
         {company.specialty?.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Specialties</Text>
+          <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+            <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Specialties</Text>
             <View style={styles.tagContainer}>
               {company.specialty.map((spec, idx) => (
-                <View key={idx} style={styles.tag}>
-                  <Text style={styles.tagText}>{spec}</Text>
+                <View key={idx} style={[styles.tag, { backgroundColor: theme.background.secondary }]}>
+                  <Text style={[styles.tagText, { color: theme.text.primary }]}>{spec}</Text>
                 </View>
               ))}
             </View>
@@ -261,13 +260,13 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
         {/* Certifications */}
         {company.certifications?.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Certifications</Text>
+          <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+            <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Certifications</Text>
             <View style={styles.tagContainer}>
               {company.certifications.map((cert, idx) => (
-                <View key={idx} style={[styles.tag, styles.certTag]}>
-                  <Award size={12} color={colors.status.success} style={{ marginRight: 4 }} />
-                  <Text style={[styles.tagText, styles.certTagText]}>{cert}</Text>
+                <View key={idx} style={[styles.tag, styles.certTag, { backgroundColor: theme.status.success + '20' }]}>
+                  <Award size={12} color={theme.status.success} style={{ marginRight: 4 }} />
+                  <Text style={[styles.tagText, { color: theme.status.success }]}>{cert}</Text>
                 </View>
               ))}
             </View>
@@ -275,18 +274,18 @@ const CompanyProfileScreen = ({ route, navigation }) => {
         )}
 
         {/* Shipping Info */}
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Shipping</Text>
+        <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+          <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Shipping</Text>
           <View style={styles.shippingInfo}>
-            <Package size={16} color={colors.text.secondary} />
-            <Text style={styles.shippingText}>
+            <Package size={16} color={theme.text.secondary} />
+            <Text style={[styles.shippingText, { color: theme.text.secondary }]}>
               {company.ships_internationally 
                 ? 'Ships internationally' 
                 : 'Domestic shipping only'}
             </Text>
           </View>
           {company.free_shipping_minimum && (
-            <Text style={styles.shippingNote}>
+            <Text style={[styles.shippingNote, { color: theme.text.secondary }]}>
               Free shipping on orders over ${company.free_shipping_minimum}
             </Text>
           )}
@@ -294,13 +293,13 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
         {/* Top Rated Teas */}
         {topTeas.length > 0 && (
-          <View style={styles.section}>
+          <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
             <View style={styles.sectionHeader}>
-              <Text style={styles.sectionTitle}>Top Rated Teas</Text>
+              <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Top Rated Teas</Text>
               <TouchableOpacity
                 onPress={() => navigation.navigate('Discovery', { companyId: company.id })}
               >
-                <Text style={styles.seeAllText}>See All</Text>
+                <Text style={[styles.seeAllText, { color: theme.accent.primary }]}>See All</Text>
               </TouchableOpacity>
             </View>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
@@ -318,34 +317,34 @@ const CompanyProfileScreen = ({ route, navigation }) => {
         )}
 
         {/* Reviews */}
-        <View style={styles.section}>
+        <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
           <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>
+            <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>
               Reviews {company.rating_count > 0 && `(${company.rating_count})`}
             </Text>
             <TouchableOpacity style={styles.writeReviewButton}>
-              <MessageSquare size={16} color={colors.accent.primary} />
-              <Text style={styles.writeReviewText}>Write Review</Text>
+              <MessageSquare size={16} color={theme.accent.primary} />
+              <Text style={[styles.writeReviewText, { color: theme.accent.primary }]}>Write Review</Text>
             </TouchableOpacity>
           </View>
 
           {reviews.length > 0 ? (
             reviews.map((review) => (
-              <View key={review.id} style={styles.reviewCard}>
+              <View key={review.id} style={[styles.reviewCard, { backgroundColor: theme.background.secondary }]}>
                 <View style={styles.reviewHeader}>
-                  <Text style={styles.reviewerName}>
+                  <Text style={[styles.reviewerName, { color: theme.text.primary }]}>
                     {review.profile?.display_name || 'Anonymous'}
                   </Text>
                   <StarRating rating={review.rating} size={14} />
                 </View>
                 {review.review_text && (
-                  <Text style={styles.reviewText}>{review.review_text}</Text>
+                  <Text style={[styles.reviewText, { color: theme.text.secondary }]}>{review.review_text}</Text>
                 )}
               </View>
             ))
           ) : (
             <View style={styles.noReviews}>
-              <Text style={styles.noReviewsText}>
+              <Text style={[styles.noReviewsText, { color: theme.text.secondary }]}>
                 No reviews yet. Be the first to review {company.name}!
               </Text>
             </View>
@@ -361,23 +360,19 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.background.primary,
   },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.background.primary,
   },
   errorText: {
     ...typography.body,
-    color: colors.text.secondary,
   },
   header: {
     height: 200,
@@ -414,32 +409,26 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 16,
     borderWidth: 3,
-    borderColor: colors.background.primary,
   },
   logoPlaceholder: {
-    backgroundColor: colors.background.secondary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   logoPlaceholderText: {
     ...typography.h1,
-    color: colors.text.secondary,
   },
   infoSection: {
     paddingTop: 50,
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.lg,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   companyName: {
     ...typography.h1,
-    color: colors.text.primary,
     marginBottom: spacing.xs,
   },
   shortDescription: {
     ...typography.body,
-    color: colors.text.secondary,
     marginBottom: spacing.sm,
   },
   ratingRow: {
@@ -449,7 +438,6 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginLeft: spacing.xs,
   },
   metaRow: {
@@ -459,7 +447,6 @@ const styles = StyleSheet.create({
   },
   metaText: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginLeft: spacing.xs,
   },
   statsRow: {
@@ -467,7 +454,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: spacing.md,
     marginBottom: spacing.md,
-    backgroundColor: colors.background.secondary,
     borderRadius: 12,
   },
   stat: {
@@ -475,15 +461,12 @@ const styles = StyleSheet.create({
   },
   statNumber: {
     ...typography.h2,
-    color: colors.text.primary,
   },
   statLabel: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   statDivider: {
     width: 1,
-    backgroundColor: colors.border.light,
   },
   actionRow: {
     flexDirection: 'row',
@@ -497,14 +480,12 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 12,
-    backgroundColor: colors.background.secondary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   section: {
     padding: spacing.lg,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -514,16 +495,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...typography.h3,
-    color: colors.text.primary,
     marginBottom: spacing.sm,
   },
   seeAllText: {
     ...typography.caption,
-    color: colors.accent.primary,
   },
   description: {
     ...typography.body,
-    color: colors.text.secondary,
     lineHeight: 22,
   },
   tagContainer: {
@@ -534,20 +512,14 @@ const styles = StyleSheet.create({
   tag: {
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
-    backgroundColor: colors.background.secondary,
     borderRadius: 16,
   },
   tagText: {
     ...typography.caption,
-    color: colors.text.primary,
   },
   certTag: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.status.success + '20',
-  },
-  certTagText: {
-    color: colors.status.success,
   },
   shippingInfo: {
     flexDirection: 'row',
@@ -556,12 +528,10 @@ const styles = StyleSheet.create({
   },
   shippingText: {
     ...typography.body,
-    color: colors.text.secondary,
     marginLeft: spacing.xs,
   },
   shippingNote: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginLeft: 24,
   },
   teaCard: {
@@ -575,10 +545,8 @@ const styles = StyleSheet.create({
   },
   writeReviewText: {
     ...typography.caption,
-    color: colors.accent.primary,
   },
   reviewCard: {
-    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     padding: spacing.md,
     marginBottom: spacing.sm,
@@ -591,11 +559,9 @@ const styles = StyleSheet.create({
   },
   reviewerName: {
     ...typography.bodyBold,
-    color: colors.text.primary,
   },
   reviewText: {
     ...typography.body,
-    color: colors.text.secondary,
   },
   noReviews: {
     padding: spacing.lg,
@@ -603,7 +569,6 @@ const styles = StyleSheet.create({
   },
   noReviewsText: {
     ...typography.body,
-    color: colors.text.secondary,
     textAlign: 'center',
   },
 });

@@ -8,10 +8,10 @@ import {
   FlatList,
   TextInput,
   Image,
-  Pressable,
 } from 'react-native';
-import { X, Search, Check } from 'lucide-react-native';
-import { colors, typography, spacing, getTeaTypeColor, getPlaceholderImage } from '../constants';
+import { X, Search } from 'lucide-react-native';
+import { typography, spacing, getPlaceholderImage } from '../constants';
+import { useTheme } from '../context';
 import { useTeas } from '../hooks';
 
 export const TeaPickerModal = ({
@@ -21,6 +21,7 @@ export const TeaPickerModal = ({
   excludeIds = [],
   title = 'Select a Tea',
 }) => {
+  const { theme, getTeaTypeColor } = useTheme();
   const { teas } = useTeas();
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -36,7 +37,7 @@ export const TeaPickerModal = ({
       );
     }
     
-    return result.slice(0, 50); // Limit for performance
+    return result.slice(0, 50);
   }, [teas, excludeIds, searchQuery]);
 
   const renderTeaItem = ({ item: tea }) => {
@@ -44,7 +45,7 @@ export const TeaPickerModal = ({
     
     return (
       <TouchableOpacity
-        style={styles.teaItem}
+        style={[styles.teaItem, { borderBottomColor: theme.border.light }]}
         onPress={() => {
           onSelect(tea);
           onClose();
@@ -58,8 +59,8 @@ export const TeaPickerModal = ({
           />
         </View>
         <View style={styles.teaInfo}>
-          <Text style={styles.teaName} numberOfLines={1}>{tea.name}</Text>
-          <Text style={styles.teaBrand} numberOfLines={1}>{tea.brandName}</Text>
+          <Text style={[styles.teaName, { color: theme.text.primary }]} numberOfLines={1}>{tea.name}</Text>
+          <Text style={[styles.teaBrand, { color: theme.text.secondary }]} numberOfLines={1}>{tea.brandName}</Text>
           <View style={styles.teaMeta}>
             <View style={[styles.typeBadge, { backgroundColor: teaColor.primary + '20' }]}>
               <Text style={[styles.typeText, { color: teaColor.primary }]}>
@@ -67,7 +68,7 @@ export const TeaPickerModal = ({
               </Text>
             </View>
             {tea.avgRating > 0 && (
-              <Text style={styles.rating}>★ {tea.avgRating.toFixed(1)}</Text>
+              <Text style={[styles.rating, { color: theme.rating.star }]}>★ {tea.avgRating.toFixed(1)}</Text>
             )}
           </View>
         </View>
@@ -82,31 +83,31 @@ export const TeaPickerModal = ({
       presentationStyle="pageSheet"
       onRequestClose={onClose}
     >
-      <View style={styles.container}>
+      <View style={[styles.container, { backgroundColor: theme.background.primary }]}>
         {/* Header */}
-        <View style={styles.header}>
+        <View style={[styles.header, { borderBottomColor: theme.border.light }]}>
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-            <X size={24} color={colors.text.primary} />
+            <X size={24} color={theme.text.primary} />
           </TouchableOpacity>
-          <Text style={styles.title}>{title}</Text>
+          <Text style={[styles.title, { color: theme.text.primary }]}>{title}</Text>
           <View style={{ width: 40 }} />
         </View>
 
         {/* Search */}
         <View style={styles.searchContainer}>
-          <View style={styles.searchBar}>
-            <Search size={18} color={colors.text.secondary} />
+          <View style={[styles.searchBar, { backgroundColor: theme.background.secondary }]}>
+            <Search size={18} color={theme.text.secondary} />
             <TextInput
-              style={styles.searchInput}
+              style={[styles.searchInput, { color: theme.text.primary }]}
               placeholder="Search teas..."
-              placeholderTextColor={colors.text.secondary}
+              placeholderTextColor={theme.text.secondary}
               value={searchQuery}
               onChangeText={setSearchQuery}
               autoFocus
             />
             {searchQuery.length > 0 && (
               <TouchableOpacity onPress={() => setSearchQuery('')}>
-                <X size={18} color={colors.text.secondary} />
+                <X size={18} color={theme.text.secondary} />
               </TouchableOpacity>
             )}
           </View>
@@ -121,7 +122,7 @@ export const TeaPickerModal = ({
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={
             <View style={styles.emptyState}>
-              <Text style={styles.emptyText}>No teas found</Text>
+              <Text style={[styles.emptyText, { color: theme.text.secondary }]}>No teas found</Text>
             </View>
           }
         />
@@ -133,7 +134,6 @@ export const TeaPickerModal = ({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
   },
   header: {
     flexDirection: 'row',
@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screenHorizontal,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   closeButton: {
     width: 40,
@@ -152,7 +151,6 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.headingSmall,
-    color: colors.text.primary,
   },
   searchContainer: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -161,7 +159,6 @@ const styles = StyleSheet.create({
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     paddingHorizontal: 14,
     height: 44,
@@ -170,7 +167,6 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     ...typography.body,
-    color: colors.text.primary,
   },
   listContent: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -181,7 +177,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   teaImageContainer: {
     width: 56,
@@ -200,12 +195,10 @@ const styles = StyleSheet.create({
   teaName: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.text.primary,
     marginBottom: 2,
   },
   teaBrand: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginBottom: 6,
   },
   teaMeta: {
@@ -225,7 +218,6 @@ const styles = StyleSheet.create({
   },
   rating: {
     ...typography.caption,
-    color: colors.rating.star,
     fontWeight: '500',
   },
   emptyState: {
@@ -234,7 +226,6 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     ...typography.body,
-    color: colors.text.secondary,
   },
 });
 

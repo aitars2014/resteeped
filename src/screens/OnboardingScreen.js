@@ -16,13 +16,13 @@ import {
   Clock, 
   Star, 
   BookmarkCheck, 
-  ChevronRight 
 } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 import { Button } from '../components';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const ONBOARDING_SLIDES = [
   {
@@ -75,6 +75,7 @@ const ONBOARDING_SLIDES = [
 const ONBOARDING_COMPLETE_KEY = '@resteeped:onboarding_complete';
 
 export const OnboardingScreen = ({ navigation, onComplete }) => {
+  const { theme } = useTheme();
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
@@ -108,7 +109,7 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
     handleComplete();
   };
 
-  const renderSlide = ({ item, index }) => {
+  const renderSlide = ({ item }) => {
     const Icon = item.icon;
     
     return (
@@ -121,9 +122,9 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
         </LinearGradient>
         
         <View style={styles.textContainer}>
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.subtitle}>{item.subtitle}</Text>
-          <Text style={styles.description}>{item.description}</Text>
+          <Text style={[styles.title, { color: theme.text.primary }]}>{item.title}</Text>
+          <Text style={[styles.subtitle, { color: theme.accent.primary }]}>{item.subtitle}</Text>
+          <Text style={[styles.description, { color: theme.text.secondary }]}>{item.description}</Text>
         </View>
       </View>
     );
@@ -156,7 +157,11 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
               key={index}
               style={[
                 styles.dot,
-                { width: dotWidth, opacity },
+                { 
+                  width: dotWidth, 
+                  opacity,
+                  backgroundColor: theme.accent.primary,
+                },
               ]}
             />
           );
@@ -168,11 +173,11 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
   const isLastSlide = currentIndex === ONBOARDING_SLIDES.length - 1;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
       {/* Skip button */}
       {!isLastSlide && (
         <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
-          <Text style={styles.skipText}>Skip</Text>
+          <Text style={[styles.skipText, { color: theme.text.secondary }]}>Skip</Text>
         </TouchableOpacity>
       )}
 
@@ -235,7 +240,6 @@ export const resetOnboarding = async () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
   },
   skipButton: {
     position: 'absolute',
@@ -246,7 +250,6 @@ const styles = StyleSheet.create({
   },
   skipText: {
     ...typography.body,
-    color: colors.text.secondary,
     fontWeight: '500',
   },
   slide: {
@@ -275,20 +278,17 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.headingLarge,
-    color: colors.text.primary,
     textAlign: 'center',
     marginBottom: spacing.sm,
   },
   subtitle: {
     ...typography.body,
-    color: colors.accent.primary,
     fontWeight: '600',
     textAlign: 'center',
     marginBottom: spacing.md,
   },
   description: {
     ...typography.body,
-    color: colors.text.secondary,
     textAlign: 'center',
     lineHeight: 26,
     maxWidth: 300,
@@ -306,7 +306,6 @@ const styles = StyleSheet.create({
   dot: {
     height: 8,
     borderRadius: 4,
-    backgroundColor: colors.accent.primary,
     marginHorizontal: 4,
   },
   buttonContainer: {

@@ -11,8 +11,9 @@ import {
   Pressable,
   ScrollView,
 } from 'react-native';
-import { X, Star, Truck, Headphones, DollarSign, Award } from 'lucide-react-native';
-import { colors, typography, spacing } from '../constants';
+import { X, Truck, Headphones, DollarSign, Award } from 'lucide-react-native';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 import { Button } from './Button';
 import { StarRating } from './StarRating';
 
@@ -32,6 +33,7 @@ export const WriteCompanyReviewModal = ({
   initialText = '',
   initialCategoryRatings = {},
 }) => {
+  const { theme } = useTheme();
   const [overallRating, setOverallRating] = useState(initialRating);
   const [reviewText, setReviewText] = useState(initialText);
   const [categoryRatings, setCategoryRatings] = useState({
@@ -75,11 +77,11 @@ export const WriteCompanyReviewModal = ({
   };
 
   const renderCategoryRating = ({ id, label, icon: Icon, description }) => (
-    <View key={id} style={styles.categoryItem}>
+    <View key={id} style={[styles.categoryItem, { backgroundColor: theme.background.secondary }]}>
       <View style={styles.categoryHeader}>
         <View style={styles.categoryLabel}>
-          <Icon size={18} color={colors.accent.primary} />
-          <Text style={styles.categoryLabelText}>{label}</Text>
+          <Icon size={18} color={theme.accent.primary} />
+          <Text style={[styles.categoryLabelText, { color: theme.text.primary }]}>{label}</Text>
         </View>
         <StarRating 
           rating={categoryRatings[id]} 
@@ -87,7 +89,7 @@ export const WriteCompanyReviewModal = ({
           onRate={(r) => setCategoryRating(id, r)}
         />
       </View>
-      <Text style={styles.categoryDescription}>{description}</Text>
+      <Text style={[styles.categoryDescription, { color: theme.text.secondary }]}>{description}</Text>
     </View>
   );
 
@@ -105,13 +107,16 @@ export const WriteCompanyReviewModal = ({
         style={styles.keyboardView}
       >
         <Pressable style={styles.overlay} onPress={onClose}>
-          <Pressable style={styles.container} onPress={e => e.stopPropagation()}>
+          <Pressable 
+            style={[styles.container, { backgroundColor: theme.background.primary }]} 
+            onPress={e => e.stopPropagation()}
+          >
             {/* Header */}
-            <View style={styles.header}>
+            <View style={[styles.header, { borderBottomColor: theme.border.light }]}>
               <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-                <X size={24} color={colors.text.primary} />
+                <X size={24} color={theme.text.primary} />
               </TouchableOpacity>
-              <Text style={styles.title}>Review Shop</Text>
+              <Text style={[styles.title, { color: theme.text.primary }]}>Review Shop</Text>
               <View style={{ width: 40 }} />
             </View>
 
@@ -121,11 +126,11 @@ export const WriteCompanyReviewModal = ({
               keyboardShouldPersistTaps="handled"
             >
               {/* Company Name */}
-              <Text style={styles.companyName}>{companyName}</Text>
+              <Text style={[styles.companyName, { color: theme.accent.primary }]}>{companyName}</Text>
 
               {/* Overall Rating */}
-              <View style={styles.overallRatingSection}>
-                <Text style={styles.sectionLabel}>Overall Rating *</Text>
+              <View style={[styles.overallRatingSection, { borderBottomColor: theme.border.light }]}>
+                <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Overall Rating *</Text>
                 <View style={styles.overallRatingContainer}>
                   <StarRating 
                     rating={overallRating} 
@@ -133,7 +138,7 @@ export const WriteCompanyReviewModal = ({
                     onRate={setOverallRating}
                   />
                   {overallRating > 0 && (
-                    <Text style={styles.ratingText}>{overallRating}/5</Text>
+                    <Text style={[styles.ratingText, { color: theme.text.primary }]}>{overallRating}/5</Text>
                   )}
                 </View>
               </View>
@@ -144,8 +149,8 @@ export const WriteCompanyReviewModal = ({
                   style={styles.categoryToggle}
                   onPress={() => setShowCategories(!showCategories)}
                 >
-                  <Text style={styles.sectionLabel}>Detailed Ratings (Optional)</Text>
-                  <Text style={styles.toggleText}>
+                  <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Detailed Ratings (Optional)</Text>
+                  <Text style={[styles.toggleText, { color: theme.accent.primary }]}>
                     {showCategories ? 'Hide' : 'Show'}
                   </Text>
                 </TouchableOpacity>
@@ -159,11 +164,15 @@ export const WriteCompanyReviewModal = ({
 
               {/* Review Text */}
               <View style={styles.section}>
-                <Text style={styles.sectionLabel}>Your Review</Text>
+                <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Your Review</Text>
                 <TextInput
-                  style={styles.reviewInput}
+                  style={[styles.reviewInput, { 
+                    backgroundColor: theme.background.secondary,
+                    color: theme.text.primary,
+                    borderColor: theme.border.light,
+                  }]}
                   placeholder="Share your experience with this tea shop. What did you order? How was the quality? Would you recommend them?"
-                  placeholderTextColor={colors.text.secondary}
+                  placeholderTextColor={theme.text.secondary}
                   value={reviewText}
                   onChangeText={setReviewText}
                   multiline
@@ -176,7 +185,10 @@ export const WriteCompanyReviewModal = ({
             </ScrollView>
 
             {/* Submit Button */}
-            <View style={styles.footer}>
+            <View style={[styles.footer, { 
+              backgroundColor: theme.background.primary,
+              borderTopColor: theme.border.light,
+            }]}>
               <Button
                 title={initialRating > 0 ? "Update Review" : "Submit Review"}
                 onPress={handleSubmit}
@@ -202,7 +214,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   container: {
-    backgroundColor: colors.background.primary,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     maxHeight: '90%',
@@ -214,7 +225,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screenHorizontal,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   closeButton: {
     width: 40,
@@ -224,7 +234,6 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.headingSmall,
-    color: colors.text.primary,
   },
   content: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -232,7 +241,6 @@ const styles = StyleSheet.create({
   companyName: {
     ...typography.body,
     fontWeight: '600',
-    color: colors.accent.primary,
     textAlign: 'center',
     marginVertical: spacing.md,
   },
@@ -241,12 +249,10 @@ const styles = StyleSheet.create({
     marginBottom: spacing.lg,
     paddingBottom: spacing.lg,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   sectionLabel: {
     ...typography.bodySmall,
     fontWeight: '600',
-    color: colors.text.secondary,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: spacing.sm,
@@ -258,7 +264,6 @@ const styles = StyleSheet.create({
   },
   ratingText: {
     ...typography.headingMedium,
-    color: colors.text.primary,
   },
   section: {
     marginBottom: spacing.lg,
@@ -271,7 +276,6 @@ const styles = StyleSheet.create({
   },
   toggleText: {
     ...typography.bodySmall,
-    color: colors.accent.primary,
     fontWeight: '500',
   },
   categoriesContainer: {
@@ -279,7 +283,6 @@ const styles = StyleSheet.create({
     marginTop: spacing.sm,
   },
   categoryItem: {
-    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     padding: spacing.md,
   },
@@ -297,21 +300,16 @@ const styles = StyleSheet.create({
   categoryLabelText: {
     ...typography.body,
     fontWeight: '500',
-    color: colors.text.primary,
   },
   categoryDescription: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   reviewInput: {
-    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     padding: spacing.md,
     ...typography.body,
-    color: colors.text.primary,
     minHeight: 120,
     borderWidth: 1,
-    borderColor: colors.border.light,
   },
   footer: {
     position: 'absolute',
@@ -320,9 +318,7 @@ const styles = StyleSheet.create({
     right: 0,
     padding: spacing.screenHorizontal,
     paddingBottom: 34,
-    backgroundColor: colors.background.primary,
     borderTopWidth: 1,
-    borderTopColor: colors.border.light,
   },
   disabledButton: {
     opacity: 0.5,

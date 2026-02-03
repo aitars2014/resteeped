@@ -8,8 +8,9 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import { X, Check, ChevronDown, Star } from 'lucide-react-native';
-import { colors, typography, spacing, getTeaTypeColor } from '../constants';
+import { X, Check, Star } from 'lucide-react-native';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 import { Button } from './Button';
 import { useCompanies } from '../hooks';
 
@@ -43,9 +44,9 @@ export const FilterModal = ({
   filters, 
   onApplyFilters 
 }) => {
+  const { theme, getTeaTypeColor } = useTheme();
   const { companies } = useCompanies();
   
-  // Local state for editing filters
   const [localFilters, setLocalFilters] = useState({
     teaType: 'all',
     company: 'all',
@@ -54,7 +55,6 @@ export const FilterModal = ({
     ...filters,
   });
 
-  // Sync with external filters when modal opens
   useEffect(() => {
     if (visible) {
       setLocalFilters({
@@ -73,13 +73,12 @@ export const FilterModal = ({
   };
 
   const handleReset = () => {
-    const resetFilters = {
+    setLocalFilters({
       teaType: 'all',
       company: 'all',
       minRating: 'all',
       sortBy: 'rating',
-    };
-    setLocalFilters(resetFilters);
+    });
   };
 
   const updateFilter = (key, value) => {
@@ -97,14 +96,18 @@ export const FilterModal = ({
     return (
       <TouchableOpacity
         key={id}
-        style={[styles.option, isSelected && styles.optionSelected]}
+        style={styles.option}
         onPress={() => onSelect(id)}
       >
-        <Text style={[styles.optionText, isSelected && styles.optionTextSelected]}>
+        <Text style={[
+          styles.optionText, 
+          { color: isSelected ? theme.accent.primary : theme.text.primary },
+          isSelected && { fontWeight: '600' }
+        ]}>
           {label}
         </Text>
         {showCheck && isSelected && (
-          <Check size={18} color={colors.accent.primary} />
+          <Check size={18} color={theme.accent.primary} />
         )}
       </TouchableOpacity>
     );
@@ -119,14 +122,21 @@ export const FilterModal = ({
         key={type.id}
         style={[
           styles.teaTypeOption,
-          isSelected && styles.teaTypeOptionSelected,
-          isSelected && teaColor && { backgroundColor: teaColor.primary },
+          { 
+            backgroundColor: isSelected 
+              ? (teaColor?.primary || theme.accent.primary)
+              : theme.background.secondary,
+            borderColor: isSelected 
+              ? (teaColor?.primary || theme.accent.primary)
+              : theme.border.light,
+          },
         ]}
         onPress={() => updateFilter('teaType', type.id)}
       >
         <Text style={[
           styles.teaTypeText,
-          isSelected && styles.teaTypeTextSelected,
+          { color: isSelected ? theme.text.inverse : theme.text.primary },
+          isSelected && { fontWeight: '600' },
         ]}>
           {type.label}
         </Text>
@@ -142,15 +152,18 @@ export const FilterModal = ({
       onRequestClose={onClose}
     >
       <Pressable style={styles.overlay} onPress={onClose}>
-        <Pressable style={styles.container} onPress={e => e.stopPropagation()}>
+        <Pressable 
+          style={[styles.container, { backgroundColor: theme.background.primary }]} 
+          onPress={e => e.stopPropagation()}
+        >
           {/* Header */}
-          <View style={styles.header}>
+          <View style={[styles.header, { borderBottomColor: theme.border.light }]}>
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
-              <X size={24} color={colors.text.primary} />
+              <X size={24} color={theme.text.primary} />
             </TouchableOpacity>
-            <Text style={styles.title}>Filters</Text>
+            <Text style={[styles.title, { color: theme.text.primary }]}>Filters</Text>
             <TouchableOpacity onPress={handleReset}>
-              <Text style={styles.resetText}>Reset</Text>
+              <Text style={[styles.resetText, { color: theme.accent.primary }]}>Reset</Text>
             </TouchableOpacity>
           </View>
 
@@ -159,16 +172,16 @@ export const FilterModal = ({
             showsVerticalScrollIndicator={false}
           >
             {/* Tea Type */}
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Tea Type</Text>
+            <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+              <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Tea Type</Text>
               <View style={styles.teaTypeGrid}>
                 {TEA_TYPES.map(renderTeaTypeOption)}
               </View>
             </View>
 
             {/* Company */}
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Brand / Shop</Text>
+            <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+              <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Brand / Shop</Text>
               <View style={styles.optionsList}>
                 {renderOption('all', 'All Brands', localFilters.company, 
                   (v) => updateFilter('company', v))}
@@ -184,8 +197,8 @@ export const FilterModal = ({
             </View>
 
             {/* Rating */}
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Minimum Rating</Text>
+            <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+              <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Minimum Rating</Text>
               <View style={styles.ratingOptions}>
                 {RATING_OPTIONS.map(option => {
                   const isSelected = localFilters.minRating === option.id;
@@ -194,20 +207,24 @@ export const FilterModal = ({
                       key={option.id}
                       style={[
                         styles.ratingOption,
-                        isSelected && styles.ratingOptionSelected,
+                        { 
+                          backgroundColor: isSelected ? theme.accent.primary : theme.background.secondary,
+                          borderColor: isSelected ? theme.accent.primary : theme.border.light,
+                        },
                       ]}
                       onPress={() => updateFilter('minRating', option.id)}
                     >
                       {option.min && (
                         <Star 
                           size={14} 
-                          color={isSelected ? colors.text.inverse : colors.rating.star}
-                          fill={isSelected ? colors.text.inverse : colors.rating.star}
+                          color={isSelected ? theme.text.inverse : theme.rating.star}
+                          fill={isSelected ? theme.text.inverse : theme.rating.star}
                         />
                       )}
                       <Text style={[
                         styles.ratingOptionText,
-                        isSelected && styles.ratingOptionTextSelected,
+                        { color: isSelected ? theme.text.inverse : theme.text.primary },
+                        isSelected && { fontWeight: '600' },
                       ]}>
                         {option.label}
                       </Text>
@@ -218,8 +235,8 @@ export const FilterModal = ({
             </View>
 
             {/* Sort By */}
-            <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Sort By</Text>
+            <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+              <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Sort By</Text>
               <View style={styles.optionsList}>
                 {SORT_OPTIONS.map(option => 
                   renderOption(
@@ -236,7 +253,10 @@ export const FilterModal = ({
           </ScrollView>
 
           {/* Apply Button */}
-          <View style={styles.footer}>
+          <View style={[styles.footer, { 
+            backgroundColor: theme.background.primary,
+            borderTopColor: theme.border.light,
+          }]}>
             <Button
               title={activeFilterCount > 0 
                 ? `Apply Filters (${activeFilterCount})` 
@@ -258,7 +278,6 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   container: {
-    backgroundColor: colors.background.primary,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     maxHeight: '85%',
@@ -270,7 +289,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screenHorizontal,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   closeButton: {
     width: 40,
@@ -280,11 +298,9 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.headingSmall,
-    color: colors.text.primary,
   },
   resetText: {
     ...typography.body,
-    color: colors.accent.primary,
   },
   content: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -292,12 +308,10 @@ const styles = StyleSheet.create({
   section: {
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   sectionTitle: {
     ...typography.bodySmall,
     fontWeight: '600',
-    color: colors.text.secondary,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
     marginBottom: spacing.sm,
@@ -311,21 +325,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 10,
     borderRadius: 20,
-    backgroundColor: colors.background.secondary,
     borderWidth: 1,
-    borderColor: colors.border.light,
-  },
-  teaTypeOptionSelected: {
-    backgroundColor: colors.accent.primary,
-    borderColor: colors.accent.primary,
   },
   teaTypeText: {
     ...typography.bodySmall,
-    color: colors.text.primary,
-  },
-  teaTypeTextSelected: {
-    color: colors.text.inverse,
-    fontWeight: '600',
   },
   optionsList: {
     gap: 2,
@@ -337,16 +340,8 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 4,
   },
-  optionSelected: {
-    // backgroundColor: colors.background.secondary,
-  },
   optionText: {
     ...typography.body,
-    color: colors.text.primary,
-  },
-  optionTextSelected: {
-    color: colors.accent.primary,
-    fontWeight: '600',
   },
   ratingOptions: {
     flexDirection: 'row',
@@ -360,21 +355,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 10,
     borderRadius: 20,
-    backgroundColor: colors.background.secondary,
     borderWidth: 1,
-    borderColor: colors.border.light,
-  },
-  ratingOptionSelected: {
-    backgroundColor: colors.accent.primary,
-    borderColor: colors.accent.primary,
   },
   ratingOptionText: {
     ...typography.bodySmall,
-    color: colors.text.primary,
-  },
-  ratingOptionTextSelected: {
-    color: colors.text.inverse,
-    fontWeight: '600',
   },
   footer: {
     position: 'absolute',
@@ -383,9 +367,7 @@ const styles = StyleSheet.create({
     right: 0,
     padding: spacing.screenHorizontal,
     paddingBottom: 34,
-    backgroundColor: colors.background.primary,
     borderTopWidth: 1,
-    borderTopColor: colors.border.light,
   },
 });
 

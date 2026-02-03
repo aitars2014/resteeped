@@ -12,7 +12,8 @@ import {
   Keyboard,
 } from 'react-native';
 import { X } from 'lucide-react-native';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 import { Button } from './Button';
 import { StarRating } from './StarRating';
 
@@ -24,6 +25,7 @@ export const WriteReviewModal = ({
   initialRating = 0,
   initialText = '',
 }) => {
+  const { theme } = useTheme();
   const [rating, setRating] = useState(initialRating);
   const [reviewText, setReviewText] = useState(initialText);
   const [submitting, setSubmitting] = useState(false);
@@ -57,40 +59,44 @@ export const WriteReviewModal = ({
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={styles.container}
           >
-            <View style={styles.modal}>
+            <View style={[styles.modal, { backgroundColor: theme.background.primary }]}>
               {/* Header */}
               <View style={styles.header}>
-                <Text style={styles.title}>Write a Review</Text>
+                <Text style={[styles.title, { color: theme.text.primary }]}>Write a Review</Text>
                 <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
-                  <X size={24} color={colors.text.secondary} />
+                  <X size={24} color={theme.text.secondary} />
                 </TouchableOpacity>
               </View>
 
               {/* Tea Name */}
-              <Text style={styles.teaName} numberOfLines={2}>{teaName}</Text>
+              <Text style={[styles.teaName, { color: theme.text.secondary }]} numberOfLines={2}>{teaName}</Text>
 
               {/* Rating */}
               <View style={styles.ratingSection}>
-                <Text style={styles.label}>Your Rating</Text>
+                <Text style={[styles.label, { color: theme.text.secondary }]}>Your Rating</Text>
                 <StarRating 
                   rating={rating} 
                   size={36} 
                   onRate={setRating}
                 />
                 {rating === 0 && (
-                  <Text style={styles.ratingHint}>Tap a star to rate</Text>
+                  <Text style={[styles.ratingHint, { color: theme.text.secondary }]}>Tap a star to rate</Text>
                 )}
               </View>
 
               {/* Review Text */}
               <View style={styles.textSection}>
-                <Text style={styles.label}>Your Review (optional)</Text>
+                <Text style={[styles.label, { color: theme.text.secondary }]}>Your Review (optional)</Text>
                 <TextInput
-                  style={styles.textInput}
+                  style={[styles.textInput, { 
+                    backgroundColor: theme.background.secondary,
+                    color: theme.text.primary,
+                    borderColor: theme.border.light,
+                  }]}
                   value={reviewText}
                   onChangeText={setReviewText}
                   placeholder="What did you think of this tea?"
-                  placeholderTextColor={colors.text.secondary}
+                  placeholderTextColor={theme.text.secondary}
                   multiline
                   numberOfLines={4}
                   textAlignVertical="top"
@@ -122,7 +128,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   modal: {
-    backgroundColor: colors.background.primary,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: spacing.screenHorizontal,
@@ -136,14 +141,12 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.headingMedium,
-    color: colors.text.primary,
   },
   closeButton: {
     padding: 4,
   },
   teaName: {
     ...typography.body,
-    color: colors.text.secondary,
     marginBottom: spacing.sectionSpacing,
   },
   ratingSection: {
@@ -152,25 +155,20 @@ const styles = StyleSheet.create({
   },
   label: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
     marginBottom: 12,
   },
   ratingHint: {
     ...typography.caption,
-    color: colors.text.secondary,
     marginTop: 8,
   },
   textSection: {
     marginBottom: spacing.sectionSpacing,
   },
   textInput: {
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.cardPadding,
     ...typography.body,
-    color: colors.text.primary,
     minHeight: 120,
     borderWidth: 1,
-    borderColor: colors.border.light,
   },
 });

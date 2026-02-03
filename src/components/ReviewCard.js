@@ -1,10 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { User } from 'lucide-react-native';
-import { colors, typography, spacing } from '../constants';
+import { typography, spacing } from '../constants';
+import { useTheme } from '../context';
 import { StarRating } from './StarRating';
 
 export const ReviewCard = ({ review }) => {
+  const { theme } = useTheme();
+  
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString('en-US', { 
@@ -15,22 +18,22 @@ export const ReviewCard = ({ review }) => {
   };
 
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, { backgroundColor: theme.background.secondary }]}>
       <View style={styles.header}>
-        <View style={styles.avatar}>
-          <User size={16} color={colors.text.inverse} />
+        <View style={[styles.avatar, { backgroundColor: theme.accent.secondary }]}>
+          <User size={16} color={theme.text.inverse} />
         </View>
         <View style={styles.headerText}>
-          <Text style={styles.username}>
+          <Text style={[styles.username, { color: theme.text.primary }]}>
             {review.profile?.display_name || review.profile?.username || 'Tea Lover'}
           </Text>
-          <Text style={styles.date}>{formatDate(review.created_at)}</Text>
+          <Text style={[styles.date, { color: theme.text.secondary }]}>{formatDate(review.created_at)}</Text>
         </View>
         <StarRating rating={review.rating} size={14} />
       </View>
       
       {review.review_text && (
-        <Text style={styles.reviewText}>{review.review_text}</Text>
+        <Text style={[styles.reviewText, { color: theme.text.primary }]}>{review.review_text}</Text>
       )}
     </View>
   );
@@ -38,7 +41,6 @@ export const ReviewCard = ({ review }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.cardPadding,
     marginBottom: spacing.elementSpacing,
@@ -52,7 +54,6 @@ const styles = StyleSheet.create({
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: colors.accent.secondary,
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: 10,
@@ -63,15 +64,12 @@ const styles = StyleSheet.create({
   username: {
     ...typography.bodySmall,
     fontWeight: '600',
-    color: colors.text.primary,
   },
   date: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   reviewText: {
     ...typography.body,
-    color: colors.text.primary,
     lineHeight: 22,
   },
 });
