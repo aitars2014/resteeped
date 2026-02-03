@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
 import { TeaCard, TeaTypeBadge } from '../components';
 import { useTeas, useCompanies, useRecommendations } from '../hooks';
@@ -147,11 +147,17 @@ export const HomeScreen = ({ navigation }) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
       >
-        {/* Header */}
+        {/* Header with Logo */}
         <View style={styles.header}>
-          <Text style={styles.greeting}>Welcome to</Text>
-          <Text style={styles.appName}>Resteeped</Text>
-          <Text style={styles.tagline}>Discover your next favorite tea</Text>
+          <View style={styles.logoRow}>
+            <View style={styles.logoIcon}>
+              <Coffee size={28} color={colors.text.inverse} />
+            </View>
+            <View>
+              <Text style={styles.appName}>Resteeped</Text>
+              <Text style={styles.tagline}>Discover your next favorite tea</Text>
+            </View>
+          </View>
         </View>
 
         {/* Search Bar */}
@@ -176,7 +182,7 @@ export const HomeScreen = ({ navigation }) => {
 
         {/* Browse by Tea Type */}
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Browse by Type</Text>
+          <Text style={styles.browseTitle}>Browse by Type</Text>
           <View style={styles.teaTypeGrid}>
             {TEA_TYPES.map(renderTeaTypeButton)}
           </View>
@@ -304,14 +310,22 @@ export const HomeScreen = ({ navigation }) => {
 
         {/* Quick Stats */}
         <View style={styles.statsSection}>
-          <View style={styles.statCard}>
+          <TouchableOpacity 
+            style={styles.statCard}
+            onPress={() => navigation.navigate('Discover')}
+            activeOpacity={0.7}
+          >
             <Text style={styles.statNumber}>{teas.length}</Text>
             <Text style={styles.statLabel}>Teas to Explore</Text>
-          </View>
-          <View style={styles.statCard}>
+          </TouchableOpacity>
+          <TouchableOpacity 
+            style={styles.statCard}
+            onPress={() => navigation.navigate('TeaShops')}
+            activeOpacity={0.7}
+          >
             <Text style={styles.statNumber}>{companies.length}</Text>
             <Text style={styles.statLabel}>Tea Shops</Text>
-          </View>
+          </TouchableOpacity>
         </View>
 
         <View style={{ height: 20 }} />
@@ -330,21 +344,34 @@ const styles = StyleSheet.create({
     paddingTop: spacing.xl,
     paddingBottom: spacing.lg,
   },
-  greeting: {
-    ...typography.body,
-    color: colors.text.secondary,
-    marginBottom: 4,
+  logoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.md,
+  },
+  logoIcon: {
+    width: 52,
+    height: 52,
+    borderRadius: 14,
+    backgroundColor: colors.accent.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: colors.accent.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 8,
+    elevation: 4,
   },
   appName: {
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: '700',
     color: colors.accent.primary,
     letterSpacing: -0.5,
   },
   tagline: {
-    ...typography.body,
+    ...typography.caption,
     color: colors.text.secondary,
-    marginTop: 6,
+    marginTop: 2,
   },
   searchContainer: {
     paddingHorizontal: spacing.screenHorizontal,
@@ -386,6 +413,13 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: colors.text.primary,
   },
+  browseTitle: {
+    ...typography.body,
+    fontWeight: '600',
+    color: colors.text.primary,
+    paddingHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.md,
+  },
   seeAllText: {
     ...typography.bodySmall,
     color: colors.accent.primary,
@@ -402,22 +436,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingHorizontal: spacing.screenHorizontal,
-    gap: spacing.md,
+    justifyContent: 'space-between',
+    gap: spacing.sm,
   },
   teaTypeButton: {
     alignItems: 'center',
-    width: (width - (spacing.screenHorizontal * 2) - 80) / 6,
+    width: (width - (spacing.screenHorizontal * 2) - 40) / 6,
+    paddingVertical: spacing.xs,
   },
   teaTypeGradient: {
-    width: 52,
-    height: 52,
-    borderRadius: 18,
+    width: 56,
+    height: 56,
+    borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 8,
+    marginBottom: 10,
   },
   teaTypeEmoji: {
-    fontSize: 24,
+    fontSize: 26,
   },
   teaTypeName: {
     ...typography.caption,
