@@ -10,3 +10,7 @@ export { ReviewCard } from './ReviewCard';
 export { WriteReviewModal } from './WriteReviewModal';
 export { WriteCompanyReviewModal } from './WriteCompanyReviewModal';
 export { TastingNotesModal } from './TastingNotesModal';
+export { CaffeineIndicator } from './CaffeineIndicator';
+export { FlavorRadar } from './FlavorRadar';
+export { TeaOfTheDay } from './TeaOfTheDay';
+export { SeasonalHighlights } from './SeasonalHighlights';
