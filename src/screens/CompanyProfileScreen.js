@@ -150,7 +150,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
             <Image source={{ uri: company.banner_url }} style={styles.banner} />
           ) : (
             <LinearGradient
-              colors={[company.primary_color || colors.accent.primary, colors.bg.secondary]}
+              colors={[company.primary_color || colors.accent.primary, colors.background.secondary]}
               style={styles.banner}
             />
           )}
@@ -266,7 +266,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
             <View style={styles.tagContainer}>
               {company.certifications.map((cert, idx) => (
                 <View key={idx} style={[styles.tag, styles.certTag]}>
-                  <Award size={12} color={colors.semantic.success} style={{ marginRight: 4 }} />
+                  <Award size={12} color={colors.status.success} style={{ marginRight: 4 }} />
                   <Text style={[styles.tagText, styles.certTagText]}>{cert}</Text>
                 </View>
               ))}
@@ -361,19 +361,19 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.bg.primary,
+    backgroundColor: colors.background.primary,
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.bg.primary,
+    backgroundColor: colors.background.primary,
   },
   errorContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.bg.primary,
+    backgroundColor: colors.background.primary,
   },
   errorText: {
     ...typography.body,
@@ -414,10 +414,10 @@ const styles = StyleSheet.create({
     height: 80,
     borderRadius: 16,
     borderWidth: 3,
-    borderColor: colors.bg.primary,
+    borderColor: colors.background.primary,
   },
   logoPlaceholder: {
-    backgroundColor: colors.bg.tertiary,
+    backgroundColor: colors.background.secondary,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -430,7 +430,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.lg,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.subtle,
+    borderBottomColor: colors.border.light,
   },
   companyName: {
     ...typography.h1,
@@ -467,7 +467,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     paddingVertical: spacing.md,
     marginBottom: spacing.md,
-    backgroundColor: colors.bg.secondary,
+    backgroundColor: colors.background.secondary,
     borderRadius: 12,
   },
   stat: {
@@ -483,7 +483,7 @@ const styles = StyleSheet.create({
   },
   statDivider: {
     width: 1,
-    backgroundColor: colors.border.subtle,
+    backgroundColor: colors.border.light,
   },
   actionRow: {
     flexDirection: 'row',
@@ -497,14 +497,14 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 12,
-    backgroundColor: colors.bg.secondary,
+    backgroundColor: colors.background.secondary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   section: {
     padding: spacing.lg,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.subtle,
+    borderBottomColor: colors.border.light,
   },
   sectionHeader: {
     flexDirection: 'row',
@@ -534,7 +534,7 @@ const styles = StyleSheet.create({
   tag: {
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
-    backgroundColor: colors.bg.secondary,
+    backgroundColor: colors.background.secondary,
     borderRadius: 16,
   },
   tagText: {
@@ -544,10 +544,10 @@ const styles = StyleSheet.create({
   certTag: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: colors.semantic.success + '20',
+    backgroundColor: colors.status.success + '20',
   },
   certTagText: {
-    color: colors.semantic.success,
+    color: colors.status.success,
   },
   shippingInfo: {
     flexDirection: 'row',
@@ -561,7 +561,7 @@ const styles = StyleSheet.create({
   },
   shippingNote: {
     ...typography.caption,
-    color: colors.text.tertiary,
+    color: colors.text.secondary,
     marginLeft: 24,
   },
   teaCard: {
@@ -578,7 +578,7 @@ const styles = StyleSheet.create({
     color: colors.accent.primary,
   },
   reviewCard: {
-    backgroundColor: colors.bg.secondary,
+    backgroundColor: colors.background.secondary,
     borderRadius: 12,
     padding: spacing.md,
     marginBottom: spacing.sm,
@@ -603,7 +603,7 @@ const styles = StyleSheet.create({
   },
   noReviewsText: {
     ...typography.body,
-    color: colors.text.tertiary,
+    color: colors.text.secondary,
     textAlign: 'center',
   },
 });

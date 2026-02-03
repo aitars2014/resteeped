@@ -10,238 +10,235 @@ const path = require('path');
 
 const OUTPUT_DIR = path.join(__dirname, '..', 'data', 'scraped');
 
-// Helper to normalize tea type
-function normalizeTeaType(type) {
-  if (!type) return null;
-  const t = type.toLowerCase().trim();
-  if (t.includes('black')) return 'black';
-  if (t.includes('green') || t.includes('matcha')) return 'green';
-  if (t.includes('oolong')) return 'oolong';
-  if (t.includes('white')) return 'white';
-  if (t.includes('puerh') || t.includes('pu-erh') || t.includes('puer')) return 'puerh';
-  if (t.includes('herbal') || t.includes('rooibos') || t.includes('tisane') || t.includes('caffeine-free') || t.includes('botanical')) return 'herbal';
-  if (t.includes('chai')) return 'black'; // Chai is typically black tea based
-  return null;
-}
+// Default brewing parameters by tea type
+const BREW_DEFAULTS = {
+  black: { temp: 212, timeMin: 3, timeMax: 5 },
+  green: { temp: 175, timeMin: 2, timeMax: 3 },
+  oolong: { temp: 195, timeMin: 3, timeMax: 5 },
+  white: { temp: 175, timeMin: 2, timeMax: 4 },
+  puerh: { temp: 212, timeMin: 3, timeMax: 5 },
+  herbal: { temp: 212, timeMin: 5, timeMax: 7 }
+};
 
-// Helper to parse temperature
-function parseTemp(text) {
-  if (!text) return null;
-  const match = text.match(/(\d+)\s*[°]?\s*F/i);
-  if (match) return parseInt(match[1]);
-  // Convert from Celsius if needed
-  const cMatch = text.match(/(\d+)\s*[°]?\s*C/i);
-  if (cMatch) return Math.round(parseInt(cMatch[1]) * 9/5 + 32);
-  return null;
-}
-
-// Helper to parse steep time
-function parseSteepTime(text) {
-  if (!text) return { min: null, max: null };
-  // Match patterns like "3-5 min", "3 to 5 minutes", "3-5 minutes"
-  const rangeMatch = text.match(/(\d+)\s*[-–to]+\s*(\d+)\s*min/i);
-  if (rangeMatch) {
-    return { min: parseInt(rangeMatch[1]), max: parseInt(rangeMatch[2]) };
-  }
-  const singleMatch = text.match(/(\d+)\s*min/i);
-  if (singleMatch) {
-    return { min: parseInt(singleMatch[1]), max: parseInt(singleMatch[1]) };
-  }
-  return { min: null, max: null };
-}
-
-// Scrape Rishi Tea
+// Scrape Rishi Tea - use Shopify's JSON API
 async function scrapeRishi(browser) {
   console.log('\n🍵 Scraping Rishi Tea...');
   const page = await browser.newPage();
   const products = [];
   
-  try {
-    // Get all tea collections
-    const collections = ['black-tea', 'green-tea', 'oolong-tea', 'white-tea', 'puer-tea', 'herbal-tea'];
-    
-    for (const collection of collections) {
-      console.log(`  📦 Scraping ${collection}...`);
-      await page.goto(`https://www.rishi-tea.com/collections/${collection}`, { waitUntil: 'networkidle', timeout: 60000 });
-      await page.waitForTimeout(2000);
-      
-      // Get product links
-      const productLinks = await page.$$eval('a[href*="/products/"]', links => 
-        [...new Set(links.map(a => a.href).filter(h => h.includes('/products/')))]
+  const collections = [
+    { handle: 'black-tea', type: 'black' },
+    { handle: 'green-tea', type: 'green' },
+    { handle: 'oolong-tea', type: 'oolong' },
+    { handle: 'white-tea', type: 'white' },
+    { handle: 'puer-tea', type: 'puerh' },
+    { handle: 'herbal-tea', type: 'herbal' }
+  ];
+  
+  for (const col of collections) {
+    console.log(`  📦 Scraping ${col.type}...`);
+    try {
+      // Shopify stores have a JSON endpoint
+      const response = await page.goto(
+        `https://www.rishi-tea.com/collections/${col.handle}/products.json?limit=50`,
+        { waitUntil: 'domcontentloaded', timeout: 30000 }
       );
       
-      console.log(`    Found ${productLinks.length} products`);
-      
-      for (const link of productLinks.slice(0, 15)) { // Limit per collection
-        try {
-          await page.goto(link, { waitUntil: 'networkidle', timeout: 30000 });
-          await page.waitForTimeout(1500);
-          
-          const product = await page.evaluate(() => {
-            const name = document.querySelector('h1')?.textContent?.trim();
-            const description = document.querySelector('[class*="product"] p, .product-description, [data-product-description]')?.textContent?.trim();
-            const priceEl = document.querySelector('[class*="price"], .product-price');
-            const priceText = priceEl?.textContent || '';
-            const priceMatch = priceText.match(/\$?([\d.]+)/);
+      const text = await page.evaluate(() => document.body.innerText);
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch {
+        // Fall back to HTML scraping
+        console.log(`    Using HTML fallback for ${col.type}`);
+        await page.goto(`https://www.rishi-tea.com/collections/${col.handle}`, { 
+          waitUntil: 'networkidle', timeout: 45000 
+        });
+        await page.waitForTimeout(3000);
+        
+        const htmlProducts = await page.evaluate(() => {
+          const items = [];
+          // Rishi uses specific product card structure
+          document.querySelectorAll('[data-product-card], .product-card, [class*="ProductCard"]').forEach(card => {
+            const linkEl = card.querySelector('a[href*="/products/"]');
+            const nameEl = card.querySelector('[class*="title"], h3, h4');
+            const imgEl = card.querySelector('img');
+            const priceEl = card.querySelector('[class*="price"]');
+            const profileEl = card.querySelector('[class*="profile"], [class*="flavor"]');
             
-            const imageEl = document.querySelector('.product-gallery img, [class*="product"] img, img[src*="cdn.shopify"]');
-            const imageUrl = imageEl?.src || imageEl?.getAttribute('data-src');
+            if (!nameEl) return;
             
-            // Extract origin
-            const originEl = document.body.innerText.match(/Origin[:\s]*([A-Za-z\s,]+)/i);
-            const origin = originEl ? originEl[1].trim() : null;
-            
-            // Extract flavor notes from taste descriptors
-            const flavorEl = document.querySelector('[class*="flavor"], [class*="taste"], [class*="profile"]');
-            let flavorNotes = [];
-            if (flavorEl) {
-              flavorNotes = flavorEl.textContent.split(/[|,]/).map(s => s.trim()).filter(s => s.length > 0 && s.length < 30);
-            }
-            
-            // Get tea type from breadcrumb or category
-            const typeEl = document.querySelector('[class*="breadcrumb"] a, .product-type');
-            const typeText = typeEl?.textContent || '';
-            
-            return { name, description, priceText, imageUrl, origin, flavorNotes, typeText };
-          });
-          
-          if (product.name) {
-            products.push({
-              name: product.name,
-              brand_name: 'Rishi Tea',
-              tea_type: normalizeTeaType(collection) || normalizeTeaType(product.typeText),
-              description: product.description || null,
-              origin: product.origin,
-              steep_temp_f: collection.includes('green') ? 175 : collection.includes('white') ? 175 : collection.includes('oolong') ? 195 : 212,
-              steep_time_min: collection.includes('green') || collection.includes('white') ? 2 : 3,
-              steep_time_max: collection.includes('green') || collection.includes('white') ? 3 : 5,
-              flavor_notes: product.flavorNotes.length > 0 ? product.flavorNotes : null,
-              image_url: product.imageUrl,
-              price_per_oz: null, // Rishi sells by pound, complex to calculate
-              source_url: link
+            items.push({
+              title: nameEl.textContent.trim(),
+              handle: linkEl?.href?.split('/products/')[1]?.split('?')[0] || '',
+              body_html: '',
+              images: imgEl?.src ? [{ src: imgEl.src }] : [],
+              variants: [{ price: priceEl?.textContent?.match(/\$([\d.]+)/)?.[1] || '0' }],
+              tags: profileEl?.textContent?.split('|').map(s => s.trim()) || []
             });
-            console.log(`      ✓ ${product.name}`);
+          });
+          return items;
+        });
+        
+        data = { products: htmlProducts };
+      }
+      
+      if (data.products) {
+        const defaults = BREW_DEFAULTS[col.type];
+        
+        for (const p of data.products) {
+          // Skip non-tea items
+          if (p.title.toLowerCase().includes('teaware') ||
+              p.title.toLowerCase().includes('gift') ||
+              p.title.toLowerCase().includes('sampler') ||
+              p.title.toLowerCase().includes('accessory')) continue;
+          
+          // Extract flavor notes from tags or profile
+          let flavorNotes = [];
+          if (p.tags && Array.isArray(p.tags)) {
+            flavorNotes = p.tags
+              .filter(t => typeof t === 'string' && t.length < 25 && !t.includes(':'))
+              .slice(0, 5);
           }
-        } catch (e) {
-          console.log(`      ✗ Failed: ${e.message}`);
+          
+          products.push({
+            name: p.title,
+            brand_name: 'Rishi Tea',
+            tea_type: col.type,
+            description: p.body_html?.replace(/<[^>]+>/g, '')?.substring(0, 500)?.trim() || null,
+            origin: null,
+            steep_temp_f: defaults.temp,
+            steep_time_min: defaults.timeMin,
+            steep_time_max: defaults.timeMax,
+            flavor_notes: flavorNotes.length > 0 ? flavorNotes : null,
+            image_url: p.images?.[0]?.src || null,
+            price_per_oz: null,
+            source_url: `https://www.rishi-tea.com/products/${p.handle}`
+          });
+          console.log(`    ✓ ${p.title}`);
         }
       }
+      
+    } catch (e) {
+      console.log(`    ✗ Error: ${e.message}`);
     }
-  } finally {
-    await page.close();
   }
   
-  return products;
+  await page.close();
+  
+  // Deduplicate by name
+  const seen = new Set();
+  return products.filter(p => {
+    if (seen.has(p.name)) return false;
+    seen.add(p.name);
+    return true;
+  });
 }
 
-// Scrape Adagio
+// Scrape Adagio - navigate their category pages
 async function scrapeAdagio(browser) {
   console.log('\n🍵 Scraping Adagio Teas...');
   const page = await browser.newPage();
   const products = [];
   
-  try {
-    const categories = [
-      { url: 'https://www.adagio.com/black/loose_leaf_black_teas.html', type: 'black' },
-      { url: 'https://www.adagio.com/green/loose_leaf_green_teas.html', type: 'green' },
-      { url: 'https://www.adagio.com/oolong/loose_leaf_oolong_teas.html', type: 'oolong' },
-      { url: 'https://www.adagio.com/white/loose_leaf_white_teas.html', type: 'white' },
-      { url: 'https://www.adagio.com/herbal/loose_leaf_herbal_teas.html', type: 'herbal' },
-      { url: 'https://www.adagio.com/puerh/index.html', type: 'puerh' }
-    ];
-    
-    for (const cat of categories) {
-      console.log(`  📦 Scraping ${cat.type}...`);
-      await page.goto(cat.url, { waitUntil: 'networkidle', timeout: 60000 });
+  // Adagio has a specific product grid structure
+  const categories = [
+    { url: 'https://www.adagio.com/black/black_tea.html', type: 'black' },
+    { url: 'https://www.adagio.com/green/green_tea.html', type: 'green' },
+    { url: 'https://www.adagio.com/oolong/oolong_tea.html', type: 'oolong' },
+    { url: 'https://www.adagio.com/white/white_tea.html', type: 'white' },
+    { url: 'https://www.adagio.com/herbal/herbal_tea.html', type: 'herbal' },
+    { url: 'https://www.adagio.com/puerh/puerh_tea.html', type: 'puerh' }
+  ];
+  
+  for (const cat of categories) {
+    console.log(`  📦 Scraping ${cat.type}...`);
+    try {
+      await page.goto(cat.url, { waitUntil: 'networkidle', timeout: 45000 });
+      await page.waitForTimeout(3000);
+      
+      // Scroll to load lazy content
+      await page.evaluate(() => {
+        window.scrollTo(0, document.body.scrollHeight / 2);
+      });
       await page.waitForTimeout(2000);
       
-      // Get product links from the grid
-      const productLinks = await page.$$eval('a[href*=".html"]', (links, baseUrl) => {
-        return [...new Set(links
-          .map(a => a.href)
-          .filter(h => h.includes('/') && !h.includes('index.html') && !h.includes('loose_leaf'))
-        )].slice(0, 20);
-      }, cat.url);
-      
-      console.log(`    Found ${productLinks.length} products`);
-      
-      for (const link of productLinks.slice(0, 12)) {
-        try {
-          await page.goto(link, { waitUntil: 'networkidle', timeout: 30000 });
-          await page.waitForTimeout(1500);
+      const pageProducts = await page.evaluate(() => {
+        const items = [];
+        
+        // Adagio uses teabox class for product tiles
+        document.querySelectorAll('.teabox, .product-tile, [class*="product-item"]').forEach(tile => {
+          const linkEl = tile.querySelector('a');
+          const nameEl = tile.querySelector('.tea-title, h3, h4, [class*="title"]');
+          const imgEl = tile.querySelector('img');
+          const priceEl = tile.querySelector('.price, [class*="price"]');
+          const descEl = tile.querySelector('.description, p');
           
-          const product = await page.evaluate(() => {
-            const name = document.querySelector('h1, .product-name, [itemprop="name"]')?.textContent?.trim();
-            const description = document.querySelector('.product-description, [itemprop="description"], .description p')?.textContent?.trim();
-            
-            // Price - Adagio shows per oz pricing
-            const priceEl = document.querySelector('.price, [itemprop="price"], .product-price');
-            const priceText = priceEl?.textContent || '';
-            const priceMatch = priceText.match(/\$?([\d.]+)/);
-            const price = priceMatch ? parseFloat(priceMatch[1]) : null;
-            
-            // Image
-            const imageEl = document.querySelector('.product-image img, [itemprop="image"], img.main-image');
-            let imageUrl = imageEl?.src || imageEl?.getAttribute('data-src');
-            if (imageUrl && !imageUrl.startsWith('http')) {
-              imageUrl = 'https://www.adagio.com' + imageUrl;
-            }
-            
-            // Brewing info
-            const brewingText = document.body.innerText;
-            const tempMatch = brewingText.match(/(\d{3})\s*[°]?\s*F/);
-            const timeMatch = brewingText.match(/(\d+)\s*[-–]?\s*(\d*)\s*min/i);
-            
-            // Origin
-            const originMatch = brewingText.match(/(?:Origin|Grown in|From)[:\s]*([A-Za-z\s,]+)/i);
-            
-            // Flavor notes from tasting notes section
-            const flavorSection = document.querySelector('.tasting-notes, .flavor-notes');
-            let flavorNotes = [];
-            if (flavorSection) {
-              flavorNotes = flavorSection.textContent.split(/[,|]/).map(s => s.trim()).filter(s => s.length > 0 && s.length < 30);
-            }
-            
-            return {
-              name,
-              description,
-              price,
-              imageUrl,
-              temp: tempMatch ? parseInt(tempMatch[1]) : null,
-              timeMin: timeMatch ? parseInt(timeMatch[1]) : null,
-              timeMax: timeMatch && timeMatch[2] ? parseInt(timeMatch[2]) : null,
-              origin: originMatch ? originMatch[1].trim() : null,
-              flavorNotes
-            };
-          });
+          if (!nameEl || !linkEl) return;
           
-          if (product.name && !product.name.toLowerCase().includes('teaware')) {
-            products.push({
-              name: product.name,
-              brand_name: 'Adagio Teas',
-              tea_type: cat.type,
-              description: product.description || null,
-              origin: product.origin,
-              steep_temp_f: product.temp || (cat.type === 'green' ? 175 : cat.type === 'white' ? 175 : 212),
-              steep_time_min: product.timeMin || 3,
-              steep_time_max: product.timeMax || product.timeMin || 5,
-              flavor_notes: product.flavorNotes.length > 0 ? product.flavorNotes : null,
-              image_url: product.imageUrl,
-              price_per_oz: product.price,
-              source_url: link
-            });
-            console.log(`      ✓ ${product.name}`);
+          const name = nameEl.textContent.trim();
+          if (name.toLowerCase().includes('teaware') ||
+              name.toLowerCase().includes('accessory') ||
+              name.toLowerCase().includes('gift set')) return;
+          
+          let href = linkEl.href;
+          if (!href.startsWith('http')) {
+            href = 'https://www.adagio.com' + href;
           }
-        } catch (e) {
-          console.log(`      ✗ Failed: ${e.message}`);
-        }
+          
+          let imgSrc = imgEl?.src || imgEl?.getAttribute('data-src');
+          if (imgSrc && !imgSrc.startsWith('http')) {
+            imgSrc = 'https://www.adagio.com' + imgSrc;
+          }
+          
+          items.push({
+            name,
+            sourceUrl: href,
+            imageUrl: imgSrc,
+            description: descEl?.textContent?.trim()?.substring(0, 300) || null,
+            price: priceEl?.textContent?.match(/\$([\d.]+)/)?.[1] || null
+          });
+        });
+        
+        return items;
+      });
+      
+      const defaults = BREW_DEFAULTS[cat.type];
+      
+      for (const p of pageProducts) {
+        products.push({
+          name: p.name,
+          brand_name: 'Adagio Teas',
+          tea_type: cat.type,
+          description: p.description,
+          origin: null,
+          steep_temp_f: defaults.temp,
+          steep_time_min: defaults.timeMin,
+          steep_time_max: defaults.timeMax,
+          flavor_notes: null,
+          image_url: p.imageUrl,
+          price_per_oz: p.price ? parseFloat(p.price) : null,
+          source_url: p.sourceUrl
+        });
+        console.log(`    ✓ ${p.name}`);
       }
+      
+      console.log(`    Found ${pageProducts.length} products`);
+      
+    } catch (e) {
+      console.log(`    ✗ Error: ${e.message}`);
     }
-  } finally {
-    await page.close();
   }
   
-  return products;
+  await page.close();
+  
+  // Deduplicate
+  const seen = new Set();
+  return products.filter(p => {
+    if (seen.has(p.name)) return false;
+    seen.add(p.name);
+    return true;
+  });
 }
 
 // Scrape Republic of Tea
@@ -250,102 +247,93 @@ async function scrapeRepublicOfTea(browser) {
   const page = await browser.newPage();
   const products = [];
   
-  try {
-    const categories = [
-      { url: 'https://www.republicoftea.com/tea/black-tea/', type: 'black' },
-      { url: 'https://www.republicoftea.com/tea/green-tea/', type: 'green' },
-      { url: 'https://www.republicoftea.com/tea/oolong-tea/', type: 'oolong' },
-      { url: 'https://www.republicoftea.com/tea/white-tea/', type: 'white' },
-      { url: 'https://www.republicoftea.com/tea/herbal-tea/', type: 'herbal' },
-      { url: 'https://www.republicoftea.com/tea/pu-erh-tea/', type: 'puerh' }
-    ];
-    
-    for (const cat of categories) {
-      console.log(`  📦 Scraping ${cat.type}...`);
-      try {
-        await page.goto(cat.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-        await page.waitForTimeout(3000);
-        
-        // Get product links
-        const productLinks = await page.$$eval('a[href*="/tea/"]', links => 
-          [...new Set(links.map(a => a.href).filter(h => 
-            h.includes('/tea/') && 
-            !h.endsWith('-tea/') && 
-            !h.includes('/c/') &&
-            h.match(/\/tea\/[^\/]+\/?$/)
-          ))]
-        );
-        
-        console.log(`    Found ${productLinks.length} products`);
-        
-        for (const link of productLinks.slice(0, 12)) {
-          try {
-            await page.goto(link, { waitUntil: 'domcontentloaded', timeout: 30000 });
-            await page.waitForTimeout(2000);
-            
-            const product = await page.evaluate(() => {
-              const name = document.querySelector('h1, .product-name')?.textContent?.trim();
-              const description = document.querySelector('.product-description, .pdp-description, [itemprop="description"]')?.textContent?.trim();
-              
-              // Price
-              const priceEl = document.querySelector('.price, .product-price, [itemprop="price"]');
-              const priceText = priceEl?.textContent || '';
-              const priceMatch = priceText.match(/\$?([\d.]+)/);
-              
-              // Image
-              const imageEl = document.querySelector('.product-image img, img[itemprop="image"], .pdp-image img');
-              let imageUrl = imageEl?.src || imageEl?.getAttribute('data-src');
-              
-              // Brewing info - look for brewing instructions section
-              const bodyText = document.body.innerText;
-              const tempMatch = bodyText.match(/(\d{3})\s*[°]?\s*F/);
-              const timeMatch = bodyText.match(/(\d+)\s*[-–to]*\s*(\d*)\s*min/i);
-              
-              // Origin
-              const originMatch = bodyText.match(/(?:Origin|Region|Country)[:\s]*([A-Za-z\s,]+)/i);
-              
-              return {
-                name,
-                description,
-                price: priceMatch ? parseFloat(priceMatch[1]) : null,
-                imageUrl,
-                temp: tempMatch ? parseInt(tempMatch[1]) : null,
-                timeMin: timeMatch ? parseInt(timeMatch[1]) : null,
-                timeMax: timeMatch && timeMatch[2] ? parseInt(timeMatch[2]) : null,
-                origin: originMatch ? originMatch[1].trim() : null
-              };
-            });
-            
-            if (product.name && product.name.length < 100) {
-              products.push({
-                name: product.name,
-                brand_name: 'The Republic of Tea',
-                tea_type: cat.type,
-                description: product.description || null,
-                origin: product.origin,
-                steep_temp_f: product.temp || (cat.type === 'green' ? 175 : cat.type === 'white' ? 175 : 212),
-                steep_time_min: product.timeMin || 3,
-                steep_time_max: product.timeMax || product.timeMin || 5,
-                flavor_notes: null,
-                image_url: product.imageUrl,
-                price_per_oz: null,
-                source_url: link
-              });
-              console.log(`      ✓ ${product.name}`);
-            }
-          } catch (e) {
-            console.log(`      ✗ Failed: ${e.message}`);
-          }
-        }
-      } catch (e) {
-        console.log(`    ✗ Category failed: ${e.message}`);
+  // Republic uses /c/ for categories
+  const categories = [
+    { url: 'https://www.republicoftea.com/c/black-teas/', type: 'black' },
+    { url: 'https://www.republicoftea.com/c/green-teas/', type: 'green' },
+    { url: 'https://www.republicoftea.com/c/oolong-teas/', type: 'oolong' },
+    { url: 'https://www.republicoftea.com/c/white-teas/', type: 'white' },
+    { url: 'https://www.republicoftea.com/c/herbal-teas/', type: 'herbal' },
+    { url: 'https://www.republicoftea.com/c/pu-erh-teas/', type: 'puerh' }
+  ];
+  
+  for (const cat of categories) {
+    console.log(`  📦 Scraping ${cat.type}...`);
+    try {
+      await page.goto(cat.url, { waitUntil: 'networkidle', timeout: 60000 });
+      await page.waitForTimeout(4000);
+      
+      // Multiple scrolls to load lazy content
+      for (let i = 0; i < 3; i++) {
+        await page.evaluate(() => window.scrollBy(0, window.innerHeight));
+        await page.waitForTimeout(1500);
       }
+      
+      const pageProducts = await page.evaluate(() => {
+        const items = [];
+        
+        // Republic uses product-tile or similar
+        document.querySelectorAll('[class*="product-tile"], [class*="ProductTile"], .tile, article').forEach(tile => {
+          const linkEl = tile.querySelector('a[href*="/p/"]');
+          const nameEl = tile.querySelector('[class*="name"], [class*="title"], h2, h3');
+          const imgEl = tile.querySelector('img');
+          const priceEl = tile.querySelector('[class*="price"]');
+          
+          if (!nameEl || !linkEl) return;
+          
+          const name = nameEl.textContent.trim();
+          if (!name || 
+              name.length > 80 ||
+              name.toLowerCase().includes('teaware') ||
+              name.toLowerCase().includes('gift')) return;
+          
+          items.push({
+            name,
+            sourceUrl: linkEl.href,
+            imageUrl: imgEl?.src || imgEl?.getAttribute('data-src'),
+            price: priceEl?.textContent?.match(/\$([\d.]+)/)?.[1] || null
+          });
+        });
+        
+        return items;
+      });
+      
+      const defaults = BREW_DEFAULTS[cat.type];
+      
+      for (const p of pageProducts) {
+        products.push({
+          name: p.name,
+          brand_name: 'The Republic of Tea',
+          tea_type: cat.type,
+          description: null,
+          origin: null,
+          steep_temp_f: defaults.temp,
+          steep_time_min: defaults.timeMin,
+          steep_time_max: defaults.timeMax,
+          flavor_notes: null,
+          image_url: p.imageUrl,
+          price_per_oz: null,
+          source_url: p.sourceUrl
+        });
+        console.log(`    ✓ ${p.name}`);
+      }
+      
+      console.log(`    Found ${pageProducts.length} products`);
+      
+    } catch (e) {
+      console.log(`    ✗ Error: ${e.message}`);
     }
-  } finally {
-    await page.close();
   }
   
-  return products;
+  await page.close();
+  
+  // Deduplicate
+  const seen = new Set();
+  return products.filter(p => {
+    if (seen.has(p.name)) return false;
+    seen.add(p.name);
+    return true;
+  });
 }
 
 // Main execution
@@ -357,16 +345,14 @@ async function main() {
   
   const browser = await chromium.launch({ 
     headless: true,
-    args: ['--no-sandbox']
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
   });
   
   try {
-    // Scrape all sites
-    const [rishiProducts, adagioProducts, republicProducts] = await Promise.all([
-      scrapeRishi(browser),
-      scrapeAdagio(browser),
-      scrapeRepublicOfTea(browser)
-    ]);
+    // Scrape sequentially
+    const rishiProducts = await scrapeRishi(browser);
+    const adagioProducts = await scrapeAdagio(browser);
+    const republicProducts = await scrapeRepublicOfTea(browser);
     
     // Save results
     console.log('\n💾 Saving results...');
@@ -389,9 +375,20 @@ async function main() {
     );
     console.log(`  ✓ republic-of-tea.json (${republicProducts.length} products)`);
     
+    // Combined file for easy import
+    const allProducts = [...rishiProducts, ...adagioProducts, ...republicProducts];
+    await fs.writeFile(
+      path.join(OUTPUT_DIR, 'all-teas.json'),
+      JSON.stringify(allProducts, null, 2)
+    );
+    console.log(`  ✓ all-teas.json (${allProducts.length} products combined)`);
+    
     // Summary
-    const total = rishiProducts.length + adagioProducts.length + republicProducts.length;
-    console.log(`\n✅ Scraping complete! Total: ${total} products`);
+    console.log(`\n✅ Scraping complete!`);
+    console.log(`   Rishi Tea: ${rishiProducts.length}`);
+    console.log(`   Adagio: ${adagioProducts.length}`);
+    console.log(`   Republic of Tea: ${republicProducts.length}`);
+    console.log(`   Total: ${allProducts.length}`);
     
   } finally {
     await browser.close();
