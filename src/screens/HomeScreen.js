@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
-import { TeaCard, TeaTypeBadge } from '../components';
+import { TeaCard, TeaTypeBadge, TeaOfTheDay, SeasonalHighlights } from '../components';
 import { useTeas, useCompanies, useRecommendations } from '../hooks';
 
 const { width } = Dimensions.get('window');
@@ -179,6 +179,23 @@ export const HomeScreen = ({ navigation }) => {
             />
           </View>
         </TouchableOpacity>
+
+        {/* Tea of the Day */}
+        {teas.length > 0 && (
+          <View style={styles.section}>
+            <TeaOfTheDay 
+              teas={teas} 
+              onPress={(tea) => navigation.navigate('TeaDetail', { tea })}
+            />
+          </View>
+        )}
+
+        {/* Seasonal Highlights */}
+        <SeasonalHighlights
+          teas={teas}
+          onTeaPress={(tea) => navigation.navigate('TeaDetail', { tea })}
+          onSeeAll={() => handleSeeAll('seasonal')}
+        />
 
         {/* Browse by Tea Type */}
         <View style={styles.section}>

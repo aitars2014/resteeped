@@ -8,17 +8,20 @@ import {
   Alert,
   ActivityIndicator,
   ScrollView,
+  Switch,
 } from 'react-native';
-import { User, Settings, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock } from 'lucide-react-native';
+import { User, Settings, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare } from 'lucide-react-native';
 import { colors, typography, spacing } from '../constants';
 import { Button } from '../components';
-import { useAuth, useCollection } from '../context';
+import { useAuth, useCollection, useTheme } from '../context';
 import { useBrewHistory } from '../hooks';
+import { exportCollectionToJSON, exportCollectionToCSV } from '../utils/exportCollection';
 
 export const ProfileScreen = ({ navigation }) => {
   const { user, profile, loading, signInWithGoogle, signOut, isConfigured } = useAuth();
   const { collection } = useCollection();
   const { brewSessions, todayBrewCount, weekBrewCount } = useBrewHistory();
+  const { isDark, themePreference, setThemePreference } = useTheme();
   
   const handleSignIn = async () => {
     if (!isConfigured) {
@@ -53,6 +56,45 @@ export const ProfileScreen = ({ navigation }) => {
         },
       ]
     );
+  };
+  
+  const handleExport = () => {
+    Alert.alert(
+      'Export Collection',
+      'Choose export format:',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        { 
+          text: 'JSON',
+          onPress: async () => {
+            const result = await exportCollectionToJSON(collection, profile);
+            if (!result.success) {
+              Alert.alert('Export Failed', result.error);
+            }
+          }
+        },
+        { 
+          text: 'CSV',
+          onPress: async () => {
+            const result = await exportCollectionToCSV(collection);
+            if (!result.success) {
+              Alert.alert('Export Failed', result.error);
+            }
+          }
+        },
+      ]
+    );
+  };
+  
+  const toggleDarkMode = () => {
+    if (themePreference === 'dark') {
+      setThemePreference('light');
+    } else if (themePreference === 'light') {
+      setThemePreference('dark');
+    } else {
+      // System -> Dark
+      setThemePreference('dark');
+    }
   };
   
   if (loading) {
@@ -198,12 +240,47 @@ export const ProfileScreen = ({ navigation }) => {
           <ChevronRight size={20} color={colors.text.secondary} />
         </TouchableOpacity>
         
-        <TouchableOpacity style={styles.menuItem}>
-          <Settings size={20} color={colors.text.secondary} />
-          <Text style={styles.menuItemText}>Settings</Text>
+        <TouchableOpacity 
+          style={styles.menuItem}
+          onPress={() => navigation.navigate('CompareTeas', { initialTeas: [] })}
+        >
+          <GitCompare size={20} color={colors.accent.primary} />
+          <Text style={styles.menuItemText}>Compare Teas</Text>
           <ChevronRight size={20} color={colors.text.secondary} />
         </TouchableOpacity>
         
+        {collection.length > 0 && (
+          <TouchableOpacity 
+            style={styles.menuItem}
+            onPress={handleExport}
+          >
+            <Download size={20} color={colors.accent.primary} />
+            <Text style={styles.menuItemText}>Export Collection</Text>
+            <ChevronRight size={20} color={colors.text.secondary} />
+          </TouchableOpacity>
+        )}
+      </View>
+      
+      {/* Appearance */}
+      <View style={styles.menuSection}>
+        <View style={styles.menuItem}>
+          {isDark ? (
+            <Moon size={20} color={colors.accent.primary} />
+          ) : (
+            <Sun size={20} color={colors.accent.primary} />
+          )}
+          <Text style={styles.menuItemText}>Dark Mode</Text>
+          <Switch
+            value={isDark}
+            onValueChange={toggleDarkMode}
+            trackColor={{ false: colors.border.medium, true: colors.accent.primary }}
+            thumbColor={colors.text.inverse}
+          />
+        </View>
+      </View>
+      
+      {/* Account */}
+      <View style={styles.menuSection}>
         <TouchableOpacity 
           style={[styles.menuItem, styles.menuItemLast]}
           onPress={handleSignOut}

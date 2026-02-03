@@ -12,9 +12,10 @@ import {
   Linking,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2 } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
-import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard } from '../components';
+import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar } from '../components';
+import { shareTea } from '../utils/sharing';
 import { useAuth, useCollection } from '../context';
 import { useReviews, useCompanies, useTeas } from '../hooks';
 
@@ -174,6 +175,13 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             <ChevronLeft size={24} color={colors.text.primary} />
           </TouchableOpacity>
           
+          <TouchableOpacity 
+            style={styles.shareButton}
+            onPress={() => shareTea(tea)}
+          >
+            <Share2 size={20} color={colors.text.primary} />
+          </TouchableOpacity>
+          
           {inCollection && (
             <View style={styles.collectionBadge}>
               <Check size={16} color={colors.text.inverse} />
@@ -225,6 +233,11 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             )}
           </View>
           
+          {/* Caffeine Level */}
+          <View style={styles.caffeineRow}>
+            <CaffeineIndicator teaType={tea.teaType} size="medium" />
+          </View>
+          
           {/* Description */}
           {tea.description && (
             <View style={styles.section}>
@@ -243,6 +256,16 @@ export const TeaDetailScreen = ({ route, navigation }) => {
                     <Text style={styles.flavorTagText}>{note}</Text>
                   </View>
                 ))}
+              </View>
+            </View>
+          )}
+          
+          {/* Flavor Profile Radar */}
+          {tea.flavorNotes && tea.flavorNotes.length >= 2 && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Flavor Profile</Text>
+              <View style={styles.radarContainer}>
+                <FlavorRadar flavorNotes={tea.flavorNotes} size={220} />
               </View>
             </View>
           )}
@@ -509,7 +532,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 16,
-    marginBottom: spacing.sectionSpacing,
+    marginBottom: spacing.md,
   },
   quickFact: {
     flexDirection: 'row',
@@ -519,6 +542,29 @@ const styles = StyleSheet.create({
   quickFactText: {
     ...typography.bodySmall,
     color: colors.text.primary,
+  },
+  caffeineRow: {
+    marginBottom: spacing.sectionSpacing,
+  },
+  radarContainer: {
+    alignItems: 'center',
+    paddingVertical: spacing.md,
+  },
+  shareButton: {
+    position: 'absolute',
+    top: 50,
+    right: 16,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: colors.background.primary,
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
   },
   section: {
     marginBottom: spacing.sectionSpacing,
