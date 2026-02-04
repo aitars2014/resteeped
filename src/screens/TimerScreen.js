@@ -85,6 +85,7 @@ export const TimerScreen = ({ route }) => {
   const teaColor = tea ? getTeaTypeColor(tea.teaType) : null;
   
   const { user } = useAuth();
+  const { updateInCollection, isInCollection, getCollectionItem } = useCollection();
   const { logBrewSession, todayBrewCount } = useBrewHistory();
   
   // Get brewing guide
@@ -260,6 +261,8 @@ export const TimerScreen = ({ route }) => {
   useEffect(() => {
     if (isComplete && !hasLogged) {
       setHasLogged(true);
+      
+      // Log the brew session
       logBrewSession({
         teaId: tea?.id,
         steepTimeSeconds: totalSeconds,
@@ -268,8 +271,36 @@ export const TimerScreen = ({ route }) => {
         infusionNumber: multiSteepMode ? currentInfusion : null,
         note: infusionNotes[currentInfusion] || null,
       });
+
+      // Mark tea as tried in collection if it exists
+      if (tea?.id && isInCollection(tea.id)) {
+        const collectionItem = getCollectionItem(tea.id);
+        if (collectionItem?.status !== 'tried') {
+          updateInCollection(tea.id, { 
+            status: 'tried',
+            tried_at: new Date().toISOString(),
+          });
+        }
+        
+        // Prompt for review if not yet reviewed
+        if (!collectionItem?.user_rating) {
+          setTimeout(() => {
+            Alert.alert(
+              'How was your tea?',
+              `Would you like to rate "${tea.name}"?`,
+              [
+                { text: 'Later', style: 'cancel' },
+                { 
+                  text: 'Rate Now', 
+                  onPress: () => navigation.navigate('TeaDetail', { tea, openReview: true })
+                },
+              ]
+            );
+          }, 1500); // Delay to let the completion UI show first
+        }
+      }
     }
-  }, [isComplete, hasLogged, tea, totalSeconds, currentInfusion, multiSteepMode, infusionNotes, logBrewSession]);
+  }, [isComplete, hasLogged, tea, totalSeconds, currentInfusion, multiSteepMode, infusionNotes, logBrewSession, isInCollection, getCollectionItem, updateInCollection, navigation]);
   
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);

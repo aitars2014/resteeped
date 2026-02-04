@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { 
   View, 
   Text, 
@@ -9,8 +9,9 @@ import {
   ActivityIndicator,
   RefreshControl,
   TouchableOpacity,
+  Animated,
 } from 'react-native';
-import { SlidersHorizontal, Clock, X } from 'lucide-react-native';
+import { SlidersHorizontal, Clock, X, ArrowUp } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { SearchBar, FilterPills, FilterModal, TeaCard } from '../components';
 import { useTeas, useSearchHistory } from '../hooks';
@@ -23,6 +24,11 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   const { theme } = useTheme();
   const { teas, loading, refreshTeas, filterTeas } = useTeas();
   const { history, addToHistory, removeFromHistory, clearHistory } = useSearchHistory();
+  
+  // Scroll to top functionality
+  const flatListRef = useRef(null);
+  const [showScrollToTop, setShowScrollToTop] = useState(false);
+  const scrollButtonOpacity = useRef(new Animated.Value(0)).current;
   
   // Accept initial values from navigation params (e.g., from Home screen)
   const { initialSearch, initialFilter } = route.params || {};
@@ -80,6 +86,25 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     filters.company !== 'all',
     filters.minRating !== 'all',
   ].filter(Boolean).length;
+
+  // Handle scroll position for scroll-to-top button
+  const handleScroll = (event) => {
+    const offsetY = event.nativeEvent.contentOffset.y;
+    const shouldShow = offsetY > 400;
+    
+    if (shouldShow !== showScrollToTop) {
+      setShowScrollToTop(shouldShow);
+      Animated.timing(scrollButtonOpacity, {
+        toValue: shouldShow ? 1 : 0,
+        duration: 200,
+        useNativeDriver: true,
+      }).start();
+    }
+  };
+
+  const scrollToTop = () => {
+    flatListRef.current?.scrollToOffset({ offset: 0, animated: true });
+  };
   
   const renderTeaCard = ({ item, index }) => (
     <View style={[styles.cardContainer, index % 2 === 0 ? styles.cardLeft : styles.cardRight]}>
@@ -216,6 +241,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
       </View>
       
       <FlatList
+        ref={flatListRef}
         data={filteredTeas}
         renderItem={renderTeaCard}
         keyExtractor={item => item.id}
@@ -225,6 +251,8 @@ export const DiscoveryScreen = ({ navigation, route }) => {
         ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmptyState}
         keyboardShouldPersistTaps="handled"
+        onScroll={handleScroll}
+        scrollEventThrottle={100}
         refreshControl={
           <RefreshControl
             refreshing={loading}
@@ -233,6 +261,22 @@ export const DiscoveryScreen = ({ navigation, route }) => {
           />
         }
       />
+
+      {/* Scroll to Top Button */}
+      <Animated.View 
+        style={[
+          styles.scrollToTopButton, 
+          { 
+            backgroundColor: theme.accent.primary,
+            opacity: scrollButtonOpacity,
+          }
+        ]}
+        pointerEvents={showScrollToTop ? 'auto' : 'none'}
+      >
+        <TouchableOpacity onPress={scrollToTop} style={styles.scrollToTopTouchable}>
+          <ArrowUp size={24} color={theme.text.inverse} />
+        </TouchableOpacity>
+      </Animated.View>
 
       {/* Filter Modal */}
       <FilterModal
