@@ -18,3 +18,4 @@ export { TeaPickerModal } from './TeaPickerModal';
 export { TeaRandomizer } from './TeaRandomizer';
 export { BrewingGuide } from './BrewingGuide';
 export { HealthBenefits } from './HealthBenefits';
+export { TeaBattle } from './TeaBattle';

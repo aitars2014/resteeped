@@ -13,8 +13,8 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee } from 'lucide-react-native';
-import { typography, spacing } from '../constants';
-import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer } from '../components';
+import { typography, spacing, fonts } from '../constants';
+import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle } from '../components';
 import { useTeas, useCompanies, useRecommendations } from '../hooks';
 import { useTheme } from '../context';
 
@@ -226,6 +226,17 @@ export const HomeScreen = ({ navigation }) => {
           onSeeAll={() => handleSeeAll('seasonal')}
         />
 
+        {/* Tea Battle - Comparison Feature */}
+        {teas.length > 1 && (
+          <TeaBattle
+            teas={teas}
+            onCompare={(tea1, tea2) => navigation.navigate('CompareTeas', { 
+              initialTeas: [tea1, tea2] 
+            })}
+            onViewTea={(tea) => navigation.navigate('TeaDetail', { tea })}
+          />
+        )}
+
         {/* Browse by Tea Type */}
         <View style={styles.section}>
           <Text style={[styles.browseTitle, { color: theme.text.primary }]}>Browse by Type</Text>
@@ -414,11 +425,14 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   sectionTitle: {
-    ...typography.body,
+    fontFamily: fonts?.serif || 'Georgia',
+    fontSize: 18,
     fontWeight: '600',
+    lineHeight: 24,
   },
   browseTitle: {
-    ...typography.body,
+    fontFamily: fonts?.serif || 'Georgia',
+    fontSize: 18,
     fontWeight: '600',
     paddingHorizontal: spacing.screenHorizontal,
     marginBottom: spacing.md,
