@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -50,6 +50,13 @@ export default function AvatarPicker({
   const { theme } = useTheme();
   const styles = createStyles(theme);
   const [selectedStyle, setSelectedStyle] = useState(currentStyle || 'notionists');
+
+  // Sync selectedStyle when currentStyle prop changes or modal opens
+  useEffect(() => {
+    if (visible && currentStyle) {
+      setSelectedStyle(currentStyle);
+    }
+  }, [visible, currentStyle]);
 
   const handleSelect = (styleId) => {
     haptics.selection();
