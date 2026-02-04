@@ -21,7 +21,7 @@ import * as Notifications from 'expo-notifications';
 import { typography, spacing } from '../constants';
 import { Button, TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
-import { useAuth, useTheme } from '../context';
+import { useAuth, useTheme, useCollection } from '../context';
 import { getBrewingGuide } from '../constants/brewingGuides';
 
 const { width } = Dimensions.get('window');

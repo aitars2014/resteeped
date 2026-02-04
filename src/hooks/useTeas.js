@@ -2,6 +2,48 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { teas as localTeas } from '../data/teas';
 
+// Interleave teas so brands are mixed rather than grouped together
+// This creates a better discovery experience
+const interleaveTeasByBrand = (teas) => {
+  if (!teas.length) return teas;
+  
+  // Group teas by brand
+  const byBrand = {};
+  teas.forEach(tea => {
+    const brand = tea.brandName || tea.companyId || 'unknown';
+    if (!byBrand[brand]) byBrand[brand] = [];
+    byBrand[brand].push(tea);
+  });
+  
+  // Get brand arrays and shuffle each one slightly to add variety
+  const brands = Object.keys(byBrand);
+  brands.forEach(brand => {
+    // Light shuffle within each brand (preserves some rating order)
+    byBrand[brand].sort(() => Math.random() - 0.5);
+  });
+  
+  // Shuffle brand order
+  brands.sort(() => Math.random() - 0.5);
+  
+  // Interleave: take one from each brand in round-robin fashion
+  const result = [];
+  let hasMore = true;
+  let index = 0;
+  
+  while (hasMore) {
+    hasMore = false;
+    for (const brand of brands) {
+      if (byBrand[brand].length > index) {
+        result.push(byBrand[brand][index]);
+        if (byBrand[brand].length > index + 1) hasMore = true;
+      }
+    }
+    index++;
+  }
+  
+  return result;
+};
+
 export const useTeas = () => {
   const [teas, setTeas] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -12,8 +54,8 @@ export const useTeas = () => {
     setError(null);
 
     if (!isSupabaseConfigured()) {
-      // Use local data in demo mode
-      setTeas(localTeas);
+      // Use local data in demo mode, interleaved for better discovery
+      setTeas(interleaveTeasByBrand(localTeas));
       setLoading(false);
       return;
     }
@@ -46,12 +88,13 @@ export const useTeas = () => {
         createdAt: tea.created_at,
       }));
 
-      setTeas(formattedTeas);
+      // Interleave teas by brand for better discovery experience
+      setTeas(interleaveTeasByBrand(formattedTeas));
     } catch (err) {
       console.error('Error fetching teas:', err);
       setError(err.message);
       // Fallback to local data
-      setTeas(localTeas);
+      setTeas(interleaveTeasByBrand(localTeas));
     } finally {
       setLoading(false);
     }
