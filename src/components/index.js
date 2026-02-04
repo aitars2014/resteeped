@@ -20,3 +20,4 @@ export { BrewingGuide } from './BrewingGuide';
 export { HealthBenefits } from './HealthBenefits';
 export { TeaBattle } from './TeaBattle';
 export { Skeleton, TeaCardSkeleton, TeaListSkeleton, TeaDetailSkeleton, SectionSkeleton } from './Skeleton';
+export { ShareableTeaCard } from './ShareableTeaCard';
