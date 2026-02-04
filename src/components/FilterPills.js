@@ -8,6 +8,17 @@ import { teaTypes } from '../data/teas';
 export const FilterPills = ({ selectedType, onSelectType }) => {
   const { theme, getTeaTypeColor } = useTheme();
   
+  // Handle tap on a filter pill - toggle if already selected
+  const handlePillPress = (typeId) => {
+    // If tapping the already-selected type, toggle back to 'all'
+    // Exception: if 'all' is selected, tapping it does nothing
+    if (selectedType === typeId && typeId !== 'all') {
+      onSelectType('all');
+    } else {
+      onSelectType(typeId);
+    }
+  };
+  
   return (
     <ScrollView 
       horizontal 
@@ -21,7 +32,7 @@ export const FilterPills = ({ selectedType, onSelectType }) => {
         return (
           <TouchableOpacity
             key={type.id}
-            onPress={() => onSelectType(type.id)}
+            onPress={() => handlePillPress(type.id)}
             activeOpacity={0.7}
           >
             {isSelected && teaColor ? (

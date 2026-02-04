@@ -113,6 +113,15 @@ export const FilterModal = ({
     );
   };
 
+  // Toggle filter value - tap selected to deselect (back to 'all')
+  const toggleFilter = (key, value) => {
+    if (localFilters[key] === value && value !== 'all') {
+      updateFilter(key, 'all');
+    } else {
+      updateFilter(key, value);
+    }
+  };
+
   const renderTeaTypeOption = (type) => {
     const isSelected = localFilters.teaType === type.id;
     const teaColor = type.id !== 'all' ? getTeaTypeColor(type.id) : null;
@@ -131,7 +140,7 @@ export const FilterModal = ({
               : theme.border.light,
           },
         ]}
-        onPress={() => updateFilter('teaType', type.id)}
+        onPress={() => toggleFilter('teaType', type.id)}
       >
         <Text style={[
           styles.teaTypeText,
@@ -184,13 +193,13 @@ export const FilterModal = ({
               <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Brand / Shop</Text>
               <View style={styles.optionsList}>
                 {renderOption('all', 'All Brands', localFilters.company, 
-                  (v) => updateFilter('company', v))}
+                  (v) => toggleFilter('company', v))}
                 {companies.map(company => 
                   renderOption(
                     company.id, 
                     company.name, 
                     localFilters.company,
-                    (v) => updateFilter('company', v)
+                    (v) => toggleFilter('company', v)
                   )
                 )}
               </View>
@@ -212,7 +221,7 @@ export const FilterModal = ({
                           borderColor: isSelected ? theme.accent.primary : theme.border.light,
                         },
                       ]}
-                      onPress={() => updateFilter('minRating', option.id)}
+                      onPress={() => toggleFilter('minRating', option.id)}
                     >
                       {option.min && (
                         <Star 
