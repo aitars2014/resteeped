@@ -10,7 +10,7 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw } from 'lucide-react-native';
+import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { Button } from '../components';
 import { useAuth, useCollection, useTheme } from '../context';
@@ -152,13 +152,13 @@ export const ProfileScreen = ({ navigation }) => {
             </View>
             <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
             <View style={styles.stat}>
-              <Clock size={24} color={theme.accent.primary} />
+              <Calendar size={24} color={theme.accent.primary} />
               <Text style={[styles.statNumber, { color: theme.text.primary }]}>{weekBrewCount}</Text>
               <Text style={[styles.statLabel, { color: theme.text.secondary }]}>This Week</Text>
             </View>
             <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
             <View style={styles.stat}>
-              <Star size={24} color={theme.accent.primary} />
+              <Award size={24} color={theme.accent.primary} />
               <Text style={[styles.statNumber, { color: theme.text.primary }]}>{brewSessions.length}</Text>
               <Text style={[styles.statLabel, { color: theme.text.secondary }]}>All Time</Text>
             </View>
@@ -206,6 +206,7 @@ export const ProfileScreen = ({ navigation }) => {
           </View>
           <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
           <View style={styles.stat}>
+            <MessageSquare size={24} color={theme.accent.primary} />
             <Text style={[styles.statNumber, { color: theme.text.primary }]}>{profile?.reviews_count || 0}</Text>
             <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Reviews</Text>
           </View>
@@ -226,11 +227,13 @@ export const ProfileScreen = ({ navigation }) => {
           </View>
           <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
           <View style={styles.stat}>
+            <Calendar size={24} color={theme.accent.primary} />
             <Text style={[styles.statNumber, { color: theme.text.primary }]}>{weekBrewCount}</Text>
             <Text style={[styles.statLabel, { color: theme.text.secondary }]}>This Week</Text>
           </View>
           <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
           <View style={styles.stat}>
+            <Award size={24} color={theme.accent.primary} />
             <Text style={[styles.statNumber, { color: theme.text.primary }]}>{brewSessions.length}</Text>
             <Text style={[styles.statLabel, { color: theme.text.secondary }]}>All Time</Text>
           </View>
