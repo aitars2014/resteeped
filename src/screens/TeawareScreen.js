@@ -64,20 +64,30 @@ const TeawareCard = ({ item, onPress, theme }) => {
       }]}
       onPress={handlePress}
       activeOpacity={0.9}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`${item.name}${item.material ? `, ${item.material.replace('_', ' ')}` : ''}${item.price_usd ? `, $${item.price_usd}` : ''}`}
+      accessibilityHint="View teaware details"
     >
       <View style={styles.cardImageContainer}>
         {item.image_url ? (
-          <Image source={{ uri: item.image_url }} style={styles.cardImage} />
+          <Image 
+            source={{ uri: item.image_url }} 
+            style={styles.cardImage}
+            accessible={true}
+            accessibilityRole="image"
+            accessibilityLabel={`Photo of ${item.name}`}
+          />
         ) : (
           <LinearGradient
             colors={[theme.accent.warm || '#C4956A', theme.accent.primary]}
             style={styles.cardImagePlaceholder}
           >
-            <Text style={styles.cardImageEmoji}>🫖</Text>
+            <Text style={styles.cardImageEmoji} accessibilityElementsHidden={true}>🫖</Text>
           </LinearGradient>
         )}
         {item.price_usd && (
-          <View style={[styles.priceTag, { backgroundColor: theme.background.primary }]}>
+          <View style={[styles.priceTag, { backgroundColor: theme.background.primary }]} accessibilityElementsHidden={true}>
             <Text style={[styles.priceText, { color: theme.text.primary }]}>
               ${item.price_usd}
             </Text>
@@ -179,8 +189,13 @@ export const TeawareScreen = ({ navigation }) => {
         ]}
         onPress={() => handleCategoryPress(id)}
         activeOpacity={0.8}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={`${name}, ${count} items`}
+        accessibilityState={{ selected: isSelected }}
+        accessibilityHint={isSelected ? "Tap to clear filter" : `Filter by ${name}`}
       >
-        <Text style={styles.categoryEmoji}>{emoji}</Text>
+        <Text style={styles.categoryEmoji} accessibilityElementsHidden={true}>{emoji}</Text>
         <Text style={[
           styles.categoryName, 
           { color: isSelected ? '#FFF' : theme.text.primary }
@@ -213,6 +228,9 @@ export const TeawareScreen = ({ navigation }) => {
               haptics.light();
               setSelectedCategory(categoryId);
             }}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={`See all ${categoryName}, ${items.length} items`}
           >
             <Text style={[styles.seeAllText, { color: theme.accent.primary }]}>
               See All ({items.length})

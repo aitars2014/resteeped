@@ -114,8 +114,13 @@ const BrewHistoryScreen = ({ navigation }) => {
             style={[styles.mostBrewedItem, { backgroundColor: theme.background.secondary }]}
             onPress={() => tea && navigation.navigate('TeaDetail', { tea })}
             disabled={!tea}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={`Number ${index + 1}: ${tea?.name || 'Unknown Tea'}, brewed ${count} times`}
+            accessibilityHint={tea ? "View tea details" : undefined}
+            accessibilityState={{ disabled: !tea }}
           >
-            <View style={[styles.mostBrewedRank, { backgroundColor: theme.accent.primary }]}>
+            <View style={[styles.mostBrewedRank, { backgroundColor: theme.accent.primary }]} accessibilityElementsHidden={true}>
               <Text style={[styles.rankNumber, { color: theme.text.inverse }]}>{index + 1}</Text>
             </View>
             <View style={styles.mostBrewedInfo}>
@@ -142,12 +147,18 @@ const BrewHistoryScreen = ({ navigation }) => {
         style={[styles.brewItem, { backgroundColor: theme.background.secondary }]}
         onPress={() => tea && navigation.navigate('TeaDetail', { tea })}
         disabled={!tea}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={`${tea?.name || 'Quick Brew'}, steeped for ${formatTime(item.steep_time_seconds)}${item.temperature_f ? ` at ${item.temperature_f} degrees` : ''}, at ${formatTimestamp(item.created_at)}`}
+        accessibilityHint={tea ? "View tea details" : undefined}
+        accessibilityState={{ disabled: !tea }}
       >
         <View 
           style={[
             styles.brewColorBar, 
             { backgroundColor: teaColor?.primary || theme.text.secondary }
           ]} 
+          accessibilityElementsHidden={true}
         />
         <View style={styles.brewContent}>
           <View style={styles.brewMain}>
@@ -197,7 +208,7 @@ const BrewHistoryScreen = ({ navigation }) => {
 
   const renderEmpty = () => (
     <View style={styles.emptyState}>
-      <Coffee size={64} color={theme.text.secondary} />
+      <Coffee size={64} color={theme.text.secondary} accessibilityElementsHidden={true} />
       <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>No brews yet</Text>
       <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
         Start brewing teas to build your history!
@@ -211,10 +222,13 @@ const BrewHistoryScreen = ({ navigation }) => {
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => navigation.goBack()}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
         >
           <ChevronLeft size={24} color={theme.text.primary} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Brew History</Text>
+        <Text style={[styles.headerTitle, { color: theme.text.primary }]} accessibilityRole="header">Brew History</Text>
         <View style={{ width: 40 }} />
       </View>
 

@@ -29,6 +29,8 @@ import {
   Filter,
   X,
   ExternalLink,
+  Store,
+  Coffee,
 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { StarRating, FilterPills } from '../components';
@@ -236,6 +238,10 @@ export const TeaShopsScreen = ({ navigation, route }) => {
       }]}
       onPress={() => navigation.navigate('CompanyProfile', { company })}
       activeOpacity={0.7}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`${company.name}${company.headquarters_city ? `, located in ${company.headquarters_city}` : ''}${company.avg_rating ? `, rated ${company.avg_rating.toFixed(1)} stars` : ''}`}
+      accessibilityHint="View company profile and teas"
     >
       <View style={styles.shopContent}>
         {/* Logo or Placeholder */}
@@ -316,7 +322,9 @@ export const TeaShopsScreen = ({ navigation, route }) => {
     <View style={styles.emptyState}>
       {hasActiveFilters ? (
         <>
-          <Text style={styles.emptyEmoji}>🔍</Text>
+          <View style={[styles.emptyIconContainer, { backgroundColor: theme.background.secondary }]}>
+            <Search size={40} color={theme.text.secondary} strokeWidth={1.5} />
+          </View>
           <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>No matches found</Text>
           <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
             Try adjusting your filters
@@ -324,6 +332,9 @@ export const TeaShopsScreen = ({ navigation, route }) => {
           <TouchableOpacity 
             style={[styles.clearFiltersButton, { borderColor: theme.accent.primary }]}
             onPress={clearFilters}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Clear all filters"
           >
             <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>
               Clear Filters
@@ -332,7 +343,9 @@ export const TeaShopsScreen = ({ navigation, route }) => {
         </>
       ) : (
         <>
-          <Text style={styles.emptyEmoji}>🏪</Text>
+          <View style={[styles.emptyIconContainer, { backgroundColor: theme.background.secondary }]}>
+            <Store size={40} color={theme.text.secondary} strokeWidth={1.5} />
+          </View>
           <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>No shops yet</Text>
           <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
             Tea shops will appear here once added
@@ -352,8 +365,12 @@ export const TeaShopsScreen = ({ navigation, route }) => {
           borderColor: theme.accent.primary + '30',
         }]}
         onPress={requestLocationPermission}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel="Enable location services"
+        accessibilityHint="See distances to tea shops near you"
       >
-        <MapPin size={20} color={theme.accent.primary} />
+        <MapPin size={20} color={theme.accent.primary} accessibilityElementsHidden={true} />
         <View style={styles.locationPromptText}>
           <Text style={[styles.locationPromptTitle, { color: theme.text.primary }]}>
             Enable Location
@@ -362,7 +379,7 @@ export const TeaShopsScreen = ({ navigation, route }) => {
             See distances to tea shops near you
           </Text>
         </View>
-        <ChevronRight size={20} color={theme.accent.primary} />
+        <ChevronRight size={20} color={theme.accent.primary} accessibilityElementsHidden={true} />
       </TouchableOpacity>
     );
   };
@@ -374,16 +391,23 @@ export const TeaShopsScreen = ({ navigation, route }) => {
         <TouchableOpacity 
           style={styles.backButton}
           onPress={() => navigation.goBack()}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
         >
           <ChevronLeft size={24} color={theme.text.primary} />
         </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.text.primary }]}>Tea Shops</Text>
+        <Text style={[styles.title, { color: theme.text.primary }]} accessibilityRole="header">Tea Shops</Text>
         <View style={styles.headerRight}>
           {/* View Toggle */}
-          <View style={[styles.viewToggle, { backgroundColor: theme.background.secondary }]}>
+          <View style={[styles.viewToggle, { backgroundColor: theme.background.secondary }]} accessibilityRole="tablist">
             <TouchableOpacity 
               style={[styles.viewToggleButton, viewMode === 'list' && { backgroundColor: theme.accent.primary }]}
               onPress={() => setViewMode('list')}
+              accessible={true}
+              accessibilityRole="tab"
+              accessibilityLabel="List view"
+              accessibilityState={{ selected: viewMode === 'list' }}
             >
               <List size={16} color={viewMode === 'list' ? theme.text.inverse : theme.text.secondary} />
             </TouchableOpacity>
@@ -393,6 +417,10 @@ export const TeaShopsScreen = ({ navigation, route }) => {
                 setViewMode('map');
                 Alert.alert('Coming Soon', 'Map view will be available in a future update!');
               }}
+              accessible={true}
+              accessibilityRole="tab"
+              accessibilityLabel="Map view"
+              accessibilityState={{ selected: viewMode === 'map' }}
             >
               <Map size={16} color={viewMode === 'map' ? theme.text.inverse : theme.text.secondary} />
             </TouchableOpacity>
@@ -438,6 +466,10 @@ export const TeaShopsScreen = ({ navigation, route }) => {
                 sortBy === option.id && { backgroundColor: theme.accent.primary, borderColor: theme.accent.primary },
               ]}
               onPress={() => setSortBy(option.id)}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`Sort by ${option.label}`}
+              accessibilityState={{ selected: sortBy === option.id }}
             >
               <Text style={[
                 styles.sortPillText,
@@ -458,6 +490,9 @@ export const TeaShopsScreen = ({ navigation, route }) => {
             <TouchableOpacity 
               style={[styles.filterChip, { backgroundColor: theme.accent.primary + '20' }]}
               onPress={() => setFilterBrand(null)}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`Remove ${filterBrand} filter`}
             >
               <Text style={[styles.filterChipText, { color: theme.accent.primary }]}>
                 {filterBrand}
@@ -469,6 +504,9 @@ export const TeaShopsScreen = ({ navigation, route }) => {
             <TouchableOpacity 
               style={[styles.filterChip, { backgroundColor: theme.accent.primary + '20' }]}
               onPress={() => setFilterTeaType(null)}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`Remove ${filterTeaType} tea filter`}
             >
               <Text style={[styles.filterChipText, { color: theme.accent.primary }]}>
                 {filterTeaType} tea
@@ -738,8 +776,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 80,
   },
-  emptyEmoji: {
-    fontSize: 48,
+  emptyIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
   },
   emptyTitle: {

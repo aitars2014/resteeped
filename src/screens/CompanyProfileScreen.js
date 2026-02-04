@@ -196,6 +196,9 @@ const CompanyProfileScreen = ({ route, navigation }) => {
             <TouchableOpacity
               style={styles.backButton}
               onPress={() => navigation.goBack()}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Go back"
             >
               <ChevronLeft size={28} color={theme.text.inverse} />
             </TouchableOpacity>
@@ -207,10 +210,18 @@ const CompanyProfileScreen = ({ route, navigation }) => {
                 source={{ uri: company.logo_url }} 
                 style={[styles.logo, { borderColor: theme.background.primary }]} 
                 resizeMode="contain"
+                accessible={true}
+                accessibilityRole="image"
+                accessibilityLabel={`${company.name} logo`}
               />
             ) : (
-              <View style={[styles.logo, styles.logoPlaceholder, { backgroundColor: theme.background.secondary, borderColor: theme.background.primary }]}>
-                <Text style={[styles.logoPlaceholderText, { color: theme.text.secondary }]}>
+              <View 
+                style={[styles.logo, styles.logoPlaceholder, { backgroundColor: theme.background.secondary, borderColor: theme.background.primary }]}
+                accessible={true}
+                accessibilityRole="image"
+                accessibilityLabel={`${company.name} logo placeholder`}
+              >
+                <Text style={[styles.logoPlaceholderText, { color: theme.text.secondary }]} accessibilityElementsHidden={true}>
                   {company.name.charAt(0)}
                 </Text>
               </View>
@@ -271,7 +282,14 @@ const CompanyProfileScreen = ({ route, navigation }) => {
               style={styles.actionButton}
             />
             {company.instagram_handle && (
-              <TouchableOpacity style={[styles.socialButton, { backgroundColor: theme.background.secondary }]} onPress={openInstagram}>
+              <TouchableOpacity 
+                style={[styles.socialButton, { backgroundColor: theme.background.secondary }]} 
+                onPress={openInstagram}
+                accessible={true}
+                accessibilityRole="link"
+                accessibilityLabel={`Visit ${company.name} on Instagram`}
+                accessibilityHint="Opens Instagram in browser"
+              >
                 <Instagram size={20} color={theme.accent.primary} />
               </TouchableOpacity>
             )}
@@ -343,6 +361,9 @@ const CompanyProfileScreen = ({ route, navigation }) => {
                   screen: 'DiscoveryHome', 
                   params: { initialCompanyFilter: company.id } 
                 })}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="See all teas from this company"
               >
                 <Text style={[styles.seeAllText, { color: theme.accent.primary }]}>See All</Text>
               </TouchableOpacity>
@@ -367,7 +388,14 @@ const CompanyProfileScreen = ({ route, navigation }) => {
             <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>
               Reviews {company.rating_count > 0 && `(${company.rating_count})`}
             </Text>
-            <TouchableOpacity style={styles.writeReviewButton} onPress={handleWriteReview}>
+            <TouchableOpacity 
+              style={styles.writeReviewButton} 
+              onPress={handleWriteReview}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Write a review"
+              accessibilityHint={`Share your experience with ${company.name}`}
+            >
               <MessageSquare size={16} color={theme.accent.primary} />
               <Text style={[styles.writeReviewText, { color: theme.accent.primary }]}>Write Review</Text>
             </TouchableOpacity>

@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
 import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle } from '../components';
 import { useTeas, useCompanies, useRecommendations } from '../hooks';
@@ -22,12 +22,12 @@ const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.42;
 
 const TEA_TYPES = [
-  { type: 'black', name: 'Black', emoji: '🫖' },
-  { type: 'green', name: 'Green', emoji: '🍃' },
-  { type: 'oolong', name: 'Oolong', emoji: '🌿' },
-  { type: 'white', name: 'White', emoji: '🤍' },
-  { type: 'puerh', name: "Pu'erh", emoji: '🏔️' },
-  { type: 'herbal', name: 'Herbal', emoji: '🌸' },
+  { type: 'black', name: 'Black', Icon: Coffee },
+  { type: 'green', name: 'Green', Icon: Leaf },
+  { type: 'oolong', name: 'Oolong', Icon: TreeDeciduous },
+  { type: 'white', name: 'White', Icon: Sprout },
+  { type: 'puerh', name: "Pu'erh", Icon: Mountain },
+  { type: 'herbal', name: 'Herbal', Icon: Flower2 },
 ];
 
 export const HomeScreen = ({ navigation }) => {
@@ -86,7 +86,7 @@ export const HomeScreen = ({ navigation }) => {
     });
   };
 
-  const renderTeaTypeButton = ({ type, name, emoji }) => {
+  const renderTeaTypeButton = ({ type, name, Icon }) => {
     const typeColor = getTeaTypeColor(type);
     return (
       <TouchableOpacity
@@ -94,6 +94,10 @@ export const HomeScreen = ({ navigation }) => {
         style={styles.teaTypeButton}
         onPress={() => handleTeaTypePress(type)}
         activeOpacity={0.7}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={`${name} tea`}
+        accessibilityHint="Double tap to filter by this tea type"
       >
         <LinearGradient
           colors={[typeColor.primary, typeColor.gradient]}
@@ -101,7 +105,7 @@ export const HomeScreen = ({ navigation }) => {
           start={{ x: 0, y: 0 }}
           end={{ x: 1, y: 1 }}
         >
-          <Text style={styles.teaTypeEmoji}>{emoji}</Text>
+          <Icon size={26} color="#FFFFFF" strokeWidth={2} />
         </LinearGradient>
         <Text style={[styles.teaTypeName, { color: theme.text.primary }]}>{name}</Text>
       </TouchableOpacity>

@@ -129,6 +129,9 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
               <TouchableOpacity 
                 style={styles.userTouchable}
                 onPress={() => onUserPress(activity.user.id, activity.user.name)}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={`View ${activity.user.name}'s profile`}
               >
                 <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
                 <View style={styles.activityHeaderText}>
@@ -148,10 +151,16 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
             <TouchableOpacity 
               style={[styles.teaPreview, { backgroundColor: theme.background.secondary }]}
               onPress={() => onTeaPress(activity.tea)}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`View ${activity.tea.name} by ${activity.tea.brandName}`}
             >
               <Image 
                 source={activity.tea.imageUrl ? { uri: activity.tea.imageUrl } : getPlaceholderImage(activity.tea.teaType)}
                 style={[styles.teaImage, { borderColor: teaColor.primary }]}
+                accessible={true}
+                accessibilityRole="image"
+                accessibilityLabel={`Photo of ${activity.tea.name}`}
               />
               <View style={styles.teaInfo}>
                 <TeaTypeBadge teaType={activity.tea.teaType} size="small" />
@@ -162,7 +171,7 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
                   {activity.tea.brandName}
                 </Text>
               </View>
-              <ChevronRight size={18} color={theme.text.tertiary} />
+              <ChevronRight size={18} color={theme.text.tertiary} accessibilityElementsHidden={true} />
             </TouchableOpacity>
             
             <View style={styles.reviewContent}>
@@ -183,6 +192,9 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
               <TouchableOpacity 
                 style={styles.userTouchable}
                 onPress={() => onUserPress(activity.user.id, activity.user.name)}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={`View ${activity.user.name}'s profile`}
               >
                 <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
                 <View style={styles.activityHeaderText}>
@@ -202,10 +214,16 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
             <TouchableOpacity 
               style={[styles.teaPreview, { backgroundColor: theme.background.secondary }]}
               onPress={() => onTeaPress(activity.tea)}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`View ${activity.tea.name} by ${activity.tea.brandName}`}
             >
               <Image 
                 source={activity.tea.imageUrl ? { uri: activity.tea.imageUrl } : getPlaceholderImage(activity.tea.teaType)}
                 style={[styles.teaImage, { borderColor: teaColor.primary }]}
+                accessible={true}
+                accessibilityRole="image"
+                accessibilityLabel={`Photo of ${activity.tea.name}`}
               />
               <View style={styles.teaInfo}>
                 <TeaTypeBadge teaType={activity.tea.teaType} size="small" />
@@ -216,7 +234,7 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
                   {activity.tea.brandName}
                 </Text>
               </View>
-              <Bookmark size={18} color={theme.accent.primary} fill={theme.accent.primary} />
+              <Bookmark size={18} color={theme.accent.primary} fill={theme.accent.primary} accessibilityElementsHidden={true} />
             </TouchableOpacity>
           </>
         );
@@ -228,6 +246,9 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
               <TouchableOpacity 
                 style={styles.userTouchable}
                 onPress={() => onUserPress(activity.user.id, activity.user.name)}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={`View ${activity.user.name}'s profile`}
               >
                 <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
                 <View style={styles.activityHeaderText}>
@@ -247,10 +268,16 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
             <TouchableOpacity 
               style={[styles.teaPreview, { backgroundColor: theme.background.secondary }]}
               onPress={() => onTeaPress(activity.tea)}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`View ${activity.tea.name} by ${activity.tea.brandName}, steeped for ${activity.steepTime} minutes`}
             >
               <Image 
                 source={activity.tea.imageUrl ? { uri: activity.tea.imageUrl } : getPlaceholderImage(activity.tea.teaType)}
                 style={[styles.teaImage, { borderColor: teaColor.primary }]}
+                accessible={true}
+                accessibilityRole="image"
+                accessibilityLabel={`Photo of ${activity.tea.name}`}
               />
               <View style={styles.teaInfo}>
                 <TeaTypeBadge teaType={activity.tea.teaType} size="small" />
@@ -261,7 +288,7 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
                   {activity.tea.brandName}
                 </Text>
               </View>
-              <View style={[styles.brewBadge, { backgroundColor: teaColor.primary + '20' }]}>
+              <View style={[styles.brewBadge, { backgroundColor: teaColor.primary + '20' }]} accessibilityElementsHidden={true}>
                 <Coffee size={14} color={teaColor.primary} />
                 <Text style={[styles.brewTime, { color: teaColor.primary }]}>
                   {activity.steepTime} min
@@ -376,7 +403,9 @@ export const ActivityFeedScreen = ({ navigation }) => {
   
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <Text style={styles.emptyEmoji}>🍵</Text>
+      <View style={[styles.emptyIconContainer, { backgroundColor: theme.background.secondary }]}>
+        <Coffee size={40} color={theme.text.secondary} strokeWidth={1.5} />
+      </View>
       <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>No activity yet</Text>
       <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
         Activity from the tea community will appear here
@@ -404,6 +433,9 @@ export const ActivityFeedScreen = ({ navigation }) => {
         <TouchableOpacity 
           style={[styles.refreshButton, { backgroundColor: theme.background.secondary }]}
           onPress={handleRefresh}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Refresh activity feed"
         >
           <RefreshCw size={18} color={theme.text.secondary} />
         </TouchableOpacity>
@@ -589,8 +621,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingTop: 80,
   },
-  emptyEmoji: {
-    fontSize: 48,
+  emptyIconContainer: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
   },
   emptyTitle: {

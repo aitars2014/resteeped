@@ -62,6 +62,10 @@ export const CompareTeasScreen = ({ route, navigation }) => {
             borderColor: theme.border.medium,
           }]} 
           onPress={addTea}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Add a tea to compare"
+          accessibilityHint="Opens tea picker to select a tea for comparison"
         >
           <Plus size={32} color={theme.text.secondary} />
           <Text style={[styles.addTeaText, { color: theme.text.secondary }]}>Add Tea</Text>
@@ -70,10 +74,17 @@ export const CompareTeasScreen = ({ route, navigation }) => {
     }
     
     return (
-      <View style={[styles.teaHeaderCard, { backgroundColor: theme.background.secondary }]}>
+      <View 
+        style={[styles.teaHeaderCard, { backgroundColor: theme.background.secondary }]}
+        accessible={true}
+        accessibilityLabel={`${tea.name} by ${tea.brandName}`}
+      >
         <TouchableOpacity 
           style={[styles.removeButton, { backgroundColor: theme.background.primary }]}
           onPress={() => removeTea(index)}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={`Remove ${tea.name} from comparison`}
         >
           <X size={16} color={theme.text.secondary} />
         </TouchableOpacity>
@@ -81,7 +92,10 @@ export const CompareTeasScreen = ({ route, navigation }) => {
         <View style={styles.teaImageContainer}>
           <Image 
             source={tea.imageUrl ? { uri: tea.imageUrl } : getPlaceholderImage(tea.teaType)} 
-            style={styles.teaImage} 
+            style={styles.teaImage}
+            accessible={true}
+            accessibilityRole="image"
+            accessibilityLabel={`Photo of ${tea.name}`}
           />
         </View>
         
@@ -100,10 +114,13 @@ export const CompareTeasScreen = ({ route, navigation }) => {
         <TouchableOpacity 
           style={styles.backButton}
           onPress={() => navigation.goBack()}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
         >
           <ChevronLeft size={24} color={theme.text.primary} />
         </TouchableOpacity>
-        <Text style={[styles.title, { color: theme.text.primary }]}>Compare Teas</Text>
+        <Text style={[styles.title, { color: theme.text.primary }]} accessibilityRole="header">Compare Teas</Text>
         <View style={{ width: 40 }} />
       </View>
       

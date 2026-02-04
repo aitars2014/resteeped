@@ -28,7 +28,7 @@ export const CollectionScreen = ({ navigation }) => {
   
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
-      <View style={styles.emptyIconContainer}>
+      <View style={styles.emptyIconContainer} accessibilityElementsHidden={true}>
         <Bookmark size={64} color={theme.text.secondary} />
       </View>
       {!user ? (
@@ -95,6 +95,11 @@ export const CollectionScreen = ({ navigation }) => {
           isActive && { borderBottomColor: theme.accent.primary, borderBottomWidth: 2 }
         ]}
         onPress={() => setFilter(tab.id)}
+        accessible={true}
+        accessibilityRole="tab"
+        accessibilityLabel={`${tab.label} filter`}
+        accessibilityState={{ selected: isActive }}
+        accessibilityHint={`Filter collection to show ${tab.label.toLowerCase()} teas`}
       >
         <Text style={[
           styles.tabText, 
@@ -119,6 +124,10 @@ export const CollectionScreen = ({ navigation }) => {
         <TouchableOpacity 
           style={[styles.addButton, { backgroundColor: theme.accent.primary }]}
           onPress={() => navigation.navigate('AddTea')}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Add new tea"
+          accessibilityHint="Opens form to add a custom tea to your collection"
         >
           <Plus size={20} color="#fff" strokeWidth={2.5} />
         </TouchableOpacity>
