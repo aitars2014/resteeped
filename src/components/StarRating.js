@@ -1,18 +1,26 @@
-import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import React, { useCallback } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Star } from 'lucide-react-native';
 import { useTheme } from '../context';
+import { haptics } from '../utils/haptics';
 
 export const StarRating = ({ 
-  rating, 
+  rating = 0, 
   size = 16, 
   onRate = null,
   showEmpty = true,
+  showNumber = false,
   maxStars = 5,
 }) => {
   const { theme } = useTheme();
   const fullStars = Math.floor(rating);
   const hasHalfStar = rating % 1 >= 0.5;
+  
+  // Handle star press with haptic feedback
+  const handleRate = useCallback((starIndex) => {
+    haptics.selection(); // Light haptic on each star
+    onRate?.(starIndex);
+  }, [onRate]);
   
   const renderStar = (index) => {
     const isFilled = index < fullStars || (index === fullStars && hasHalfStar);
@@ -29,8 +37,9 @@ export const StarRating = ({
       return (
         <TouchableOpacity 
           key={index} 
-          onPress={() => onRate(index + 1)}
+          onPress={() => handleRate(index + 1)}
           style={styles.starButton}
+          activeOpacity={0.7}
         >
           {StarComponent}
         </TouchableOpacity>
@@ -43,6 +52,11 @@ export const StarRating = ({
   return (
     <View style={styles.container}>
       {Array.from({ length: maxStars }, (_, i) => renderStar(i))}
+      {showNumber && rating > 0 && (
+        <Text style={[styles.ratingNumber, { color: theme.text.secondary }]}>
+          {rating.toFixed(1)}
+        </Text>
+      )}
     </View>
   );
 };
@@ -55,5 +69,10 @@ const styles = StyleSheet.create({
   },
   starButton: {
     padding: 2,
+  },
+  ratingNumber: {
+    marginLeft: 6,
+    fontSize: 13,
+    fontWeight: '500',
   },
 });

@@ -15,6 +15,7 @@ import {
   BrewHistoryScreen,
   TeaShopsScreen,
   CompareTeasScreen,
+  ActivityFeedScreen,
 } from '../screens';
 
 const Tab = createBottomTabNavigator();
@@ -27,6 +28,7 @@ const HomeStack = () => (
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
     <Stack.Screen name="CompanyProfile" component={CompanyProfileScreen} />
     <Stack.Screen name="TeaShops" component={TeaShopsScreen} />
+    <Stack.Screen name="ActivityFeed" component={ActivityFeedScreen} />
   </Stack.Navigator>
 );
 

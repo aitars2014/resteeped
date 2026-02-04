@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
 import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle } from '../components';
 import { useTeas, useCompanies, useRecommendations } from '../hooks';
@@ -344,6 +344,29 @@ export const HomeScreen = ({ navigation }) => {
         <View style={styles.section}>
           {renderSectionHeader(null, 'New Arrivals', () => handleSeeAll('new'))}
           {renderHorizontalTeaList(newTeas, 'New teas coming soon')}
+        </View>
+
+        {/* Community Activity Link */}
+        <View style={styles.section}>
+          <TouchableOpacity
+            style={[styles.communityCard, { 
+              backgroundColor: theme.background.secondary,
+              borderColor: theme.border.light,
+            }]}
+            onPress={() => navigation.navigate('ActivityFeed')}
+            activeOpacity={0.8}
+          >
+            <View style={[styles.communityIcon, { backgroundColor: theme.accent.primary + '20' }]}>
+              <Users size={24} color={theme.accent.primary} />
+            </View>
+            <View style={styles.communityContent}>
+              <Text style={[styles.communityTitle, { color: theme.text.primary }]}>Community Feed</Text>
+              <Text style={[styles.communitySubtitle, { color: theme.text.secondary }]}>
+                See what other tea lovers are brewing
+              </Text>
+            </View>
+            <ChevronRight size={20} color={theme.text.secondary} />
+          </TouchableOpacity>
         </View>
 
         {/* Quick Stats */}

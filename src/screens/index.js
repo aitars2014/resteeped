@@ -8,4 +8,5 @@ export { default as CompanyProfileScreen } from './CompanyProfileScreen';
 export { default as BrewHistoryScreen } from './BrewHistoryScreen';
 export { default as TeaShopsScreen } from './TeaShopsScreen';
 export { default as CompareTeasScreen } from './CompareTeasScreen';
+export { default as ActivityFeedScreen } from './ActivityFeedScreen';
 export { OnboardingScreen, isOnboardingComplete, resetOnboarding } from './OnboardingScreen';
