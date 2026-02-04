@@ -326,6 +326,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
               </TouchableOpacity>
             </View>
             
+            {/* App reviews first */}
             {reviews.length > 0 ? (
               reviews.slice(0, 3).map((review) => (
                 <ReviewCard key={review.id} review={review} />
@@ -341,6 +342,19 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             {reviews.length > 3 && (
               <TouchableOpacity style={styles.seeAllButton}>
                 <Text style={styles.seeAllText}>See all {reviews.length} reviews</Text>
+              </TouchableOpacity>
+            )}
+            
+            {/* External reviews link */}
+            {tea.ratingCount > 0 && tea.url && (
+              <TouchableOpacity 
+                style={styles.externalReviewsLink}
+                onPress={() => Linking.openURL(tea.url)}
+              >
+                <ExternalLink size={16} color={theme.text.secondary} />
+                <Text style={styles.externalReviewsText}>
+                  View {tea.ratingCount} reviews on {tea.brandName}
+                </Text>
               </TouchableOpacity>
             )}
           </View>
@@ -693,6 +707,20 @@ const createStyles = (theme) => ({
     ...typography.bodySmall,
     color: theme.accent.primary,
     fontWeight: '500',
+  },
+  externalReviewsLink: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 14,
+    marginTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: theme.border.light,
+  },
+  externalReviewsText: {
+    ...typography.bodySmall,
+    color: theme.text.secondary,
   },
   buttonContainer: {
     position: 'absolute',

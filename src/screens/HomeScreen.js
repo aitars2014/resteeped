@@ -224,6 +224,9 @@ export const HomeScreen = ({ navigation }) => {
               params: { tea } 
             })}
             onViewTea={(tea) => navigation.navigate('TeaDetail', { tea })}
+            onAddTea={() => navigation.navigate('Discover', {
+              screen: 'DiscoveryHome',
+            })}
           />
         )}
 
@@ -438,6 +441,9 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     marginLeft: 12,
+    height: '100%',
+    paddingVertical: 0,
+    textAlignVertical: 'center',
     ...typography.body,
   },
   section: {

@@ -1,0 +1,114 @@
+# Resteeped QA Tracker
+
+*Last updated: 2026-02-04*
+
+## Status Summary
+
+| Status | Count |
+|--------|-------|
+| ✅ Done | 17 |
+| 🔄 In Progress | 0 |
+| ⏳ To Do | 6 |
+| 🚧 Blocked | 0 |
+
+---
+
+## Completed ✅
+
+### Critical Blockers
+- [x] Compare button on Tea Battles does nothing → Added `CompareTeas` to HomeStack
+- [x] Community profiles "navigation property doesn't exist" error → Fixed prop passing
+- [x] Custom tea not showing in collection after adding → Now inserts into `user_teas`
+- [x] Brew activity not recording data → Fixed AsyncStorage persistence
+- [x] Brew history not populating → Same fix as above
+
+### UX Polish
+- [x] Tea type selection dark mode visibility → Added 3px border + bg tint when selected
+- [x] No way to clear search box → Added X button
+- [x] Search persists when clicking collections (Featured Teas, etc.) → Now clears
+- [x] No way to unselect single filter → Tap active filter to toggle off
+- [x] Need better discover sort (brand mixing) → Added `interleaveTeasByBrand()`
+- [x] Shop profile banners + logo scaling → Gradient banner + contain resize
+- [x] Shops review button not working → Wired to WriteCompanyReviewModal
+- [x] Scroll-to-top on Discover page → Floating button after 400px scroll
+- [x] Tea shop counter showing 4 → Updated DEMO_COMPANIES with all 17
+
+### Features
+- [x] Rename "Brew Timer" to "Tea Timer" → Done
+- [x] Push notification headline → "It's tea time!"
+- [x] Auto-mark tea as "tried" after brewing → Updates `user_teas` status
+- [x] Prompt for review after brewing (if not rated) → Added review modal
+
+---
+
+## To Do ⏳
+
+### High Priority
+- [ ] **Search box text alignment** — Text not aligned with search icon on Home tab
+- [ ] **"What should I brew"** — Should use teas from user's collection. If empty, prompt to add or offer recommendations
+- [ ] **Tea reviews display** — Show app reviews first, then link to 3rd party site reviews
+
+### Medium Priority  
+- [ ] **Timer completion sound** — Need better sound effect (Taylor said I can choose)
+- [ ] **Emoji library update** — Find emoji set matching "Aesop of tea" design
+
+### Low Priority / Deferred
+- [ ] **Apple Watch sync** — Requires WatchKit integration (significant native work)
+
+---
+
+## QA Checklist (Production Readiness)
+
+### Core Flows
+- [ ] Sign up → confirm email → profile setup
+- [ ] Browse teas → filter → view detail → add to collection
+- [ ] Add custom tea → photo upload → appears in collection
+- [ ] Timer → completion → mark tried → review prompt
+- [ ] Search → filter → clear → return to browse
+- [ ] Shop profiles → reviews → external links
+
+### Edge Cases
+- [ ] Empty states (no teas, no reviews, new user)
+- [ ] Network errors / offline behavior
+- [ ] Image loading failures
+- [ ] Deep linking
+- [ ] Push notification permissions denied
+
+### Visual/UX
+- [ ] All screens in dark mode
+- [ ] All screens in light mode
+- [ ] Typography hierarchy consistent
+- [ ] Touch targets 44pt minimum
+- [ ] Loading states (skeletons)
+- [ ] Error states with retry
+
+### Performance
+- [ ] Cold start time
+- [ ] List scroll smoothness (60fps)
+- [ ] Image memory management
+- [ ] API response caching
+
+### Platform Specific
+- [ ] iOS notch/Dynamic Island handling
+- [ ] Android back button behavior
+- [ ] Keyboard avoiding views
+- [ ] Status bar styling
+
+---
+
+## How to Report Issues
+
+1. Add issue to appropriate section above
+2. Include: what you expected vs what happened
+3. Note device/OS if platform-specific
+4. Screenshots appreciated
+
+---
+
+## Commits (Recent)
+- `3506dbb` - Update DEMO_COMPANIES to all 17 tea shops
+- `2e4e967` - Allow filter deselect by tapping
+- `57a85b4` - Floating scroll-to-top button
+- `5340b7f` - Interleave teas by brand
+- `10c54de` - Gradient banner + logo scaling
+- `ef6a705` - Shop review button

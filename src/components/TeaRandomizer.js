@@ -19,12 +19,14 @@ import { StarRating } from './StarRating';
 
 const { width, height } = Dimensions.get('window');
 
-export const TeaRandomizer = ({ teas, onBrewTea, onViewTea }) => {
+export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const { collection } = useCollection();
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedTea, setSelectedTea] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
+  const [showEmptyChoice, setShowEmptyChoice] = useState(false);
+  const [useAllTeas, setUseAllTeas] = useState(false);
   
   // Animation values
   const spinValue = useRef(new Animated.Value(0)).current;
@@ -32,9 +34,9 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea }) => {
   const opacityValue = useRef(new Animated.Value(0)).current;
   const shuffleEmojis = useRef(new Animated.Value(0)).current;
   
-  // Get teas to pick from - prefer user's collection, fall back to all teas
-  const getTeaPool = () => {
-    if (collection.length > 0) {
+  // Get teas to pick from - prefer user's collection, or all teas if user chose that
+  const getTeaPool = (forceAll = false) => {
+    if (!forceAll && collection.length > 0) {
       // Map collection items to their full tea data
       return collection
         .map(item => item.tea || teas.find(t => t.id === item.tea_id))
@@ -43,18 +45,12 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea }) => {
     return teas;
   };
   
-  const pickRandomTea = () => {
-    const pool = getTeaPool();
-    if (pool.length === 0) return null;
-    
-    const randomIndex = Math.floor(Math.random() * pool.length);
-    return pool[randomIndex];
-  };
+  const hasCollection = collection.length > 0;
   
-  const startRandomize = () => {
-    setModalVisible(true);
+  const runSpinAnimation = (forceAll = false) => {
     setIsSpinning(true);
     setSelectedTea(null);
+    setShowEmptyChoice(false);
     
     // Reset animations
     spinValue.setValue(0);
@@ -88,7 +84,8 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea }) => {
     
     // After spinning, reveal the tea
     setTimeout(() => {
-      const tea = pickRandomTea();
+      const pool = getTeaPool(forceAll);
+      const tea = pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : null;
       setSelectedTea(tea);
       setIsSpinning(false);
       
@@ -109,10 +106,34 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea }) => {
     }, 1500);
   };
   
+  const startRandomize = () => {
+    setModalVisible(true);
+    
+    // If user has no collection, show choice prompt
+    if (!hasCollection && teas.length > 0) {
+      setShowEmptyChoice(true);
+      setIsSpinning(false);
+      setSelectedTea(null);
+    } else {
+      runSpinAnimation(useAllTeas);
+    }
+  };
+  
+  const handleUseAllTeas = () => {
+    setUseAllTeas(true);
+    runSpinAnimation(true);
+  };
+  
+  const handleGoToAddTea = () => {
+    handleClose();
+    if (onAddTea) onAddTea();
+  };
+  
   const handleClose = () => {
     setModalVisible(false);
     setSelectedTea(null);
     setIsSpinning(false);
+    setShowEmptyChoice(false);
   };
   
   const handleBrewTea = () => {
@@ -174,7 +195,32 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea }) => {
               <X size={24} color={theme.text.secondary} />
             </TouchableOpacity>
             
-            {isSpinning ? (
+            {showEmptyChoice ? (
+              // Empty collection - show choice
+              <View style={styles.emptyChoiceContainer}>
+                <Text style={styles.emptyEmoji}>🍵</Text>
+                <Text style={[styles.emptyChoiceTitle, { color: theme.text.primary }]}>
+                  Your collection is empty
+                </Text>
+                <Text style={[styles.emptyChoiceSubtext, { color: theme.text.secondary }]}>
+                  Add teas to your collection for personalized recommendations, or get a random suggestion from all teas.
+                </Text>
+                <View style={styles.emptyChoiceButtons}>
+                  <Button
+                    title="Add Teas to Collection"
+                    onPress={handleGoToAddTea}
+                    variant="primary"
+                    style={styles.choiceButton}
+                  />
+                  <Button
+                    title="Get a Random Suggestion"
+                    onPress={handleUseAllTeas}
+                    variant="secondary"
+                    style={styles.choiceButton}
+                  />
+                </View>
+              </View>
+            ) : isSpinning ? (
               // Spinning state
               <View style={styles.spinningContainer}>
                 <Animated.View style={[styles.spinningEmoji, { transform: [{ rotate: spinRotation }] }]}>
@@ -465,6 +511,29 @@ const styles = StyleSheet.create({
   emptySubtext: {
     ...typography.body,
     textAlign: 'center',
+  },
+  emptyChoiceContainer: {
+    alignItems: 'center',
+    paddingVertical: 30,
+    paddingHorizontal: 10,
+  },
+  emptyChoiceTitle: {
+    ...typography.headingSmall,
+    marginBottom: 12,
+    textAlign: 'center',
+  },
+  emptyChoiceSubtext: {
+    ...typography.body,
+    textAlign: 'center',
+    marginBottom: 24,
+    lineHeight: 22,
+  },
+  emptyChoiceButtons: {
+    width: '100%',
+    gap: 12,
+  },
+  choiceButton: {
+    width: '100%',
   },
 });
 

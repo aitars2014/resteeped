@@ -18,6 +18,7 @@ import {
 import { Minus, Plus, Coffee, Bell, BellOff, Repeat, ChevronLeft, ChevronRight, NotebookPen, X, Check } from 'lucide-react-native';
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
+import { Audio } from 'expo-av';
 import { typography, spacing } from '../constants';
 import { Button, TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
@@ -39,6 +40,32 @@ const CIRCLE_SIZE = 240;
 const STROKE_WIDTH = 12;
 const RADIUS = (CIRCLE_SIZE - STROKE_WIDTH) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+
+// Play a pleasant completion sound (Tibetan singing bowl)
+const playCompletionSound = async () => {
+  try {
+    // Configure audio mode for playback
+    await Audio.setAudioModeAsync({
+      playsInSilentModeIOS: true,
+      staysActiveInBackground: false,
+    });
+    
+    // Use local Tibetan singing bowl sound
+    const { sound } = await Audio.Sound.createAsync(
+      require('../../assets/sounds/tea-ready.mp3'),
+      { shouldPlay: true, volume: 0.8 }
+    );
+    
+    // Cleanup after playing
+    sound.setOnPlaybackStatusUpdate((status) => {
+      if (status.didJustFinish) {
+        sound.unloadAsync();
+      }
+    });
+  } catch (error) {
+    console.log('Error playing completion sound:', error);
+  }
+};
 
 // Get recommended steep times for multiple infusions
 const getInfusionTimes = (tea, totalInfusions) => {
@@ -239,6 +266,7 @@ export const TimerScreen = ({ route }) => {
             setIsRunning(false);
             setIsComplete(true);
             Vibration.vibrate([500, 200, 500, 200, 500]);
+            playCompletionSound();
             notificationIdRef.current = null;
             timerEndTimeRef.current = null;
             return 0;
