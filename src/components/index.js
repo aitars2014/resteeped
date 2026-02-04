@@ -17,3 +17,4 @@ export { SeasonalHighlights } from './SeasonalHighlights';
 export { TeaPickerModal } from './TeaPickerModal';
 export { TeaRandomizer } from './TeaRandomizer';
 export { BrewingGuide } from './BrewingGuide';
+export { HealthBenefits } from './HealthBenefits';

@@ -1,22 +1,33 @@
 // Resteeped Design System - Themes
 // Light and Dark mode color schemes
+// Editorial aesthetic: warm, sophisticated, magazine-inspired
 
 export const lightTheme = {
   background: {
-    primary: '#F5F1E8',    // Warm cream
-    secondary: '#FAF9F6',  // Off-white
-    tertiary: '#FFFFFF',   // Pure white
+    primary: '#FAF8F5',    // Warm off-white (paper-like)
+    secondary: '#FFFFFF',  // Pure white
+    tertiary: '#F5F1E8',   // Warm cream
+    elevated: '#FFFFFF',   // Elevated surfaces
   },
   text: {
-    primary: '#2C3E50',    // Charcoal
-    secondary: '#7F8C8D',  // Medium gray
-    tertiary: '#95A5A6',   // Light gray
+    primary: '#1A1A1A',    // Near black (better readability)
+    secondary: '#666666',  // Medium gray
+    tertiary: '#999999',   // Light gray
     inverse: '#FFFFFF',
+    muted: '#B3B3B3',      // Very subtle text
   },
   accent: {
     primary: '#2D5016',    // Forest green
     secondary: '#7CB89D',  // Sage green
     tertiary: '#A8D5BA',   // Light sage
+    warm: '#C4956A',       // Warm amber/tea color
+    warmLight: '#E8D4BC',  // Light amber
+  },
+  // Editorial highlight colors
+  editorial: {
+    highlight: '#FFF8E7',  // Warm highlight background
+    pullQuote: '#2D5016',  // Pull quote accent
+    divider: '#E8E4DC',    // Subtle divider
   },
   status: {
     error: '#C0392B',
@@ -58,20 +69,30 @@ export const lightTheme = {
 
 export const darkTheme = {
   background: {
-    primary: '#121212',    // True dark
-    secondary: '#1E1E1E',  // Elevated surfaces
-    tertiary: '#2A2A2A',   // Card backgrounds
+    primary: '#0D0D0D',    // Deep black (OLED friendly)
+    secondary: '#1A1A1A',  // Elevated surfaces
+    tertiary: '#252525',   // Card backgrounds
+    elevated: '#2A2A2A',   // Highest elevation
   },
   text: {
-    primary: '#FFFFFF',    // Pure white for max contrast
-    secondary: '#B0B0B0',  // Lighter gray for better readability
-    tertiary: '#808080',   // Medium gray
-    inverse: '#121212',
+    primary: '#FAFAFA',    // Slightly warm white
+    secondary: '#A0A0A0',  // Medium gray
+    tertiary: '#707070',   // Subtle gray
+    inverse: '#0D0D0D',
+    muted: '#505050',      // Very subtle text
   },
   accent: {
-    primary: '#8FD4B0',    // Brighter sage green for dark mode
-    secondary: '#A8D5BA',  // Light sage
+    primary: '#A8D5BA',    // Softer sage green for dark mode
+    secondary: '#7CB89D',  // Sage
     tertiary: '#5A9A7A',   // Muted green
+    warm: '#D4A574',       // Warm amber/tea (brighter for dark)
+    warmLight: '#8B7355',  // Muted warm
+  },
+  // Editorial highlight colors
+  editorial: {
+    highlight: '#1F1A14',  // Warm dark highlight
+    pullQuote: '#A8D5BA',  // Pull quote accent
+    divider: '#2A2520',    // Warm subtle divider
   },
   status: {
     error: '#FF6B6B',

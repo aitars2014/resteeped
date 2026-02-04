@@ -13,7 +13,7 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2 } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
-import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide } from '../components';
+import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, HealthBenefits } from '../components';
 import { shareTea } from '../utils/sharing';
 import { useAuth, useCollection, useTheme } from '../context';
 import { useReviews, useCompanies, useTeas } from '../hooks';
@@ -232,6 +232,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           
           {/* Expert Brewing Guide */}
           <BrewingGuide tea={tea} />
+          
+          {/* Health Benefits */}
+          <HealthBenefits tea={tea} />
           
           {/* Description */}
           {tea.description && (
