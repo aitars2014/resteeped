@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
+import { haptics } from '../utils/haptics';
 
 export const Button = ({ 
   title, 
@@ -10,9 +11,18 @@ export const Button = ({
   disabled = false,
   icon = null,
   style = {},
+  haptic = true, // Enable haptic feedback by default
 }) => {
   const { theme } = useTheme();
   const isPrimary = variant === 'primary';
+  
+  // Wrap onPress with haptic feedback
+  const handlePress = useCallback(() => {
+    if (haptic && !disabled) {
+      isPrimary ? haptics.medium() : haptics.light();
+    }
+    onPress?.();
+  }, [onPress, haptic, disabled, isPrimary]);
   
   const dynamicStyles = {
     primary: {
@@ -39,9 +49,9 @@ export const Button = ({
         disabled && [styles.disabled, dynamicStyles.disabled],
         style,
       ]}
-      onPress={onPress}
+      onPress={handlePress}
       disabled={disabled}
-      activeOpacity={0.8}
+      activeOpacity={0.85}
     >
       <View style={styles.content}>
         {icon && <View style={styles.icon}>{icon}</View>}

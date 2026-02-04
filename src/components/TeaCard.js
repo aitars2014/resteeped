@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { typography, spacing, getPlaceholderImage, fonts } from '../constants';
 import { useTheme } from '../context';
 import { StarRating } from './StarRating';
 import { TeaTypeBadge } from './TeaTypeBadge';
+import { haptics } from '../utils/haptics';
 
 const { width } = Dimensions.get('window');
 
@@ -29,6 +30,12 @@ export const TeaCard = ({
   const teaName = tea.name;
   const brandName = tea.brandName || tea.brand_name || tea.company?.name || '';
   
+  // Haptic feedback on press
+  const handlePress = useCallback(() => {
+    haptics.light();
+    onPress?.();
+  }, [onPress]);
+  
   // Horizontal compact variant
   if (horizontal) {
     return (
@@ -37,8 +44,8 @@ export const TeaCard = ({
           backgroundColor: theme.background.secondary,
           borderColor: theme.border.light,
         }, style]} 
-        onPress={onPress}
-        activeOpacity={0.8}
+        onPress={handlePress}
+        activeOpacity={0.85}
       >
         <Image 
           source={tea.imageUrl || tea.image_url ? { uri: tea.imageUrl || tea.image_url } : placeholderImage} 
@@ -67,7 +74,7 @@ export const TeaCard = ({
         style={[styles.featuredCard, { 
           backgroundColor: theme.background.secondary,
         }, style]} 
-        onPress={onPress}
+        onPress={handlePress}
         activeOpacity={0.9}
       >
         {/* Large hero image */}
@@ -119,7 +126,7 @@ export const TeaCard = ({
         },
         style
       ]} 
-      onPress={onPress}
+      onPress={handlePress}
       activeOpacity={0.9}
     >
       {/* Image with type badge */}
