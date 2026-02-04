@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -12,7 +12,8 @@ import {
 } from 'react-native';
 import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { Button, Avatar } from '../components';
+import { Button, Avatar, AvatarPicker } from '../components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth, useCollection, useTheme } from '../context';
 import { useBrewHistory } from '../hooks';
 import { exportCollectionToJSON, exportCollectionToCSV } from '../utils/exportCollection';
@@ -23,6 +24,21 @@ export const ProfileScreen = ({ navigation }) => {
   const { collection } = useCollection();
   const { brewSessions, todayBrewCount, weekBrewCount } = useBrewHistory();
   const { theme, isDark, themePreference, setThemePreference } = useTheme();
+  
+  const [avatarPickerVisible, setAvatarPickerVisible] = useState(false);
+  const [avatarStyle, setAvatarStyle] = useState('notionists');
+
+  useEffect(() => {
+    // Load saved avatar style
+    AsyncStorage.getItem('@resteeped:avatar_style').then(style => {
+      if (style) setAvatarStyle(style);
+    });
+  }, []);
+
+  const handleAvatarStyleChange = async (style) => {
+    setAvatarStyle(style);
+    await AsyncStorage.setItem('@resteeped:avatar_style', style);
+  };
   
   const handleSignIn = async () => {
     if (!isConfigured) {
@@ -175,12 +191,18 @@ export const ProfileScreen = ({ navigation }) => {
   const renderLoggedIn = () => (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.profileHeader}>
-        <Avatar 
-          userId={user?.id}
-          name={profile?.display_name || profile?.username}
-          imageUrl={profile?.avatar_url}
-          size={64}
-        />
+        <TouchableOpacity onPress={() => setAvatarPickerVisible(true)}>
+          <Avatar 
+            userId={user?.id}
+            name={profile?.display_name || profile?.username}
+            imageUrl={profile?.avatar_url}
+            size={64}
+            avatarStyle={avatarStyle}
+          />
+          <View style={[styles.editAvatarBadge, { backgroundColor: theme.accent.primary }]}>
+            <Text style={styles.editAvatarText}>✏️</Text>
+          </View>
+        </TouchableOpacity>
         <View style={styles.profileInfo}>
           <Text style={[styles.username, { color: theme.text.primary }]}>
             {profile?.display_name || profile?.username || 'Tea Lover'}
@@ -349,18 +371,29 @@ export const ProfileScreen = ({ navigation }) => {
   );
   
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
-      <View style={styles.header}>
-        <Text style={[styles.title, { color: theme.text.primary }]}>Profile</Text>
-      </View>
-      
-      {user ? renderLoggedIn() : renderLoggedOut()}
-      
-      <View style={[styles.footer, { borderTopColor: theme.border.light }]}>
-        <Text style={[styles.footerText, { color: theme.text.secondary }]}>Resteeped v1.0.0</Text>
-        <Text style={[styles.footerSubtext, { color: theme.text.tertiary }]}>Made with 🍵 for tea lovers</Text>
-      </View>
-    </SafeAreaView>
+    <>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: theme.text.primary }]}>Profile</Text>
+        </View>
+        
+        {user ? renderLoggedIn() : renderLoggedOut()}
+        
+        <View style={[styles.footer, { borderTopColor: theme.border.light }]}>
+          <Text style={[styles.footerText, { color: theme.text.secondary }]}>Resteeped v1.0.0</Text>
+          <Text style={[styles.footerSubtext, { color: theme.text.tertiary }]}>Made with 🍵 for tea lovers</Text>
+        </View>
+      </SafeAreaView>
+
+      <AvatarPicker
+        visible={avatarPickerVisible}
+        onClose={() => setAvatarPickerVisible(false)}
+        onSelect={handleAvatarStyleChange}
+        currentStyle={avatarStyle}
+        userId={user?.id}
+        userName={profile?.display_name || profile?.username || 'Tea Lover'}
+      />
+    </>
   );
 };
 
@@ -431,6 +464,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginRight: spacing.md,
+  },
+  editAvatarBadge: {
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    width: 24,
+    height: 24,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  editAvatarText: {
+    fontSize: 12,
   },
   profileInfo: {
     flex: 1,
