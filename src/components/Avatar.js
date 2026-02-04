@@ -90,7 +90,12 @@ export default function Avatar({
   // Show image if available and not errored
   if (finalImageUrl && !imageError) {
     return (
-      <View style={[containerStyle, style]}>
+      <View 
+        style={[containerStyle, style]}
+        accessible={true}
+        accessibilityRole="image"
+        accessibilityLabel={name ? `${name}'s avatar` : 'User avatar'}
+      >
         <Image
           source={{ uri: finalImageUrl }}
           style={{ width: size, height: size }}
@@ -108,9 +113,12 @@ export default function Avatar({
         { backgroundColor: fallbackColors[0] },
         style
       ]}
+      accessible={true}
+      accessibilityRole="image"
+      accessibilityLabel={name ? `${name}'s avatar, showing initials ${initials}` : 'User avatar'}
     >
       <View style={[styles.initialsContainer, { backgroundColor: fallbackColors[1] }]}>
-        <Text style={[styles.initials, { fontSize, color: '#fff' }]}>
+        <Text style={[styles.initials, { fontSize, color: '#fff' }]} accessibilityElementsHidden>
           {initials}
         </Text>
       </View>

@@ -34,6 +34,11 @@ export const FilterPills = ({ selectedType, onSelectType }) => {
             key={type.id}
             onPress={() => handlePillPress(type.id)}
             activeOpacity={0.7}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={`${type.label} filter${isSelected ? ', selected' : ''}`}
+            accessibilityHint={isSelected && type.id !== 'all' ? 'Double tap to deselect' : 'Double tap to filter by this type'}
+            accessibilityState={{ selected: isSelected }}
           >
             {isSelected && teaColor ? (
               <LinearGradient

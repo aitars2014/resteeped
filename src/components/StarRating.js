@@ -40,6 +40,10 @@ export const StarRating = ({
           onPress={() => handleRate(index + 1)}
           style={styles.starButton}
           activeOpacity={0.7}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel={`Rate ${index + 1} star${index === 0 ? '' : 's'}`}
+          accessibilityHint="Double tap to select this rating"
         >
           {StarComponent}
         </TouchableOpacity>
@@ -49,11 +53,25 @@ export const StarRating = ({
     return StarComponent;
   };
   
+  const accessibilityLabel = onRate 
+    ? `Rating selector, currently ${rating > 0 ? `${rating.toFixed(1)} stars` : 'no rating'}`
+    : rating > 0 
+      ? `Rated ${rating.toFixed(1)} out of ${maxStars} stars` 
+      : 'No rating yet';
+  
   return (
-    <View style={styles.container}>
+    <View 
+      style={styles.container}
+      accessible={!onRate}
+      accessibilityRole={onRate ? undefined : "text"}
+      accessibilityLabel={onRate ? undefined : accessibilityLabel}
+    >
       {Array.from({ length: maxStars }, (_, i) => renderStar(i))}
       {showNumber && rating > 0 && (
-        <Text style={[styles.ratingNumber, { color: theme.text.secondary }]}>
+        <Text 
+          style={[styles.ratingNumber, { color: theme.text.secondary }]}
+          accessibilityElementsHidden
+        >
           {rating.toFixed(1)}
         </Text>
       )}

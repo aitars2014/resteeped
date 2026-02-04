@@ -475,6 +475,10 @@ export const TimerScreen = ({ route }) => {
                 setIsComplete(false);
                 setHasLogged(false);
               }}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Single steep mode"
+              accessibilityState={{ selected: !multiSteepMode }}
             >
               <Text style={[
                 styles.modeButtonText,
@@ -497,6 +501,10 @@ export const TimerScreen = ({ route }) => {
                 setTotalSeconds(times[0] || defaultTimeSeconds);
                 setRemainingSeconds(times[0] || defaultTimeSeconds);
               }}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`Gongfu mode, ${maxInfusions} infusions`}
+              accessibilityState={{ selected: multiSteepMode }}
             >
               <Repeat size={14} color={multiSteepMode ? theme.text.inverse : theme.text.secondary} style={{ marginRight: 4 }} />
               <Text style={[
@@ -626,11 +634,20 @@ export const TimerScreen = ({ route }) => {
               style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
               onPress={() => adjustTime(-15)}
               disabled={isRunning}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Decrease time by 15 seconds"
+              accessibilityState={{ disabled: isRunning }}
             >
               <Minus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
             </TouchableOpacity>
             
-            <View style={styles.adjustTimeContainer}>
+            <View 
+              style={styles.adjustTimeContainer}
+              accessible={true}
+              accessibilityRole="text"
+              accessibilityLabel={`Total steep time: ${formatTime(totalSeconds)}`}
+            >
               <Text style={[styles.adjustTimeText, { color: theme.text.primary }]}>{formatTime(totalSeconds)}</Text>
               <Text style={[styles.adjustTimeLabel, { color: theme.text.secondary }]}>total</Text>
             </View>
@@ -639,6 +656,10 @@ export const TimerScreen = ({ route }) => {
               style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
               onPress={() => adjustTime(15)}
               disabled={isRunning}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Increase time by 15 seconds"
+              accessibilityState={{ disabled: isRunning }}
             >
               <Plus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
             </TouchableOpacity>

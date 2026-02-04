@@ -17,8 +17,14 @@ export const TeaTypeBadge = ({ teaType, size = 'small' }) => {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 0 }}
       style={[styles.badge, isSmall ? styles.small : styles.large]}
+      accessible={true}
+      accessibilityRole="text"
+      accessibilityLabel={`${label} tea`}
     >
-      <Text style={[styles.text, { color: theme.text.inverse }, isSmall ? styles.smallText : styles.largeText]}>
+      <Text 
+        style={[styles.text, { color: theme.text.inverse }, isSmall ? styles.smallText : styles.largeText]}
+        accessibilityElementsHidden
+      >
         {label}
       </Text>
     </LinearGradient>

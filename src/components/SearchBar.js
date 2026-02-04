@@ -36,9 +36,19 @@ export const SearchBar = ({
         onBlur={onBlur}
         onSubmitEditing={onSubmitEditing}
         returnKeyType="search"
+        accessible={true}
+        accessibilityLabel="Search"
+        accessibilityHint="Enter search terms to find teas"
       />
       {onFilterPress && (
-        <TouchableOpacity onPress={onFilterPress} style={styles.filterButton}>
+        <TouchableOpacity 
+          onPress={onFilterPress} 
+          style={styles.filterButton}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Filter options"
+          accessibilityHint="Double tap to open filter menu"
+        >
           <SlidersHorizontal size={20} color={theme.text.secondary} />
         </TouchableOpacity>
       )}

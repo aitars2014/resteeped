@@ -12,6 +12,8 @@ export const Button = ({
   icon = null,
   style = {},
   haptic = true, // Enable haptic feedback by default
+  accessibilityLabel,
+  accessibilityHint,
 }) => {
   const { theme } = useTheme();
   const isPrimary = variant === 'primary';
@@ -52,6 +54,11 @@ export const Button = ({
       onPress={handlePress}
       disabled={disabled}
       activeOpacity={0.85}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel || title}
+      accessibilityHint={accessibilityHint}
+      accessibilityState={{ disabled }}
     >
       <View style={styles.content}>
         {icon && <View style={styles.icon}>{icon}</View>}

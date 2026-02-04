@@ -17,15 +17,22 @@ export const ReviewCard = ({ review }) => {
     });
   };
 
+  const username = review.profile?.display_name || review.profile?.username || 'Tea Lover';
+  
   return (
-    <View style={[styles.card, { backgroundColor: theme.background.secondary }]}>
+    <View 
+      style={[styles.card, { backgroundColor: theme.background.secondary }]}
+      accessible={true}
+      accessibilityRole="text"
+      accessibilityLabel={`Review by ${username}, ${review.rating} stars${review.review_text ? `: ${review.review_text}` : ''}`}
+    >
       <View style={styles.header}>
         <View style={[styles.avatar, { backgroundColor: theme.accent.secondary }]}>
           <User size={16} color={theme.text.inverse} />
         </View>
         <View style={styles.headerText}>
           <Text style={[styles.username, { color: theme.text.primary }]}>
-            {review.profile?.display_name || review.profile?.username || 'Tea Lover'}
+            {username}
           </Text>
           <Text style={[styles.date, { color: theme.text.secondary }]}>{formatDate(review.created_at)}</Text>
         </View>

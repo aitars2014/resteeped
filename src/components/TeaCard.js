@@ -46,6 +46,10 @@ export const TeaCard = ({
         }, style]} 
         onPress={handlePress}
         activeOpacity={0.85}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={`${teaName} by ${brandName}. ${rating > 0 ? `Rated ${rating.toFixed(1)} stars` : 'No ratings yet'}`}
+        accessibilityHint="Double tap to view tea details"
       >
         <Image 
           source={tea.imageUrl || tea.image_url ? { uri: tea.imageUrl || tea.image_url } : placeholderImage} 
@@ -76,6 +80,10 @@ export const TeaCard = ({
         }, style]} 
         onPress={handlePress}
         activeOpacity={0.9}
+        accessible={true}
+        accessibilityRole="button"
+        accessibilityLabel={`Featured: ${teaName} by ${brandName}. ${rating > 0 ? `Rated ${rating.toFixed(1)} stars` : 'No ratings yet'}`}
+        accessibilityHint="Double tap to view tea details"
       >
         {/* Large hero image */}
         <View style={styles.featuredImageContainer}>
@@ -128,6 +136,10 @@ export const TeaCard = ({
       ]} 
       onPress={handlePress}
       activeOpacity={0.9}
+      accessible={true}
+      accessibilityRole="button"
+      accessibilityLabel={`${teaName} by ${brandName}. ${rating > 0 ? `Rated ${rating.toFixed(1)} stars` : 'No ratings yet'}`}
+      accessibilityHint="Double tap to view tea details"
     >
       {/* Image with type badge */}
       <View style={[styles.imageContainer, compact && styles.imageContainerCompact]}>
