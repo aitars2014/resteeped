@@ -87,13 +87,19 @@ export default function TeawareDetailScreen({ route, navigation }) {
             source={{ uri: teaware.image_url }}
             style={styles.image}
             resizeMode="cover"
+            accessible={true}
+            accessibilityRole="image"
+            accessibilityLabel={`Photo of ${teaware.name}`}
           />
         ) : (
           <LinearGradient
             colors={[getMaterialColor(teaware.material), theme.background.secondary]}
             style={styles.imagePlaceholder}
+            accessible={true}
+            accessibilityRole="image"
+            accessibilityLabel={`${teaware.name} placeholder image`}
           >
-            <Text style={styles.placeholderEmoji}>🫖</Text>
+            <Text style={styles.placeholderEmoji} accessibilityElementsHidden={true}>🫖</Text>
           </LinearGradient>
         )}
         
@@ -102,6 +108,9 @@ export default function TeawareDetailScreen({ route, navigation }) {
           <TouchableOpacity 
             style={[styles.backButton, { backgroundColor: theme.background.primary + 'DD' }]}
             onPress={handleBack}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Go back"
           >
             <ChevronLeft size={24} color={theme.text.primary} />
           </TouchableOpacity>
@@ -109,7 +118,11 @@ export default function TeawareDetailScreen({ route, navigation }) {
 
         {/* Price Badge */}
         {teaware.price_usd && (
-          <View style={[styles.priceBadge, { backgroundColor: theme.accent.primary }]}>
+          <View 
+            style={[styles.priceBadge, { backgroundColor: theme.accent.primary }]}
+            accessible={true}
+            accessibilityLabel={`Price: $${teaware.price_usd.toFixed(2)}`}
+          >
             <Text style={styles.priceText}>${teaware.price_usd.toFixed(2)}</Text>
           </View>
         )}
@@ -139,7 +152,7 @@ export default function TeawareDetailScreen({ route, navigation }) {
         </View>
 
         {/* Name */}
-        <Text style={[styles.name, { color: theme.text.primary }]}>
+        <Text style={[styles.name, { color: theme.text.primary }]} accessibilityRole="header">
           {teaware.name}
         </Text>
 
@@ -158,10 +171,14 @@ export default function TeawareDetailScreen({ route, navigation }) {
         )}
 
         {/* Specs */}
-        <View style={styles.specs}>
+        <View style={styles.specs} accessibilityRole="list" accessibilityLabel="Specifications">
           {teaware.capacity_ml && (
-            <View style={[styles.specItem, { backgroundColor: theme.background.secondary }]}>
-              <Droplets size={20} color={theme.accent.primary} />
+            <View 
+              style={[styles.specItem, { backgroundColor: theme.background.secondary }]}
+              accessible={true}
+              accessibilityLabel={`Capacity: ${teaware.capacity_ml} milliliters`}
+            >
+              <Droplets size={20} color={theme.accent.primary} accessibilityElementsHidden={true} />
               <Text style={[styles.specValue, { color: theme.text.primary }]}>
                 {teaware.capacity_ml}ml
               </Text>
@@ -172,8 +189,12 @@ export default function TeawareDetailScreen({ route, navigation }) {
           )}
           
           {teaware.dimensions_cm && (
-            <View style={[styles.specItem, { backgroundColor: theme.background.secondary }]}>
-              <Ruler size={20} color={theme.accent.primary} />
+            <View 
+              style={[styles.specItem, { backgroundColor: theme.background.secondary }]}
+              accessible={true}
+              accessibilityLabel={`Dimensions: ${teaware.dimensions_cm}`}
+            >
+              <Ruler size={20} color={theme.accent.primary} accessibilityElementsHidden={true} />
               <Text style={[styles.specValue, { color: theme.text.primary }]}>
                 {teaware.dimensions_cm}
               </Text>
@@ -242,9 +263,13 @@ export default function TeawareDetailScreen({ route, navigation }) {
         )}
 
         {/* Stock Status */}
-        <Text style={[styles.stockStatus, { 
-          color: teaware.in_stock ? theme.status.success : theme.text.tertiary 
-        }]}>
+        <Text 
+          style={[styles.stockStatus, { 
+            color: teaware.in_stock ? theme.status.success : theme.text.tertiary 
+          }]}
+          accessible={true}
+          accessibilityLabel={teaware.in_stock ? 'In Stock' : 'Out of Stock'}
+        >
           {teaware.in_stock ? '● In Stock' : '○ Out of Stock'}
         </Text>
       </ScrollView>

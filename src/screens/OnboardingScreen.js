@@ -115,7 +115,11 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
     const isFirstSlide = index === 0;
     
     return (
-      <View style={styles.slide}>
+      <View 
+        style={styles.slide}
+        accessible={true}
+        accessibilityLabel={`Slide ${index + 1} of ${ONBOARDING_SLIDES.length}: ${item.title}. ${item.subtitle}. ${item.description}`}
+      >
         {isFirstSlide ? (
           <Image 
             source={isDark 
@@ -124,18 +128,22 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
             } 
             style={styles.welcomeLogo}
             resizeMode="contain"
+            accessible={true}
+            accessibilityRole="image"
+            accessibilityLabel="Resteeped logo"
           />
         ) : (
           <LinearGradient
             colors={item.gradientColors}
             style={styles.iconContainer}
+            accessibilityElementsHidden={true}
           >
             <Icon size={64} color={item.iconColor} strokeWidth={1.5} />
           </LinearGradient>
         )}
         
         <View style={styles.textContainer}>
-          <Text style={[styles.title, { color: theme.text.primary }]}>{item.title}</Text>
+          <Text style={[styles.title, { color: theme.text.primary }]} accessibilityRole="header">{item.title}</Text>
           <Text style={[styles.subtitle, { color: theme.accent.primary }]}>{item.subtitle}</Text>
           <Text style={[styles.description, { color: theme.text.secondary }]}>{item.description}</Text>
         </View>
@@ -145,7 +153,12 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
 
   const renderPagination = () => {
     return (
-      <View style={styles.pagination}>
+      <View 
+        style={styles.pagination}
+        accessible={true}
+        accessibilityRole="tablist"
+        accessibilityLabel={`Page ${currentIndex + 1} of ${ONBOARDING_SLIDES.length}`}
+      >
         {ONBOARDING_SLIDES.map((_, index) => {
           const inputRange = [
             (index - 1) * width,
@@ -189,7 +202,14 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
       {/* Skip button */}
       {!isLastSlide && (
-        <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
+        <TouchableOpacity 
+          style={styles.skipButton} 
+          onPress={handleSkip}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Skip introduction"
+          accessibilityHint="Skip to the main app"
+        >
           <Text style={[styles.skipText, { color: theme.text.secondary }]}>Skip</Text>
         </TouchableOpacity>
       )}

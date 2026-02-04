@@ -194,20 +194,44 @@ export default function AddTeaScreen({ navigation }) {
           {/* Image Picker */}
           <View style={styles.imageSection}>
             {image ? (
-              <TouchableOpacity onPress={pickImage} style={styles.imageContainer}>
-                <Image source={{ uri: image.uri }} style={styles.image} />
-                <View style={styles.changeImageOverlay}>
+              <TouchableOpacity 
+                onPress={pickImage} 
+                style={styles.imageContainer}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel="Tea photo selected, tap to change"
+              >
+                <Image 
+                  source={{ uri: image.uri }} 
+                  style={styles.image}
+                  accessible={true}
+                  accessibilityRole="image"
+                  accessibilityLabel="Selected tea photo"
+                />
+                <View style={styles.changeImageOverlay} accessibilityElementsHidden={true}>
                   <Ionicons name="camera" size={24} color="#fff" />
                   <Text style={styles.changeImageText}>Change</Text>
                 </View>
               </TouchableOpacity>
             ) : (
               <View style={styles.imagePlaceholder}>
-                <TouchableOpacity style={styles.imageButton} onPress={pickImage}>
+                <TouchableOpacity 
+                  style={styles.imageButton} 
+                  onPress={pickImage}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Choose photo from library"
+                >
                   <Ionicons name="images-outline" size={28} color={theme.text.tertiary} />
                   <Text style={styles.imageButtonText}>Choose Photo</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.imageButton} onPress={takePhoto}>
+                <TouchableOpacity 
+                  style={styles.imageButton} 
+                  onPress={takePhoto}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Take a photo with camera"
+                >
                   <Ionicons name="camera-outline" size={28} color={theme.text.tertiary} />
                   <Text style={styles.imageButtonText}>Take Photo</Text>
                 </TouchableOpacity>
@@ -217,32 +241,38 @@ export default function AddTeaScreen({ navigation }) {
 
           {/* Tea Name */}
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Tea Name *</Text>
+            <Text style={styles.label} nativeID="teaNameLabel">Tea Name *</Text>
             <TextInput
               style={styles.input}
               value={name}
               onChangeText={setName}
               placeholder="e.g., Dragon Well Spring 2024"
               placeholderTextColor={theme.text.tertiary}
+              accessible={true}
+              accessibilityLabel="Tea name, required"
+              accessibilityLabelledBy="teaNameLabel"
             />
           </View>
 
           {/* Brand Name */}
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Brand / Vendor</Text>
+            <Text style={styles.label} nativeID="brandNameLabel">Brand / Vendor</Text>
             <TextInput
               style={styles.input}
               value={brandName}
               onChangeText={setBrandName}
               placeholder="e.g., Yunnan Sourcing"
               placeholderTextColor={theme.text.tertiary}
+              accessible={true}
+              accessibilityLabel="Brand or vendor name"
+              accessibilityLabelledBy="brandNameLabel"
             />
           </View>
 
           {/* Tea Type */}
           <View style={styles.inputGroup}>
             <Text style={styles.label}>Tea Type *</Text>
-            <View style={styles.typeGrid}>
+            <View style={styles.typeGrid} accessibilityRole="radiogroup" accessibilityLabel="Select tea type">
               {TEA_TYPES.map((type) => (
                 <TouchableOpacity
                   key={type.value}
@@ -258,8 +288,12 @@ export default function AddTeaScreen({ navigation }) {
                     haptics.selection();
                     setTeaType(type.value);
                   }}
+                  accessible={true}
+                  accessibilityRole="radio"
+                  accessibilityLabel={type.label}
+                  accessibilityState={{ selected: teaType === type.value }}
                 >
-                  <View style={[styles.typeColor, { backgroundColor: type.color }]} />
+                  <View style={[styles.typeColor, { backgroundColor: type.color }]} accessibilityElementsHidden={true} />
                   <Text style={[
                     styles.typeLabel,
                     teaType === type.value && styles.typeLabelActive
@@ -273,7 +307,7 @@ export default function AddTeaScreen({ navigation }) {
 
           {/* Description */}
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Description</Text>
+            <Text style={styles.label} nativeID="descriptionLabel">Description</Text>
             <TextInput
               style={[styles.input, styles.textArea]}
               value={description}
@@ -283,24 +317,30 @@ export default function AddTeaScreen({ navigation }) {
               multiline
               numberOfLines={4}
               textAlignVertical="top"
+              accessible={true}
+              accessibilityLabel="Description"
+              accessibilityLabelledBy="descriptionLabel"
             />
           </View>
 
           {/* Purchase Location */}
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Where did you get it?</Text>
+            <Text style={styles.label} nativeID="purchaseLocationLabel">Where did you get it?</Text>
             <TextInput
               style={styles.input}
               value={purchaseLocation}
               onChangeText={setPurchaseLocation}
               placeholder="e.g., Local tea shop, Online"
               placeholderTextColor={theme.text.tertiary}
+              accessible={true}
+              accessibilityLabel="Purchase location"
+              accessibilityLabelledBy="purchaseLocationLabel"
             />
           </View>
 
           {/* Personal Notes */}
           <View style={styles.inputGroup}>
-            <Text style={styles.label}>Personal Notes</Text>
+            <Text style={styles.label} nativeID="personalNotesLabel">Personal Notes</Text>
             <TextInput
               style={[styles.input, styles.textArea]}
               value={notes}
@@ -310,6 +350,9 @@ export default function AddTeaScreen({ navigation }) {
               multiline
               numberOfLines={3}
               textAlignVertical="top"
+              accessible={true}
+              accessibilityLabel="Personal notes"
+              accessibilityLabelledBy="personalNotesLabel"
             />
           </View>
 

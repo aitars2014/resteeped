@@ -134,10 +134,16 @@ export default function UserProfileScreen({ route, navigation }) {
     <SafeAreaView style={styles.container} edges={['top']}>
       {/* Header */}
       <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton} onPress={handleBack}>
+        <TouchableOpacity 
+          style={styles.backButton} 
+          onPress={handleBack}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Go back"
+        >
           <ChevronLeft size={24} color={theme.text.primary} />
         </TouchableOpacity>
-        <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Profile</Text>
+        <Text style={[styles.headerTitle, { color: theme.text.primary }]} accessibilityRole="header">Profile</Text>
         <View style={{ width: 44 }} />
       </View>
 
@@ -147,7 +153,7 @@ export default function UserProfileScreen({ route, navigation }) {
         showsVerticalScrollIndicator={false}
       >
         {/* Profile Header */}
-        <View style={styles.profileHeader}>
+        <View style={styles.profileHeader} accessible={true} accessibilityLabel={`${userData.name}'s profile, joined ${formatDate(userData.joinDate)}`}>
           <Avatar 
             userId={userId} 
             name={userData.name} 
@@ -158,7 +164,7 @@ export default function UserProfileScreen({ route, navigation }) {
             {userData.name}
           </Text>
           <View style={styles.joinDate}>
-            <Calendar size={14} color={theme.text.tertiary} />
+            <Calendar size={14} color={theme.text.tertiary} accessibilityElementsHidden={true} />
             <Text style={[styles.joinDateText, { color: theme.text.tertiary }]}>
               Joined {formatDate(userData.joinDate)}
             </Text>
@@ -171,25 +177,29 @@ export default function UserProfileScreen({ route, navigation }) {
         </View>
 
         {/* Stats */}
-        <View style={[styles.statsContainer, { backgroundColor: theme.background.secondary }]}>
+        <View 
+          style={[styles.statsContainer, { backgroundColor: theme.background.secondary }]}
+          accessible={true}
+          accessibilityLabel={`Statistics: ${userData.stats.teasTried} teas tried, ${userData.stats.reviews} reviews, ${userData.stats.collections} lists`}
+        >
           <View style={styles.statItem}>
-            <Coffee size={20} color={theme.accent.primary} />
+            <Coffee size={20} color={theme.accent.primary} accessibilityElementsHidden={true} />
             <Text style={[styles.statNumber, { color: theme.text.primary }]}>
               {userData.stats.teasTried}
             </Text>
             <Text style={[styles.statLabel, { color: theme.text.tertiary }]}>Teas Tried</Text>
           </View>
-          <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
+          <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} accessibilityElementsHidden={true} />
           <View style={styles.statItem}>
-            <MessageSquare size={20} color={theme.accent.primary} />
+            <MessageSquare size={20} color={theme.accent.primary} accessibilityElementsHidden={true} />
             <Text style={[styles.statNumber, { color: theme.text.primary }]}>
               {userData.stats.reviews}
             </Text>
             <Text style={[styles.statLabel, { color: theme.text.tertiary }]}>Reviews</Text>
           </View>
-          <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
+          <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} accessibilityElementsHidden={true} />
           <View style={styles.statItem}>
-            <Bookmark size={20} color={theme.accent.primary} />
+            <Bookmark size={20} color={theme.accent.primary} accessibilityElementsHidden={true} />
             <Text style={[styles.statNumber, { color: theme.text.primary }]}>
               {userData.stats.collections}
             </Text>
@@ -199,10 +209,14 @@ export default function UserProfileScreen({ route, navigation }) {
 
         {/* Favorite Tea Types */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>
+          <Text style={[styles.sectionTitle, { color: theme.text.primary }]} accessibilityRole="header">
             Favorite Types
           </Text>
-          <View style={styles.teaTypes}>
+          <View 
+            style={styles.teaTypes}
+            accessible={true}
+            accessibilityLabel={`Favorite tea types: ${userData.favoriteTeas.map(t => t.charAt(0).toUpperCase() + t.slice(1)).join(', ')}`}
+          >
             {userData.favoriteTeas.map((type, idx) => (
               <View 
                 key={idx}
@@ -219,13 +233,15 @@ export default function UserProfileScreen({ route, navigation }) {
         {/* Recent Reviews */}
         {reviews.length > 0 && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>
+            <Text style={[styles.sectionTitle, { color: theme.text.primary }]} accessibilityRole="header">
               Recent Reviews
             </Text>
             {reviews.map((review) => (
               <View 
                 key={review.id}
                 style={[styles.reviewCard, { backgroundColor: theme.background.secondary }]}
+                accessible={true}
+                accessibilityLabel={`Review for ${review.teaName}, ${review.rating} stars: ${review.text}`}
               >
                 <View style={styles.reviewHeader}>
                   <Text style={[styles.reviewTeaName, { color: theme.text.primary }]}>
