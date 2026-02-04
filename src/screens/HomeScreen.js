@@ -576,6 +576,33 @@ const styles = StyleSheet.create({
     ...typography.caption,
     marginTop: 6,
   },
+  communityCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: spacing.screenHorizontal,
+    padding: spacing.cardPadding,
+    borderRadius: spacing.cardBorderRadius,
+    borderWidth: 1,
+  },
+  communityIcon: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: spacing.md,
+  },
+  communityContent: {
+    flex: 1,
+  },
+  communityTitle: {
+    ...typography.body,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  communitySubtitle: {
+    ...typography.caption,
+  },
 });
 
 export default HomeScreen;
