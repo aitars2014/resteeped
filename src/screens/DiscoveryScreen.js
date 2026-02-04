@@ -423,4 +423,23 @@ const styles = StyleSheet.create({
     ...typography.body,
     textAlign: 'center',
   },
+  scrollToTopButton: {
+    position: 'absolute',
+    bottom: 100,
+    right: spacing.screenHorizontal,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  scrollToTopTouchable: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
