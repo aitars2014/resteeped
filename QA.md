@@ -6,9 +6,9 @@
 
 | Status | Count |
 |--------|-------|
-| ✅ Done | 17 |
+| ✅ Done | 21 |
 | 🔄 In Progress | 0 |
-| ⏳ To Do | 6 |
+| ⏳ To Do | 2 |
 | 🚧 Blocked | 0 |
 
 ---
@@ -32,6 +32,10 @@
 - [x] Shops review button not working → Wired to WriteCompanyReviewModal
 - [x] Scroll-to-top on Discover page → Floating button after 400px scroll
 - [x] Tea shop counter showing 4 → Updated DEMO_COMPANIES with all 17
+- [x] Search box text alignment → Added `height: 100%`, `textAlignVertical: 'center'`
+- [x] "What should I brew" → Now prompts when collection empty: add teas OR get random suggestion
+- [x] Tea reviews display → App reviews first, then "View X reviews on [Brand]" link
+- [x] Timer completion sound → Tibetan singing bowl via expo-av
 
 ### Features
 - [x] Rename "Brew Timer" to "Tea Timer" → Done
@@ -43,17 +47,11 @@
 
 ## To Do ⏳
 
-### High Priority
-- [ ] **Search box text alignment** — Text not aligned with search icon on Home tab
-- [ ] **"What should I brew"** — Should use teas from user's collection. If empty, prompt to add or offer recommendations
-- [ ] **Tea reviews display** — Show app reviews first, then link to 3rd party site reviews
-
-### Medium Priority  
-- [ ] **Timer completion sound** — Need better sound effect (Taylor said I can choose)
-- [ ] **Emoji library update** — Find emoji set matching "Aesop of tea" design
+### Medium Priority
+- [ ] **Emoji library update** — Consider replacing emojis with custom icons for premium aesthetic, or use a consistent emoji set (Twemoji/Noto)
 
 ### Low Priority / Deferred
-- [ ] **Apple Watch sync** — Requires WatchKit integration (significant native work)
+- [ ] **Apple Watch sync** — Requires WatchKit integration (significant native work, ~2-3 days)
 
 ---
 
