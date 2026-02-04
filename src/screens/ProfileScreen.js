@@ -191,7 +191,13 @@ export const ProfileScreen = ({ navigation }) => {
   const renderLoggedIn = () => (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.profileHeader}>
-        <TouchableOpacity onPress={() => setAvatarPickerVisible(true)}>
+        <TouchableOpacity 
+          onPress={() => setAvatarPickerVisible(true)}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Change avatar"
+          accessibilityHint="Double tap to choose a new avatar style"
+        >
           <Avatar 
             userId={user?.id}
             name={profile?.display_name || profile?.username}
@@ -200,7 +206,7 @@ export const ProfileScreen = ({ navigation }) => {
             avatarStyle={avatarStyle}
           />
           <View style={[styles.editAvatarBadge, { backgroundColor: theme.accent.primary }]}>
-            <Text style={styles.editAvatarText}>✏️</Text>
+            <Text style={styles.editAvatarText} accessibilityElementsHidden>✏️</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.profileInfo}>
@@ -273,6 +279,10 @@ export const ProfileScreen = ({ navigation }) => {
         <TouchableOpacity 
           style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
           onPress={() => navigation.navigate('BrewHistory')}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Brew History"
+          accessibilityHint="View your brew history"
         >
           <Coffee size={20} color={theme.accent.primary} />
           <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Brew History</Text>
@@ -282,6 +292,10 @@ export const ProfileScreen = ({ navigation }) => {
         <TouchableOpacity 
           style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
           onPress={() => navigation.navigate('CompareTeas', { initialTeas: [] })}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Compare Teas"
+          accessibilityHint="Compare different teas side by side"
         >
           <GitCompare size={20} color={theme.accent.primary} />
           <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Compare Teas</Text>
@@ -291,6 +305,10 @@ export const ProfileScreen = ({ navigation }) => {
         <TouchableOpacity 
           style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
           onPress={() => navigation.navigate('Teaware')}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="My Teaware"
+          accessibilityHint="Browse your teaware collection"
         >
           <Package size={20} color={theme.accent.primary} />
           <Text style={[styles.menuItemText, { color: theme.text.primary }]}>My Teaware</Text>
@@ -301,6 +319,10 @@ export const ProfileScreen = ({ navigation }) => {
           <TouchableOpacity 
             style={[styles.menuItem, styles.menuItemLast]}
             onPress={handleExport}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Export Collection"
+            accessibilityHint="Export your tea collection as a file"
           >
             <Download size={20} color={theme.accent.primary} />
             <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Export Collection</Text>
@@ -314,7 +336,13 @@ export const ProfileScreen = ({ navigation }) => {
         backgroundColor: theme.background.secondary,
         borderColor: theme.border.medium,
       }]}>
-        <View style={[styles.menuItem, { borderBottomColor: theme.border.light }]}>
+        <View 
+          style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
+          accessible={true}
+          accessibilityRole="switch"
+          accessibilityLabel="Dark Mode"
+          accessibilityState={{ checked: isDark }}
+        >
           {isDark ? (
             <Moon size={20} color={theme.accent.primary} />
           ) : (
@@ -326,6 +354,7 @@ export const ProfileScreen = ({ navigation }) => {
             onValueChange={toggleDarkMode}
             trackColor={{ false: theme.border.medium, true: theme.accent.primary }}
             thumbColor={theme.text.inverse}
+            accessibilityLabel="Toggle dark mode"
           />
         </View>
         
