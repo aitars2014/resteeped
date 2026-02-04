@@ -94,6 +94,35 @@
 
 ---
 
+## TARS QA Findings (2026-02-04)
+
+### Bugs Found & Fixed
+- [x] `CompanyProfileScreen`: "See All" teas navigation broken → Was navigating to non-existent 'Discovery' screen
+
+### Accessibility Issues (High Priority for Production)
+- [ ] **Very few accessibility labels** — Only 2 accessibility attributes in entire codebase
+- [ ] Add `accessibilityLabel` to all interactive elements
+- [ ] Add `accessibilityRole` to buttons, links, images
+- [ ] Add `accessibilityHint` for complex interactions
+
+### Code Quality Notes
+- ✅ Good error handling in contexts
+- ✅ Proper loading states on most screens
+- ✅ Skeleton loaders implemented
+- ✅ Image fallbacks/error handling in place
+- ✅ SafeAreaView usage throughout
+- ✅ No hardcoded HTTP/localhost URLs
+- ✅ No TODO/FIXME comments left
+
+### Recommended Before Production
+1. **Accessibility audit** — Critical for App Store compliance
+2. **Error boundaries** — Catch rendering errors gracefully
+3. **Analytics integration** — Track user flows
+4. **Crash reporting** — Sentry or similar
+5. **Performance profiling** — Check for unnecessary re-renders
+
+---
+
 ## How to Report Issues
 
 1. Add issue to appropriate section above

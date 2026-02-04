@@ -339,7 +339,10 @@ const CompanyProfileScreen = ({ route, navigation }) => {
             <View style={styles.sectionHeader}>
               <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Top Rated Teas</Text>
               <TouchableOpacity
-                onPress={() => navigation.navigate('Discovery', { companyId: company.id })}
+                onPress={() => navigation.navigate('Discover', { 
+                  screen: 'DiscoveryHome', 
+                  params: { initialCompanyFilter: company.id } 
+                })}
               >
                 <Text style={[styles.seeAllText, { color: theme.accent.primary }]}>See All</Text>
               </TouchableOpacity>
