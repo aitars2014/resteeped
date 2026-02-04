@@ -1,0 +1,66 @@
+{
+  "scrapedAt": "2026-02-04T02:06:56.360Z",
+  "sources": [
+    {
+      "name": "Crimson Lotus Tea",
+      "url": "https://crimsonlotustea.com/collections/tea-wares",
+      "status": "success",
+      "productCount": 20,
+      "categories": [
+        "tea pets",
+        "cups",
+        "teapots",
+        "gaiwans"
+      ],
+      "materials": [
+        "Jianshui clay",
+        "Huaning clay (glazed)",
+        "Jianzhan clay (glazed)"
+      ],
+      "priceRange": {
+        "min": 2.99,
+        "max": 224.99,
+        "currency": "USD"
+      }
+    },
+    {
+      "name": "Teasenz",
+      "url": "https://www.teasenz.com/teaware",
+      "status": "partial",
+      "note": "Individual products scraped (Magento store, no JSON API)",
+      "productCount": 9,
+      "categories": [
+        "teapots",
+        "gaiwans",
+        "tea sets",
+        "tea pets",
+        "accessories",
+        "cups"
+      ],
+      "materials": [
+        "Zi Ni (purple) Yixing clay",
+        "porcelain",
+        "ceramic",
+        "borosilicate glass, wood",
+        "borosilicate glass",
+        "Duan Ni Yixing clay",
+        "steel, copper, rosewood",
+        "borosilicate glass, stainless steel",
+        "ceramic (Ru kiln)"
+      ]
+    },
+    {
+      "name": "Mei Leaf",
+      "url": "https://meileaf.com/teawares/",
+      "status": "failed",
+      "error": "Web server down (HTTP 521)",
+      "productCount": 0
+    }
+  ],
+  "totalProducts": 29,
+  "files": [
+    "crimson-lotus-teaware.json",
+    "teasenz-teaware.json",
+    "meileaf-teaware.json"
+  ]
+}

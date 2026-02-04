@@ -198,7 +198,7 @@ INSERT INTO companies (
   'Chicago', 'IL', 'USA',
   2015,
   ARRAY['Seasonal', 'Single Origin', 'Chinese', 'Japanese'],
-  ARRAY[],
+  ARRAY[]::TEXT[],
   true,
   'premium',
   'spiritteaco'
@@ -220,7 +220,7 @@ INSERT INTO companies (
   'San Francisco', 'CA', 'USA',
   2012,
   ARRAY['Chinese', 'Taiwanese', 'Oolong', 'Pu-erh'],
-  ARRAY[],
+  ARRAY[]::TEXT[],
   true,
   'premium',
   'songteaandceramics'

@@ -1,0 +1,14 @@
+{
+  "source": "meileaf.com",
+  "status": "unavailable",
+  "error": "Web server down (HTTP 521) - Cloudflare reports host not responding",
+  "attemptedAt": "2026-02-04T02:06:42.325Z",
+  "expectedCategories": [
+    "gaiwans",
+    "teapots",
+    "cups",
+    "accessories"
+  ],
+  "note": "Mei Leaf is a UK-based premium tea and teaware vendor. Site was unavailable during scrape attempt. Retry recommended.",
+  "products": []
+}
