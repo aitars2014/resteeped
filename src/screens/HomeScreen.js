@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { TeaCard, TeaOfTheDay, SeasonalHighlights } from '../components';
+import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer } from '../components';
 import { useTeas, useCompanies, useRecommendations } from '../hooks';
 import { useTheme } from '../context';
 
@@ -205,6 +205,18 @@ export const HomeScreen = ({ navigation }) => {
               onPress={(tea) => navigation.navigate('TeaDetail', { tea })}
             />
           </View>
+        )}
+
+        {/* Tea Randomizer - "What should I brew?" */}
+        {teas.length > 0 && (
+          <TeaRandomizer
+            teas={teas}
+            onBrewTea={(tea) => navigation.navigate('Timer', { 
+              screen: 'TimerHome',
+              params: { tea } 
+            })}
+            onViewTea={(tea) => navigation.navigate('TeaDetail', { tea })}
+          />
         )}
 
         {/* Seasonal Highlights */}

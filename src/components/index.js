@@ -15,3 +15,4 @@ export { FlavorRadar } from './FlavorRadar';
 export { TeaOfTheDay } from './TeaOfTheDay';
 export { SeasonalHighlights } from './SeasonalHighlights';
 export { TeaPickerModal } from './TeaPickerModal';
+export { TeaRandomizer } from './TeaRandomizer';
