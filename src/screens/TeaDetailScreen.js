@@ -154,6 +154,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             source={tea.imageUrl ? { uri: tea.imageUrl } : getPlaceholderImage(tea.teaType)} 
             style={styles.heroImage}
             resizeMode="cover"
+            accessible={true}
+            accessibilityRole="image"
+            accessibilityLabel={`Photo of ${tea.name}`}
           />
           <LinearGradient
             colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.4)']}
@@ -163,6 +166,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <TouchableOpacity 
             style={styles.backButton}
             onPress={() => navigation.goBack()}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Go back"
           >
             <ChevronLeft size={24} color={theme.text.primary} />
           </TouchableOpacity>
@@ -170,6 +176,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <TouchableOpacity 
             style={styles.shareButton}
             onPress={() => shareTea(tea)}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Share this tea"
           >
             <Share2 size={20} color={theme.text.primary} />
           </TouchableOpacity>
@@ -183,10 +192,20 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         
         {/* Content */}
         <View style={styles.content}>
-          <Text style={styles.teaName}>{tea.name}</Text>
+          <Text 
+            style={styles.teaName}
+            accessible={true}
+            accessibilityRole="header"
+          >
+            {tea.name}
+          </Text>
           <TouchableOpacity 
             onPress={() => company && navigation.navigate('CompanyProfile', { company })}
             disabled={!company}
+            accessible={true}
+            accessibilityRole={company ? "link" : "text"}
+            accessibilityLabel={company ? `View ${tea.brandName} profile` : tea.brandName}
+            accessibilityHint={company ? "Double tap to view company profile" : undefined}
           >
             <Text style={[styles.brandName, company && styles.brandNameTappable]}>
               {tea.brandName}

@@ -138,7 +138,12 @@ export const DiscoveryScreen = ({ navigation, route }) => {
             <Clock size={16} color={theme.text.secondary} />
             <Text style={[styles.historyTitle, { color: theme.text.secondary }]}>Recent Searches</Text>
           </View>
-          <TouchableOpacity onPress={clearHistory}>
+          <TouchableOpacity 
+            onPress={clearHistory}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Clear search history"
+          >
             <Text style={[styles.clearText, { color: theme.accent.primary }]}>Clear</Text>
           </TouchableOpacity>
         </View>
@@ -147,6 +152,10 @@ export const DiscoveryScreen = ({ navigation, route }) => {
             key={index}
             style={[styles.historyItem, { borderBottomColor: theme.border.light }]}
             onPress={() => handleHistorySelect(query)}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel={`Search for ${query}`}
+            accessibilityHint="Double tap to search"
           >
             <Text style={[styles.historyQuery, { color: theme.text.primary }]} numberOfLines={1}>
               {query}
@@ -273,7 +282,13 @@ export const DiscoveryScreen = ({ navigation, route }) => {
         ]}
         pointerEvents={showScrollToTop ? 'auto' : 'none'}
       >
-        <TouchableOpacity onPress={scrollToTop} style={styles.scrollToTopTouchable}>
+        <TouchableOpacity 
+          onPress={scrollToTop} 
+          style={styles.scrollToTopTouchable}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Scroll to top"
+        >
           <ArrowUp size={24} color={theme.text.inverse} />
         </TouchableOpacity>
       </Animated.View>
