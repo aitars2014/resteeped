@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { AuthProvider, CollectionProvider, ThemeProvider, useTheme } from './src/context';
+import { initAnalytics } from './src/utils';
 import * as Sentry from '@sentry/react-native';
 
 Sentry.init({
@@ -15,10 +16,18 @@ Sentry.init({
   // Enable Logs
   enableLogs: true,
 
+  // Performance Monitoring
+  tracesSampleRate: 1.0, // Capture 100% of transactions in dev, reduce in production
+  profilesSampleRate: 1.0, // Profile 100% of sampled transactions
+
   // Configure Session Replay
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1,
-  integrations: [Sentry.mobileReplayIntegration(), Sentry.feedbackIntegration()],
+  integrations: [
+    Sentry.reactNativeTracingIntegration(),
+    Sentry.mobileReplayIntegration(),
+    Sentry.feedbackIntegration(),
+  ],
 
   // uncomment the line below to enable Spotlight (https://spotlightjs.com)
   // spotlight: __DEV__,
@@ -37,6 +46,11 @@ const AppContent = () => {
 };
 
 export default Sentry.wrap(function App() {
+  // Initialize analytics on app start
+  useEffect(() => {
+    initAnalytics();
+  }, []);
+
   return (
     <ThemeProvider>
       <AuthProvider>

@@ -2,30 +2,53 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { teas as localTeas } from '../data/teas';
 
-// Interleave teas so brands are mixed rather than grouped together
-// This creates a better discovery experience
-const interleaveTeasByBrand = (teas) => {
+// Calculate a ranking score that balances rating quality with popularity
+// Uses Bayesian average: score = (avgRating * ratingCount + C * m) / (ratingCount + C)
+// - C = confidence threshold (reviews needed before we trust the rating)
+// - m = prior mean (assumed average for teas with few/no reviews)
+const calculateRankingScore = (tea) => {
+  const avgRating = tea.avgRating || 0;
+  const ratingCount = tea.ratingCount || 0;
+  
+  // Tunable parameters
+  const C = 5;    // Confidence threshold - need ~5 reviews to trust rating
+  const m = 3.8;  // Prior mean - assume average tea is ~3.8 stars
+  
+  // Bayesian average
+  const bayesianRating = (avgRating * ratingCount + C * m) / (ratingCount + C);
+  
+  // Add small popularity boost (log scale to avoid domination by very popular teas)
+  const popularityBoost = Math.log10(ratingCount + 1) * 0.1;
+  
+  return bayesianRating + popularityBoost;
+};
+
+// Sort teas by ranking score, then interleave by brand for variety
+const rankAndDiversifyTeas = (teas) => {
   if (!teas.length) return teas;
   
-  // Group teas by brand
+  // Calculate scores and sort
+  const scoredTeas = teas.map(tea => ({
+    ...tea,
+    _rankScore: calculateRankingScore(tea),
+  }));
+  scoredTeas.sort((a, b) => b._rankScore - a._rankScore);
+  
+  // Group by brand, preserving score order within each brand
   const byBrand = {};
-  teas.forEach(tea => {
+  scoredTeas.forEach(tea => {
     const brand = tea.brandName || tea.companyId || 'unknown';
     if (!byBrand[brand]) byBrand[brand] = [];
     byBrand[brand].push(tea);
   });
   
-  // Get brand arrays and shuffle each one slightly to add variety
-  const brands = Object.keys(byBrand);
-  brands.forEach(brand => {
-    // Light shuffle within each brand (preserves some rating order)
-    byBrand[brand].sort(() => Math.random() - 0.5);
+  // Sort brands by their top tea's score (best brands first)
+  const brands = Object.keys(byBrand).sort((a, b) => {
+    return byBrand[b][0]._rankScore - byBrand[a][0]._rankScore;
   });
   
-  // Shuffle brand order
-  brands.sort(() => Math.random() - 0.5);
-  
-  // Interleave: take one from each brand in round-robin fashion
+  // Interleave: take top tea from each brand in round-robin
+  // This ensures variety while keeping quality teas near the top
   const result = [];
   let hasMore = true;
   let index = 0;
@@ -34,7 +57,9 @@ const interleaveTeasByBrand = (teas) => {
     hasMore = false;
     for (const brand of brands) {
       if (byBrand[brand].length > index) {
-        result.push(byBrand[brand][index]);
+        const tea = byBrand[brand][index];
+        delete tea._rankScore; // Clean up internal property
+        result.push(tea);
         if (byBrand[brand].length > index + 1) hasMore = true;
       }
     }
@@ -54,8 +79,8 @@ export const useTeas = () => {
     setError(null);
 
     if (!isSupabaseConfigured()) {
-      // Use local data in demo mode, interleaved for better discovery
-      setTeas(interleaveTeasByBrand(localTeas));
+      // Use local data in demo mode, ranked and diversified for better discovery
+      setTeas(rankAndDiversifyTeas(localTeas));
       setLoading(false);
       return;
     }
@@ -88,13 +113,13 @@ export const useTeas = () => {
         createdAt: tea.created_at,
       }));
 
-      // Interleave teas by brand for better discovery experience
-      setTeas(interleaveTeasByBrand(formattedTeas));
+      // Rank and diversify teas for better discovery experience
+      setTeas(rankAndDiversifyTeas(formattedTeas));
     } catch (err) {
       console.error('Error fetching teas:', err);
       setError(err.message);
       // Fallback to local data
-      setTeas(interleaveTeasByBrand(localTeas));
+      setTeas(rankAndDiversifyTeas(localTeas));
     } finally {
       setLoading(false);
     }
@@ -153,6 +178,10 @@ export const useTeas = () => {
     switch (sortBy) {
       case 'rating':
         result.sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0));
+        break;
+      case 'relevance':
+        // Sort by combined rating + popularity score
+        result.sort((a, b) => calculateRankingScore(b) - calculateRankingScore(a));
         break;
       case 'name':
         result.sort((a, b) => a.name.localeCompare(b.name));

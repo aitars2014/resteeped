@@ -1,0 +1,126 @@
+// Analytics utility using Amplitude
+import * as Amplitude from '@amplitude/analytics-react-native';
+
+// Initialize with API key from environment
+const AMPLITUDE_API_KEY = process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY;
+
+let initialized = false;
+
+/**
+ * Initialize Amplitude analytics
+ * Call this once at app startup
+ */
+export const initAnalytics = async () => {
+  if (initialized || !AMPLITUDE_API_KEY) {
+    if (!AMPLITUDE_API_KEY) {
+      console.log('[Analytics] No API key configured, analytics disabled');
+    }
+    return;
+  }
+
+  try {
+    await Amplitude.init(AMPLITUDE_API_KEY, undefined, {
+      // Track session events automatically
+      defaultTracking: {
+        sessions: true,
+        appLifecycles: true,
+        screenViews: true,
+      },
+    });
+    initialized = true;
+    console.log('[Analytics] Amplitude initialized');
+  } catch (error) {
+    console.error('[Analytics] Failed to initialize:', error);
+  }
+};
+
+/**
+ * Track a custom event
+ * @param {string} eventName - Name of the event
+ * @param {Object} properties - Optional event properties
+ */
+export const trackEvent = (eventName, properties = {}) => {
+  if (!initialized) return;
+  
+  try {
+    Amplitude.track(eventName, properties);
+  } catch (error) {
+    console.error('[Analytics] Failed to track event:', error);
+  }
+};
+
+/**
+ * Identify a user (call after sign-in)
+ * @param {string} userId - User's unique ID
+ * @param {Object} userProperties - Optional user properties
+ */
+export const identifyUser = (userId, userProperties = {}) => {
+  if (!initialized) return;
+  
+  try {
+    Amplitude.setUserId(userId);
+    
+    if (Object.keys(userProperties).length > 0) {
+      const identifyEvent = new Amplitude.Identify();
+      Object.entries(userProperties).forEach(([key, value]) => {
+        identifyEvent.set(key, value);
+      });
+      Amplitude.identify(identifyEvent);
+    }
+  } catch (error) {
+    console.error('[Analytics] Failed to identify user:', error);
+  }
+};
+
+/**
+ * Clear user identity (call on sign-out)
+ */
+export const resetUser = () => {
+  if (!initialized) return;
+  
+  try {
+    Amplitude.reset();
+  } catch (error) {
+    console.error('[Analytics] Failed to reset user:', error);
+  }
+};
+
+// Pre-defined event names for consistency
+export const AnalyticsEvents = {
+  // Onboarding
+  ONBOARDING_STARTED: 'onboarding_started',
+  ONBOARDING_COMPLETED: 'onboarding_completed',
+  ONBOARDING_SKIPPED: 'onboarding_skipped',
+  
+  // Auth
+  SIGN_UP: 'sign_up',
+  SIGN_IN: 'sign_in',
+  SIGN_OUT: 'sign_out',
+  
+  // Tea Discovery
+  TEA_VIEWED: 'tea_viewed',
+  TEA_SEARCHED: 'tea_searched',
+  TEA_FILTERED: 'tea_filtered',
+  
+  // Collection
+  TEA_ADDED_TO_COLLECTION: 'tea_added_to_collection',
+  TEA_REMOVED_FROM_COLLECTION: 'tea_removed_from_collection',
+  
+  // Brewing
+  BREW_STARTED: 'brew_started',
+  BREW_COMPLETED: 'brew_completed',
+  BREW_CANCELLED: 'brew_cancelled',
+  
+  // Reviews
+  REVIEW_SUBMITTED: 'review_submitted',
+  REVIEW_EDITED: 'review_edited',
+  
+  // Social
+  TEA_SHARED: 'tea_shared',
+  PROFILE_VIEWED: 'profile_viewed',
+  COMPANY_VIEWED: 'company_viewed',
+  
+  // Teaware
+  TEAWARE_VIEWED: 'teaware_viewed',
+  TEAWARE_ADDED: 'teaware_added',
+};

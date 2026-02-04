@@ -32,10 +32,11 @@ const RATING_OPTIONS = [
 ];
 
 const SORT_OPTIONS = [
+  { id: 'relevance', label: 'Best Match' },
   { id: 'rating', label: 'Highest Rated' },
+  { id: 'reviews', label: 'Most Reviewed' },
   { id: 'name', label: 'Name (A-Z)' },
   { id: 'newest', label: 'Newest First' },
-  { id: 'reviews', label: 'Most Reviewed' },
 ];
 
 export const FilterModal = ({ 
@@ -51,7 +52,7 @@ export const FilterModal = ({
     teaType: 'all',
     company: 'all',
     minRating: 'all',
-    sortBy: 'rating',
+    sortBy: 'relevance',
     ...filters,
   });
 
@@ -61,7 +62,7 @@ export const FilterModal = ({
         teaType: 'all',
         company: 'all',
         minRating: 'all',
-        sortBy: 'rating',
+        sortBy: 'relevance',
         ...filters,
       });
     }
@@ -77,7 +78,7 @@ export const FilterModal = ({
       teaType: 'all',
       company: 'all',
       minRating: 'all',
-      sortBy: 'rating',
+      sortBy: 'relevance',
     });
   };
 

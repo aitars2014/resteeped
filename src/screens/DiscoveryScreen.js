@@ -40,7 +40,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     teaType: initialFilter || 'all',
     company: 'all',
     minRating: 'all',
-    sortBy: 'rating',
+    sortBy: 'relevance',
   });
   
   // Update filters when navigating from Home with new params
@@ -233,7 +233,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
               teaType: 'all',
               company: 'all',
               minRating: 'all',
-              sortBy: 'rating',
+              sortBy: 'relevance',
             })}
           >
             <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>Clear filters</Text>

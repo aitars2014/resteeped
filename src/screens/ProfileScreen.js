@@ -10,7 +10,8 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package } from 'lucide-react-native';
+import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, AlertTriangle } from 'lucide-react-native';
+import * as Sentry from '@sentry/react-native';
 import { typography, spacing } from '../constants';
 import { Button, Avatar, AvatarPicker } from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -359,7 +360,7 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
         
         <TouchableOpacity 
-          style={[styles.menuItem, styles.menuItemLast]}
+          style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
           onPress={() => {
             Alert.alert(
               'Reset Onboarding',
@@ -379,6 +380,18 @@ export const ProfileScreen = ({ navigation }) => {
         >
           <RotateCcw size={20} color={theme.accent.primary} />
           <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Reset Onboarding</Text>
+          <ChevronRight size={20} color={theme.text.secondary} />
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={[styles.menuItem, styles.menuItemLast]}
+          onPress={() => {
+            Sentry.captureException(new Error('Test error from Resteeped Profile Screen'));
+            Alert.alert('Sentry Test', 'Test error sent to Sentry! Check your dashboard.');
+          }}
+        >
+          <AlertTriangle size={20} color={theme.status.warning} />
+          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Send Test Error to Sentry</Text>
           <ChevronRight size={20} color={theme.text.secondary} />
         </TouchableOpacity>
       </View>
