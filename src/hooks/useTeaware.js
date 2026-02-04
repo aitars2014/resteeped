@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '../config/supabase';
+import { supabase } from '../lib/supabase';
 
 // Demo teaware data for development
 const DEMO_TEAWARE = [
