@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
-import { Bookmark } from 'lucide-react-native';
+import { Bookmark, Plus } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { TeaCard, Button } from '../components';
 import { useAuth, useCollection, useTheme } from '../context';
@@ -110,10 +110,18 @@ export const CollectionScreen = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: theme.text.primary }]}>My Teas</Text>
-        {user && collection.length > 0 && (
-          <Text style={[styles.count, { color: theme.text.secondary }]}>{collection.length} teas</Text>
-        )}
+        <View>
+          <Text style={[styles.title, { color: theme.text.primary }]}>My Teas</Text>
+          {user && collection.length > 0 && (
+            <Text style={[styles.count, { color: theme.text.secondary }]}>{collection.length} teas</Text>
+          )}
+        </View>
+        <TouchableOpacity 
+          style={[styles.addButton, { backgroundColor: theme.accent.primary }]}
+          onPress={() => navigation.navigate('AddTea')}
+        >
+          <Plus size={20} color="#fff" strokeWidth={2.5} />
+        </TouchableOpacity>
       </View>
       
       {/* Filter tabs */}
@@ -164,6 +172,13 @@ const styles = StyleSheet.create({
   },
   count: {
     ...typography.bodySmall,
+  },
+  addButton: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   filterTabs: {
     flexDirection: 'row',

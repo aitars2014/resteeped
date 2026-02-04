@@ -22,3 +22,4 @@ export { TeaBattle } from './TeaBattle';
 export { Skeleton, TeaCardSkeleton, TeaListSkeleton, TeaDetailSkeleton, SectionSkeleton } from './Skeleton';
 export { ShareableTeaCard } from './ShareableTeaCard';
 export { ShareableComparisonCard } from './ShareableComparisonCard';
+export { default as Avatar } from './Avatar';

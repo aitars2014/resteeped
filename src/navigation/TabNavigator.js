@@ -17,6 +17,7 @@ import {
   CompareTeasScreen,
   ActivityFeedScreen,
   TeawareScreen,
+  AddTeaScreen,
 } from '../screens';
 
 const Tab = createBottomTabNavigator();
@@ -48,6 +49,15 @@ const CollectionStack = () => (
     <Stack.Screen name="CollectionHome" component={CollectionScreen} />
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
     <Stack.Screen name="CompanyProfile" component={CompanyProfileScreen} />
+    <Stack.Screen 
+      name="AddTea" 
+      component={AddTeaScreen}
+      options={{ 
+        headerShown: true,
+        headerTitle: 'Add Tea',
+        headerBackTitle: 'Back',
+      }}
+    />
   </Stack.Navigator>
 );
 
