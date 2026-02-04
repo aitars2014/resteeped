@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Home, Search, Bookmark, Clock, User } from 'lucide-react-native';
+import { Home, Search, Bookmark, Clock, User, Coffee } from 'lucide-react-native';
 import { typography } from '../constants';
 import { useTheme } from '../context';
 import { 
@@ -16,6 +16,7 @@ import {
   TeaShopsScreen,
   CompareTeasScreen,
   ActivityFeedScreen,
+  TeawareScreen,
 } from '../screens';
 
 const Tab = createBottomTabNavigator();
@@ -64,6 +65,7 @@ const ProfileStack = () => (
     <Stack.Screen name="BrewHistory" component={BrewHistoryScreen} />
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
     <Stack.Screen name="CompareTeas" component={CompareTeasScreen} />
+    <Stack.Screen name="Teaware" component={TeawareScreen} />
   </Stack.Navigator>
 );
 

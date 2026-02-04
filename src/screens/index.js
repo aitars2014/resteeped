@@ -10,3 +10,4 @@ export { default as TeaShopsScreen } from './TeaShopsScreen';
 export { default as CompareTeasScreen } from './CompareTeasScreen';
 export { default as ActivityFeedScreen } from './ActivityFeedScreen';
 export { OnboardingScreen, isOnboardingComplete, resetOnboarding } from './OnboardingScreen';
+export { default as TeawareScreen } from './TeawareScreen';

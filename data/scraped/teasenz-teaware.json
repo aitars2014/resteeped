@@ -1,0 +1,181 @@
+[
+  {
+    "name": "Ziye Shipiao Yixing Teapot with Phoenix Painting",
+    "description": "A Zi Ni (purple clay) Yixing teapot fully handcrafted in the triangular 'Ziye Shipiao' shape, featuring a detailed phoenix clay painting. The purple clay is sourced from the original purple clay ore from Huanglong mountain. Features excellent pouring speed through the 9 hole filter.",
+    "price": null,
+    "currency": "USD",
+    "available": true,
+    "category": "teapots",
+    "material": "Zi Ni (purple) Yixing clay",
+    "tags": [
+      "Yixing",
+      "handcrafted",
+      "phoenix design"
+    ],
+    "capacity": "230ml",
+    "dimensions": "14.2x6.3cm",
+    "images": [],
+    "source": "teasenz.com",
+    "url": "https://www.teasenz.com/ziye-shipiao"
+  },
+  {
+    "name": "White Porcelain Gaiwan, Magnolia Shape",
+    "description": "A traditional Chinese tea vessel with three parts: bowl, lid, and saucer. The three parts represent heaven (lid), earth (saucer), and humanity (bowl). Designed for steeping delicate loose leaf teas such as green, white and oolong.",
+    "price": null,
+    "currency": "USD",
+    "available": true,
+    "category": "gaiwans",
+    "material": "porcelain",
+    "tags": [
+      "traditional",
+      "magnolia shape"
+    ],
+    "capacity": "115ml",
+    "images": [],
+    "source": "teasenz.com",
+    "url": "https://www.teasenz.com/white-gaiwan"
+  },
+  {
+    "name": "Cute Panda Tea Set with 3 Cups & Travel Bag",
+    "description": "A cute panda travel tea set designed to steep Chinese tea the traditional way with playful charm. Comes with tea maker and 3 cups in a beautifully designed travel box.",
+    "price": null,
+    "currency": "USD",
+    "available": true,
+    "category": "tea sets",
+    "material": "ceramic",
+    "tags": [
+      "panda",
+      "travel set",
+      "gift"
+    ],
+    "capacity": "220ml teapot, 50ml cups",
+    "dimensions": "10.8x8cm teapot, 5.5x3cm cups",
+    "dishwasherSafe": true,
+    "microwaveSafe": true,
+    "images": [],
+    "source": "teasenz.com",
+    "url": "https://www.teasenz.com/cute-panda-tea-set"
+  },
+  {
+    "name": "Glass Teapot with Magnetic Filtration Infuser",
+    "description": "Exquisite glass teapot featuring innovative magnetic filtration infuser. Simply place tea leaves in the infuser, then press to activate magnetic separation. Crafted from premium heat-resistant borosilicate glass with elegant wooden accents.",
+    "price": null,
+    "currency": "USD",
+    "available": true,
+    "category": "teapots",
+    "material": "borosilicate glass, wood",
+    "tags": [
+      "magnetic infuser",
+      "innovative",
+      "glass"
+    ],
+    "capacity": "720ml",
+    "dimensions": "15.5x8.5cm",
+    "dishwasherSafe": false,
+    "microwaveSafe": false,
+    "images": [],
+    "source": "teasenz.com",
+    "url": "https://www.teasenz.com/glass-magnetic-teapot-filtration-infuser"
+  },
+  {
+    "name": "Artistic Glass Gaiwan, Flower & Butterfly Artwork",
+    "description": "Glass gaiwan with flowers and butterflies dancing across its surface. Premium borosilicate glass resistant to sudden temperature changes. Optimal size for traditional kungfu tea style brewing.",
+    "price": null,
+    "currency": "USD",
+    "available": true,
+    "category": "gaiwans",
+    "material": "borosilicate glass",
+    "tags": [
+      "artistic",
+      "floral design",
+      "glass"
+    ],
+    "capacity": "150ml",
+    "dimensions": "9.5x7.5cm",
+    "dishwasherSafe": false,
+    "microwaveSafe": false,
+    "images": [],
+    "source": "teasenz.com",
+    "url": "https://www.teasenz.com/floral-glass-gaiwan"
+  },
+  {
+    "name": "Tiger Tea Pet",
+    "description": "100% handcrafted from Duan Ni clay with hand painting. Tigers are associated with courage, willpower and personal strength. In China, the tiger is the 3rd zodiac sign associated with honour and power.",
+    "price": null,
+    "currency": "USD",
+    "available": true,
+    "category": "tea pets",
+    "material": "Duan Ni Yixing clay",
+    "tags": [
+      "tiger",
+      "zodiac",
+      "handpainted"
+    ],
+    "dimensions": "8x5.5x4cm",
+    "images": [],
+    "source": "teasenz.com",
+    "url": "https://www.teasenz.com/tiger-tea-pet"
+  },
+  {
+    "name": "Damascus Pu Erh Tea Knife",
+    "description": "A pu erh tea knife made from steel, copper and solid rosewood. Damascus steel-like finish. Perfect for breaking apart compressed tea cakes.",
+    "price": null,
+    "currency": "USD",
+    "available": true,
+    "category": "accessories",
+    "material": "steel, copper, rosewood",
+    "tags": [
+      "tea knife",
+      "pu erh tool",
+      "damascus"
+    ],
+    "dimensions": "16.2x1.8cm",
+    "dishwasherSafe": false,
+    "microwaveSafe": false,
+    "images": [],
+    "source": "teasenz.com",
+    "url": "https://www.teasenz.com/damascus-tea-knife"
+  },
+  {
+    "name": "Shuiping Glass Teapot",
+    "description": "Shuiping shape glass teapot with ideal 200ml size for gongfu brewing. Thickened handle for comfortable hold and stainless steel spiral filter in the spout. Manually made from cooking grade borosilicate glass.",
+    "price": null,
+    "currency": "USD",
+    "available": true,
+    "category": "teapots",
+    "material": "borosilicate glass, stainless steel",
+    "tags": [
+      "shuiping",
+      "gongfu",
+      "glass"
+    ],
+    "capacity": "200ml",
+    "dimensions": "9x14.5cm",
+    "dishwasherSafe": true,
+    "microwaveSafe": false,
+    "images": [],
+    "source": "teasenz.com",
+    "url": "https://www.teasenz.com/shuiping-glass-teapot"
+  },
+  {
+    "name": "Ruyao Cat Tea Cup - Ru Kiln Crackle Glaze",
+    "description": "White Ru kiln tea cup with hand-painted cat theme and crackle glaze finish. Handmade and traditionally fired at 1360°C (2480°F).",
+    "price": 11.95,
+    "currency": "USD",
+    "available": true,
+    "category": "cups",
+    "material": "ceramic (Ru kiln)",
+    "tags": [
+      "cat design",
+      "Ru kiln",
+      "crackle glaze"
+    ],
+    "capacity": "110ml",
+    "dimensions": "6.5x6.2cm",
+    "dishwasherSafe": false,
+    "microwaveSafe": false,
+    "images": [],
+    "source": "teasenz.com",
+    "url": "https://www.teasenz.com/cat-tea-cup"
+  }
+]

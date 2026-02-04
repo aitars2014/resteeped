@@ -1,0 +1,366 @@
+[
+  {
+    "name": "Peanut Teapet",
+    "description": "These things are hilarious and highly realistic.",
+    "price": 3.99,
+    "currency": "USD",
+    "available": true,
+    "category": "tea pets",
+    "material": null,
+    "tags": [
+      "Tea Pets"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0753-2.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/peanut-teapet-seattle-inventory"
+  },
+  {
+    "name": "Tea-Rex Teapet",
+    "description": "No need to run, this adorable little dino comes in peace.",
+    "price": 15.99,
+    "currency": "USD",
+    "available": false,
+    "category": "tea pets",
+    "material": null,
+    "tags": [
+      "Tea Pets"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/2024-Tea-Rex-Teapet-1.png"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "One of a Kind Wood Fired Jianshui Clay Tea Cup",
+    "description": "Wood fired Jianshui clay tea cups made with rare Wanyao clay.",
+    "price": 99.99,
+    "currency": "USD",
+    "available": true,
+    "category": "cups",
+    "material": "Jianshui clay",
+    "tags": [
+      "Jianshui",
+      "Tea Cups",
+      "Wood Fired"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/6BFEB6E9-6EFD-4FFD-9392-E15603186661.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui 8 Ball Teapot",
+    "description": "This 8-ball teapot is a really fun addition to your tea brewing setup. Made from high quality Jianshui clay.",
+    "price": 99.99,
+    "currency": "USD",
+    "available": false,
+    "category": "teapots",
+    "material": "Jianshui clay",
+    "tags": [
+      "Jianshui",
+      "Teapots"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/905FB1D7-9CAA-483D-A142-7F64FD291982.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Yunnan Dragon Kiln Wood Fired Tea Cup - Grade 2",
+    "description": "Chinese wood fired dragon kilns have been a part of ceramics for thousands of years. These cups were fired in the Huaning dragon kiln.",
+    "price": 19.99,
+    "currency": "USD",
+    "available": true,
+    "category": "cups",
+    "material": "Huaning clay (glazed)",
+    "tags": [
+      "Huaning",
+      "Tea Cups",
+      "Wood Fired"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/Huaning-Dragon-Kiln-Grade-2.png"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Wood Fired Jianshui Clay Lotus Tea Cup - 65ml",
+    "description": "Wood fired Jianshui clay lotus tea cups with rare Wanyao clay.",
+    "price": 79.99,
+    "currency": "USD",
+    "available": true,
+    "category": "cups",
+    "material": "Jianshui clay",
+    "tags": [
+      "Jianshui",
+      "Tea Cups",
+      "Wood Fired"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/1A872DC3-9BF5-40AD-8CF2-D9EE31771138.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui Black Clay Lotus Tea Cup - 65ml",
+    "description": "These cups were designed to match our Black Clay Lotus Gaiwans.",
+    "price": 19.99,
+    "currency": "USD",
+    "available": true,
+    "category": "cups",
+    "material": "Jianshui clay",
+    "tags": [
+      "Jianshui",
+      "Tea Cups"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/B7C95446-150A-4FE2-BF94-539B3D933F68.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui Zitao Clay Easy Gaiwan - 180ml",
+    "description": "We love brewing in Jianshui clay and we love the simplicity of easy gaiwans.",
+    "price": 69.99,
+    "currency": "USD",
+    "available": true,
+    "category": "gaiwans",
+    "material": "Jianshui clay",
+    "tags": [
+      "Gaiwans",
+      "Jianshui"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/Jianshui-Easy-Gaiwans-4-Up.png"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui Black Lotus Teapot - Xishi Style",
+    "description": "A true tea lovers teapot with rare Wanyao clay.",
+    "price": 99.99,
+    "currency": "USD",
+    "available": false,
+    "category": "teapots",
+    "material": "Jianshui clay",
+    "tags": [
+      "Jianshui",
+      "Teapots"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0614.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Peanut Teapet",
+    "description": "These things are hilarious and highly realistic clay peanuts.",
+    "price": 2.99,
+    "currency": "USD",
+    "available": true,
+    "category": "tea pets",
+    "material": null,
+    "tags": [
+      "Tea Pets"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0753-2.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui Dragon Boss Teapot - 280ml",
+    "description": "Look at this beast of a teapot! The largest one we have ever sold.",
+    "price": 149.99,
+    "currency": "USD",
+    "available": true,
+    "category": "teapots",
+    "material": "Jianshui clay",
+    "tags": [
+      "Jianshui",
+      "Teapots"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/86F3EB1F-7023-4A3A-B921-DE1B1E99C1F8.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui Black Lotus Gaiwan - 150ml",
+    "description": "We have used many gaiwans over the years. This shape we always come back to.",
+    "price": 89.99,
+    "currency": "USD",
+    "available": true,
+    "category": "teapots",
+    "material": "Jianshui clay",
+    "tags": [
+      "Gaiwans",
+      "Jianshui",
+      "Teapots"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0619.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui White Lotus Gaiwan - 150ml",
+    "description": "White lotus gaiwan with rare Wanyao clay.",
+    "price": 89.99,
+    "currency": "USD",
+    "available": true,
+    "category": "teapots",
+    "material": "Jianshui clay",
+    "tags": [
+      "Gaiwans",
+      "Jianshui",
+      "Teapots"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0710.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui White Lotus Teapot - Tall Shi Piao Style",
+    "description": "True tea lovers teapot with rare Wanyao clay in Shi Piao style.",
+    "price": 99.99,
+    "currency": "USD",
+    "available": false,
+    "category": "teapots",
+    "material": "Jianshui clay",
+    "tags": [
+      "Jianshui",
+      "Teapots"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0606.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui White Lotus Teapot - Dragon's Egg Style",
+    "description": "Dragon Egg style teapot with rare Wanyao clay.",
+    "price": 99.99,
+    "currency": "USD",
+    "available": true,
+    "category": "teapots",
+    "material": "Jianshui clay",
+    "tags": [
+      "Jianshui",
+      "Teapots"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0610.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Jianshui White Lotus Teapot - Xishi Style",
+    "description": "Xishi style teapot with rare Wanyao clay.",
+    "price": 99.99,
+    "currency": "USD",
+    "available": true,
+    "category": "teapots",
+    "material": "Jianshui clay",
+    "tags": [
+      "Jianshui",
+      "Teapots"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0608.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Huaning We Come in Peace Teacup - 80ml",
+    "description": "Beautiful cups with gorgeous patterns from Huaning, Yunnan.",
+    "price": 29.99,
+    "currency": "USD",
+    "available": true,
+    "category": "cups",
+    "material": "Huaning clay (glazed)",
+    "tags": [
+      "Huaning",
+      "Tea Cups"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0687.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Huaning Jade Magic Teacup - 65ml",
+    "description": "Rich green jade-like glaze teacups from Huaning.",
+    "price": 29.99,
+    "currency": "USD",
+    "available": true,
+    "category": "cups",
+    "material": "Huaning clay (glazed)",
+    "tags": [
+      "Huaning",
+      "Tea Cups"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/DSC_0749-2.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Silver Repaired Wood Fired Jianzhan Teacup #01 90ml",
+    "description": "Vintage jianzhan teacup repaired with silver, wood fired 20 years ago.",
+    "price": 224.99,
+    "currency": "USD",
+    "available": true,
+    "category": "cups",
+    "material": "Jianzhan clay (glazed)",
+    "tags": [
+      "Jianzhan",
+      "Tea Cups",
+      "Wood Fired"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/Silver_Repaired_1-4.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  },
+  {
+    "name": "Vintage Wood Fired Jianzhan Teacup #20 80ml Oil Drop",
+    "description": "Jianzhan teacup with oil drop glaze, wood fired 20 years ago.",
+    "price": 179.99,
+    "currency": "USD",
+    "available": true,
+    "category": "cups",
+    "material": "Jianzhan clay (glazed)",
+    "tags": [
+      "Jianzhan",
+      "Tea Cups",
+      "Wood Fired"
+    ],
+    "images": [
+      "https://cdn.shopify.com/s/files/1/0303/0437/files/Vintage_Jianzhan_20-7.jpg"
+    ],
+    "source": "crimsonlotustea.com",
+    "url": "https://crimsonlotustea.com/products/undefined"
+  }
+]

@@ -10,7 +10,7 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award } from 'lucide-react-native';
+import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { Button } from '../components';
 import { useAuth, useCollection, useTheme } from '../context';
@@ -260,6 +260,15 @@ export const ProfileScreen = ({ navigation }) => {
         >
           <GitCompare size={20} color={theme.accent.primary} />
           <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Compare Teas</Text>
+          <ChevronRight size={20} color={theme.text.secondary} />
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
+          onPress={() => navigation.navigate('Teaware')}
+        >
+          <Package size={20} color={theme.accent.primary} />
+          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>My Teaware</Text>
           <ChevronRight size={20} color={theme.text.secondary} />
         </TouchableOpacity>
         
