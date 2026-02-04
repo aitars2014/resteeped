@@ -48,7 +48,8 @@
 ## To Do ⏳
 
 ### Medium Priority
-- [ ] **Emoji library update** — Consider replacing emojis with custom icons for premium aesthetic, or use a consistent emoji set (Twemoji/Noto)
+- [x] **Illustrations Phase 1** — Tea type buttons + empty states now use Lucide icons
+- [ ] **Illustrations Phase 2** — Custom SVGs for teapot/gaiwan, teaware categories
 
 ### Low Priority / Deferred
 - [ ] **Apple Watch sync** — Requires WatchKit integration (significant native work, ~2-3 days)
@@ -99,15 +100,21 @@
 ### Bugs Found & Fixed
 - [x] `CompanyProfileScreen`: "See All" teas navigation broken → Was navigating to non-existent 'Discovery' screen
 
-### Accessibility ✅ (In Progress)
+### Accessibility ✅ (Complete)
 - [x] **Core components** — Button, TeaCard, Avatar, StarRating, SearchBar, FilterPills, TeaTypeBadge, ReviewCard
 - [x] **TimerScreen** — Mode buttons, time adjustment controls
 - [x] **ProfileScreen** — Menu items, dark mode switch, avatar edit
 - [x] **DiscoveryScreen** — Search history, scroll to top
 - [x] **TeaDetailScreen** — Hero image, navigation buttons, headers
-- [ ] Remaining screens need accessibility pass (CollectionScreen, ActivityFeedScreen, etc.)
+- [x] **CollectionScreen** — Tea list, filter controls
+- [x] **ActivityFeedScreen** — Activity cards, user interactions
+- [x] **BrewHistoryScreen** — History items, stats
+- [x] **CompanyProfileScreen** — Company info, actions
+- [x] **CompareTeasScreen** — Tea selection, comparison views
+- [x] **TeaShopsScreen** — Shop cards, map/list toggle
+- [x] **TeawareScreen** — Teaware cards, filters
 
-**Progress: 2 → 65 accessibility attributes added**
+**Progress: 2 → 160 accessibility attributes**
 
 ### Code Quality Notes
 - ✅ Good error handling in contexts
