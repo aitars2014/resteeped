@@ -605,10 +605,10 @@ export const TimerScreen = ({ route }) => {
           
           <View style={styles.timeDisplay}>
             {isComplete ? (
-              <>
-                <Text style={styles.completeEmoji}>☕</Text>
+              <View style={styles.completeContainer}>
+                <Coffee size={48} color={theme.accent.primary} strokeWidth={1.5} />
                 <Text style={[styles.completeText, { color: theme.accent.primary }]}>Ready!</Text>
-              </>
+              </View>
             ) : (
               <Text style={[styles.timeText, { color: theme.text.primary }]}>{formatTime(remainingSeconds)}</Text>
             )}
@@ -928,12 +928,12 @@ const styles = StyleSheet.create({
     fontWeight: '300',
     fontVariant: ['tabular-nums'],
   },
-  completeEmoji: {
-    fontSize: 44,
-    marginBottom: 4,
+  completeContainer: {
+    alignItems: 'center',
   },
   completeText: {
     ...typography.headingMedium,
+    marginTop: 8,
   },
   recommendedLabel: {
     ...typography.caption,
