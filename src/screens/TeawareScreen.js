@@ -18,12 +18,13 @@ import {
   Coffee,
   Droplets,
   Package,
+  Wrench,
+  Sparkles,
 } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
 import { useTheme } from '../context';
 import { useTeaware } from '../hooks/useTeaware';
 import { SearchBar, FilterPills, TeaCardSkeleton, Gaiwan, Teapot, TeaCup, YixingPot } from '../components';
-import { Coffee, Package, Wrench, Sparkles, Droplets } from 'lucide-react-native';
 import { haptics } from '../utils/haptics';
 
 const { width } = Dimensions.get('window');
