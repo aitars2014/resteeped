@@ -10,12 +10,13 @@ import {
   Image,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Shuffle, X, Coffee, Sparkles } from 'lucide-react-native';
+import { Shuffle, X, Coffee, Sparkles, Leaf } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
 import { useTheme, useCollection } from '../context';
 import { Button } from './Button';
 import { TeaTypeBadge } from './TeaTypeBadge';
 import { StarRating } from './StarRating';
+import { TeaCup, Teapot } from './icons';
 
 const { width, height } = Dimensions.get('window');
 
@@ -198,7 +199,9 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
             {showEmptyChoice ? (
               // Empty collection - show choice
               <View style={styles.emptyChoiceContainer}>
-                <Text style={styles.emptyEmoji}>🍵</Text>
+                <View style={[styles.emptyIconContainer, { backgroundColor: theme.background.secondary }]}>
+                  <Coffee size={48} color={theme.accent.primary} strokeWidth={1.5} />
+                </View>
                 <Text style={[styles.emptyChoiceTitle, { color: theme.text.primary }]}>
                   Your collection is empty
                 </Text>
@@ -223,8 +226,8 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
             ) : isSpinning ? (
               // Spinning state
               <View style={styles.spinningContainer}>
-                <Animated.View style={[styles.spinningEmoji, { transform: [{ rotate: spinRotation }] }]}>
-                  <Text style={styles.bigEmoji}>🍵</Text>
+                <Animated.View style={[styles.spinningIcon, { transform: [{ rotate: spinRotation }] }]}>
+                  <TeaCup size={80} color={theme.accent.primary} strokeWidth={1.5} />
                 </Animated.View>
                 <Animated.Text style={[styles.spinningText, { 
                   color: theme.text.primary,
@@ -236,8 +239,8 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
                   Finding your perfect brew...
                 </Animated.Text>
                 
-                {/* Floating tea emojis */}
-                <Animated.Text style={[styles.floatingEmoji, styles.floatingEmoji1, {
+                {/* Floating tea icons */}
+                <Animated.View style={[styles.floatingIcon, styles.floatingIcon1, {
                   opacity: shuffleEmojis,
                   transform: [{
                     translateY: shuffleEmojis.interpolate({
@@ -246,9 +249,9 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
                     }),
                   }],
                 }]}>
-                  ☕
-                </Animated.Text>
-                <Animated.Text style={[styles.floatingEmoji, styles.floatingEmoji2, {
+                  <Coffee size={32} color={theme.text.secondary} strokeWidth={1.5} />
+                </Animated.View>
+                <Animated.View style={[styles.floatingIcon, styles.floatingIcon2, {
                   opacity: shuffleEmojis,
                   transform: [{
                     translateY: shuffleEmojis.interpolate({
@@ -257,8 +260,8 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
                     }),
                   }],
                 }]}>
-                  🫖
-                </Animated.Text>
+                  <Teapot size={32} color={theme.text.secondary} strokeWidth={1.5} />
+                </Animated.View>
               </View>
             ) : selectedTea ? (
               // Tea reveal
@@ -336,7 +339,9 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
             ) : (
               // No tea available
               <View style={styles.emptyState}>
-                <Text style={styles.emptyEmoji}>🍃</Text>
+                <View style={[styles.emptyIconContainer, { backgroundColor: theme.background.secondary }]}>
+                  <Leaf size={48} color={theme.text.secondary} strokeWidth={1.5} />
+                </View>
                 <Text style={[styles.emptyText, { color: theme.text.primary }]}>
                   No teas available
                 </Text>
@@ -400,25 +405,21 @@ const styles = StyleSheet.create({
     paddingVertical: 60,
     position: 'relative',
   },
-  spinningEmoji: {
+  spinningIcon: {
     marginBottom: 24,
-  },
-  bigEmoji: {
-    fontSize: 80,
   },
   spinningText: {
     ...typography.body,
     fontWeight: '500',
   },
-  floatingEmoji: {
+  floatingIcon: {
     position: 'absolute',
-    fontSize: 32,
   },
-  floatingEmoji1: {
+  floatingIcon1: {
     top: 40,
     left: 20,
   },
-  floatingEmoji2: {
+  floatingIcon2: {
     top: 40,
     right: 20,
   },
@@ -500,8 +501,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 40,
   },
-  emptyEmoji: {
-    fontSize: 60,
+  emptyIconContainer: {
+    width: 96,
+    height: 96,
+    borderRadius: 48,
+    alignItems: 'center',
+    justifyContent: 'center',
     marginBottom: 16,
   },
   emptyText: {
