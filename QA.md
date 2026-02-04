@@ -49,7 +49,7 @@
 
 ### Medium Priority
 - [x] **Illustrations Phase 1** — Tea type buttons + empty states now use Lucide icons
-- [ ] **Illustrations Phase 2** — Custom SVGs for teapot/gaiwan, teaware categories
+- [x] **Illustrations Phase 2** — Custom SVGs: Gaiwan, Teapot, Kyusu, YixingPot, TeaCup, TeaLeaf
 
 ### Low Priority / Deferred
 - [ ] **Apple Watch sync** — Requires WatchKit integration (significant native work, ~2-3 days)
