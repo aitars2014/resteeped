@@ -22,7 +22,8 @@ import {
 import { typography, spacing, fonts } from '../constants';
 import { useTheme } from '../context';
 import { useTeaware } from '../hooks/useTeaware';
-import { SearchBar, FilterPills, TeaCardSkeleton } from '../components';
+import { SearchBar, FilterPills, TeaCardSkeleton, Gaiwan, Teapot, TeaCup, YixingPot } from '../components';
+import { Coffee, Package, Wrench, Sparkles, Droplets } from 'lucide-react-native';
 import { haptics } from '../utils/haptics';
 
 const { width } = Dimensions.get('window');
@@ -30,12 +31,12 @@ const CARD_WIDTH = (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2;
 
 // Teaware categories with icons and colors
 const CATEGORIES = [
-  { id: 'gaiwan', name: 'Gaiwans', emoji: '🍵', color: '#7CB89D' },
-  { id: 'teapot', name: 'Teapots', emoji: '🫖', color: '#E8A060' },
-  { id: 'cup', name: 'Cups', emoji: '🍶', color: '#A8D5BA' },
-  { id: 'pitcher', name: 'Pitchers', emoji: '🏺', color: '#C4956A' },
-  { id: 'tea_tools', name: 'Tools', emoji: '🔧', color: '#B0B0B0' },
-  { id: 'tea_pet', name: 'Tea Pets', emoji: '🐉', color: '#E0B0D8' },
+  { id: 'gaiwan', name: 'Gaiwans', Icon: Gaiwan, color: '#7CB89D' },
+  { id: 'teapot', name: 'Teapots', Icon: Teapot, color: '#E8A060' },
+  { id: 'cup', name: 'Cups', Icon: TeaCup, color: '#A8D5BA' },
+  { id: 'pitcher', name: 'Pitchers', Icon: Droplets, color: '#C4956A' },
+  { id: 'tea_tools', name: 'Tools', Icon: Wrench, color: '#B0B0B0' },
+  { id: 'tea_pet', name: 'Tea Pets', Icon: Sparkles, color: '#E0B0D8' },
 ];
 
 // Material filters
@@ -173,7 +174,7 @@ export const TeawareScreen = ({ navigation }) => {
   };
 
   // Render category button
-  const renderCategoryButton = ({ id, name, emoji, color }) => {
+  const renderCategoryButton = ({ id, name, Icon, color }) => {
     const isSelected = selectedCategory === id;
     const count = teawareByCategory[id]?.length || 0;
     
@@ -195,7 +196,7 @@ export const TeawareScreen = ({ navigation }) => {
         accessibilityState={{ selected: isSelected }}
         accessibilityHint={isSelected ? "Tap to clear filter" : `Filter by ${name}`}
       >
-        <Text style={styles.categoryEmoji} accessibilityElementsHidden={true}>{emoji}</Text>
+        <Icon size={24} color={isSelected ? '#FFF' : color} strokeWidth={2} />
         <Text style={[
           styles.categoryName, 
           { color: isSelected ? '#FFF' : theme.text.primary }
@@ -391,8 +392,7 @@ const styles = StyleSheet.create({
     marginRight: 10,
     minWidth: 80,
   },
-  categoryEmoji: {
-    fontSize: 24,
+  categoryIcon: {
     marginBottom: 4,
   },
   categoryName: {

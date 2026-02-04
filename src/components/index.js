@@ -24,3 +24,6 @@ export { ShareableTeaCard } from './ShareableTeaCard';
 export { ShareableComparisonCard } from './ShareableComparisonCard';
 export { default as Avatar } from './Avatar';
 export { default as AvatarPicker, AVATAR_STYLES } from './AvatarPicker';
+
+// Custom tea icons (Lucide-style)
+export * from './icons';

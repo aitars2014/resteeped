@@ -9,21 +9,21 @@ const TeawareContext = createContext({});
 
 export const useTeaware = () => useContext(TeawareContext);
 
-// Default teaware types
+// Default teaware types - icon names reference custom icons or Lucide
 export const TEAWARE_TYPES = [
-  { id: 'gaiwan', name: 'Gaiwan', emoji: '🫖' },
-  { id: 'yixing', name: 'Yixing Teapot', emoji: '🏺' },
-  { id: 'teapot', name: 'Teapot', emoji: '☕' },
-  { id: 'kyusu', name: 'Kyusu', emoji: '🍵' },
-  { id: 'gongfu_set', name: 'Gongfu Set', emoji: '🫖' },
-  { id: 'infuser', name: 'Infuser/Strainer', emoji: '🥄' },
-  { id: 'cup', name: 'Tea Cup', emoji: '🍵' },
-  { id: 'mug', name: 'Mug', emoji: '☕' },
-  { id: 'travel', name: 'Travel Tumbler', emoji: '🥤' },
-  { id: 'kettle', name: 'Kettle', emoji: '🫖' },
-  { id: 'scale', name: 'Tea Scale', emoji: '⚖️' },
-  { id: 'cha_hai', name: 'Cha Hai (Pitcher)', emoji: '🫗' },
-  { id: 'other', name: 'Other', emoji: '🍃' },
+  { id: 'gaiwan', name: 'Gaiwan', icon: 'Gaiwan' },
+  { id: 'yixing', name: 'Yixing Teapot', icon: 'YixingPot' },
+  { id: 'teapot', name: 'Teapot', icon: 'Teapot' },
+  { id: 'kyusu', name: 'Kyusu', icon: 'Kyusu' },
+  { id: 'gongfu_set', name: 'Gongfu Set', icon: 'Gaiwan' },
+  { id: 'infuser', name: 'Infuser/Strainer', icon: 'Filter' },
+  { id: 'cup', name: 'Tea Cup', icon: 'TeaCup' },
+  { id: 'mug', name: 'Mug', icon: 'Coffee' },
+  { id: 'travel', name: 'Travel Tumbler', icon: 'Cup' },
+  { id: 'kettle', name: 'Kettle', icon: 'Teapot' },
+  { id: 'scale', name: 'Tea Scale', icon: 'Scale' },
+  { id: 'cha_hai', name: 'Cha Hai (Pitcher)', icon: 'Droplets' },
+  { id: 'other', name: 'Other', icon: 'Package' },
 ];
 
 // Default materials
