@@ -126,15 +126,20 @@ const ActivityCard = ({ activity, theme, onTeaPress }) => {
         return (
           <>
             <View style={styles.activityHeader}>
-              <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
-              <View style={styles.activityHeaderText}>
-                <Text style={[styles.userName, { color: theme.text.primary }]}>
-                  {activity.user.name}
-                </Text>
-                <Text style={[styles.activityAction, { color: theme.text.secondary }]}>
-                  reviewed a tea
-                </Text>
-              </View>
+              <TouchableOpacity 
+                style={styles.userTouchable}
+                onPress={() => navigation.navigate('UserProfile', { userId: activity.user.id, userName: activity.user.name })}
+              >
+                <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
+                <View style={styles.activityHeaderText}>
+                  <Text style={[styles.userName, { color: theme.text.primary }]}>
+                    {activity.user.name}
+                  </Text>
+                  <Text style={[styles.activityAction, { color: theme.text.secondary }]}>
+                    reviewed a tea
+                  </Text>
+                </View>
+              </TouchableOpacity>
               <Text style={[styles.timestamp, { color: theme.text.tertiary }]}>
                 {formatRelativeTime(activity.timestamp)}
               </Text>
@@ -175,15 +180,20 @@ const ActivityCard = ({ activity, theme, onTeaPress }) => {
         return (
           <>
             <View style={styles.activityHeader}>
-              <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
-              <View style={styles.activityHeaderText}>
-                <Text style={[styles.userName, { color: theme.text.primary }]}>
-                  {activity.user.name}
-                </Text>
-                <Text style={[styles.activityAction, { color: theme.text.secondary }]}>
-                  added to their collection
-                </Text>
-              </View>
+              <TouchableOpacity 
+                style={styles.userTouchable}
+                onPress={() => navigation.navigate('UserProfile', { userId: activity.user.id, userName: activity.user.name })}
+              >
+                <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
+                <View style={styles.activityHeaderText}>
+                  <Text style={[styles.userName, { color: theme.text.primary }]}>
+                    {activity.user.name}
+                  </Text>
+                  <Text style={[styles.activityAction, { color: theme.text.secondary }]}>
+                    added to their collection
+                  </Text>
+                </View>
+              </TouchableOpacity>
               <Text style={[styles.timestamp, { color: theme.text.tertiary }]}>
                 {formatRelativeTime(activity.timestamp)}
               </Text>
@@ -215,15 +225,20 @@ const ActivityCard = ({ activity, theme, onTeaPress }) => {
         return (
           <>
             <View style={styles.activityHeader}>
-              <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
-              <View style={styles.activityHeaderText}>
-                <Text style={[styles.userName, { color: theme.text.primary }]}>
-                  {activity.user.name}
-                </Text>
-                <Text style={[styles.activityAction, { color: theme.text.secondary }]}>
-                  brewed a cup
-                </Text>
-              </View>
+              <TouchableOpacity 
+                style={styles.userTouchable}
+                onPress={() => navigation.navigate('UserProfile', { userId: activity.user.id, userName: activity.user.name })}
+              >
+                <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
+                <View style={styles.activityHeaderText}>
+                  <Text style={[styles.userName, { color: theme.text.primary }]}>
+                    {activity.user.name}
+                  </Text>
+                  <Text style={[styles.activityAction, { color: theme.text.secondary }]}>
+                    brewed a cup
+                  </Text>
+                </View>
+              </TouchableOpacity>
               <Text style={[styles.timestamp, { color: theme.text.tertiary }]}>
                 {formatRelativeTime(activity.timestamp)}
               </Text>
@@ -500,6 +515,12 @@ const styles = StyleSheet.create({
   userAvatar: {
     fontSize: 32,
     marginRight: 10,
+  },
+  userTouchable: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    gap: 10,
   },
   activityHeaderText: {
     flex: 1,

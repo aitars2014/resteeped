@@ -12,3 +12,5 @@ export { default as ActivityFeedScreen } from './ActivityFeedScreen';
 export { OnboardingScreen, isOnboardingComplete, resetOnboarding } from './OnboardingScreen';
 export { default as TeawareScreen } from './TeawareScreen';
 export { default as AddTeaScreen } from './AddTeaScreen';
+export { default as TeawareDetailScreen } from './TeawareDetailScreen';
+export { default as UserProfileScreen } from './UserProfileScreen';
