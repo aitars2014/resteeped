@@ -1,6 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
+
+const BREW_HISTORY_KEY = '@resteeped:brew_history';
 
 export const useBrewHistory = () => {
   const { user, isDevMode } = useAuth();
@@ -11,7 +14,21 @@ export const useBrewHistory = () => {
   const isLocalMode = !isSupabaseConfigured() || isDevMode;
 
   const fetchBrewHistory = useCallback(async () => {
-    if (!user || isLocalMode) {
+    if (isLocalMode) {
+      // Load from AsyncStorage in dev mode
+      try {
+        const stored = await AsyncStorage.getItem(BREW_HISTORY_KEY);
+        if (stored) {
+          setBrewSessions(JSON.parse(stored));
+        }
+      } catch (err) {
+        console.error('Error loading local brew history:', err);
+      }
+      setLoading(false);
+      return;
+    }
+
+    if (!user) {
       setLoading(false);
       return;
     }
@@ -42,7 +59,7 @@ export const useBrewHistory = () => {
   }, [fetchBrewHistory]);
 
   const logBrewSession = async ({ teaId, steepTimeSeconds, temperatureF, teaData = null }) => {
-    if (!user || isLocalMode) {
+    if (isLocalMode) {
       // Store locally for dev mode or non-logged-in users
       const session = {
         id: Date.now().toString(),
@@ -53,8 +70,19 @@ export const useBrewHistory = () => {
         created_at: new Date().toISOString(),
         tea: teaData, // Store tea data for display in dev mode
       };
-      setBrewSessions(prev => [session, ...prev]);
+      const newSessions = [session, ...brewSessions];
+      setBrewSessions(newSessions);
+      // Persist to AsyncStorage
+      try {
+        await AsyncStorage.setItem(BREW_HISTORY_KEY, JSON.stringify(newSessions.slice(0, 100)));
+      } catch (err) {
+        console.error('Error saving local brew history:', err);
+      }
       return { data: session, error: null };
+    }
+    
+    if (!user) {
+      return { error: new Error('User not logged in') };
     }
 
     try {

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Linking,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -22,9 +23,10 @@ import {
 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
-import { Button, StarRating, TeaCard } from '../components';
+import { Button, StarRating, TeaCard, WriteCompanyReviewModal } from '../components';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
+import { useCompanyReviews } from '../hooks';
 
 const CompanyProfileScreen = ({ route, navigation }) => {
   const { theme } = useTheme();
@@ -35,6 +37,10 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   const [topTeas, setTopTeas] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(!passedCompany);
+  const [showReviewModal, setShowReviewModal] = useState(false);
+
+  // Get the company reviews hook for submitting reviews
+  const { submitReview, userReview, refreshReviews } = useCompanyReviews(companyId || passedCompany?.id);
 
   useEffect(() => {
     if (companyId && !passedCompany) {
@@ -118,6 +124,31 @@ const CompanyProfileScreen = ({ route, navigation }) => {
     }
   };
 
+  const handleWriteReview = () => {
+    if (!user && !isDevMode) {
+      Alert.alert(
+        'Sign In Required',
+        'Please sign in to write a review.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Sign In', onPress: () => navigation.navigate('Profile') },
+        ]
+      );
+      return;
+    }
+    setShowReviewModal(true);
+  };
+
+  const handleSubmitReview = async (reviewData) => {
+    const { error } = await submitReview(reviewData);
+    if (error) {
+      Alert.alert('Error', 'Failed to submit review. Please try again.');
+      return;
+    }
+    setShowReviewModal(false);
+    fetchReviews(); // Refresh the reviews list
+  };
+
   if (loading) {
     return (
       <View style={[styles.loadingContainer, { backgroundColor: theme.background.primary }]}>
@@ -145,13 +176,20 @@ const CompanyProfileScreen = ({ route, navigation }) => {
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
         <View style={styles.header}>
-          {company.banner_url ? (
-            <Image source={{ uri: company.banner_url }} style={styles.banner} />
-          ) : (
-            <LinearGradient
-              colors={[company.primary_color || theme.accent.primary, theme.background.secondary]}
-              style={styles.banner}
-            />
+          {/* Always show gradient banner for visual appeal */}
+          <LinearGradient
+            colors={[
+              company.primary_color || theme.accent.primary,
+              company.primary_color 
+                ? `${company.primary_color}88` 
+                : `${theme.accent.primary}88`,
+              theme.background.secondary,
+            ]}
+            locations={[0, 0.6, 1]}
+            style={styles.banner}
+          />
+          {company.banner_url && (
+            <Image source={{ uri: company.banner_url }} style={styles.bannerImage} />
           )}
           
           <SafeAreaView style={styles.headerOverlay}>
@@ -159,13 +197,17 @@ const CompanyProfileScreen = ({ route, navigation }) => {
               style={styles.backButton}
               onPress={() => navigation.goBack()}
             >
-              <ChevronLeft size={28} color={theme.text.primary} />
+              <ChevronLeft size={28} color={theme.text.inverse} />
             </TouchableOpacity>
           </SafeAreaView>
 
-          <View style={[styles.logoContainer, { borderColor: theme.background.primary }]}>
+          <View style={[styles.logoContainer, { borderColor: theme.background.primary, backgroundColor: theme.background.primary }]}>
             {company.logo_url ? (
-              <Image source={{ uri: company.logo_url }} style={[styles.logo, { borderColor: theme.background.primary }]} />
+              <Image 
+                source={{ uri: company.logo_url }} 
+                style={[styles.logo, { borderColor: theme.background.primary }]} 
+                resizeMode="contain"
+              />
             ) : (
               <View style={[styles.logo, styles.logoPlaceholder, { backgroundColor: theme.background.secondary, borderColor: theme.background.primary }]}>
                 <Text style={[styles.logoPlaceholderText, { color: theme.text.secondary }]}>
@@ -322,7 +364,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
             <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>
               Reviews {company.rating_count > 0 && `(${company.rating_count})`}
             </Text>
-            <TouchableOpacity style={styles.writeReviewButton}>
+            <TouchableOpacity style={styles.writeReviewButton} onPress={handleWriteReview}>
               <MessageSquare size={16} color={theme.accent.primary} />
               <Text style={[styles.writeReviewText, { color: theme.accent.primary }]}>Write Review</Text>
             </TouchableOpacity>
@@ -353,6 +395,22 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
         <View style={{ height: 40 }} />
       </ScrollView>
+
+      {/* Write Review Modal */}
+      <WriteCompanyReviewModal
+        visible={showReviewModal}
+        onClose={() => setShowReviewModal(false)}
+        onSubmit={handleSubmitReview}
+        companyName={company?.name}
+        initialRating={userReview?.rating || 0}
+        initialText={userReview?.review_text || ''}
+        initialCategoryRatings={{
+          quality: userReview?.quality_rating || 0,
+          shipping: userReview?.shipping_rating || 0,
+          service: userReview?.service_rating || 0,
+          value: userReview?.value_rating || 0,
+        }}
+      />
     </View>
   );
 };
@@ -381,6 +439,16 @@ const styles = StyleSheet.create({
   banner: {
     width: '100%',
     height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+  },
+  bannerImage: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    top: 0,
+    left: 0,
   },
   headerOverlay: {
     position: 'absolute',
