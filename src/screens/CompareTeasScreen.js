@@ -2,35 +2,18 @@ import React, { useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   ScrollView,
   TouchableOpacity,
   Image,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, Plus, X, Thermometer, Clock, Zap } from 'lucide-react-native';
-import { colors, typography, spacing, getTeaTypeColor, getPlaceholderImage } from '../constants';
+import { ChevronLeft, Plus, X } from 'lucide-react-native';
+import { typography, spacing, getPlaceholderImage } from '../constants';
 import { StarRating, TeaTypeBadge, CaffeineIndicator, TeaPickerModal } from '../components';
-
-const ComparisonRow = ({ label, values, highlight = false }) => (
-  <View style={[styles.comparisonRow, highlight && styles.highlightRow]}>
-    <Text style={styles.rowLabel}>{label}</Text>
-    <View style={styles.rowValues}>
-      {values.map((value, index) => (
-        <View key={index} style={styles.rowValueCell}>
-          {typeof value === 'string' || typeof value === 'number' ? (
-            <Text style={styles.rowValue}>{value || '—'}</Text>
-          ) : (
-            value
-          )}
-        </View>
-      ))}
-    </View>
-  </View>
-);
+import { useTheme } from '../context';
 
 export const CompareTeasScreen = ({ route, navigation }) => {
+  const { theme } = useTheme();
   const { initialTeas = [] } = route.params || {};
   const [teas, setTeas] = useState(initialTeas.slice(0, 3));
   const [showPicker, setShowPicker] = useState(false);
@@ -49,25 +32,50 @@ export const CompareTeasScreen = ({ route, navigation }) => {
     }
   };
   
+  const ComparisonRow = ({ label, values, highlight = false }) => (
+    <View style={[
+      styles.comparisonRow, 
+      { borderBottomColor: theme.border.light },
+      highlight && { backgroundColor: theme.accent.primary + '10' }
+    ]}>
+      <Text style={[styles.rowLabel, { color: theme.text.secondary }]}>{label}</Text>
+      <View style={styles.rowValues}>
+        {values.map((value, index) => (
+          <View key={index} style={[styles.rowValueCell, { borderLeftColor: theme.border.light }]}>
+            {typeof value === 'string' || typeof value === 'number' ? (
+              <Text style={[styles.rowValue, { color: theme.text.primary }]}>{value || '—'}</Text>
+            ) : (
+              value
+            )}
+          </View>
+        ))}
+      </View>
+    </View>
+  );
+  
   const renderTeaHeader = (tea, index) => {
     if (!tea) {
       return (
-        <TouchableOpacity style={styles.addTeaCard} onPress={addTea}>
-          <Plus size={32} color={colors.text.secondary} />
-          <Text style={styles.addTeaText}>Add Tea</Text>
+        <TouchableOpacity 
+          style={[styles.addTeaCard, { 
+            backgroundColor: theme.background.secondary,
+            borderColor: theme.border.medium,
+          }]} 
+          onPress={addTea}
+        >
+          <Plus size={32} color={theme.text.secondary} />
+          <Text style={[styles.addTeaText, { color: theme.text.secondary }]}>Add Tea</Text>
         </TouchableOpacity>
       );
     }
     
-    const teaColor = getTeaTypeColor(tea.teaType);
-    
     return (
-      <View style={styles.teaHeaderCard}>
+      <View style={[styles.teaHeaderCard, { backgroundColor: theme.background.secondary }]}>
         <TouchableOpacity 
-          style={styles.removeButton}
+          style={[styles.removeButton, { backgroundColor: theme.background.primary }]}
           onPress={() => removeTea(index)}
         >
-          <X size={16} color={colors.text.secondary} />
+          <X size={16} color={theme.text.secondary} />
         </TouchableOpacity>
         
         <View style={styles.teaImageContainer}>
@@ -77,8 +85,8 @@ export const CompareTeasScreen = ({ route, navigation }) => {
           />
         </View>
         
-        <Text style={styles.teaName} numberOfLines={2}>{tea.name}</Text>
-        <Text style={styles.teaBrand} numberOfLines={1}>{tea.brandName}</Text>
+        <Text style={[styles.teaName, { color: theme.text.primary }]} numberOfLines={2}>{tea.name}</Text>
+        <Text style={[styles.teaBrand, { color: theme.text.secondary }]} numberOfLines={1}>{tea.brandName}</Text>
       </View>
     );
   };
@@ -86,16 +94,16 @@ export const CompareTeasScreen = ({ route, navigation }) => {
   const slots = [teas[0] || null, teas[1] || null, teas[2] || null];
   
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]} edges={['top']}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { borderBottomColor: theme.border.light }]}>
         <TouchableOpacity 
           style={styles.backButton}
           onPress={() => navigation.goBack()}
         >
-          <ChevronLeft size={24} color={colors.text.primary} />
+          <ChevronLeft size={24} color={theme.text.primary} />
         </TouchableOpacity>
-        <Text style={styles.title}>Compare Teas</Text>
+        <Text style={[styles.title, { color: theme.text.primary }]}>Compare Teas</Text>
         <View style={{ width: 40 }} />
       </View>
       
@@ -110,7 +118,7 @@ export const CompareTeasScreen = ({ route, navigation }) => {
         </View>
         
         {teas.length >= 2 && (
-          <View style={styles.comparisonTable}>
+          <View style={[styles.comparisonTable, { backgroundColor: theme.background.secondary }]}>
             {/* Type */}
             <ComparisonRow
               label="Type"
@@ -126,7 +134,7 @@ export const CompareTeasScreen = ({ route, navigation }) => {
               values={slots.map(tea => tea ? (
                 <View style={styles.ratingCell}>
                   <StarRating rating={tea.avgRating || 0} size={12} />
-                  <Text style={styles.ratingNumber}>
+                  <Text style={[styles.ratingNumber, { color: theme.text.secondary }]}>
                     {(tea.avgRating || 0).toFixed(1)}
                   </Text>
                 </View>
@@ -178,8 +186,8 @@ export const CompareTeasScreen = ({ route, navigation }) => {
         
         {teas.length < 2 && (
           <View style={styles.emptyState}>
-            <Text style={styles.emptyTitle}>Select teas to compare</Text>
-            <Text style={styles.emptySubtitle}>
+            <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>Select teas to compare</Text>
+            <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
               Add at least 2 teas to see a side-by-side comparison
             </Text>
           </View>
@@ -200,10 +208,9 @@ export const CompareTeasScreen = ({ route, navigation }) => {
   );
 };
 
-const styles = StyleSheet.create({
+const styles = {
   container: {
     flex: 1,
-    backgroundColor: colors.background.primary,
   },
   header: {
     flexDirection: 'row',
@@ -212,7 +219,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screenHorizontal,
     paddingVertical: spacing.md,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
   },
   backButton: {
     width: 40,
@@ -222,7 +228,6 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.headingSmall,
-    color: colors.text.primary,
   },
   teaHeaders: {
     flexDirection: 'row',
@@ -234,26 +239,22 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   teaHeaderCard: {
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.md,
     alignItems: 'center',
     minHeight: 160,
   },
   addTeaCard: {
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     padding: spacing.md,
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: 160,
     borderWidth: 2,
-    borderColor: colors.border.light,
     borderStyle: 'dashed',
   },
   addTeaText: {
     ...typography.bodySmall,
-    color: colors.text.secondary,
     marginTop: spacing.sm,
   },
   removeButton: {
@@ -263,7 +264,6 @@ const styles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: colors.background.primary,
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1,
@@ -279,41 +279,29 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
-  teaImagePlaceholder: {
-    width: '100%',
-    height: '100%',
-  },
   teaName: {
     ...typography.bodySmall,
     fontWeight: '600',
-    color: colors.text.primary,
     textAlign: 'center',
     marginBottom: 2,
   },
   teaBrand: {
     ...typography.caption,
-    color: colors.text.secondary,
     textAlign: 'center',
   },
   comparisonTable: {
     marginHorizontal: spacing.screenHorizontal,
-    backgroundColor: colors.background.secondary,
     borderRadius: spacing.cardBorderRadius,
     overflow: 'hidden',
   },
   comparisonRow: {
     flexDirection: 'row',
     borderBottomWidth: 1,
-    borderBottomColor: colors.border.light,
     minHeight: 48,
-  },
-  highlightRow: {
-    backgroundColor: colors.accent.primary + '08',
   },
   rowLabel: {
     width: 80,
     ...typography.caption,
-    color: colors.text.secondary,
     fontWeight: '500',
     padding: spacing.sm,
     alignSelf: 'center',
@@ -328,11 +316,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderLeftWidth: 1,
-    borderLeftColor: colors.border.light,
   },
   rowValue: {
     ...typography.bodySmall,
-    color: colors.text.primary,
     textAlign: 'center',
   },
   ratingCell: {
@@ -341,7 +327,6 @@ const styles = StyleSheet.create({
   },
   ratingNumber: {
     ...typography.caption,
-    color: colors.text.secondary,
   },
   emptyState: {
     alignItems: 'center',
@@ -351,14 +336,12 @@ const styles = StyleSheet.create({
   },
   emptyTitle: {
     ...typography.headingSmall,
-    color: colors.text.primary,
     marginBottom: spacing.sm,
   },
   emptySubtitle: {
     ...typography.body,
-    color: colors.text.secondary,
     textAlign: 'center',
   },
-});
+};
 
 export default CompareTeasScreen;
