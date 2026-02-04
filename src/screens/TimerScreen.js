@@ -9,14 +9,22 @@ import {
   Alert,
   Platform,
   AppState,
+  ScrollView,
+  TextInput,
+  Modal,
+  Dimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
-import { Minus, Plus, Coffee, Bell, BellOff } from 'lucide-react-native';
+import { Minus, Plus, Coffee, Bell, BellOff, Repeat, ChevronLeft, ChevronRight, NotebookPen, X, Check } from 'lucide-react-native';
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
 import { typography, spacing } from '../constants';
 import { Button, TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
 import { useAuth, useTheme } from '../context';
+import { getBrewingGuide } from '../constants/brewingGuides';
+
+const { width } = Dimensions.get('window');
 
 // Configure notification handler
 Notifications.setNotificationHandler({
@@ -27,10 +35,49 @@ Notifications.setNotificationHandler({
   }),
 });
 
-const CIRCLE_SIZE = 260;
+const CIRCLE_SIZE = 240;
 const STROKE_WIDTH = 12;
 const RADIUS = (CIRCLE_SIZE - STROKE_WIDTH) / 2;
 const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+
+// Get recommended steep times for multiple infusions
+const getInfusionTimes = (tea, totalInfusions) => {
+  const guide = getBrewingGuide(tea);
+  const baseTime = guide.steepTime.min;
+  const times = [];
+  
+  // Different patterns for different tea types
+  const teaType = tea?.teaType?.toLowerCase();
+  
+  if (teaType === 'puerh') {
+    // Pu'erh: Start very short, increase gradually
+    for (let i = 0; i < totalInfusions; i++) {
+      if (i === 0) times.push(15); // 15 sec rinse/first steep
+      else if (i === 1) times.push(20);
+      else if (i < 5) times.push(20 + (i - 1) * 5);
+      else times.push(30 + (i - 4) * 10);
+    }
+  } else if (teaType === 'oolong') {
+    // Oolong: Start short, increase moderately
+    for (let i = 0; i < totalInfusions; i++) {
+      if (i === 0) times.push(30);
+      else if (i < 3) times.push(30 + i * 15);
+      else times.push(60 + (i - 2) * 20);
+    }
+  } else if (teaType === 'green' || teaType === 'white') {
+    // Green/White: Moderate start, gentle increase
+    for (let i = 0; i < totalInfusions; i++) {
+      times.push(Math.round((baseTime * 60) + i * 30));
+    }
+  } else {
+    // Default: Linear increase from base time
+    for (let i = 0; i < totalInfusions; i++) {
+      times.push(Math.round(baseTime * 60) + i * 30);
+    }
+  }
+  
+  return times;
+};
 
 export const TimerScreen = ({ route }) => {
   const { theme, getTeaTypeColor } = useTheme();
@@ -40,10 +87,25 @@ export const TimerScreen = ({ route }) => {
   const { user } = useAuth();
   const { logBrewSession, todayBrewCount } = useBrewHistory();
   
+  // Get brewing guide
+  const guide = tea ? getBrewingGuide(tea) : null;
+  const maxInfusions = guide?.infusions || 1;
+  const isMultiSteep = maxInfusions > 1;
+  
   const defaultTimeSeconds = tea?.steepTimeMin 
     ? Math.round(tea.steepTimeMin * 60) 
     : 180;
   
+  // Multi-steep state
+  const [multiSteepMode, setMultiSteepMode] = useState(isMultiSteep);
+  const [currentInfusion, setCurrentInfusion] = useState(1);
+  const [totalInfusions, setTotalInfusions] = useState(Math.min(maxInfusions, 7));
+  const [infusionTimes, setInfusionTimes] = useState([]);
+  const [infusionNotes, setInfusionNotes] = useState({});
+  const [showNotesModal, setShowNotesModal] = useState(false);
+  const [currentNote, setCurrentNote] = useState('');
+  
+  // Timer state
   const [totalSeconds, setTotalSeconds] = useState(defaultTimeSeconds);
   const [remainingSeconds, setRemainingSeconds] = useState(defaultTimeSeconds);
   const [isRunning, setIsRunning] = useState(false);
@@ -55,6 +117,16 @@ export const TimerScreen = ({ route }) => {
   const notificationIdRef = useRef(null);
   const appStateRef = useRef(AppState.currentState);
   const timerEndTimeRef = useRef(null);
+  
+  // Initialize infusion times when tea changes
+  useEffect(() => {
+    if (tea && multiSteepMode) {
+      const times = getInfusionTimes(tea, totalInfusions);
+      setInfusionTimes(times);
+      setTotalSeconds(times[0] || defaultTimeSeconds);
+      setRemainingSeconds(times[0] || defaultTimeSeconds);
+    }
+  }, [tea?.id, multiSteepMode, totalInfusions]);
   
   // Request notification permissions on mount
   useEffect(() => {
@@ -77,20 +149,18 @@ export const TimerScreen = ({ route }) => {
     return () => subscription?.remove();
   }, []);
   
-  // Handle app coming back to foreground - update timer based on elapsed time
+  // Handle app coming back to foreground
   const handleAppStateChange = (nextAppState) => {
     if (
       appStateRef.current.match(/inactive|background/) &&
       nextAppState === 'active' &&
       timerEndTimeRef.current
     ) {
-      // App came back to foreground - recalculate remaining time
       const now = Date.now();
       const endTime = timerEndTimeRef.current;
       const remaining = Math.max(0, Math.ceil((endTime - now) / 1000));
       
       if (remaining <= 0) {
-        // Timer finished while in background
         setRemainingSeconds(0);
         setIsRunning(false);
         setIsComplete(true);
@@ -102,28 +172,25 @@ export const TimerScreen = ({ route }) => {
     appStateRef.current = nextAppState;
   };
   
-  // Schedule a notification for when the timer ends
+  // Schedule notification
   const scheduleNotification = async (seconds) => {
     if (!notificationsEnabled) return;
-    
-    // Cancel any existing notification
     await cancelNotification();
-    
-    // Store when timer will end
     timerEndTimeRef.current = Date.now() + (seconds * 1000);
     
     const teaName = tea?.name || 'Your tea';
+    const infusionText = multiSteepMode ? ` (Infusion ${currentInfusion})` : '';
     
     const id = await Notifications.scheduleNotificationAsync({
       content: {
         title: '☕ Tea is Ready!',
-        body: `${teaName} has finished steeping. Enjoy!`,
+        body: `${teaName}${infusionText} has finished steeping.`,
         sound: true,
         priority: Notifications.AndroidNotificationPriority.HIGH,
       },
       trigger: {
         type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-        seconds: Math.max(1, seconds), // Ensure at least 1 second
+        seconds: Math.max(1, seconds),
         repeats: false,
       },
     });
@@ -131,7 +198,6 @@ export const TimerScreen = ({ route }) => {
     notificationIdRef.current = id;
   };
   
-  // Cancel scheduled notification
   const cancelNotification = async () => {
     if (notificationIdRef.current) {
       await Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
@@ -145,17 +211,22 @@ export const TimerScreen = ({ route }) => {
     const newDefault = tea?.steepTimeMin 
       ? Math.round(tea.steepTimeMin * 60) 
       : 180;
-    setTotalSeconds(newDefault);
-    setRemainingSeconds(newDefault);
+    
+    if (!multiSteepMode) {
+      setTotalSeconds(newDefault);
+      setRemainingSeconds(newDefault);
+    }
+    
     setIsComplete(false);
     setHasLogged(false);
-    // Cancel any pending notification when switching teas
+    setCurrentInfusion(1);
+    setInfusionNotes({});
     cancelNotification();
   }, [tea?.id]);
   
+  // Timer effect
   useEffect(() => {
     if (isRunning && remainingSeconds > 0) {
-      // Schedule notification when timer starts
       if (notificationsEnabled) {
         scheduleNotification(remainingSeconds);
       }
@@ -167,7 +238,6 @@ export const TimerScreen = ({ route }) => {
             setIsRunning(false);
             setIsComplete(true);
             Vibration.vibrate([500, 200, 500, 200, 500]);
-            // Notification should have fired, clear the ref
             notificationIdRef.current = null;
             timerEndTimeRef.current = null;
             return 0;
@@ -176,7 +246,6 @@ export const TimerScreen = ({ route }) => {
         });
       }, 1000);
     } else if (!isRunning) {
-      // Cancel notification when paused
       cancelNotification();
     }
     
@@ -195,10 +264,12 @@ export const TimerScreen = ({ route }) => {
         teaId: tea?.id,
         steepTimeSeconds: totalSeconds,
         temperatureF: tea?.steepTempF,
-        teaData: tea, // Pass full tea data for dev mode
+        teaData: tea,
+        infusionNumber: multiSteepMode ? currentInfusion : null,
+        note: infusionNotes[currentInfusion] || null,
       });
     }
-  }, [isComplete, hasLogged, tea, totalSeconds, logBrewSession]);
+  }, [isComplete, hasLogged, tea, totalSeconds, currentInfusion, multiSteepMode, infusionNotes, logBrewSession]);
   
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
@@ -209,11 +280,18 @@ export const TimerScreen = ({ route }) => {
   const adjustTime = (delta) => {
     if (isRunning) return;
     
-    const newTime = Math.max(30, Math.min(900, totalSeconds + delta));
+    const newTime = Math.max(10, Math.min(900, totalSeconds + delta));
     setTotalSeconds(newTime);
     setRemainingSeconds(newTime);
     setIsComplete(false);
     setHasLogged(false);
+    
+    // Update infusion time if in multi-steep mode
+    if (multiSteepMode) {
+      const newTimes = [...infusionTimes];
+      newTimes[currentInfusion - 1] = newTime;
+      setInfusionTimes(newTimes);
+    }
   };
   
   const handleStartPause = () => {
@@ -235,6 +313,52 @@ export const TimerScreen = ({ route }) => {
     await cancelNotification();
   };
   
+  // Multi-steep navigation
+  const goToNextInfusion = () => {
+    if (currentInfusion < totalInfusions) {
+      const nextInfusion = currentInfusion + 1;
+      setCurrentInfusion(nextInfusion);
+      const nextTime = infusionTimes[nextInfusion - 1] || totalSeconds + 30;
+      setTotalSeconds(nextTime);
+      setRemainingSeconds(nextTime);
+      setIsComplete(false);
+      setHasLogged(false);
+    }
+  };
+  
+  const goToPrevInfusion = () => {
+    if (currentInfusion > 1) {
+      const prevInfusion = currentInfusion - 1;
+      setCurrentInfusion(prevInfusion);
+      const prevTime = infusionTimes[prevInfusion - 1] || totalSeconds - 30;
+      setTotalSeconds(Math.max(10, prevTime));
+      setRemainingSeconds(Math.max(10, prevTime));
+      setIsComplete(false);
+      setHasLogged(false);
+    }
+  };
+  
+  const handleSaveNote = () => {
+    if (currentNote.trim()) {
+      setInfusionNotes(prev => ({
+        ...prev,
+        [currentInfusion]: currentNote.trim(),
+      }));
+    } else {
+      // Remove note if empty
+      const newNotes = { ...infusionNotes };
+      delete newNotes[currentInfusion];
+      setInfusionNotes(newNotes);
+    }
+    setShowNotesModal(false);
+    setCurrentNote('');
+  };
+  
+  const openNotesModal = () => {
+    setCurrentNote(infusionNotes[currentInfusion] || '');
+    setShowNotesModal(true);
+  };
+  
   const progress = remainingSeconds / totalSeconds;
   const strokeDashoffset = CIRCUMFERENCE * (1 - progress);
   
@@ -242,142 +366,337 @@ export const TimerScreen = ({ route }) => {
     ? formatTime(Math.round(tea.steepTimeMin * 60))
     : null;
   
-  const isCustomTime = totalSeconds !== defaultTimeSeconds;
+  const isCustomTime = !multiSteepMode && totalSeconds !== defaultTimeSeconds;
   
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
-      {/* Header with brew count */}
-      <View style={styles.header}>
-        <View style={styles.headerLeft}>
-          <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Brew Timer</Text>
-          {/* Notification status indicator */}
-          <View style={[styles.notificationBadge, { backgroundColor: theme.background.secondary }, !notificationsEnabled && styles.notificationBadgeOff]}>
-            {notificationsEnabled ? (
-              <Bell size={12} color={theme.accent.primary} />
+      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
+        {/* Header with brew count */}
+        <View style={styles.header}>
+          <View style={styles.headerLeft}>
+            <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Brew Timer</Text>
+            <View style={[styles.notificationBadge, { backgroundColor: theme.background.secondary }, !notificationsEnabled && styles.notificationBadgeOff]}>
+              {notificationsEnabled ? (
+                <Bell size={12} color={theme.accent.primary} />
+              ) : (
+                <BellOff size={12} color={theme.text.secondary} />
+              )}
+            </View>
+          </View>
+          {todayBrewCount > 0 && (
+            <View style={[styles.brewCount, { backgroundColor: theme.background.secondary }]}>
+              <Coffee size={14} color={theme.accent.primary} />
+              <Text style={[styles.brewCountText, { color: theme.accent.primary }]}>{todayBrewCount} today</Text>
+            </View>
+          )}
+        </View>
+        
+        {/* Tea info if available */}
+        {tea && (
+          <View style={styles.teaInfo}>
+            <Text style={[styles.teaName, { color: theme.text.primary }]} numberOfLines={1}>{tea.name}</Text>
+            <TeaTypeBadge teaType={tea.teaType} size="small" />
+          </View>
+        )}
+        
+        {/* Multi-Steep Toggle (only show if tea supports it) */}
+        {tea && maxInfusions > 1 && (
+          <View style={styles.multiSteepToggle}>
+            <TouchableOpacity
+              style={[
+                styles.modeButton,
+                { borderColor: theme.border.medium },
+                !multiSteepMode && { backgroundColor: theme.accent.primary, borderColor: theme.accent.primary },
+              ]}
+              onPress={() => {
+                setMultiSteepMode(false);
+                setTotalSeconds(defaultTimeSeconds);
+                setRemainingSeconds(defaultTimeSeconds);
+                setCurrentInfusion(1);
+                setIsComplete(false);
+                setHasLogged(false);
+              }}
+            >
+              <Text style={[
+                styles.modeButtonText,
+                { color: theme.text.secondary },
+                !multiSteepMode && { color: theme.text.inverse },
+              ]}>
+                Single Steep
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.modeButton,
+                { borderColor: theme.border.medium },
+                multiSteepMode && { backgroundColor: theme.accent.primary, borderColor: theme.accent.primary },
+              ]}
+              onPress={() => {
+                setMultiSteepMode(true);
+                const times = getInfusionTimes(tea, totalInfusions);
+                setInfusionTimes(times);
+                setTotalSeconds(times[0] || defaultTimeSeconds);
+                setRemainingSeconds(times[0] || defaultTimeSeconds);
+              }}
+            >
+              <Repeat size={14} color={multiSteepMode ? theme.text.inverse : theme.text.secondary} style={{ marginRight: 4 }} />
+              <Text style={[
+                styles.modeButtonText,
+                { color: theme.text.secondary },
+                multiSteepMode && { color: theme.text.inverse },
+              ]}>
+                Gongfu ({maxInfusions})
+              </Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        
+        {/* Infusion Progress (Multi-Steep Mode) */}
+        {multiSteepMode && (
+          <View style={styles.infusionProgress}>
+            <View style={styles.infusionHeader}>
+              <TouchableOpacity 
+                onPress={goToPrevInfusion}
+                disabled={currentInfusion <= 1 || isRunning}
+                style={[styles.infusionNavButton, (currentInfusion <= 1 || isRunning) && { opacity: 0.3 }]}
+              >
+                <ChevronLeft size={24} color={theme.text.primary} />
+              </TouchableOpacity>
+              
+              <View style={styles.infusionInfo}>
+                <Text style={[styles.infusionLabel, { color: theme.text.secondary }]}>Infusion</Text>
+                <Text style={[styles.infusionNumber, { color: theme.accent.primary }]}>
+                  {currentInfusion} of {totalInfusions}
+                </Text>
+              </View>
+              
+              <TouchableOpacity 
+                onPress={goToNextInfusion}
+                disabled={currentInfusion >= totalInfusions || isRunning}
+                style={[styles.infusionNavButton, (currentInfusion >= totalInfusions || isRunning) && { opacity: 0.3 }]}
+              >
+                <ChevronRight size={24} color={theme.text.primary} />
+              </TouchableOpacity>
+            </View>
+            
+            {/* Infusion Dots */}
+            <View style={styles.infusionDots}>
+              {Array.from({ length: totalInfusions }).map((_, idx) => (
+                <View
+                  key={idx}
+                  style={[
+                    styles.infusionDot,
+                    { backgroundColor: theme.border.light },
+                    idx + 1 <= currentInfusion && { backgroundColor: teaColor?.primary || theme.accent.primary },
+                    idx + 1 === currentInfusion && styles.currentInfusionDot,
+                  ]}
+                />
+              ))}
+            </View>
+            
+            {/* Add Note Button */}
+            <TouchableOpacity 
+              style={[styles.addNoteButton, { borderColor: theme.border.light }]}
+              onPress={openNotesModal}
+            >
+              <NotebookPen size={14} color={theme.text.secondary} />
+              <Text style={[styles.addNoteText, { color: theme.text.secondary }]}>
+                {infusionNotes[currentInfusion] ? 'Edit note' : 'Add note for this infusion'}
+              </Text>
+              {infusionNotes[currentInfusion] && (
+                <Check size={14} color={theme.accent.primary} />
+              )}
+            </TouchableOpacity>
+          </View>
+        )}
+        
+        {/* Timer Circle */}
+        <View style={styles.timerContainer}>
+          <Svg width={CIRCLE_SIZE} height={CIRCLE_SIZE}>
+            <Circle
+              cx={CIRCLE_SIZE / 2}
+              cy={CIRCLE_SIZE / 2}
+              r={RADIUS}
+              stroke={theme.border.light}
+              strokeWidth={STROKE_WIDTH}
+              fill={theme.background.secondary}
+            />
+            <Circle
+              cx={CIRCLE_SIZE / 2}
+              cy={CIRCLE_SIZE / 2}
+              r={RADIUS}
+              stroke={teaColor?.primary || theme.accent.primary}
+              strokeWidth={STROKE_WIDTH}
+              fill="transparent"
+              strokeLinecap="round"
+              strokeDasharray={CIRCUMFERENCE}
+              strokeDashoffset={strokeDashoffset}
+              rotation="-90"
+              origin={`${CIRCLE_SIZE / 2}, ${CIRCLE_SIZE / 2}`}
+            />
+          </Svg>
+          
+          <View style={styles.timeDisplay}>
+            {isComplete ? (
+              <>
+                <Text style={styles.completeEmoji}>☕</Text>
+                <Text style={[styles.completeText, { color: theme.accent.primary }]}>Ready!</Text>
+              </>
             ) : (
-              <BellOff size={12} color={theme.text.secondary} />
+              <Text style={[styles.timeText, { color: theme.text.primary }]}>{formatTime(remainingSeconds)}</Text>
             )}
           </View>
         </View>
-        {todayBrewCount > 0 && (
-          <View style={[styles.brewCount, { backgroundColor: theme.background.secondary }]}>
-            <Coffee size={14} color={theme.accent.primary} />
-            <Text style={[styles.brewCountText, { color: theme.accent.primary }]}>{todayBrewCount} today</Text>
+        
+        {/* Recommended time label */}
+        {!isComplete && (
+          <Text style={[styles.recommendedLabel, { color: theme.text.secondary }]}>
+            {multiSteepMode 
+              ? `Steep ${currentInfusion}: ${formatTime(infusionTimes[currentInfusion - 1] || totalSeconds)}`
+              : recommendedTime 
+                ? `Recommended: ${recommendedTime}${isCustomTime ? ' • Custom' : ''}`
+                : 'Set your steep time'
+            }
+          </Text>
+        )}
+        
+        {/* Time adjustment controls */}
+        {!isComplete && (
+          <View style={styles.adjustControls}>
+            <TouchableOpacity 
+              style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
+              onPress={() => adjustTime(-15)}
+              disabled={isRunning}
+            >
+              <Minus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
+            </TouchableOpacity>
+            
+            <View style={styles.adjustTimeContainer}>
+              <Text style={[styles.adjustTimeText, { color: theme.text.primary }]}>{formatTime(totalSeconds)}</Text>
+              <Text style={[styles.adjustTimeLabel, { color: theme.text.secondary }]}>total</Text>
+            </View>
+            
+            <TouchableOpacity 
+              style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
+              onPress={() => adjustTime(15)}
+              disabled={isRunning}
+            >
+              <Plus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
+            </TouchableOpacity>
           </View>
         )}
-      </View>
-      
-      {/* Tea info if available */}
-      {tea && (
-        <View style={styles.teaInfo}>
-          <Text style={[styles.teaName, { color: theme.text.primary }]} numberOfLines={1}>{tea.name}</Text>
-          <TeaTypeBadge teaType={tea.teaType} size="small" />
-        </View>
-      )}
-      
-      {/* Timer Circle */}
-      <View style={styles.timerContainer}>
-        <Svg width={CIRCLE_SIZE} height={CIRCLE_SIZE}>
-          <Circle
-            cx={CIRCLE_SIZE / 2}
-            cy={CIRCLE_SIZE / 2}
-            r={RADIUS}
-            stroke={theme.border.light}
-            strokeWidth={STROKE_WIDTH}
-            fill={theme.background.secondary}
-          />
-          <Circle
-            cx={CIRCLE_SIZE / 2}
-            cy={CIRCLE_SIZE / 2}
-            r={RADIUS}
-            stroke={teaColor?.primary || theme.accent.primary}
-            strokeWidth={STROKE_WIDTH}
-            fill="transparent"
-            strokeLinecap="round"
-            strokeDasharray={CIRCUMFERENCE}
-            strokeDashoffset={strokeDashoffset}
-            rotation="-90"
-            origin={`${CIRCLE_SIZE / 2}, ${CIRCLE_SIZE / 2}`}
-          />
-        </Svg>
         
-        <View style={styles.timeDisplay}>
-          {isComplete ? (
-            <>
-              <Text style={styles.completeEmoji}>☕</Text>
-              <Text style={[styles.completeText, { color: theme.accent.primary }]}>Ready!</Text>
-            </>
-          ) : (
-            <Text style={[styles.timeText, { color: theme.text.primary }]}>{formatTime(remainingSeconds)}</Text>
-          )}
-        </View>
-      </View>
-      
-      {/* Recommended time label */}
-      {recommendedTime && !isComplete && (
-        <Text style={[styles.recommendedLabel, { color: theme.text.secondary }]}>
-          Recommended: {recommendedTime}
-          {isCustomTime && ' • Custom'}
-        </Text>
-      )}
-      
-      {/* Time adjustment controls */}
-      {!isComplete && (
-        <View style={styles.adjustControls}>
-          <TouchableOpacity 
-            style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
-            onPress={() => adjustTime(-30)}
-            disabled={isRunning}
-          >
-            <Minus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
-          </TouchableOpacity>
-          
-          <View style={styles.adjustTimeContainer}>
-            <Text style={[styles.adjustTimeText, { color: theme.text.primary }]}>{formatTime(totalSeconds)}</Text>
-            <Text style={[styles.adjustTimeLabel, { color: theme.text.secondary }]}>total</Text>
+        {/* Temperature display */}
+        {tea?.steepTempF && !isComplete && (
+          <View style={styles.tempContainer}>
+            <Text style={[styles.tempText, { color: theme.text.secondary }]}>🌡️ {tea.steepTempF}°F</Text>
           </View>
-          
-          <TouchableOpacity 
-            style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
-            onPress={() => adjustTime(30)}
-            disabled={isRunning}
-          >
-            <Plus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
-          </TouchableOpacity>
-        </View>
-      )}
-      
-      {/* Temperature display */}
-      {tea?.steepTempF && !isComplete && (
-        <View style={styles.tempContainer}>
-          <Text style={[styles.tempText, { color: theme.text.secondary }]}>🌡️ {tea.steepTempF}°F</Text>
-        </View>
-      )}
-      
-      {/* Control buttons */}
-      <View style={styles.buttonContainer}>
-        <Button 
-          title={isComplete ? "Brew Again" : isRunning ? "Pause" : "Start"}
-          onPress={handleStartPause}
-          variant="primary"
-          style={styles.button}
-        />
-        {!isComplete && (
+        )}
+        
+        {/* Show current note if exists */}
+        {multiSteepMode && infusionNotes[currentInfusion] && !isComplete && (
+          <View style={[styles.notePreview, { backgroundColor: theme.background.secondary }]}>
+            <NotebookPen size={14} color={theme.text.secondary} />
+            <Text style={[styles.notePreviewText, { color: theme.text.secondary }]} numberOfLines={2}>
+              {infusionNotes[currentInfusion]}
+            </Text>
+          </View>
+        )}
+        
+        {/* Control buttons */}
+        <View style={styles.buttonContainer}>
           <Button 
-            title="Reset"
-            onPress={handleReset}
-            variant="secondary"
+            title={isComplete ? (multiSteepMode && currentInfusion < totalInfusions ? "Next Infusion →" : "Brew Again") : isRunning ? "Pause" : "Start"}
+            onPress={isComplete && multiSteepMode && currentInfusion < totalInfusions ? goToNextInfusion : handleStartPause}
+            variant="primary"
             style={styles.button}
           />
+          {!isComplete && (
+            <Button 
+              title="Reset"
+              onPress={handleReset}
+              variant="secondary"
+              style={styles.button}
+            />
+          )}
+        </View>
+        
+        {/* Infusion Summary (when completed session) */}
+        {multiSteepMode && isComplete && Object.keys(infusionNotes).length > 0 && (
+          <View style={[styles.sessionSummary, { borderColor: theme.border.light }]}>
+            <Text style={[styles.summaryTitle, { color: theme.text.primary }]}>Session Notes</Text>
+            {Object.entries(infusionNotes).map(([infusion, note]) => (
+              <View key={infusion} style={styles.summaryItem}>
+                <Text style={[styles.summaryInfusion, { color: theme.accent.primary }]}>
+                  Infusion {infusion}:
+                </Text>
+                <Text style={[styles.summaryNote, { color: theme.text.secondary }]}>
+                  {note}
+                </Text>
+              </View>
+            ))}
+          </View>
         )}
-      </View>
+        
+        {/* Tip for no tea selected */}
+        {!tea && (
+          <Text style={[styles.tipText, { color: theme.text.secondary }]}>
+            Tip: Start a timer from a tea's detail page to track your brews
+          </Text>
+        )}
+      </ScrollView>
       
-      {/* Tip for no tea selected */}
-      {!tea && (
-        <Text style={[styles.tipText, { color: theme.text.secondary }]}>
-          Tip: Start a timer from a tea's detail page to track your brews
-        </Text>
-      )}
+      {/* Notes Modal */}
+      <Modal
+        visible={showNotesModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowNotesModal(false)}
+      >
+        <KeyboardAvoidingView 
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.modalOverlay}
+        >
+          <View style={[styles.notesModal, { backgroundColor: theme.background.primary }]}>
+            <View style={styles.notesModalHeader}>
+              <Text style={[styles.notesModalTitle, { color: theme.text.primary }]}>
+                Infusion {currentInfusion} Notes
+              </Text>
+              <TouchableOpacity onPress={() => setShowNotesModal(false)}>
+                <X size={24} color={theme.text.secondary} />
+              </TouchableOpacity>
+            </View>
+            
+            <Text style={[styles.notesModalSubtitle, { color: theme.text.secondary }]}>
+              Record your impressions of this steep
+            </Text>
+            
+            <TextInput
+              style={[styles.notesInput, { 
+                backgroundColor: theme.background.secondary,
+                borderColor: theme.border.light,
+                color: theme.text.primary,
+              }]}
+              placeholder="E.g., Lighter color, more floral notes..."
+              placeholderTextColor={theme.text.tertiary}
+              value={currentNote}
+              onChangeText={setCurrentNote}
+              multiline
+              numberOfLines={4}
+              textAlignVertical="top"
+            />
+            
+            <View style={styles.notesModalButtons}>
+              <Button
+                title="Save Note"
+                onPress={handleSaveNote}
+                variant="primary"
+                style={{ flex: 1 }}
+              />
+            </View>
+          </View>
+        </KeyboardAvoidingView>
+      </Modal>
     </SafeAreaView>
   );
 };
@@ -385,6 +704,9 @@ export const TimerScreen = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 40,
   },
   header: {
     flexDirection: 'row',
@@ -435,6 +757,80 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textAlign: 'center',
   },
+  multiSteepToggle: {
+    flexDirection: 'row',
+    paddingHorizontal: spacing.screenHorizontal,
+    gap: 10,
+    marginBottom: 16,
+  },
+  modeButton: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  modeButtonText: {
+    ...typography.bodySmall,
+    fontWeight: '500',
+  },
+  infusionProgress: {
+    paddingHorizontal: spacing.screenHorizontal,
+    marginBottom: 16,
+  },
+  infusionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
+  },
+  infusionNavButton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  infusionInfo: {
+    alignItems: 'center',
+  },
+  infusionLabel: {
+    ...typography.caption,
+  },
+  infusionNumber: {
+    ...typography.headingMedium,
+    fontWeight: '700',
+  },
+  infusionDots: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 8,
+    marginBottom: 12,
+  },
+  infusionDot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+  },
+  currentInfusionDot: {
+    width: 12,
+    height: 12,
+    borderRadius: 6,
+  },
+  addNoteButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderRadius: 8,
+    borderStyle: 'dashed',
+  },
+  addNoteText: {
+    ...typography.caption,
+  },
   timerContainer: {
     alignSelf: 'center',
     position: 'relative',
@@ -448,12 +844,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   timeText: {
-    fontSize: 52,
+    fontSize: 48,
     fontWeight: '300',
     fontVariant: ['tabular-nums'],
   },
   completeEmoji: {
-    fontSize: 48,
+    fontSize: 44,
     marginBottom: 4,
   },
   completeText: {
@@ -497,19 +893,90 @@ const styles = StyleSheet.create({
   tempText: {
     ...typography.body,
   },
+  notePreview: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: spacing.screenHorizontal,
+    marginBottom: 16,
+    padding: 10,
+    borderRadius: 10,
+    gap: 8,
+  },
+  notePreviewText: {
+    ...typography.caption,
+    flex: 1,
+  },
   buttonContainer: {
     paddingHorizontal: spacing.screenHorizontal,
     gap: 10,
-    marginTop: 'auto',
-    marginBottom: 24,
+    marginTop: 8,
   },
   button: {
     width: '100%',
+  },
+  sessionSummary: {
+    marginHorizontal: spacing.screenHorizontal,
+    marginTop: 20,
+    padding: 16,
+    borderWidth: 1,
+    borderRadius: 12,
+  },
+  summaryTitle: {
+    ...typography.body,
+    fontWeight: '600',
+    marginBottom: 12,
+  },
+  summaryItem: {
+    marginBottom: 8,
+  },
+  summaryInfusion: {
+    ...typography.caption,
+    fontWeight: '600',
+  },
+  summaryNote: {
+    ...typography.caption,
+    marginTop: 2,
   },
   tipText: {
     ...typography.caption,
     textAlign: 'center',
     paddingHorizontal: spacing.screenHorizontal,
-    marginBottom: 24,
+    marginTop: 24,
+  },
+  modalOverlay: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  notesModal: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    paddingBottom: 40,
+  },
+  notesModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+  },
+  notesModalTitle: {
+    ...typography.headingSmall,
+  },
+  notesModalSubtitle: {
+    ...typography.caption,
+    marginBottom: 16,
+  },
+  notesInput: {
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 12,
+    minHeight: 100,
+    ...typography.body,
+    marginBottom: 16,
+  },
+  notesModalButtons: {
+    flexDirection: 'row',
+    gap: 10,
   },
 });
