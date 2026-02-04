@@ -24,7 +24,7 @@ import {
   RefreshCw,
 } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
-import { StarRating, TeaTypeBadge } from '../components';
+import { StarRating, TeaTypeBadge, Avatar } from '../components';
 import { useTheme, useAuth } from '../context';
 import { useReviews, useTeas, useBrewHistory } from '../hooks';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
@@ -43,13 +43,13 @@ const ACTIVITY_TYPES = {
 const generateMockActivities = (teas, reviews) => {
   const activities = [];
   const mockUsers = [
-    { name: 'Sarah', avatar: '👩‍🦰' },
-    { name: 'Mike', avatar: '👨' },
-    { name: 'Emma', avatar: '👩' },
-    { name: 'James', avatar: '🧔' },
-    { name: 'Lily', avatar: '👩‍🦱' },
-    { name: 'David', avatar: '👨‍🦲' },
-    { name: 'Amy', avatar: '👱‍♀️' },
+    { id: 'user-sarah-001', name: 'Sarah' },
+    { id: 'user-mike-002', name: 'Mike' },
+    { id: 'user-emma-003', name: 'Emma' },
+    { id: 'user-james-004', name: 'James' },
+    { id: 'user-lily-005', name: 'Lily' },
+    { id: 'user-david-006', name: 'David' },
+    { id: 'user-amy-007', name: 'Amy' },
   ];
   
   // Add reviews as activities
@@ -126,7 +126,7 @@ const ActivityCard = ({ activity, theme, onTeaPress }) => {
         return (
           <>
             <View style={styles.activityHeader}>
-              <Text style={styles.userAvatar}>{activity.user.avatar}</Text>
+              <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
               <View style={styles.activityHeaderText}>
                 <Text style={[styles.userName, { color: theme.text.primary }]}>
                   {activity.user.name}
@@ -175,7 +175,7 @@ const ActivityCard = ({ activity, theme, onTeaPress }) => {
         return (
           <>
             <View style={styles.activityHeader}>
-              <Text style={styles.userAvatar}>{activity.user.avatar}</Text>
+              <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
               <View style={styles.activityHeaderText}>
                 <Text style={[styles.userName, { color: theme.text.primary }]}>
                   {activity.user.name}
@@ -215,7 +215,7 @@ const ActivityCard = ({ activity, theme, onTeaPress }) => {
         return (
           <>
             <View style={styles.activityHeader}>
-              <Text style={styles.userAvatar}>{activity.user.avatar}</Text>
+              <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
               <View style={styles.activityHeaderText}>
                 <Text style={[styles.userName, { color: theme.text.primary }]}>
                   {activity.user.name}

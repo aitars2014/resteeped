@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { Button } from '../components';
+import { Button, Avatar } from '../components';
 import { useAuth, useCollection, useTheme } from '../context';
 import { useBrewHistory } from '../hooks';
 import { exportCollectionToJSON, exportCollectionToCSV } from '../utils/exportCollection';
@@ -175,9 +175,12 @@ export const ProfileScreen = ({ navigation }) => {
   const renderLoggedIn = () => (
     <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
       <View style={styles.profileHeader}>
-        <View style={[styles.avatar, { backgroundColor: theme.accent.primary }]}>
-          <User size={32} color={theme.text.inverse} />
-        </View>
+        <Avatar 
+          userId={user?.id}
+          name={profile?.display_name || profile?.username}
+          imageUrl={profile?.avatar_url}
+          size={64}
+        />
         <View style={styles.profileInfo}>
           <Text style={[styles.username, { color: theme.text.primary }]}>
             {profile?.display_name || profile?.username || 'Tea Lover'}
