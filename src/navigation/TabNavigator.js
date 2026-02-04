@@ -34,6 +34,7 @@ const HomeStack = () => (
     <Stack.Screen name="TeaShops" component={TeaShopsScreen} />
     <Stack.Screen name="ActivityFeed" component={ActivityFeedScreen} />
     <Stack.Screen name="UserProfile" component={UserProfileScreen} />
+    <Stack.Screen name="CompareTeas" component={CompareTeasScreen} />
   </Stack.Navigator>
 );
 

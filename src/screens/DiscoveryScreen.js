@@ -39,6 +39,10 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   
   // Update filters when navigating from Home with new params
   useEffect(() => {
+    // If navigating with a filter/section but no search, clear the search
+    if (initialFilter !== undefined && initialSearch === undefined) {
+      setSearchQuery('');
+    }
     if (initialSearch !== undefined) setSearchQuery(initialSearch);
     if (initialFilter !== undefined) {
       setFilters(prev => ({ ...prev, teaType: initialFilter }));

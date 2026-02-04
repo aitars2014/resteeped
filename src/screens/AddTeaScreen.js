@@ -142,7 +142,7 @@ export default function AddTeaScreen({ navigation }) {
         return;
       }
 
-      const { error } = await supabase.from('teas').insert({
+      const { data: newTea, error } = await supabase.from('teas').insert({
         name: name.trim(),
         brand_name: brandName.trim() || 'Personal Collection',
         tea_type: teaType,
@@ -152,9 +152,20 @@ export default function AddTeaScreen({ navigation }) {
         created_by: user.id,
         purchase_location: purchaseLocation.trim() || null,
         user_notes: notes.trim() || null,
-      });
+      }).select().single();
 
       if (error) throw error;
+
+      // Also add to user's collection
+      const { error: collectionError } = await supabase.from('user_teas').insert({
+        user_id: user.id,
+        tea_id: newTea.id,
+        status: 'want_to_try',
+      });
+
+      if (collectionError) {
+        console.warn('Could not add to collection:', collectionError);
+      }
 
       haptics.success();
       Alert.alert('Success', 'Tea added to your collection!', [
@@ -237,8 +248,11 @@ export default function AddTeaScreen({ navigation }) {
                   key={type.value}
                   style={[
                     styles.typeButton,
-                    teaType === type.value && styles.typeButtonActive,
-                    { borderColor: type.color }
+                    teaType === type.value && [
+                      styles.typeButtonActive,
+                      { borderColor: type.color, borderWidth: 3, backgroundColor: type.color + '20' }
+                    ],
+                    !teaType || teaType !== type.value ? { borderColor: theme.border.light } : null
                   ]}
                   onPress={() => {
                     haptics.selection();

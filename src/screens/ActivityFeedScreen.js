@@ -115,7 +115,7 @@ const formatRelativeTime = (date) => {
 };
 
 // Activity Card Component
-const ActivityCard = ({ activity, theme, onTeaPress }) => {
+const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
   const teaColor = activity.tea?.teaType ? 
     theme.teaType[activity.tea.teaType?.toLowerCase()] || theme.teaType.black 
     : theme.teaType.black;
@@ -128,7 +128,7 @@ const ActivityCard = ({ activity, theme, onTeaPress }) => {
             <View style={styles.activityHeader}>
               <TouchableOpacity 
                 style={styles.userTouchable}
-                onPress={() => navigation.navigate('UserProfile', { userId: activity.user.id, userName: activity.user.name })}
+                onPress={() => onUserPress(activity.user.id, activity.user.name)}
               >
                 <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
                 <View style={styles.activityHeaderText}>
@@ -182,7 +182,7 @@ const ActivityCard = ({ activity, theme, onTeaPress }) => {
             <View style={styles.activityHeader}>
               <TouchableOpacity 
                 style={styles.userTouchable}
-                onPress={() => navigation.navigate('UserProfile', { userId: activity.user.id, userName: activity.user.name })}
+                onPress={() => onUserPress(activity.user.id, activity.user.name)}
               >
                 <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
                 <View style={styles.activityHeaderText}>
@@ -227,7 +227,7 @@ const ActivityCard = ({ activity, theme, onTeaPress }) => {
             <View style={styles.activityHeader}>
               <TouchableOpacity 
                 style={styles.userTouchable}
-                onPress={() => navigation.navigate('UserProfile', { userId: activity.user.id, userName: activity.user.name })}
+                onPress={() => onUserPress(activity.user.id, activity.user.name)}
               >
                 <Avatar userId={activity.user.id} name={activity.user.name} size={40} />
                 <View style={styles.activityHeaderText}>
@@ -431,6 +431,7 @@ export const ActivityFeedScreen = ({ navigation }) => {
               activity={item} 
               theme={theme} 
               onTeaPress={handleTeaPress}
+              onUserPress={(userId, userName) => navigation.navigate('UserProfile', { userId, userName })}
             />
           )}
           keyExtractor={item => item.id}

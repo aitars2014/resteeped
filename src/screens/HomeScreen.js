@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
 import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle } from '../components';
 import { useTeas, useCompanies, useRecommendations } from '../hooks';
@@ -194,6 +194,14 @@ export const HomeScreen = ({ navigation }) => {
               onSubmitEditing={handleSearch}
               returnKeyType="search"
             />
+            {searchQuery.length > 0 && (
+              <TouchableOpacity 
+                onPress={() => setSearchQuery('')}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              >
+                <X size={18} color={theme.text.tertiary} />
+              </TouchableOpacity>
+            )}
           </View>
         </TouchableOpacity>
 

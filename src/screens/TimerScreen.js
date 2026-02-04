@@ -183,8 +183,8 @@ export const TimerScreen = ({ route }) => {
     
     const id = await Notifications.scheduleNotificationAsync({
       content: {
-        title: '☕ Tea is Ready!',
-        body: `${teaName}${infusionText} has finished steeping.`,
+        title: "🍵 It's tea time!",
+        body: `${teaName}${infusionText} is ready to enjoy.`,
         sound: true,
         priority: Notifications.AndroidNotificationPriority.HIGH,
       },
@@ -374,7 +374,7 @@ export const TimerScreen = ({ route }) => {
         {/* Header with brew count */}
         <View style={styles.header}>
           <View style={styles.headerLeft}>
-            <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Brew Timer</Text>
+            <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Tea Timer</Text>
             <View style={[styles.notificationBadge, { backgroundColor: theme.background.secondary }, !notificationsEnabled && styles.notificationBadgeOff]}>
               {notificationsEnabled ? (
                 <Bell size={12} color={theme.accent.primary} />
