@@ -9,10 +9,10 @@ export const HEALTH_BENEFITS = {
     antioxidants: 'high',
     antioxidantTypes: ['Theaflavins', 'Thearubigins'],
     benefits: [
-      { icon: '❤️', title: 'Heart Health', description: 'May support cardiovascular function' },
-      { icon: '🧠', title: 'Mental Alertness', description: 'Caffeine provides natural energy boost' },
-      { icon: '🦠', title: 'Gut Health', description: 'Polyphenols may support healthy gut bacteria' },
-      { icon: '💪', title: 'Energy', description: 'Natural caffeine for sustained energy' },
+      { icon: 'Heart', title: 'Heart Health', description: 'May support cardiovascular function' },
+      { icon: 'Brain', title: 'Mental Alertness', description: 'Caffeine provides natural energy boost' },
+      { icon: 'Sparkles', title: 'Gut Health', description: 'Polyphenols may support healthy gut bacteria' },
+      { icon: 'Zap', title: 'Energy', description: 'Natural caffeine for sustained energy' },
     ],
     compounds: [
       { name: 'Caffeine', amount: 'High' },
@@ -26,10 +26,10 @@ export const HEALTH_BENEFITS = {
     antioxidants: 'very-high',
     antioxidantTypes: ['EGCG', 'Catechins'],
     benefits: [
-      { icon: '🧬', title: 'Antioxidant Rich', description: 'High in EGCG, a powerful antioxidant' },
-      { icon: '🧠', title: 'Brain Function', description: 'L-theanine + caffeine for calm focus' },
-      { icon: '🔥', title: 'Metabolism', description: 'May support healthy metabolism' },
-      { icon: '😌', title: 'Relaxation', description: 'L-theanine promotes calm alertness' },
+      { icon: 'Shield', title: 'Antioxidant Rich', description: 'High in EGCG, a powerful antioxidant' },
+      { icon: 'Brain', title: 'Brain Function', description: 'L-theanine + caffeine for calm focus' },
+      { icon: 'Flame', title: 'Metabolism', description: 'May support healthy metabolism' },
+      { icon: 'Smile', title: 'Relaxation', description: 'L-theanine promotes calm alertness' },
     ],
     compounds: [
       { name: 'EGCG', amount: 'Very High' },
@@ -44,10 +44,10 @@ export const HEALTH_BENEFITS = {
     antioxidants: 'high',
     antioxidantTypes: ['Theaflavins', 'Catechins', 'EGCG'],
     benefits: [
-      { icon: '⚖️', title: 'Weight Management', description: 'May support healthy weight goals' },
-      { icon: '🧠', title: 'Mental Clarity', description: 'Balanced caffeine and L-theanine' },
-      { icon: '🦷', title: 'Dental Health', description: 'Fluoride content supports teeth' },
-      { icon: '💆', title: 'Stress Relief', description: 'Calming properties from L-theanine' },
+      { icon: 'Scale', title: 'Weight Management', description: 'May support healthy weight goals' },
+      { icon: 'Brain', title: 'Mental Clarity', description: 'Balanced caffeine and L-theanine' },
+      { icon: 'Sparkle', title: 'Dental Health', description: 'Fluoride content supports teeth' },
+      { icon: 'Feather', title: 'Stress Relief', description: 'Calming properties from L-theanine' },
     ],
     compounds: [
       { name: 'Caffeine', amount: 'Moderate' },
@@ -61,10 +61,10 @@ export const HEALTH_BENEFITS = {
     antioxidants: 'very-high',
     antioxidantTypes: ['Catechins', 'EGCG', 'Polyphenols'],
     benefits: [
-      { icon: '✨', title: 'Skin Health', description: 'Antioxidants may support skin health' },
-      { icon: '🧬', title: 'Antioxidant Rich', description: 'Highest antioxidant content of all teas' },
-      { icon: '😴', title: 'Gentle Energy', description: 'Low caffeine for gentle alertness' },
-      { icon: '🛡️', title: 'Immune Support', description: 'Catechins may support immunity' },
+      { icon: 'Sparkles', title: 'Skin Health', description: 'Antioxidants may support skin health' },
+      { icon: 'Shield', title: 'Antioxidant Rich', description: 'Highest antioxidant content of all teas' },
+      { icon: 'Moon', title: 'Gentle Energy', description: 'Low caffeine for gentle alertness' },
+      { icon: 'ShieldCheck', title: 'Immune Support', description: 'Catechins may support immunity' },
     ],
     compounds: [
       { name: 'Catechins', amount: 'Very High' },
@@ -79,10 +79,10 @@ export const HEALTH_BENEFITS = {
     antioxidants: 'high',
     antioxidantTypes: ['Statins', 'Lovastatin', 'Polyphenols'],
     benefits: [
-      { icon: '🍽️', title: 'Digestion', description: 'Traditionally used to aid digestion' },
-      { icon: '❤️', title: 'Cholesterol', description: 'May support healthy cholesterol levels' },
-      { icon: '🧹', title: 'Cleansing', description: 'Often used in cleansing routines' },
-      { icon: '🦠', title: 'Gut Microbiome', description: 'Fermentation creates beneficial bacteria' },
+      { icon: 'UtensilsCrossed', title: 'Digestion', description: 'Traditionally used to aid digestion' },
+      { icon: 'Heart', title: 'Cholesterol', description: 'May support healthy cholesterol levels' },
+      { icon: 'RefreshCw', title: 'Cleansing', description: 'Often used in cleansing routines' },
+      { icon: 'Sparkles', title: 'Gut Microbiome', description: 'Fermentation creates beneficial bacteria' },
     ],
     compounds: [
       { name: 'Statins', amount: 'Moderate (aged)' },
@@ -97,10 +97,10 @@ export const HEALTH_BENEFITS = {
     antioxidants: 'varies',
     antioxidantTypes: ['Varies by herb'],
     benefits: [
-      { icon: '😴', title: 'Sleep Support', description: 'Chamomile & lavender promote relaxation' },
-      { icon: '🌿', title: 'Caffeine-Free', description: 'Enjoy any time without sleep impact' },
-      { icon: '💆', title: 'Stress Relief', description: 'Many herbs have calming properties' },
-      { icon: '🌡️', title: 'Soothing', description: 'Peppermint & ginger soothe the stomach' },
+      { icon: 'Moon', title: 'Sleep Support', description: 'Chamomile & lavender promote relaxation' },
+      { icon: 'Leaf', title: 'Caffeine-Free', description: 'Enjoy any time without sleep impact' },
+      { icon: 'Feather', title: 'Stress Relief', description: 'Many herbs have calming properties' },
+      { icon: 'Thermometer', title: 'Soothing', description: 'Peppermint & ginger soothe the stomach' },
     ],
     compounds: [
       { name: 'Caffeine', amount: 'None' },

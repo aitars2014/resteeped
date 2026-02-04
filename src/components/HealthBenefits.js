@@ -13,7 +13,40 @@ import {
   ChevronUp,
   Info,
   Beaker,
+  Brain,
+  Shield,
+  ShieldCheck,
+  Flame,
+  Smile,
+  Scale,
+  Sparkle,
+  Feather,
+  Moon,
+  UtensilsCrossed,
+  RefreshCw,
+  Leaf,
+  Thermometer,
 } from 'lucide-react-native';
+
+// Map icon names to components
+const BENEFIT_ICONS = {
+  Heart,
+  Brain,
+  Sparkles,
+  Zap,
+  Shield,
+  Flame,
+  Smile,
+  Scale,
+  Sparkle,
+  Feather,
+  Moon,
+  ShieldCheck,
+  UtensilsCrossed,
+  RefreshCw,
+  Leaf,
+  Thermometer,
+};
 import { typography, spacing } from '../constants';
 import { getHealthBenefits, getCaffeineDescription, getAntioxidantColor } from '../constants/healthBenefits';
 import { useTheme } from '../context';
@@ -124,23 +157,28 @@ export const HealthBenefits = ({ tea }) => {
       
       {/* Benefits Grid */}
       <View style={styles.benefitsGrid}>
-        {benefits.benefits.map((benefit, index) => (
-          <View 
-            key={index} 
-            style={[styles.benefitCard, { 
-              backgroundColor: theme.background.secondary,
-              borderColor: theme.border.light,
-            }]}
-          >
-            <Text style={styles.benefitIcon}>{benefit.icon}</Text>
-            <Text style={[styles.benefitTitle, { color: theme.text.primary }]}>
-              {benefit.title}
-            </Text>
-            <Text style={[styles.benefitDescription, { color: theme.text.secondary }]} numberOfLines={2}>
-              {benefit.description}
-            </Text>
-          </View>
-        ))}
+        {benefits.benefits.map((benefit, index) => {
+          const IconComponent = BENEFIT_ICONS[benefit.icon] || Sparkles;
+          return (
+            <View 
+              key={index} 
+              style={[styles.benefitCard, { 
+                backgroundColor: theme.background.secondary,
+                borderColor: theme.border.light,
+              }]}
+            >
+              <View style={styles.benefitIconContainer}>
+                <IconComponent size={24} color={teaColor.primary} strokeWidth={1.5} />
+              </View>
+              <Text style={[styles.benefitTitle, { color: theme.text.primary }]}>
+                {benefit.title}
+              </Text>
+              <Text style={[styles.benefitDescription, { color: theme.text.secondary }]} numberOfLines={2}>
+                {benefit.description}
+              </Text>
+            </View>
+          );
+        })}
       </View>
       
       {/* Key Compounds (Expandable) */}
@@ -197,9 +235,12 @@ export const HealthBenefits = ({ tea }) => {
       
       {/* Note for herbal teas */}
       {benefits.note && (
-        <Text style={[styles.noteText, { color: theme.text.secondary }]}>
-          ℹ️ {benefits.note}
-        </Text>
+        <View style={styles.noteContainer}>
+          <Info size={14} color={theme.text.secondary} />
+          <Text style={[styles.noteText, { color: theme.text.secondary }]}>
+            {benefits.note}
+          </Text>
+        </View>
       )}
     </View>
   );
@@ -273,9 +314,8 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     borderWidth: 1,
   },
-  benefitIcon: {
-    fontSize: 24,
-    marginBottom: 6,
+  benefitIconContainer: {
+    marginBottom: 8,
   },
   benefitTitle: {
     ...typography.bodySmall,
@@ -339,10 +379,16 @@ const styles = StyleSheet.create({
     ...typography.caption,
     fontStyle: 'italic',
   },
-  noteText: {
-    ...typography.caption,
+  noteContainer: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 6,
     marginTop: 8,
     paddingHorizontal: 4,
+  },
+  noteText: {
+    ...typography.caption,
+    flex: 1,
   },
 });
 
