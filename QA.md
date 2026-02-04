@@ -99,11 +99,15 @@
 ### Bugs Found & Fixed
 - [x] `CompanyProfileScreen`: "See All" teas navigation broken → Was navigating to non-existent 'Discovery' screen
 
-### Accessibility Issues (High Priority for Production)
-- [ ] **Very few accessibility labels** — Only 2 accessibility attributes in entire codebase
-- [ ] Add `accessibilityLabel` to all interactive elements
-- [ ] Add `accessibilityRole` to buttons, links, images
-- [ ] Add `accessibilityHint` for complex interactions
+### Accessibility ✅ (In Progress)
+- [x] **Core components** — Button, TeaCard, Avatar, StarRating, SearchBar, FilterPills, TeaTypeBadge, ReviewCard
+- [x] **TimerScreen** — Mode buttons, time adjustment controls
+- [x] **ProfileScreen** — Menu items, dark mode switch, avatar edit
+- [x] **DiscoveryScreen** — Search history, scroll to top
+- [x] **TeaDetailScreen** — Hero image, navigation buttons, headers
+- [ ] Remaining screens need accessibility pass (CollectionScreen, ActivityFeedScreen, etc.)
+
+**Progress: 2 → 65 accessibility attributes added**
 
 ### Code Quality Notes
 - ✅ Good error handling in contexts
