@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Resteeped</title>
+  <meta name="description" content="Get in touch with Resteeped">
+  <meta name="theme-color" content="#0D0D0D">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+</head>
+<body>
+  <main class="legal">
+    <div class="container">
+      <a href="/" class="back-link">← Back to Resteeped</a>
+      
+      <h1>Contact Us</h1>
+      <p style="color: var(--text-secondary); margin-bottom: var(--space-lg);">
+        Have a question, feedback, or just want to say hello? We'd love to hear from you.
+      </p>
+      
+      <!-- Update the form ID after deploying formspree.json -->
+      <form 
+        action="https://formspree.io/f/xwpvqkpn" 
+        method="POST"
+        class="contact-form"
+      >
+        <div class="form-group">
+          <label for="topic">Topic</label>
+          <select id="topic" name="topic" required>
+            <option value="">Select a topic...</option>
+            <option value="general">General Inquiry</option>
+            <option value="feedback">App Feedback</option>
+            <option value="bug">Report a Bug</option>
+            <option value="tea-request">Request a Tea Brand</option>
+            <option value="partnership">Partnership Opportunity</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email (optional)</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            placeholder="your@email.com"
+          >
+          <span class="form-hint">Include if you'd like a response</span>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea 
+            id="message" 
+            name="message" 
+            rows="6" 
+            placeholder="Tell us what's on your mind..."
+            required
+          ></textarea>
+        </div>
+        
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <nav class="footer-nav">
+        <a href="/">Home</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+      </nav>
+      <p class="copyright">© 2025 Resteeped. Made with care for tea lovers.</p>
+    </div>
+  </footer>
+</body>
+</html>

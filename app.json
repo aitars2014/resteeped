@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.resteeped.app"
+      "bundleIdentifier": "com.resteeped.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -36,6 +39,12 @@
           "organization": "resteeped"
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0388a37b-4987-42cd-a451-ed0624e305d8"
+      }
+    },
+    "owner": "taylorpratt"
   }
 }
