@@ -2,10 +2,10 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Platform, Alert } from 'react-native';
 import Purchases from 'react-native-purchases';
 
-// RevenueCat API keys
-// Note: Using test key for now - replace with production keys before release
-const REVENUECAT_IOS_KEY = 'test_vOpwugusbspbtVFvwbaXCkXlGhq';
-const REVENUECAT_ANDROID_KEY = 'test_vOpwugusbspbtVFvwbaXCkXlGhq';
+// RevenueCat API keys - loaded from environment variables
+// Set EXPO_PUBLIC_REVENUECAT_IOS_KEY and EXPO_PUBLIC_REVENUECAT_ANDROID_KEY in .env
+const REVENUECAT_IOS_KEY = process.env.EXPO_PUBLIC_REVENUECAT_IOS_KEY || '';
+const REVENUECAT_ANDROID_KEY = process.env.EXPO_PUBLIC_REVENUECAT_ANDROID_KEY || '';
 
 // Product identifiers - must match what you create in App Store Connect / Google Play Console
 export const PRODUCTS = {
@@ -44,7 +44,7 @@ export const SubscriptionProvider = ({ children }) => {
       // Check if keys are configured
       const apiKey = Platform.OS === 'ios' ? REVENUECAT_IOS_KEY : REVENUECAT_ANDROID_KEY;
       
-      if (!apiKey || apiKey.startsWith('YOUR_')) {
+      if (!apiKey || apiKey.startsWith('YOUR_') || apiKey.startsWith('test_')) {
         console.log('RevenueCat not configured - running in free mode');
         setIsLoading(false);
         return;
