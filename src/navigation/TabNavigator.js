@@ -20,6 +20,8 @@ import {
   AddTeaScreen,
   TeawareDetailScreen,
   UserProfileScreen,
+  ContactScreen,
+  PaywallScreen,
 } from '../screens';
 
 const Tab = createBottomTabNavigator();
@@ -63,6 +65,13 @@ const CollectionStack = () => (
         headerBackTitle: 'Back',
       }}
     />
+    <Stack.Screen 
+      name="Paywall" 
+      component={PaywallScreen}
+      options={{ 
+        presentation: 'modal',
+      }}
+    />
   </Stack.Navigator>
 );
 
@@ -82,6 +91,7 @@ const ProfileStack = () => (
     <Stack.Screen name="CompareTeas" component={CompareTeasScreen} />
     <Stack.Screen name="Teaware" component={TeawareScreen} />
     <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
+    <Stack.Screen name="Contact" component={ContactScreen} />
   </Stack.Navigator>
 );
 

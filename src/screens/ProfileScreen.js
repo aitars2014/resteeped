@@ -10,7 +10,7 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, AlertTriangle } from 'lucide-react-native';
+import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, AlertTriangle, Mail } from 'lucide-react-native';
 import * as Sentry from '@sentry/react-native';
 import { typography, spacing } from '../constants';
 import { Button, Avatar, AvatarPicker } from '../components';
@@ -392,6 +392,25 @@ export const ProfileScreen = ({ navigation }) => {
         >
           <AlertTriangle size={20} color={theme.status.warning} />
           <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Send Test Error to Sentry</Text>
+          <ChevronRight size={20} color={theme.text.secondary} />
+        </TouchableOpacity>
+      </View>
+      
+      {/* Support */}
+      <View style={[styles.menuSection, { 
+        backgroundColor: theme.background.secondary,
+        borderColor: theme.border.medium,
+      }]}>
+        <TouchableOpacity 
+          style={[styles.menuItem, styles.menuItemLast]}
+          onPress={() => navigation.navigate('Contact')}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Contact Us"
+          accessibilityHint="Send feedback, report bugs, or inquire about sponsorship"
+        >
+          <Mail size={20} color={theme.accent.primary} />
+          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Contact Us</Text>
           <ChevronRight size={20} color={theme.text.secondary} />
         </TouchableOpacity>
       </View>

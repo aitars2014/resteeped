@@ -11,13 +11,25 @@ import {
 import { Bookmark, Plus } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { TeaCard, Button } from '../components';
-import { useAuth, useCollection, useTheme } from '../context';
+import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 
 export const CollectionScreen = ({ navigation }) => {
   const { theme } = useTheme();
   const { user } = useAuth();
   const { collection, loading, refreshCollection } = useCollection();
+  const { isPremium, canAddToCollection, getRemainingFreeSlots, FREE_TIER_LIMITS } = useSubscription();
   const [filter, setFilter] = useState('all');
+  
+  const remainingSlots = getRemainingFreeSlots(collection.length);
+  const showUpgradeBanner = !isPremium && collection.length >= FREE_TIER_LIMITS.MAX_COLLECTION_SIZE - 3;
+  
+  const handleAddTea = () => {
+    if (canAddToCollection(collection.length)) {
+      navigation.navigate('AddTea');
+    } else {
+      navigation.navigate('Paywall');
+    }
+  };
   
   const filteredCollection = collection.filter(item => {
     if (filter === 'all') return true;
@@ -123,15 +135,31 @@ export const CollectionScreen = ({ navigation }) => {
         </View>
         <TouchableOpacity 
           style={[styles.addButton, { backgroundColor: theme.accent.primary }]}
-          onPress={() => navigation.navigate('AddTea')}
+          onPress={handleAddTea}
           accessible={true}
           accessibilityRole="button"
           accessibilityLabel="Add new tea"
-          accessibilityHint="Opens form to add a custom tea to your collection"
+          accessibilityHint={canAddToCollection(collection.length) 
+            ? "Opens form to add a custom tea to your collection" 
+            : "Upgrade to premium to add more teas"}
         >
           <Plus size={20} color="#fff" strokeWidth={2.5} />
         </TouchableOpacity>
       </View>
+      
+      {/* Upgrade Banner */}
+      {showUpgradeBanner && (
+        <TouchableOpacity 
+          style={[styles.upgradeBanner, { backgroundColor: theme.accent.primary + '15' }]}
+          onPress={() => navigation.navigate('Paywall')}
+        >
+          <Text style={[styles.upgradeBannerText, { color: theme.accent.primary }]}>
+            {remainingSlots > 0 
+              ? `${remainingSlots} free slot${remainingSlots === 1 ? '' : 's'} remaining`
+              : 'Collection full — Upgrade for unlimited teas'}
+          </Text>
+        </TouchableOpacity>
+      )}
       
       {/* Filter tabs */}
       <View style={[styles.filterTabs, { borderBottomColor: theme.border.light }]}>
@@ -247,5 +275,16 @@ const styles = StyleSheet.create({
   },
   emptyButton: {
     minWidth: 200,
+  },
+  upgradeBanner: {
+    marginHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.md,
+    padding: spacing.md,
+    borderRadius: 12,
+    alignItems: 'center',
+  },
+  upgradeBannerText: {
+    ...typography.bodySmall,
+    fontWeight: '600',
   },
 });

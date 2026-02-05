@@ -16,6 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
+import { useCollection } from '../context/CollectionContext';
 import { typography, spacing } from '../constants';
 import { Button } from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,6 +35,7 @@ const TEA_TYPES = [
 export default function AddTeaScreen({ navigation }) {
   const { theme } = useTheme();
   const { user, isDevMode } = useAuth();
+  const { refreshCollection, addToCollection } = useCollection();
   const styles = createStyles(theme);
 
   const [name, setName] = useState('');
@@ -155,8 +157,18 @@ export default function AddTeaScreen({ navigation }) {
         customTeas.push(localTea);
         await AsyncStorage.setItem('dev_custom_teas', JSON.stringify(customTeas));
 
+        // Add to collection so it shows up in "My Teas"
+        await addToCollection(localTea.id, 'want_to_try', {
+          id: localTea.id,
+          name: localTea.name,
+          brandName: localTea.brand_name,
+          teaType: localTea.tea_type,
+          description: localTea.description,
+          imageUrl: localTea.image_url,
+        });
+
         haptics.success();
-        Alert.alert('Success', 'Tea added to your local collection!', [
+        Alert.alert('Success', 'Tea added to your collection!', [
           { text: 'OK', onPress: () => navigation.goBack() }
         ]);
         return;
@@ -192,6 +204,9 @@ export default function AddTeaScreen({ navigation }) {
       if (collectionError) {
         console.warn('Could not add to collection:', collectionError);
       }
+
+      // Refresh collection to show the new tea
+      await refreshCollection();
 
       haptics.success();
       Alert.alert('Success', 'Tea added to your collection!', [

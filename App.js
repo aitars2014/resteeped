@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { AppNavigator } from './src/navigation/AppNavigator';
-import { AuthProvider, CollectionProvider, ThemeProvider, useTheme } from './src/context';
+import { AuthProvider, CollectionProvider, ThemeProvider, SubscriptionProvider, useTheme } from './src/context';
 import { initAnalytics } from './src/utils';
 import * as Sentry from '@sentry/react-native';
 
@@ -54,9 +54,11 @@ export default Sentry.wrap(function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
-        <CollectionProvider>
-          <AppContent />
-        </CollectionProvider>
+        <SubscriptionProvider>
+          <CollectionProvider>
+            <AppContent />
+          </CollectionProvider>
+        </SubscriptionProvider>
       </AuthProvider>
     </ThemeProvider>
   );

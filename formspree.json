@@ -1,0 +1,28 @@
+{
+  "project": "2930500323560652342",
+  "forms": {
+    "contactForm": {
+      "name": "Resteeped Contact Form",
+      "actions": [
+        {
+          "type": "email",
+          "to": "tea@resteeped.com"
+        }
+      ],
+      "fields": {
+        "topic": {
+          "type": "text",
+          "required": true
+        },
+        "message": {
+          "type": "text",
+          "required": true
+        },
+        "email": {
+          "type": "email",
+          "required": false
+        }
+      }
+    }
+  }
+}

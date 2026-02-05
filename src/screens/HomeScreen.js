@@ -420,7 +420,7 @@ export const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('Discover')}
             activeOpacity={0.7}
           >
-            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{teas.length}</Text>
+            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{teas.length.toLocaleString()}</Text>
             <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Teas to Explore</Text>
           </TouchableOpacity>
           <TouchableOpacity 
@@ -431,7 +431,7 @@ export const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('TeaShops')}
             activeOpacity={0.7}
           >
-            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{companies.length}</Text>
+            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{companies.length.toLocaleString()}</Text>
             <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Tea Shops</Text>
           </TouchableOpacity>
         </View>
