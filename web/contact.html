@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact — Resteeped</title>
+  <title>Contact - Resteeped</title>
   <meta name="description" content="Get in touch with Resteeped">
   <meta name="theme-color" content="#0D0D0D">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,15 +16,14 @@
   <main class="legal">
     <div class="container">
       <a href="/" class="back-link">← Back to Resteeped</a>
-      
+
       <h1>Contact Us</h1>
       <p style="color: var(--text-secondary); margin-bottom: var(--space-lg);">
         Have a question, feedback, or just want to say hello? We'd love to hear from you.
       </p>
-      
-      <!-- Update the form ID after deploying formspree.json -->
-      <form 
-        action="https://formspree.io/f/xwpvqkpn" 
+
+      <form
+        action="https://formspree.io/p/2930500323560652342/f/contactForm"
         method="POST"
         class="contact-form"
       >
@@ -40,29 +39,29 @@
             <option value="other">Other</option>
           </select>
         </div>
-        
+
         <div class="form-group">
           <label for="email">Email (optional)</label>
-          <input 
-            type="email" 
-            id="email" 
-            name="email" 
+          <input
+            type="email"
+            id="email"
+            name="email"
             placeholder="your@email.com"
           >
           <span class="form-hint">Include if you'd like a response</span>
         </div>
-        
+
         <div class="form-group">
           <label for="message">Message</label>
-          <textarea 
-            id="message" 
-            name="message" 
-            rows="6" 
+          <textarea
+            id="message"
+            name="message"
+            rows="6"
             placeholder="Tell us what's on your mind..."
             required
           ></textarea>
         </div>
-        
+
         <button type="submit" class="submit-btn">Send Message</button>
       </form>
     </div>
