@@ -79,9 +79,11 @@ const styles = StyleSheet.create({
     borderRadius: spacing.buttonBorderRadius,
     alignItems: 'center',
     justifyContent: 'center',
+    paddingHorizontal: spacing.buttonPaddingH,
   },
   primary: {
     height: spacing.buttonHeightPrimary,
+    paddingVertical: spacing.md,
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
     shadowRadius: 12,
@@ -90,6 +92,7 @@ const styles = StyleSheet.create({
   secondary: {
     backgroundColor: 'transparent',
     height: spacing.buttonHeightSecondary,
+    paddingVertical: spacing.sm + 4,
     borderWidth: 2,
   },
   disabled: {
