@@ -420,7 +420,7 @@ export const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('Discover')}
             activeOpacity={0.7}
           >
-            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{teas.length.toLocaleString()}</Text>
+            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{teas.length >= 1000 ? `${teas.length.toLocaleString()}+` : teas.length.toLocaleString()}</Text>
             <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Teas to Explore</Text>
           </TouchableOpacity>
           <TouchableOpacity 

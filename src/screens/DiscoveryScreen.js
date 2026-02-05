@@ -225,7 +225,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
       {/* Result Count */}
       <View style={styles.resultCount}>
         <Text style={[styles.resultText, { color: theme.text.secondary }]}>
-          {filteredTeas.length} tea{filteredTeas.length !== 1 ? 's' : ''}
+          {filteredTeas.length >= 1000 ? `${filteredTeas.length.toLocaleString()}+` : filteredTeas.length.toLocaleString()} tea{filteredTeas.length !== 1 ? 's' : ''}
         </Text>
         {activeFilterCount > 0 && (
           <TouchableOpacity 
