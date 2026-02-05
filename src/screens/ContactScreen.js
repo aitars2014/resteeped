@@ -16,9 +16,9 @@ import { ChevronLeft, ChevronDown, Send } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 
-// Formspree form endpoint (use direct hash format for simplicity)
-// Create a form at https://formspree.io/forms and replace this hash
-const FORMSPREE_FORM_HASH = 'xovejkqr'; // Replace with your actual form hash
+// Formspree CLI-deployed form endpoint
+const FORMSPREE_PROJECT_ID = '2930500323560652342';
+const FORMSPREE_FORM_KEY = 'contactForm';
 
 const CONTACT_TOPICS = [
   { id: 'bug', label: 'Bug Report / Feature Request', requiresEmail: false },
@@ -67,7 +67,7 @@ export const ContactScreen = ({ navigation }) => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`https://formspree.io/f/${FORMSPREE_FORM_HASH}`, {
+      const response = await fetch(`https://formspree.io/p/${FORMSPREE_PROJECT_ID}/f/${FORMSPREE_FORM_KEY}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
