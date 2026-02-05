@@ -106,7 +106,7 @@ const getInfusionTimes = (tea, totalInfusions) => {
   return times;
 };
 
-export const TimerScreen = ({ route }) => {
+export const TimerScreen = ({ route, navigation }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const tea = route?.params?.tea;
   const teaColor = tea ? getTeaTypeColor(tea.teaType) : null;
