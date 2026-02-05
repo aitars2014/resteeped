@@ -22,6 +22,7 @@ export { TeaBattle } from './TeaBattle';
 export { Skeleton, TeaCardSkeleton, TeaListSkeleton, TeaDetailSkeleton, SectionSkeleton } from './Skeleton';
 export { ShareableTeaCard } from './ShareableTeaCard';
 export { ShareableComparisonCard } from './ShareableComparisonCard';
+export { TeawareCard } from './TeawareCard';
 export { default as Avatar } from './Avatar';
 export { default as AvatarPicker, AVATAR_STYLES } from './AvatarPicker';
 

@@ -18,6 +18,7 @@ import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { typography, spacing } from '../constants';
 import { Button } from '../components';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase } from '../lib/supabase';
 import { haptics } from '../utils';
 
@@ -133,12 +134,37 @@ export default function AddTeaScreen({ navigation }) {
         imageUrl = await uploadImage();
       }
 
+      // Dev mode: store locally (no real auth)
       if (isDevMode) {
-        // Dev mode: just simulate success
+        const localTea = {
+          id: `local-${Date.now()}`,
+          name: name.trim(),
+          brand_name: brandName.trim() || 'Personal Collection',
+          tea_type: teaType,
+          description: description.trim() || null,
+          image_url: imageUrl,
+          is_custom: true,
+          purchase_location: purchaseLocation.trim() || null,
+          user_notes: notes.trim() || null,
+          created_at: new Date().toISOString(),
+        };
+
+        // Store in AsyncStorage
+        const existing = await AsyncStorage.getItem('dev_custom_teas');
+        const customTeas = existing ? JSON.parse(existing) : [];
+        customTeas.push(localTea);
+        await AsyncStorage.setItem('dev_custom_teas', JSON.stringify(customTeas));
+
         haptics.success();
-        Alert.alert('Success', 'Tea added to your collection!', [
+        Alert.alert('Success', 'Tea added to your local collection!', [
           { text: 'OK', onPress: () => navigation.goBack() }
         ]);
+        return;
+      }
+
+      // Production: require authentication
+      if (!user?.id) {
+        Alert.alert('Sign In Required', 'Please sign in to add custom teas to your collection.');
         return;
       }
 
@@ -156,7 +182,7 @@ export default function AddTeaScreen({ navigation }) {
 
       if (error) throw error;
 
-      // Also add to user's collection
+      // Add to user's collection
       const { error: collectionError } = await supabase.from('user_teas').insert({
         user_id: user.id,
         tea_id: newTea.id,

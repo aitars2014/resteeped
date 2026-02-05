@@ -12,10 +12,10 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
-import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle } from '../components';
-import { useTeas, useCompanies, useRecommendations } from '../hooks';
+import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard } from '../components';
+import { useTeas, useCompanies, useRecommendations, useTeaware } from '../hooks';
 import { useTheme } from '../context';
 
 const { width } = Dimensions.get('window');
@@ -34,6 +34,7 @@ export const HomeScreen = ({ navigation }) => {
   const { theme, isDark, getTeaTypeColor } = useTheme();
   const { teas, loading: teasLoading, refreshTeas } = useTeas();
   const { companies } = useCompanies();
+  const { teaware } = useTeaware();
   const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -360,6 +361,31 @@ export const HomeScreen = ({ navigation }) => {
           {renderSectionHeader(null, 'New Arrivals', () => handleSeeAll('new'))}
           {renderHorizontalTeaList(newTeas, 'New teas coming soon')}
         </View>
+
+        {/* Teaware Collection */}
+        {teaware.length > 0 && (
+          <View style={styles.section}>
+            {renderSectionHeader(
+              <Cuboid size={18} color={theme.accent.primary} />,
+              'Teaware',
+              () => navigation.navigate('Profile', { screen: 'TeawareCollection' })
+            )}
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.horizontalList}
+            >
+              {teaware.slice(0, 6).map((item) => (
+                <TeawareCard
+                  key={item.id}
+                  item={item}
+                  onPress={() => navigation.navigate('TeawareDetail', { teaware: item })}
+                  compact
+                />
+              ))}
+            </ScrollView>
+          </View>
+        )}
 
         {/* Community Activity Link */}
         <View style={styles.section}>

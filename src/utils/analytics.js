@@ -1,11 +1,27 @@
 // Analytics utility using Amplitude
 import * as Amplitude from '@amplitude/analytics-react-native';
-import { Platform } from 'react-native';
+import { Platform, LogBox } from 'react-native';
 
 // Initialize with API key from environment
 const AMPLITUDE_API_KEY = process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY;
 
 let initialized = false;
+
+// Suppress Amplitude cookie errors (not applicable in React Native)
+LogBox.ignoreLogs([
+  'Amplitude Logger [Error]: Failed to set cookie',
+  'Failed to set cookie for key: AMP',
+]);
+
+// Also filter console.error for Amplitude cookie messages
+const originalConsoleError = console.error;
+console.error = (...args) => {
+  const message = args[0]?.toString?.() || '';
+  if (message.includes('Amplitude Logger') && message.includes('cookie')) {
+    return; // Silently ignore Amplitude cookie errors
+  }
+  originalConsoleError.apply(console, args);
+};
 
 /**
  * Initialize Amplitude analytics
@@ -35,6 +51,10 @@ export const initAnalytics = async () => {
       // Increase flush interval to reduce battery/network usage
       flushIntervalMillis: 30000,
       flushQueueSize: 30,
+      // Disable cookie storage (not supported in React Native)
+      disableCookies: true,
+      // Use in-memory storage as fallback
+      storageProvider: undefined,
     };
 
     await Amplitude.init(AMPLITUDE_API_KEY, undefined, config);

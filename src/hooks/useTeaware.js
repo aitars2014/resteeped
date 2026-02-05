@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 
 // Demo teaware data for development
+// Using Unsplash images for reliable display
 const DEMO_TEAWARE = [
   {
     id: 'demo-1',
@@ -12,7 +13,7 @@ const DEMO_TEAWARE = [
     material: 'other',
     capacity_ml: 140,
     price_usd: 79,
-    image_url: 'https://cdn.shopify.com/s/files/1/0586/9817/files/DSC_9694_5a745c4b-d52f-48e2-b5a1-906f9f09f79f.jpg',
+    image_url: 'https://images.unsplash.com/photo-1563822249366-3efb23b8e0c9?w=400&h=300&fit=crop',
     in_stock: true,
     origin_region: 'China',
   },
@@ -27,7 +28,7 @@ const DEMO_TEAWARE = [
     capacity_ml: 115,
     price_usd: 96,
     artisan_name: 'Jin Jia Qi',
-    image_url: 'https://cdn.shopify.com/s/files/1/0586/9817/files/DSC_1323_0dcd6c8a-78d1-49fb-a850-709606c50e7b.jpg',
+    image_url: 'https://images.unsplash.com/photo-1594631252845-29fc4cc8cde9?w=400&h=300&fit=crop',
     in_stock: true,
     origin_region: 'Yixing, Jiangsu, China',
     recommended_teas: ['puerh', 'oolong'],
@@ -41,7 +42,7 @@ const DEMO_TEAWARE = [
     material: 'porcelain',
     capacity_ml: 150,
     price_usd: 67,
-    image_url: 'https://cdn.shopify.com/s/files/1/0586/9817/files/DSC_4593.jpg',
+    image_url: 'https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=400&h=300&fit=crop',
     in_stock: true,
     origin_region: 'Dehua, Fujian, China',
   },
@@ -56,21 +57,21 @@ const DEMO_TEAWARE = [
     capacity_ml: 95,
     price_usd: 96,
     artisan_name: 'Jin Jia Qi',
-    image_url: 'https://cdn.shopify.com/s/files/1/0586/9817/files/DSC_6267.jpg',
+    image_url: 'https://images.unsplash.com/photo-1530968033775-2c92736b131e?w=400&h=300&fit=crop',
     in_stock: true,
     origin_region: 'Yixing, Jiangsu, China',
     recommended_teas: ['puerh', 'oolong', 'black'],
   },
   {
     id: 'demo-5',
-    name: 'Midnight Constellation Jianzhan Gaiwan',
+    name: 'Midnight Constellation Jianzhan Cup',
     slug: 'jianzhan-constellation',
     description: 'Striking high-fired Jianzhan with classic oil-spot crystallization.',
-    category: 'gaiwan',
+    category: 'cup',
     material: 'stoneware',
     capacity_ml: 150,
     price_usd: 45,
-    image_url: null,
+    image_url: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
     in_stock: true,
     origin_region: 'Jianyang, Fujian, China',
   },
@@ -83,7 +84,7 @@ const DEMO_TEAWARE = [
     material: 'porcelain',
     capacity_ml: 150,
     price_usd: 72,
-    image_url: 'https://cdn.shopify.com/s/files/1/0586/9817/files/DSC_5018.jpg',
+    image_url: 'https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop',
     in_stock: true,
     origin_region: 'Dehua, Fujian, China',
   },
@@ -113,9 +114,20 @@ export const useTeaware = () => {
       if (fetchError) throw fetchError;
 
       if (data && data.length > 0) {
-        setTeaware(data);
+        // Normalize image_url - use images array as fallback
+        const normalized = data.map(item => ({
+          ...item,
+          image_url: item.image_url || item.images?.[0] || null,
+        }));
+        // Sort to show items with images first
+        normalized.sort((a, b) => {
+          if (a.image_url && !b.image_url) return -1;
+          if (!a.image_url && b.image_url) return 1;
+          return 0;
+        });
+        setTeaware(normalized);
       } else {
-        // Use demo data if no real data
+        // Use demo data only if database is empty
         setTeaware(DEMO_TEAWARE);
       }
     } catch (err) {
