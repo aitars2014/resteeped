@@ -1,5 +1,6 @@
 // Analytics utility using Amplitude
 import * as Amplitude from '@amplitude/analytics-react-native';
+import { Platform } from 'react-native';
 
 // Initialize with API key from environment
 const AMPLITUDE_API_KEY = process.env.EXPO_PUBLIC_AMPLITUDE_API_KEY;
@@ -19,18 +20,31 @@ export const initAnalytics = async () => {
   }
 
   try {
-    await Amplitude.init(AMPLITUDE_API_KEY, undefined, {
+    // Configure for React Native environment
+    const config = {
       // Track session events automatically
       defaultTracking: {
         sessions: true,
         appLifecycles: true,
-        screenViews: true,
+        screenViews: false, // Disable auto screen views - we'll track manually
       },
-    });
+      // Privacy-friendly defaults
+      trackingOptions: {
+        ipAddress: false,
+      },
+      // Increase flush interval to reduce battery/network usage
+      flushIntervalMillis: 30000,
+      flushQueueSize: 30,
+    };
+
+    await Amplitude.init(AMPLITUDE_API_KEY, undefined, config);
     initialized = true;
-    console.log('[Analytics] Amplitude initialized');
+    console.log(`[Analytics] Amplitude initialized (${Platform.OS})`);
   } catch (error) {
-    console.error('[Analytics] Failed to initialize:', error);
+    // Analytics is non-critical - log warning but don't crash the app
+    console.warn('[Analytics] Init warning:', error.message || error);
+    // Still mark as initialized to prevent repeated init attempts
+    initialized = true;
   }
 };
 

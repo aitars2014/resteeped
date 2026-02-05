@@ -25,6 +25,39 @@ const BRANDS = {
     founded: 1945,
     specialty: ['Black tea', 'Herbal tea', 'Green tea'],
   },
+  numi: {
+    name: 'Numi Organic Tea',
+    slug: 'numi-organic-tea',
+    url: 'https://numitea.com',
+    description: 'Premium organic tea company founded in Oakland in 1999. Known for ethically sourced, fair trade certified teas and unique blends like Aged Earl Grey and flowering teas.',
+    city: 'Oakland',
+    state: 'CA',
+    country: 'United States',
+    founded: 1999,
+    specialty: ['Organic tea', 'Pu-erh', 'Flowering tea', 'Fair Trade'],
+  },
+  tradmed: {
+    name: 'Traditional Medicinals',
+    slug: 'traditional-medicinals',
+    url: 'https://www.traditionalmedicinals.com',
+    description: 'Herbal wellness tea company founded in 1974 in Sebastopol, California. Pioneers in pharmacopoeial-quality herbal teas for specific health benefits.',
+    city: 'Sebastopol',
+    state: 'CA',
+    country: 'United States',
+    founded: 1974,
+    specialty: ['Herbal tea', 'Wellness blends', 'Medicinal herbs'],
+  },
+  teaforte: {
+    name: 'Tea Forté',
+    slug: 'tea-forte',
+    url: 'https://www.teaforte.com',
+    description: 'Premium tea brand known for signature pyramid infusers and elegant tea accessories. Founded in 2003, offers high-quality loose leaf teas in distinctive packaging.',
+    city: 'Concord',
+    state: 'MA',
+    country: 'United States',
+    founded: 2003,
+    specialty: ['Pyramid infusers', 'Loose leaf tea', 'Gift sets'],
+  },
   stash: {
     name: 'Stash Tea',
     slug: 'stash-tea',
@@ -57,6 +90,94 @@ const BRANDS = {
     country: 'United States',
     founded: 1969,
     specialty: ['Herbal tea', 'Wellness blends', 'Sleepytime'],
+  },
+  teapigs: {
+    name: 'Teapigs',
+    slug: 'teapigs',
+    url: 'https://www.teapigs.com',
+    description: 'UK tea brand founded in 2006, known for whole leaf tea in biodegradable tea temples. Focus on quality and sustainability.',
+    city: 'London',
+    state: null,
+    country: 'United Kingdom',
+    founded: 2006,
+    specialty: ['Tea temples', 'Whole leaf tea', 'Matcha'],
+  },
+  smithtea: {
+    name: 'Steven Smith Teamaker',
+    slug: 'steven-smith-teamaker',
+    url: 'https://www.smithtea.com',
+    description: 'Portland-based artisan tea company founded by Steven Smith (creator of Stash and Tazo). Known for premium, handcrafted blends.',
+    city: 'Portland',
+    state: 'OR',
+    country: 'United States',
+    founded: 2009,
+    specialty: ['Artisan blends', 'Premium sachets', 'Single origin'],
+  },
+  artoftea: {
+    name: 'Art of Tea',
+    slug: 'art-of-tea',
+    url: 'https://www.artoftea.com',
+    description: 'Los Angeles-based tea company founded in 2003, specializing in organic, hand-blended teas sourced from sustainable farms.',
+    city: 'Los Angeles',
+    state: 'CA',
+    country: 'United States',
+    founded: 2003,
+    specialty: ['Organic tea', 'Wellness blends', 'Custom blending'],
+  },
+  crimsonlotus: {
+    name: 'Crimson Lotus Tea',
+    slug: 'crimson-lotus-tea',
+    url: 'https://crimsonlotustea.com',
+    description: 'Seattle-based specialty tea company focused on authentic pu-erh and other Chinese teas sourced directly from Yunnan.',
+    city: 'Seattle',
+    state: 'WA',
+    country: 'United States',
+    founded: 2013,
+    specialty: ['Pu-erh', 'Sheng', 'Shou', 'Yunnan teas'],
+  },
+  yunnansourcing: {
+    name: 'Yunnan Sourcing',
+    slug: 'yunnan-sourcing',
+    url: 'https://yunnansourcing.com',
+    description: 'Premier source for Yunnan teas, specializing in pu-erh, offering hundreds of teas directly from Chinese farmers and factories.',
+    city: 'Kunming',
+    state: 'Yunnan',
+    country: 'China',
+    founded: 2004,
+    specialty: ['Pu-erh', 'Yunnan teas', 'Aged teas', 'Factory productions'],
+  },
+  spirittea: {
+    name: 'Spirit Tea',
+    slug: 'spirit-tea',
+    url: 'https://www.spirittea.co',
+    description: 'Specialty tea company focused on rare and exceptional teas from East Asia, sourced directly from farmers.',
+    city: 'Chicago',
+    state: 'IL',
+    country: 'United States',
+    founded: 2015,
+    specialty: ['Rare teas', 'Vietnamese tea', 'Single origin'],
+  },
+  songtea: {
+    name: 'Song Tea & Ceramics',
+    slug: 'song-tea-ceramics',
+    url: 'https://songtea.com',
+    description: 'San Francisco-based tea company specializing in rare Chinese and Taiwanese teas, paired with artisan ceramics.',
+    city: 'San Francisco',
+    state: 'CA',
+    country: 'United States',
+    founded: 2009,
+    specialty: ['Taiwanese oolong', 'Chinese tea', 'Artisan ceramics'],
+  },
+  teaspot: {
+    name: 'The Tea Spot',
+    slug: 'the-tea-spot',
+    url: 'https://www.theteaspot.com',
+    description: 'Boulder-based tea company founded in 2004, offering premium loose leaf teas and modern steepware.',
+    city: 'Boulder',
+    state: 'CO',
+    country: 'United States',
+    founded: 2004,
+    specialty: ['Loose leaf tea', 'Steepware', 'Wellness teas'],
   },
 };
 
@@ -97,16 +218,23 @@ function isTeaProduct(product) {
   
   // Exclude non-tea items
   const excludePatterns = [
-    'gift', 'sampler', 'variety pack', 'assortment',
+    'gift', 'sampler', 'variety pack', 'assortment', 'discovery box',
     'mug', 'cup', 'teapot', 'infuser', 'accessory', 'accessories',
     'honey', 'sweetener', 'cookie', 'biscuit',
+    'lozenge', 'capsule', 'supplement', 'carbon offset', 'carbon neutral',
+    'latte powder', 'drinking chocolate',
+    'teaware', 'gift card', 'membership', 'bundle', 'custom gift', 'tea gift',
+    'combo', 'set of',
   ];
   
-  if (excludePatterns.some(p => title.includes(p))) return false;
+  if (excludePatterns.some(p => title.includes(p) || type.includes(p))) return false;
   
-  // Include if it looks like tea
+  // Include if product_type explicitly mentions tea type
+  if (/^(black|green|white|herbal|oolong)\s*tea$/i.test(type)) return true;
+  if (type === 'assorted') return true; // Tea Forté uses this
+  
   const includePatterns = ['tea', 'chai', 'matcha', 'tisane', 'herbal', 'infusion'];
-  return includePatterns.some(p => title.includes(p) || tags.some(t => t.includes(p)) || type.includes(p));
+  return includePatterns.some(p => title.includes(p) || tags.some(t => t.includes(p)));
 }
 
 async function ensureCompany(brandKey) {
