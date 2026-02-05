@@ -179,6 +179,17 @@ const BRANDS = {
     founded: 2004,
     specialty: ['Loose leaf tea', 'Steepware', 'Wellness teas'],
   },
+  steepingroom: {
+    name: 'The Steeping Room',
+    slug: 'the-steeping-room',
+    url: 'https://thesteepingroom.com',
+    description: 'Austin-based specialty tea shop offering an extensive collection of loose leaf teas from around the world, with a focus on single-origin and artisan teas.',
+    city: 'Austin',
+    state: 'TX',
+    country: 'United States',
+    founded: 2007,
+    specialty: ['Single-origin tea', 'Puerh', 'Oolong', 'Artisan teas'],
+  },
 };
 
 // Map tags to tea types
