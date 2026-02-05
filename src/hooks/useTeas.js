@@ -86,10 +86,12 @@ export const useTeas = () => {
     }
 
     try {
+      // Supabase defaults to 1000 rows max - need to fetch all
       const { data, error: fetchError } = await supabase
         .from('teas')
         .select('*')
-        .order('avg_rating', { ascending: false });
+        .order('avg_rating', { ascending: false })
+        .range(0, 9999); // Fetch up to 10k teas
 
       if (fetchError) throw fetchError;
 
