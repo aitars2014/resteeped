@@ -96,22 +96,31 @@ main {
   line-height: 1.7;
 }
 
-/* App Store Badges */
+/* App Store Badge */
 .app-badges {
   display: flex;
-  gap: var(--space-sm);
   justify-content: center;
-  flex-wrap: wrap;
 }
 
-.badge img {
-  height: 48px;
-  width: auto;
-  transition: opacity 0.2s ease;
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
-.badge:hover img {
-  opacity: 0.85;
+.badge:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
+.badge svg {
+  display: block;
+}
+
+.badge-single {
+  /* Ensure single badge is perfectly centered */
+  margin: 0 auto;
 }
 
 /* Features Section */
