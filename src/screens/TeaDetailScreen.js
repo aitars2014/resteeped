@@ -115,25 +115,23 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   };
   
   const handleBuyTea = async () => {
-    const url = tea.productUrl || tea.product_url;
-    if (url) {
-      try {
-        await Linking.openURL(url);
-      } catch (error) {
-        Alert.alert('Error', 'Could not open the product page.');
-      }
-    } else if (company?.website_url) {
-      // Fallback to company website
-      try {
-        await Linking.openURL(company.website_url);
-      } catch (error) {
-        Alert.alert('Error', 'Could not open the shop website.');
-      }
+    const productUrl = tea.productUrl || tea.product_url;
+    const companyUrl = company?.website_url;
+    const brandName = tea.brandName || tea.brand_name || 'this tea';
+    
+    // Try product URL first, then company website, then search
+    const url = productUrl || companyUrl || `https://www.google.com/search?q=${encodeURIComponent(brandName + ' ' + tea.name + ' tea')}`;
+    
+    try {
+      await Linking.openURL(url);
+    } catch (error) {
+      Alert.alert('Error', 'Could not open the link.');
     }
   };
   
-  // Check if tea is available (has product URL or is not marked discontinued)
-  const isAvailable = !tea.discontinued && (tea.productUrl || tea.product_url || company?.website_url);
+  // Always show buy option if we have a brand name (we can at least search for it)
+  const brandName = tea.brandName || tea.brand_name;
+  const hasDirectLink = tea.productUrl || tea.product_url || company?.website_url;
   
   const formatSteepTime = () => {
     if (tea.steepTimeMin && tea.steepTimeMax) {
@@ -379,9 +377,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           </View>
           
           {/* Buy This Tea */}
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Buy This Tea</Text>
-            {isAvailable ? (
+          {brandName && (
+            <View style={styles.section}>
+              <Text style={styles.sectionTitle}>Buy This Tea</Text>
               <TouchableOpacity 
                 style={styles.buyCard}
                 onPress={handleBuyTea}
@@ -393,23 +391,17 @@ export const TeaDetailScreen = ({ route, navigation }) => {
                   </View>
                   <View style={styles.buyCardText}>
                     <Text style={styles.buyCardTitle}>
-                      Available at {tea.brandName}
+                      {hasDirectLink ? `Available at ${brandName}` : `Find at ${brandName}`}
                     </Text>
                     <Text style={styles.buyCardSubtitle}>
-                      Tap to visit their website
+                      {hasDirectLink ? 'Tap to visit their website' : 'Tap to search online'}
                     </Text>
                   </View>
                   <ExternalLink size={20} color={theme.text.secondary} />
                 </View>
               </TouchableOpacity>
-            ) : (
-              <View style={styles.unavailableCard}>
-                <Text style={styles.unavailableText}>
-                  This tea is currently not available for purchase
-                </Text>
-              </View>
-            )}
-          </View>
+            </View>
+          )}
           
           {/* You Might Also Like */}
           {similarTeas.length > 0 && (
