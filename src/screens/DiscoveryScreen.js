@@ -30,15 +30,15 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);
   const scrollButtonOpacity = useRef(new Animated.Value(0)).current;
   
-  // Accept initial values from navigation params (e.g., from Home screen)
-  const { initialSearch, initialFilter } = route.params || {};
+  // Accept initial values from navigation params (e.g., from Home screen or Company page)
+  const { initialSearch, initialFilter, initialCompanyFilter } = route.params || {};
   
   const [searchQuery, setSearchQuery] = useState(initialSearch || '');
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [filters, setFilters] = useState({
     teaType: initialFilter || 'all',
-    company: 'all',
+    company: initialCompanyFilter || 'all',
     minRating: 'all',
     sortBy: 'relevance',
   });
@@ -46,14 +46,17 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   // Update filters when navigating from Home with new params
   useEffect(() => {
     // If navigating with a filter/section but no search, clear the search
-    if (initialFilter !== undefined && initialSearch === undefined) {
+    if ((initialFilter !== undefined || initialCompanyFilter !== undefined) && initialSearch === undefined) {
       setSearchQuery('');
     }
     if (initialSearch !== undefined) setSearchQuery(initialSearch);
     if (initialFilter !== undefined) {
       setFilters(prev => ({ ...prev, teaType: initialFilter }));
     }
-  }, [initialSearch, initialFilter]);
+    if (initialCompanyFilter !== undefined) {
+      setFilters(prev => ({ ...prev, company: initialCompanyFilter }));
+    }
+  }, [initialSearch, initialFilter, initialCompanyFilter]);
   
   const filteredTeas = useMemo(() => {
     return filterTeas(searchQuery, filters);

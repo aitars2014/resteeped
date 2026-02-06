@@ -23,7 +23,7 @@ import {
 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
-import { Button, StarRating, TeaCard, WriteCompanyReviewModal } from '../components';
+import { Button, StarRating, TeaCard, WriteCompanyReviewModal, CompanyProfileSkeleton } from '../components';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
 import { useCompanyReviews } from '../hooks';
@@ -151,9 +151,9 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
   if (loading) {
     return (
-      <View style={[styles.loadingContainer, { backgroundColor: theme.background.primary }]}>
-        <ActivityIndicator size="large" color={theme.accent.primary} />
-      </View>
+      <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
+        <CompanyProfileSkeleton />
+      </SafeAreaView>
     );
   }
 
@@ -174,23 +174,36 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   return (
     <View style={[styles.container, { backgroundColor: theme.background.primary }]}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Header */}
+        {/* Header - Profile image as banner */}
         <View style={styles.header}>
-          {/* Always show gradient banner for visual appeal */}
-          <LinearGradient
-            colors={[
-              company.primary_color || theme.accent.primary,
-              company.primary_color 
-                ? `${company.primary_color}88` 
-                : `${theme.accent.primary}88`,
-              theme.background.secondary,
-            ]}
-            locations={[0, 0.6, 1]}
-            style={styles.banner}
-          />
-          {company.banner_url && (
-            <Image source={{ uri: company.banner_url }} style={styles.bannerImage} />
+          {/* Use logo as the banner image if available, otherwise gradient */}
+          {company.logo_url ? (
+            <Image 
+              source={{ uri: company.logo_url }} 
+              style={styles.profileBanner}
+              resizeMode="cover"
+              accessible={true}
+              accessibilityRole="image"
+              accessibilityLabel={`${company.name} profile image`}
+            />
+          ) : (
+            <LinearGradient
+              colors={[
+                company.primary_color || theme.accent.primary,
+                company.primary_color 
+                  ? `${company.primary_color}88` 
+                  : `${theme.accent.primary}88`,
+                theme.background.secondary,
+              ]}
+              locations={[0, 0.6, 1]}
+              style={styles.banner}
+            />
           )}
+          {/* Overlay gradient for text readability */}
+          <LinearGradient
+            colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.1)', 'transparent']}
+            style={styles.headerGradient}
+          />
           
           <SafeAreaView style={styles.headerOverlay}>
             <TouchableOpacity
@@ -203,35 +216,11 @@ const CompanyProfileScreen = ({ route, navigation }) => {
               <ChevronLeft size={28} color={theme.text.inverse} />
             </TouchableOpacity>
           </SafeAreaView>
-
-          <View style={[styles.logoContainer, { borderColor: theme.background.primary, backgroundColor: theme.background.primary }]}>
-            {company.logo_url ? (
-              <Image 
-                source={{ uri: company.logo_url }} 
-                style={[styles.logo, { borderColor: theme.background.primary }]} 
-                resizeMode="contain"
-                accessible={true}
-                accessibilityRole="image"
-                accessibilityLabel={`${company.name} logo`}
-              />
-            ) : (
-              <View 
-                style={[styles.logo, styles.logoPlaceholder, { backgroundColor: theme.background.secondary, borderColor: theme.background.primary }]}
-                accessible={true}
-                accessibilityRole="image"
-                accessibilityLabel={`${company.name} logo placeholder`}
-              >
-                <Text style={[styles.logoPlaceholderText, { color: theme.text.secondary }]} accessibilityElementsHidden={true}>
-                  {company.name.charAt(0)}
-                </Text>
-              </View>
-            )}
-          </View>
         </View>
 
         {/* Company Info */}
         <View style={[styles.infoSection, { borderBottomColor: theme.border.light }]}>
-          <Text style={[styles.companyName, { color: theme.text.primary }]}>{company.name}</Text>
+          <Text style={[styles.companyName, styles.companyNameNoLogo, { color: theme.text.primary }]}>{company.name}</Text>
           
           {company.short_description && (
             <Text style={[styles.shortDescription, { color: theme.text.secondary }]}>{company.short_description}</Text>
@@ -464,7 +453,7 @@ const styles = StyleSheet.create({
     ...typography.body,
   },
   header: {
-    height: 200,
+    height: 220,
     position: 'relative',
   },
   banner: {
@@ -474,12 +463,16 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   },
-  bannerImage: {
+  profileBanner: {
     width: '100%',
     height: '100%',
+  },
+  headerGradient: {
     position: 'absolute',
     top: 0,
     left: 0,
+    right: 0,
+    height: 100,
   },
   headerOverlay: {
     position: 'absolute',
@@ -498,26 +491,8 @@ const styles = StyleSheet.create({
     marginLeft: spacing.md,
     marginTop: spacing.sm,
   },
-  logoContainer: {
-    position: 'absolute',
-    bottom: -40,
-    left: spacing.lg,
-  },
-  logo: {
-    width: 80,
-    height: 80,
-    borderRadius: 16,
-    borderWidth: 3,
-  },
-  logoPlaceholder: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  logoPlaceholderText: {
-    ...typography.h1,
-  },
   infoSection: {
-    paddingTop: 50,
+    paddingTop: spacing.lg,
     paddingHorizontal: spacing.lg,
     paddingBottom: spacing.lg,
     borderBottomWidth: 1,
@@ -525,6 +500,9 @@ const styles = StyleSheet.create({
   companyName: {
     ...typography.h1,
     marginBottom: spacing.xs,
+  },
+  companyNameNoLogo: {
+    // No extra padding needed since logo overlay is removed
   },
   shortDescription: {
     ...typography.body,

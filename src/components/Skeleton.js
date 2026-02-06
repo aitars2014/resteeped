@@ -160,6 +160,43 @@ export const SectionSkeleton = () => {
   );
 };
 
+/**
+ * Skeleton for company profile screen
+ */
+export const CompanyProfileSkeleton = () => {
+  const { isDark } = useTheme();
+  
+  return (
+    <View style={[styles.detailSkeleton, { backgroundColor: isDark ? '#121212' : '#FAF8F5' }]}>
+      {/* Banner */}
+      <Skeleton height={220} borderRadius={0} />
+      
+      {/* Company Info */}
+      <View style={styles.companyContent}>
+        <Skeleton width="70%" height={28} style={{ marginBottom: 8 }} />
+        <Skeleton width="90%" height={14} style={{ marginBottom: 12 }} />
+        <Skeleton width={140} height={16} style={{ marginBottom: 16 }} />
+        
+        {/* Stats row */}
+        <View style={styles.companyStats}>
+          <Skeleton width="30%" height={70} borderRadius={12} />
+          <Skeleton width="30%" height={70} borderRadius={12} />
+          <Skeleton width="30%" height={70} borderRadius={12} />
+        </View>
+        
+        {/* Button */}
+        <Skeleton width="100%" height={48} borderRadius={12} style={{ marginTop: 16 }} />
+        
+        {/* Section */}
+        <Skeleton width={100} height={18} style={{ marginTop: 24, marginBottom: 12 }} />
+        <Skeleton width="100%" height={14} style={{ marginBottom: 8 }} />
+        <Skeleton width="100%" height={14} style={{ marginBottom: 8 }} />
+        <Skeleton width="60%" height={14} />
+      </View>
+    </View>
+  );
+};
+
 const styles = StyleSheet.create({
   skeleton: {
     overflow: 'hidden',
@@ -195,6 +232,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     gap: 12,
+  },
+  companyContent: {
+    padding: spacing.lg,
+  },
+  companyStats: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 8,
   },
   sectionSkeleton: {
     marginBottom: spacing.sectionSpacing,

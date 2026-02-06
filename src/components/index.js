@@ -19,7 +19,7 @@ export { TeaRandomizer } from './TeaRandomizer';
 export { BrewingGuide } from './BrewingGuide';
 export { HealthBenefits } from './HealthBenefits';
 export { TeaBattle } from './TeaBattle';
-export { Skeleton, TeaCardSkeleton, TeaListSkeleton, TeaDetailSkeleton, SectionSkeleton } from './Skeleton';
+export { Skeleton, TeaCardSkeleton, TeaListSkeleton, TeaDetailSkeleton, SectionSkeleton, CompanyProfileSkeleton } from './Skeleton';
 export { ShareableTeaCard } from './ShareableTeaCard';
 export { ShareableComparisonCard } from './ShareableComparisonCard';
 export { TeawareCard } from './TeawareCard';
