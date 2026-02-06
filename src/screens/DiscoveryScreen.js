@@ -13,9 +13,39 @@ import {
 } from 'react-native';
 import { SlidersHorizontal, Clock, X, ArrowUp } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { SearchBar, FilterPills, FilterModal, TeaCard } from '../components';
+import { SearchBar, FilterPills, FilterModal, TeaCard, TeaCardSkeleton } from '../components';
 import { useTeas, useSearchHistory } from '../hooks';
 import { useTheme } from '../context';
+
+// Skeleton grid for loading state
+const SkeletonGrid = () => (
+  <View style={skeletonStyles.grid}>
+    {Array.from({ length: 6 }).map((_, i) => (
+      <View key={i} style={[skeletonStyles.cardContainer, i % 2 === 0 ? skeletonStyles.cardLeft : skeletonStyles.cardRight]}>
+        <TeaCardSkeleton />
+      </View>
+    ))}
+  </View>
+);
+
+const skeletonStyles = StyleSheet.create({
+  grid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: spacing.screenHorizontal,
+    paddingTop: spacing.md,
+  },
+  cardContainer: {
+    width: (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2,
+    marginBottom: spacing.cardGap,
+  },
+  cardLeft: {
+    marginRight: spacing.cardGap / 2,
+  },
+  cardRight: {
+    marginLeft: spacing.cardGap / 2,
+  },
+});
 
 const { width } = Dimensions.get('window');
 const cardWidth = (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2;
@@ -118,18 +148,18 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     </View>
   );
   
-  const renderEmptyState = () => (
-    <View style={styles.emptyState}>
-      {loading ? (
-        <ActivityIndicator size="large" color={theme.accent.primary} />
-      ) : (
-        <>
-          <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>No teas found</Text>
-          <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>Try a different search or filter</Text>
-        </>
-      )}
-    </View>
-  );
+  const renderEmptyState = () => {
+    if (loading) {
+      return <SkeletonGrid />;
+    }
+    
+    return (
+      <View style={styles.emptyState}>
+        <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>No teas found</Text>
+        <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>Try a different search or filter</Text>
+      </View>
+    );
+  };
 
   const renderSearchHistory = () => {
     if (!showHistory || history.length === 0 || searchQuery.length > 0) return null;

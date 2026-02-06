@@ -14,9 +14,31 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
-import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard } from '../components';
+import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton } from '../components';
 import { useTeas, useCompanies, useRecommendations, useTeaware } from '../hooks';
 import { useTheme } from '../context';
+
+// Skeleton for horizontal tea list while loading
+const HorizontalListSkeleton = () => (
+  <ScrollView 
+    horizontal 
+    showsHorizontalScrollIndicator={false}
+    contentContainerStyle={{ paddingHorizontal: spacing.screenHorizontal, gap: spacing.cardGap }}
+  >
+    {Array.from({ length: 4 }).map((_, i) => (
+      <View key={i} style={{ width: width * 0.42 }}>
+        <TeaCardSkeleton compact />
+      </View>
+    ))}
+  </ScrollView>
+);
+
+// Skeleton for Tea of the Day
+const TeaOfDaySkeleton = () => (
+  <View style={{ marginHorizontal: spacing.screenHorizontal, borderRadius: 16, overflow: 'hidden' }}>
+    <Skeleton height={200} borderRadius={16} />
+  </View>
+);
 
 const { width } = Dimensions.get('window');
 const CARD_WIDTH = width * 0.42;
@@ -114,6 +136,11 @@ export const HomeScreen = ({ navigation }) => {
   };
 
   const renderHorizontalTeaList = (teaList, emptyMessage) => {
+    // Show skeleton while loading
+    if (teasLoading) {
+      return <HorizontalListSkeleton />;
+    }
+    
     if (teaList.length === 0) {
       return (
         <View style={styles.emptySection}>
@@ -211,14 +238,16 @@ export const HomeScreen = ({ navigation }) => {
         </TouchableOpacity>
 
         {/* Tea of the Day */}
-        {teas.length > 0 && (
-          <View style={styles.section}>
+        <View style={styles.section}>
+          {teasLoading ? (
+            <TeaOfDaySkeleton />
+          ) : teas.length > 0 ? (
             <TeaOfTheDay 
               teas={teas} 
               onPress={(tea) => navigation.navigate('TeaDetail', { tea })}
             />
-          </View>
-        )}
+          ) : null}
+        </View>
 
         {/* Tea Randomizer - "What should I brew?" */}
         {teas.length > 0 && (
