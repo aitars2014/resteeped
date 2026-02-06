@@ -539,6 +539,7 @@ const styles = StyleSheet.create({
   },
   choiceButton: {
     width: '100%',
+    minHeight: 56,
   },
 });
 

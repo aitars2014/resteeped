@@ -55,32 +55,55 @@ const getCurrentSeason = () => {
   return 'winter';
 };
 
-const getSeasonalTeas = (teas, seasonKey) => {
+const getSeasonalTeas = (teas, seasonKey, limit = 8) => {
   const season = SEASONS[seasonKey];
   if (!season || !teas) return [];
   
-  return teas
-    .filter(tea => {
-      // Match by tea type
-      const typeMatch = season.teaTypes.includes(tea.teaType?.toLowerCase());
-      
-      // Match by keywords in flavor notes or description
-      const flavorNotes = (tea.flavorNotes || []).map(f => f.toLowerCase());
-      const description = (tea.description || '').toLowerCase();
-      const keywordMatch = season.keywords.some(kw => 
-        flavorNotes.some(fn => fn.includes(kw)) || description.includes(kw)
-      );
-      
-      return typeMatch || keywordMatch;
-    })
-    .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0))
-    .slice(0, 8);
+  // Score each tea based on how well it matches the season
+  const scoredTeas = teas.map(tea => {
+    let score = 0;
+    const teaType = tea.teaType?.toLowerCase();
+    const flavorNotes = (tea.flavorNotes || []).map(f => f.toLowerCase());
+    const description = (tea.description || '').toLowerCase();
+    const name = (tea.name || '').toLowerCase();
+    
+    // Tea type match (high priority)
+    if (season.teaTypes.includes(teaType)) {
+      score += 10;
+    }
+    
+    // Keyword matches (accumulate points for each match)
+    season.keywords.forEach(kw => {
+      if (flavorNotes.some(fn => fn.includes(kw))) score += 3;
+      if (description.includes(kw)) score += 2;
+      if (name.includes(kw)) score += 2;
+    });
+    
+    // Bonus for rating
+    if (tea.avgRating) score += tea.avgRating;
+    
+    return { ...tea, seasonScore: score };
+  });
+  
+  // Filter to teas with at least some relevance (score > 5)
+  return scoredTeas
+    .filter(tea => tea.seasonScore > 5)
+    .sort((a, b) => b.seasonScore - a.seasonScore)
+    .slice(0, limit);
 };
+
+// Get full curated collection (capped at 25)
+const getSeasonalCollection = (teas, seasonKey) => getSeasonalTeas(teas, seasonKey, 25);
 
 export const SeasonalHighlights = ({ teas, onTeaPress, onSeeAll }) => {
   const currentSeason = useMemo(() => getCurrentSeason(), []);
   const season = SEASONS[currentSeason];
   const seasonalTeas = useMemo(() => getSeasonalTeas(teas, currentSeason), [teas, currentSeason]);
+  const fullCollection = useMemo(() => getSeasonalCollection(teas, currentSeason), [teas, currentSeason]);
+  
+  const handleSeeAll = () => {
+    onSeeAll?.(fullCollection, season);
+  };
   
   if (seasonalTeas.length === 0) return null;
   
@@ -91,7 +114,7 @@ export const SeasonalHighlights = ({ teas, onTeaPress, onSeeAll }) => {
       {/* Header */}
       <TouchableOpacity 
         style={styles.headerCard}
-        onPress={onSeeAll}
+        onPress={handleSeeAll}
         activeOpacity={0.8}
       >
         <LinearGradient

@@ -5,7 +5,7 @@
     "scheme": "resteeped",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/ios-icons/Default.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
@@ -16,6 +16,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.resteeped.app",
+      "icon": {
+        "light": "./assets/ios-icons/Default.png",
+        "dark": "./assets/ios-icons/Dark.png",
+        "tinted": "./assets/ios-icons/TintedDark.png"
+      },
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }

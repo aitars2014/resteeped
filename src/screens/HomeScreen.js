@@ -239,7 +239,14 @@ export const HomeScreen = ({ navigation }) => {
         <SeasonalHighlights
           teas={teas}
           onTeaPress={(tea) => navigation.navigate('TeaDetail', { tea })}
-          onSeeAll={() => handleSeeAll('seasonal')}
+          onSeeAll={(curatedTeas, season) => {
+            navigation.navigate('SeasonalCollection', { 
+              teas: curatedTeas, 
+              title: season.name,
+              description: season.description,
+              colors: season.colors,
+            });
+          }}
         />
 
         {/* Tea Battle - Comparison Feature */}

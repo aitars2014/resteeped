@@ -22,6 +22,7 @@ import {
   UserProfileScreen,
   ContactScreen,
   PaywallScreen,
+  SeasonalCollectionScreen,
 } from '../screens';
 
 const Tab = createBottomTabNavigator();
@@ -38,6 +39,7 @@ const HomeStack = () => (
     <Stack.Screen name="UserProfile" component={UserProfileScreen} />
     <Stack.Screen name="CompareTeas" component={CompareTeasScreen} />
     <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
+    <Stack.Screen name="SeasonalCollection" component={SeasonalCollectionScreen} />
   </Stack.Navigator>
 );
 

@@ -16,3 +16,4 @@ export { default as TeawareDetailScreen } from './TeawareDetailScreen';
 export { default as UserProfileScreen } from './UserProfileScreen';
 export { ContactScreen } from './ContactScreen';
 export { PaywallScreen } from './PaywallScreen';
+export { SeasonalCollectionScreen } from './SeasonalCollectionScreen';
