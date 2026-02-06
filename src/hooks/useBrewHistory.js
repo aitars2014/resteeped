@@ -58,7 +58,7 @@ export const useBrewHistory = () => {
     fetchBrewHistory();
   }, [fetchBrewHistory]);
 
-  const logBrewSession = async ({ teaId, steepTimeSeconds, temperatureF, teaData = null }) => {
+  const logBrewSession = async ({ teaId, steepTimeSeconds, temperatureF, teaData = null, infusionNumber = null, note = null }) => {
     if (isLocalMode) {
       // Store locally for dev mode or non-logged-in users
       const session = {
@@ -67,17 +67,19 @@ export const useBrewHistory = () => {
         tea_id: teaId,
         steep_time_seconds: steepTimeSeconds,
         temperature_f: temperatureF,
+        infusion_number: infusionNumber,
+        note: note,
         created_at: new Date().toISOString(),
         tea: teaData, // Store tea data for display in dev mode
       };
-      const newSessions = [session, ...brewSessions];
-      setBrewSessions(newSessions);
-      // Persist to AsyncStorage
-      try {
-        await AsyncStorage.setItem(BREW_HISTORY_KEY, JSON.stringify(newSessions.slice(0, 100)));
-      } catch (err) {
-        console.error('Error saving local brew history:', err);
-      }
+      // Use functional setState to avoid stale closure
+      setBrewSessions(prev => {
+        const newSessions = [session, ...prev];
+        // Persist to AsyncStorage (async, fire and forget)
+        AsyncStorage.setItem(BREW_HISTORY_KEY, JSON.stringify(newSessions.slice(0, 100)))
+          .catch(err => console.error('Error saving local brew history:', err));
+        return newSessions;
+      });
       return { data: session, error: null };
     }
     
