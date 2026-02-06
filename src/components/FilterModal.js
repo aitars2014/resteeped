@@ -8,11 +8,13 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import { X, Check, Star } from 'lucide-react-native';
+import { X, Check, Star, ChevronDown, ChevronUp } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { Button } from './Button';
 import { useCompanies } from '../hooks';
+
+const INITIAL_BRANDS_SHOWN = 8;
 
 const TEA_TYPES = [
   { id: 'all', label: 'All Types' },
@@ -55,6 +57,7 @@ export const FilterModal = ({
     sortBy: 'relevance',
     ...filters,
   });
+  const [showAllBrands, setShowAllBrands] = useState(false);
 
   useEffect(() => {
     if (visible) {
@@ -65,6 +68,7 @@ export const FilterModal = ({
         sortBy: 'relevance',
         ...filters,
       });
+      setShowAllBrands(false);
     }
   }, [visible, filters]);
 
@@ -195,16 +199,43 @@ export const FilterModal = ({
               <View style={styles.optionsList}>
                 {renderOption('all', 'All Brands', localFilters.company, 
                   (v) => toggleFilter('company', v))}
-                {[...companies]
-                  .sort((a, b) => a.name.localeCompare(b.name))
-                  .map(company => 
-                    renderOption(
-                      company.id, 
-                      company.name, 
-                      localFilters.company,
-                      (v) => toggleFilter('company', v)
-                    )
-                  )}
+                {(() => {
+                  const sortedCompanies = [...companies].sort((a, b) => a.name.localeCompare(b.name));
+                  const displayedCompanies = showAllBrands 
+                    ? sortedCompanies 
+                    : sortedCompanies.slice(0, INITIAL_BRANDS_SHOWN);
+                  const hasMore = sortedCompanies.length > INITIAL_BRANDS_SHOWN;
+                  
+                  return (
+                    <>
+                      {displayedCompanies.map(company => 
+                        renderOption(
+                          company.id, 
+                          company.name, 
+                          localFilters.company,
+                          (v) => toggleFilter('company', v)
+                        )
+                      )}
+                      {hasMore && (
+                        <TouchableOpacity
+                          style={styles.showMoreButton}
+                          onPress={() => setShowAllBrands(!showAllBrands)}
+                        >
+                          {showAllBrands ? (
+                            <ChevronUp size={18} color={theme.accent.primary} />
+                          ) : (
+                            <ChevronDown size={18} color={theme.accent.primary} />
+                          )}
+                          <Text style={[styles.showMoreText, { color: theme.accent.primary }]}>
+                            {showAllBrands 
+                              ? 'Show fewer' 
+                              : `Show ${sortedCompanies.length - INITIAL_BRANDS_SHOWN} more brands`}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    </>
+                  );
+                })()}
               </View>
             </View>
 
@@ -354,6 +385,17 @@ const styles = StyleSheet.create({
   },
   optionText: {
     ...typography.body,
+  },
+  showMoreButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    gap: 6,
+  },
+  showMoreText: {
+    ...typography.bodySmall,
+    fontWeight: '600',
   },
   ratingOptions: {
     flexDirection: 'row',
