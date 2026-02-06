@@ -182,6 +182,36 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const updateProfile = async (updates) => {
+    if (!user) return { error: { message: 'Not logged in' } };
+    
+    // Dev mode: update local state only
+    if (isDevMode) {
+      setProfile(prev => ({ ...prev, ...updates }));
+      return { data: { ...profile, ...updates }, error: null };
+    }
+
+    if (!isSupabaseConfigured()) {
+      return { error: { message: 'Supabase not configured' } };
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .update(updates)
+        .eq('id', user.id)
+        .select()
+        .single();
+      
+      if (error) throw error;
+      setProfile(data);
+      return { data, error: null };
+    } catch (error) {
+      console.error('Error updating profile:', error);
+      return { error };
+    }
+  };
+
   const value = {
     user,
     profile,
@@ -191,6 +221,7 @@ export const AuthProvider = ({ children }) => {
     isDevMode,
     signInWithGoogle,
     signOut,
+    updateProfile,
     refreshProfile: () => user && fetchProfile(user.id),
   };
 

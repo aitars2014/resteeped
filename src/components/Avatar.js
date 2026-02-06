@@ -54,15 +54,17 @@ export default function Avatar({
   size = 48,
   style,
   avatarStyle = 'notionists', // DiceBear style
+  avatarSeed = null, // Custom seed for variation selection
 }) {
   const { theme } = useTheme();
   
   // Generate deterministic avatar URL from DiceBear
   const dicebearUrl = useMemo(() => {
-    if (!userId) return null;
-    const seed = userId.replace(/-/g, '');
+    if (!userId && !avatarSeed) return null;
+    // Use custom seed if provided, otherwise fall back to userId
+    const seed = avatarSeed || userId.replace(/-/g, '');
     return `https://api.dicebear.com/7.x/${avatarStyle}/png?seed=${seed}&size=${size * 2}&backgroundColor=transparent`;
-  }, [userId, avatarStyle, size]);
+  }, [userId, avatarStyle, avatarSeed, size]);
 
   // Get fallback color based on userId or name
   const fallbackColors = useMemo(() => {

@@ -10,10 +10,9 @@ import {
   ScrollView,
   Switch,
 } from 'react-native';
-import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, AlertTriangle, Mail } from 'lucide-react-native';
-import * as Sentry from '@sentry/react-native';
+import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { Button, Avatar, AvatarPicker } from '../components';
+import { Button, Avatar, AvatarPicker, EditDisplayNameModal } from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAuth, useCollection, useTheme } from '../context';
 import { useBrewHistory } from '../hooks';
@@ -21,24 +20,43 @@ import { exportCollectionToJSON, exportCollectionToCSV } from '../utils/exportCo
 import { resetOnboarding } from './OnboardingScreen';
 
 export const ProfileScreen = ({ navigation }) => {
-  const { user, profile, loading, signInWithGoogle, signOut, isConfigured } = useAuth();
+  const { user, profile, loading, signInWithGoogle, signOut, updateProfile, isConfigured } = useAuth();
   const { collection } = useCollection();
   const { brewSessions, todayBrewCount, weekBrewCount } = useBrewHistory();
   const { theme, isDark, themePreference, setThemePreference } = useTheme();
   
   const [avatarPickerVisible, setAvatarPickerVisible] = useState(false);
   const [avatarStyle, setAvatarStyle] = useState('notionists');
+  const [avatarSeed, setAvatarSeed] = useState(null);
+  const [editNameVisible, setEditNameVisible] = useState(false);
 
   useEffect(() => {
-    // Load saved avatar style
-    AsyncStorage.getItem('@resteeped:avatar_style').then(style => {
+    // Load saved avatar style and seed
+    Promise.all([
+      AsyncStorage.getItem('@resteeped:avatar_style'),
+      AsyncStorage.getItem('@resteeped:avatar_seed'),
+    ]).then(([style, seed]) => {
       if (style) setAvatarStyle(style);
+      if (seed) setAvatarSeed(seed);
     });
   }, []);
 
-  const handleAvatarStyleChange = async (style) => {
+  const handleAvatarChange = async (style, seed) => {
     setAvatarStyle(style);
+    setAvatarSeed(seed);
     await AsyncStorage.setItem('@resteeped:avatar_style', style);
+    if (seed) {
+      await AsyncStorage.setItem('@resteeped:avatar_seed', seed);
+    } else {
+      await AsyncStorage.removeItem('@resteeped:avatar_seed');
+    }
+  };
+
+  const handleDisplayNameChange = async (newName) => {
+    const { error } = await updateProfile({ display_name: newName });
+    if (error) {
+      Alert.alert('Error', 'Failed to update display name. Please try again.');
+    }
   };
   
   const handleSignIn = async () => {
@@ -205,15 +223,25 @@ export const ProfileScreen = ({ navigation }) => {
             imageUrl={profile?.avatar_url}
             size={64}
             avatarStyle={avatarStyle}
+            avatarSeed={avatarSeed}
           />
           <View style={[styles.editAvatarBadge, { backgroundColor: theme.accent.primary }]}>
             <Text style={styles.editAvatarText} accessibilityElementsHidden>✏️</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.profileInfo}>
-          <Text style={[styles.username, { color: theme.text.primary }]}>
-            {profile?.display_name || profile?.username || 'Tea Lover'}
-          </Text>
+          <TouchableOpacity 
+            style={styles.displayNameRow}
+            onPress={() => setEditNameVisible(true)}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Edit display name"
+          >
+            <Text style={[styles.username, { color: theme.text.primary }]}>
+              {profile?.display_name || profile?.username || 'Tea Lover'}
+            </Text>
+            <Edit2 size={16} color={theme.text.secondary} style={styles.editIcon} />
+          </TouchableOpacity>
           <Text style={[styles.email, { color: theme.text.secondary }]}>{user?.email}</Text>
         </View>
       </View>
@@ -360,7 +388,7 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
         
         <TouchableOpacity 
-          style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
+          style={[styles.menuItem, styles.menuItemLast]}
           onPress={() => {
             Alert.alert(
               'Reset Onboarding',
@@ -380,18 +408,6 @@ export const ProfileScreen = ({ navigation }) => {
         >
           <RotateCcw size={20} color={theme.accent.primary} />
           <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Reset Onboarding</Text>
-          <ChevronRight size={20} color={theme.text.secondary} />
-        </TouchableOpacity>
-        
-        <TouchableOpacity 
-          style={[styles.menuItem, styles.menuItemLast]}
-          onPress={() => {
-            Sentry.captureException(new Error('Test error from Resteeped Profile Screen'));
-            Alert.alert('Sentry Test', 'Test error sent to Sentry! Check your dashboard.');
-          }}
-        >
-          <AlertTriangle size={20} color={theme.status.warning} />
-          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Send Test Error to Sentry</Text>
           <ChevronRight size={20} color={theme.text.secondary} />
         </TouchableOpacity>
       </View>
@@ -449,10 +465,18 @@ export const ProfileScreen = ({ navigation }) => {
       <AvatarPicker
         visible={avatarPickerVisible}
         onClose={() => setAvatarPickerVisible(false)}
-        onSelect={handleAvatarStyleChange}
+        onSelect={handleAvatarChange}
         currentStyle={avatarStyle}
+        currentSeed={avatarSeed}
         userId={user?.id}
         userName={profile?.display_name || profile?.username || 'Tea Lover'}
+      />
+
+      <EditDisplayNameModal
+        visible={editNameVisible}
+        onClose={() => setEditNameVisible(false)}
+        onSave={handleDisplayNameChange}
+        currentName={profile?.display_name || profile?.username || ''}
       />
     </>
   );
@@ -541,6 +565,13 @@ const styles = StyleSheet.create({
   },
   profileInfo: {
     flex: 1,
+  },
+  displayNameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  editIcon: {
+    marginLeft: 8,
   },
   username: {
     ...typography.headingMedium,
