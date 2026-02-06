@@ -200,7 +200,9 @@ export const FilterModal = ({
                 {renderOption('all', 'All Brands', localFilters.company, 
                   (v) => toggleFilter('company', v))}
                 {(() => {
-                  const sortedCompanies = [...companies].sort((a, b) => a.name.localeCompare(b.name));
+                  // Sort alphabetically, ignoring "The " prefix
+                  const sortName = (name) => name.replace(/^The\s+/i, '').toLowerCase();
+                  const sortedCompanies = [...companies].sort((a, b) => sortName(a.name).localeCompare(sortName(b.name)));
                   const displayedCompanies = showAllBrands 
                     ? sortedCompanies 
                     : sortedCompanies.slice(0, INITIAL_BRANDS_SHOWN);
