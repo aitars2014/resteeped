@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -15,6 +15,7 @@ import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, No
 import { typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, HealthBenefits } from '../components';
 import { shareTea } from '../utils/sharing';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { useAuth, useCollection, useTheme } from '../context';
 import { useReviews, useCompanies, useTeas } from '../hooks';
 
@@ -43,6 +44,16 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showTastingNotes, setShowTastingNotes] = useState(false);
+  
+  // Track tea view
+  useEffect(() => {
+    trackEvent(AnalyticsEvents.TEA_VIEWED, {
+      tea_id: tea.id,
+      tea_name: tea.name,
+      tea_type: tea.teaType || tea.tea_type,
+      brand: tea.brandName || tea.brand_name,
+    });
+  }, [tea.id]);
   
   // Find company by brand name or company_id
   const company = tea.companyId 
@@ -92,6 +103,12 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     if (error) {
       Alert.alert('Error', 'Could not submit review. Please try again.');
     } else {
+      trackEvent(AnalyticsEvents.REVIEW_SUBMITTED, {
+        tea_id: tea.id,
+        tea_name: tea.name,
+        rating,
+        has_text: !!reviewText,
+      });
       setShowReviewModal(false);
     }
   };

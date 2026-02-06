@@ -22,6 +22,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { Button } from '../components';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const { width } = Dimensions.get('window');
 
@@ -80,13 +81,27 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
   const scrollX = useRef(new Animated.Value(0)).current;
+  const [hasTrackedStart, setHasTrackedStart] = useState(false);
 
-  const handleComplete = async () => {
+  // Track onboarding started on first view
+  React.useEffect(() => {
+    if (!hasTrackedStart) {
+      trackEvent(AnalyticsEvents.ONBOARDING_STARTED);
+      setHasTrackedStart(true);
+    }
+  }, []);
+
+  const handleComplete = async (skipped = false) => {
     try {
       await AsyncStorage.setItem(ONBOARDING_COMPLETE_KEY, 'true');
     } catch (e) {
       console.log('Error saving onboarding state:', e);
     }
+    
+    trackEvent(skipped ? AnalyticsEvents.ONBOARDING_SKIPPED : AnalyticsEvents.ONBOARDING_COMPLETED, {
+      slides_viewed: currentIndex + 1,
+      total_slides: ONBOARDING_SLIDES.length,
+    });
     
     if (onComplete) {
       onComplete();
@@ -102,12 +117,12 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
         animated: true 
       });
     } else {
-      handleComplete();
+      handleComplete(false);
     }
   };
 
   const handleSkip = () => {
-    handleComplete();
+    handleComplete(true);
   };
 
   const renderSlide = ({ item, index }) => {

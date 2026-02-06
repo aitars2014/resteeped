@@ -27,6 +27,7 @@ import { Button, StarRating, TeaCard, WriteCompanyReviewModal, CompanyProfileSke
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
 import { useCompanyReviews } from '../hooks';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const CompanyProfileScreen = ({ route, navigation }) => {
   const { theme } = useTheme();
@@ -49,6 +50,14 @@ const CompanyProfileScreen = ({ route, navigation }) => {
     if (companyId || passedCompany?.id) {
       fetchTopTeas();
       fetchReviews();
+    }
+    // Track company view
+    const companyData = passedCompany || company;
+    if (companyData) {
+      trackEvent(AnalyticsEvents.COMPANY_VIEWED, {
+        company_id: companyData.id,
+        company_name: companyData.name,
+      });
     }
   }, [companyId, passedCompany]);
 

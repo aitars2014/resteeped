@@ -16,6 +16,7 @@ import { typography, spacing } from '../constants';
 import { SearchBar, FilterPills, FilterModal, TeaCard, TeaCardSkeleton } from '../components';
 import { useTeas, useSearchHistory } from '../hooks';
 import { useTheme } from '../context';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 // Skeleton grid for loading state
 const SkeletonGrid = () => (
@@ -94,16 +95,29 @@ export const DiscoveryScreen = ({ navigation, route }) => {
 
   const handleApplyFilters = (newFilters) => {
     setFilters(newFilters);
+    trackEvent(AnalyticsEvents.TEA_FILTERED, {
+      tea_type: newFilters.teaType,
+      company: newFilters.company,
+      min_rating: newFilters.minRating,
+      sort_by: newFilters.sortBy,
+    });
   };
 
   const handleTypeChange = (type) => {
     setFilters(prev => ({ ...prev, teaType: type }));
+    if (type !== 'all') {
+      trackEvent(AnalyticsEvents.TEA_FILTERED, { tea_type: type });
+    }
   };
 
   const handleSearchSubmit = () => {
     if (searchQuery.trim()) {
       addToHistory(searchQuery.trim());
       setShowHistory(false);
+      trackEvent(AnalyticsEvents.TEA_SEARCHED, { 
+        query: searchQuery.trim(),
+        results_count: filteredTeas.length,
+      });
     }
   };
 

@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from './AuthContext';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const CollectionContext = createContext({});
 
@@ -66,6 +67,12 @@ export const CollectionProvider = ({ children }) => {
         },
         ...prev.filter(item => item.tea_id !== teaId), // Remove if already exists
       ]);
+      trackEvent(AnalyticsEvents.TEA_ADDED_TO_COLLECTION, { 
+        tea_id: teaId, 
+        status,
+        tea_name: teaData?.name,
+        tea_type: teaData?.teaType || teaData?.tea_type,
+      });
       return { error: null };
     }
 
@@ -84,6 +91,10 @@ export const CollectionProvider = ({ children }) => {
       if (error) throw error;
       
       await fetchCollection();
+      trackEvent(AnalyticsEvents.TEA_ADDED_TO_COLLECTION, { 
+        tea_id: teaId, 
+        status,
+      });
       return { data, error: null };
     } catch (error) {
       console.error('Error adding to collection:', error);
@@ -99,6 +110,7 @@ export const CollectionProvider = ({ children }) => {
 
     if (isLocalMode) {
       setCollection(prev => prev.filter(item => item.tea_id !== teaId));
+      trackEvent(AnalyticsEvents.TEA_REMOVED_FROM_COLLECTION, { tea_id: teaId });
       return { error: null };
     }
 
@@ -112,6 +124,7 @@ export const CollectionProvider = ({ children }) => {
       if (error) throw error;
       
       await fetchCollection();
+      trackEvent(AnalyticsEvents.TEA_REMOVED_FROM_COLLECTION, { tea_id: teaId });
       return { error: null };
     } catch (error) {
       console.error('Error removing from collection:', error);

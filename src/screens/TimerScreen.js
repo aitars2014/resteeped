@@ -24,6 +24,7 @@ import { Button, TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
 import { useAuth, useTheme, useCollection } from '../context';
 import { getBrewingGuide } from '../constants/brewingGuides';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const { width } = Dimensions.get('window');
 
@@ -295,6 +296,16 @@ export const TimerScreen = ({ route, navigation }) => {
     if (isComplete && !hasLogged) {
       setHasLogged(true);
       
+      // Track brew completed
+      trackEvent(AnalyticsEvents.BREW_COMPLETED, {
+        tea_id: tea?.id,
+        tea_name: tea?.name,
+        tea_type: tea?.teaType,
+        steep_time: totalSeconds,
+        multi_steep: multiSteepMode,
+        infusion: multiSteepMode ? currentInfusion : null,
+      });
+      
       // Log the brew session
       logBrewSession({
         teaId: tea?.id,
@@ -380,7 +391,24 @@ export const TimerScreen = ({ route, navigation }) => {
       setIsComplete(false);
       setHasLogged(false);
       setIsRunning(true);
+      trackEvent(AnalyticsEvents.BREW_STARTED, {
+        tea_id: tea?.id,
+        tea_name: tea?.name,
+        steep_time: totalSeconds,
+        is_restart: true,
+      });
     } else {
+      if (!isRunning) {
+        // Starting timer
+        trackEvent(AnalyticsEvents.BREW_STARTED, {
+          tea_id: tea?.id,
+          tea_name: tea?.name,
+          tea_type: tea?.teaType,
+          steep_time: totalSeconds,
+          multi_steep: multiSteepMode,
+          infusion: multiSteepMode ? currentInfusion : null,
+        });
+      }
       setIsRunning(!isRunning);
     }
   };

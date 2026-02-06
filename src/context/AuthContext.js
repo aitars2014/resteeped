@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
+import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from '../utils/analytics';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -101,6 +102,7 @@ export const AuthProvider = ({ children }) => {
       setUser(DEV_USER);
       setProfile(DEV_PROFILE);
       setIsDevMode(true);
+      trackEvent(AnalyticsEvents.SIGN_IN, { method: 'dev_mode' });
       return { data: { user: DEV_USER }, error: null };
     }
 
@@ -144,6 +146,14 @@ export const AuthProvider = ({ children }) => {
               });
             
             if (sessionError) throw sessionError;
+            
+            // Track sign in and identify user
+            if (sessionData?.user) {
+              const isNewUser = new Date(sessionData.user.created_at) > new Date(Date.now() - 60000);
+              trackEvent(isNewUser ? AnalyticsEvents.SIGN_UP : AnalyticsEvents.SIGN_IN, { method: 'google' });
+              identifyUser(sessionData.user.id, { email: sessionData.user.email });
+            }
+            
             return { data: sessionData, error: null };
           }
         }
@@ -163,6 +173,8 @@ export const AuthProvider = ({ children }) => {
       setUser(null);
       setProfile(null);
       setIsDevMode(false);
+      trackEvent(AnalyticsEvents.SIGN_OUT);
+      resetUser();
       return { error: null };
     }
 
@@ -175,6 +187,8 @@ export const AuthProvider = ({ children }) => {
       if (error) throw error;
       setUser(null);
       setProfile(null);
+      trackEvent(AnalyticsEvents.SIGN_OUT);
+      resetUser();
       return { error: null };
     } catch (error) {
       console.error('Sign out error:', error);
