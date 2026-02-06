@@ -86,14 +86,34 @@ export const useTeas = () => {
     }
 
     try {
-      // Supabase defaults to 1000 rows max - need to fetch all
-      const { data, error: fetchError } = await supabase
-        .from('teas')
-        .select('*')
-        .order('avg_rating', { ascending: false })
-        .range(0, 9999); // Fetch up to 10k teas
+      // Supabase has a 1000-row default limit - paginate to fetch all
+      const PAGE_SIZE = 1000;
+      let allTeas = [];
+      let page = 0;
+      let hasMore = true;
 
-      if (fetchError) throw fetchError;
+      while (hasMore) {
+        const from = page * PAGE_SIZE;
+        const to = from + PAGE_SIZE - 1;
+        
+        const { data, error: fetchError } = await supabase
+          .from('teas')
+          .select('*')
+          .order('avg_rating', { ascending: false, nullsFirst: false })
+          .range(from, to);
+
+        if (fetchError) throw fetchError;
+        
+        if (data && data.length > 0) {
+          allTeas = [...allTeas, ...data];
+          hasMore = data.length === PAGE_SIZE;
+          page++;
+        } else {
+          hasMore = false;
+        }
+      }
+
+      const data = allTeas;
 
       // Transform to match app's expected format
       const formattedTeas = data.map(tea => ({
