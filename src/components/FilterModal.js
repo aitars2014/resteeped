@@ -195,14 +195,16 @@ export const FilterModal = ({
               <View style={styles.optionsList}>
                 {renderOption('all', 'All Brands', localFilters.company, 
                   (v) => toggleFilter('company', v))}
-                {companies.map(company => 
-                  renderOption(
-                    company.id, 
-                    company.name, 
-                    localFilters.company,
-                    (v) => toggleFilter('company', v)
-                  )
-                )}
+                {[...companies]
+                  .sort((a, b) => a.name.localeCompare(b.name))
+                  .map(company => 
+                    renderOption(
+                      company.id, 
+                      company.name, 
+                      localFilters.company,
+                      (v) => toggleFilter('company', v)
+                    )
+                  )}
               </View>
             </View>
 
