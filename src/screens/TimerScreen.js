@@ -112,7 +112,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const teaColor = tea ? getTeaTypeColor(tea.teaType) : null;
   
   const { user } = useAuth();
-  const { updateInCollection, isInCollection, getCollectionItem } = useCollection();
+  const { updateInCollection, isInCollection, getCollectionItem, setPreferredSteepTime, getPreferredSteepTime } = useCollection();
   const { logBrewSession, todayBrewCount } = useBrewHistory();
   
   // Get brewing guide
@@ -120,9 +120,13 @@ export const TimerScreen = ({ route, navigation }) => {
   const maxInfusions = guide?.infusions || 1;
   const isMultiSteep = maxInfusions > 1;
   
-  const defaultTimeSeconds = tea?.steepTimeMin 
+  // Check for user's preferred steep time first
+  const preferredTime = tea?.id ? getPreferredSteepTime(tea.id) : null;
+  const teaDefaultTime = tea?.steepTimeMin 
     ? Math.round(tea.steepTimeMin * 60) 
     : 180;
+  const defaultTimeSeconds = preferredTime || teaDefaultTime;
+  const hasCustomTime = preferredTime !== null;
   
   // Multi-steep state
   const [multiSteepMode, setMultiSteepMode] = useState(isMultiSteep);
@@ -140,6 +144,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const [isComplete, setIsComplete] = useState(false);
   const [hasLogged, setHasLogged] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
+  const [timeModified, setTimeModified] = useState(false);
   
   const intervalRef = useRef(null);
   const notificationIdRef = useRef(null);
@@ -344,12 +349,28 @@ export const TimerScreen = ({ route, navigation }) => {
     setRemainingSeconds(newTime);
     setIsComplete(false);
     setHasLogged(false);
+    setTimeModified(true);
     
     // Update infusion time if in multi-steep mode
     if (multiSteepMode) {
       const newTimes = [...infusionTimes];
       newTimes[currentInfusion - 1] = newTime;
       setInfusionTimes(newTimes);
+    }
+  };
+
+  // Save current time as preferred steep time for this tea
+  const handleSavePreferredTime = async () => {
+    if (!tea?.id || !isInCollection(tea.id)) return;
+    
+    const { error } = await setPreferredSteepTime(tea.id, totalSeconds);
+    if (!error) {
+      setTimeModified(false);
+      Alert.alert(
+        'Saved!',
+        `${formatTime(totalSeconds)} is now your preferred steep time for ${tea.name}.`,
+        [{ text: 'OK' }]
+      );
     }
   };
   
@@ -666,6 +687,28 @@ export const TimerScreen = ({ route, navigation }) => {
           </View>
         )}
         
+        {/* Save as preferred steep time */}
+        {tea?.id && isInCollection(tea.id) && timeModified && !isRunning && !isComplete && (
+          <TouchableOpacity
+            style={[styles.savePreferredButton, { borderColor: theme.accent.primary }]}
+            onPress={handleSavePreferredTime}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Save as my preferred steep time"
+          >
+            <Text style={[styles.savePreferredText, { color: theme.accent.primary }]}>
+              Save as my preferred steep time
+            </Text>
+          </TouchableOpacity>
+        )}
+        
+        {/* Show if using preferred time */}
+        {hasCustomTime && !timeModified && !isComplete && (
+          <Text style={[styles.customTimeLabel, { color: theme.accent.primary }]}>
+            ★ Using your preferred time
+          </Text>
+        )}
+        
         {/* Temperature display */}
         {tea?.steepTempF && !isComplete && (
           <View style={styles.tempContainer}>
@@ -972,6 +1015,23 @@ const styles = StyleSheet.create({
   },
   tempText: {
     ...typography.body,
+  },
+  savePreferredButton: {
+    alignSelf: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginBottom: 12,
+  },
+  savePreferredText: {
+    ...typography.bodySmall,
+    fontWeight: '600',
+  },
+  customTimeLabel: {
+    ...typography.caption,
+    textAlign: 'center',
+    marginBottom: 8,
   },
   notePreview: {
     flexDirection: 'row',

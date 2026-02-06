@@ -162,6 +162,19 @@ export const CollectionProvider = ({ children }) => {
     });
   };
 
+  // Set preferred steep time for a tea (in seconds)
+  const setPreferredSteepTime = async (teaId, steepTimeSeconds) => {
+    return updateInCollection(teaId, {
+      preferred_steep_time: steepTimeSeconds,
+    });
+  };
+
+  // Get preferred steep time for a tea (returns null if not set)
+  const getPreferredSteepTime = (teaId) => {
+    const item = collection.find(item => item.tea_id === teaId);
+    return item?.preferred_steep_time || null;
+  };
+
   // Check if tea is in collection
   const isInCollection = (teaId) => {
     return collection.some(item => item.tea_id === teaId);
@@ -181,6 +194,8 @@ export const CollectionProvider = ({ children }) => {
     rateTea,
     isInCollection,
     getCollectionItem,
+    setPreferredSteepTime,
+    getPreferredSteepTime,
     refreshCollection: fetchCollection,
   };
 
