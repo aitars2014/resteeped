@@ -86,8 +86,28 @@ export const useTeas = () => {
     }
 
     try {
-      // Supabase has a 1000-row default limit - paginate to fetch all
-      const PAGE_SIZE = 1000;
+      // Optimized query: select only needed fields, use larger page size
+      // Note: Increase Supabase API max_rows to 10000 for single-request fetch
+      const PAGE_SIZE = 5000;
+      const SELECTED_FIELDS = `
+        id,
+        name,
+        brand_name,
+        tea_type,
+        description,
+        origin,
+        steep_temp_f,
+        steep_time_min,
+        steep_time_max,
+        flavor_notes,
+        image_url,
+        price_per_oz,
+        avg_rating,
+        rating_count,
+        company_id,
+        created_at
+      `;
+      
       let allTeas = [];
       let page = 0;
       let hasMore = true;
@@ -98,7 +118,7 @@ export const useTeas = () => {
         
         const { data, error: fetchError } = await supabase
           .from('teas')
-          .select('*')
+          .select(SELECTED_FIELDS)
           .order('avg_rating', { ascending: false, nullsFirst: false })
           .range(from, to);
 
