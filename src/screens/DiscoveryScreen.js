@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect, useRef } from 'react';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { 
   View, 
   Text, 
@@ -206,9 +206,45 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     );
   };
   
-  const renderHeader = () => (
+  // Memoize the list header (without search bar) to prevent unnecessary re-renders
+  const listHeader = useMemo(() => (
     <>
-      {/* Search Bar Row */}
+      {/* Tea Type Pills */}
+      <View style={styles.filtersContainer}>
+        <FilterPills 
+          selectedType={filters.teaType}
+          onSelectType={handleTypeChange}
+        />
+      </View>
+      
+      {/* Result Count */}
+      <View style={styles.resultCount}>
+        <Text style={[styles.resultText, { color: theme.text.secondary }]}>
+          {filteredTeas.length >= 1000 ? `${filteredTeas.length.toLocaleString()}+` : filteredTeas.length.toLocaleString()} tea{filteredTeas.length !== 1 ? 's' : ''}
+        </Text>
+        {activeFilterCount > 0 && (
+          <TouchableOpacity 
+            onPress={() => setFilters({
+              teaType: 'all',
+              company: 'all',
+              minRating: 'all',
+              sortBy: 'relevance',
+            })}
+          >
+            <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>Clear filters</Text>
+          </TouchableOpacity>
+        )}
+      </View>
+    </>
+  ), [filters.teaType, filteredTeas.length, activeFilterCount, theme]);
+  
+  return (
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
+      <View style={styles.header}>
+        <Text style={[styles.title, { color: theme.text.primary }]}>Discover</Text>
+      </View>
+      
+      {/* Search Bar - outside FlatList to prevent keyboard dismiss on re-render */}
       <View style={styles.searchRow}>
         <View style={styles.searchContainer}>
           <SearchBar 
@@ -247,41 +283,6 @@ export const DiscoveryScreen = ({ navigation, route }) => {
       {/* Search History */}
       {renderSearchHistory()}
       
-      {/* Tea Type Pills */}
-      <View style={styles.filtersContainer}>
-        <FilterPills 
-          selectedType={filters.teaType}
-          onSelectType={handleTypeChange}
-        />
-      </View>
-      
-      {/* Result Count */}
-      <View style={styles.resultCount}>
-        <Text style={[styles.resultText, { color: theme.text.secondary }]}>
-          {filteredTeas.length >= 1000 ? `${filteredTeas.length.toLocaleString()}+` : filteredTeas.length.toLocaleString()} tea{filteredTeas.length !== 1 ? 's' : ''}
-        </Text>
-        {activeFilterCount > 0 && (
-          <TouchableOpacity 
-            onPress={() => setFilters({
-              teaType: 'all',
-              company: 'all',
-              minRating: 'all',
-              sortBy: 'relevance',
-            })}
-          >
-            <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>Clear filters</Text>
-          </TouchableOpacity>
-        )}
-      </View>
-    </>
-  );
-  
-  return (
-    <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
-      <View style={styles.header}>
-        <Text style={[styles.title, { color: theme.text.primary }]}>Discover</Text>
-      </View>
-      
       <FlatList
         ref={flatListRef}
         data={filteredTeas}
@@ -290,9 +291,10 @@ export const DiscoveryScreen = ({ navigation, route }) => {
         numColumns={2}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={renderHeader}
+        ListHeaderComponent={listHeader}
         ListEmptyComponent={renderEmptyState}
         keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="on-drag"
         onScroll={handleScroll}
         scrollEventThrottle={100}
         refreshControl={
