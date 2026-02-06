@@ -749,7 +749,7 @@ async function scrapeBrand(brandKey) {
       tea_type: getTeaType(product.tags || [], product.title),
       description: cleanDescription(product.body_html),
       image_url: product.images?.[0]?.src || null,
-      product_url: `${brand.url}/products/${product.handle}`,
+      product_url: product.handle ? `${brand.url}/products/${product.handle}` : null,
     };
     
     const { error } = await supabase.from('teas').insert(teaData);
