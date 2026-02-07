@@ -40,6 +40,11 @@ const HomeStack = () => (
     <Stack.Screen name="CompareTeas" component={CompareTeasScreen} />
     <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
     <Stack.Screen name="SeasonalCollection" component={SeasonalCollectionScreen} />
+    <Stack.Screen 
+      name="Paywall" 
+      component={PaywallScreen}
+      options={{ presentation: 'modal' }}
+    />
   </Stack.Navigator>
 );
 
@@ -49,6 +54,11 @@ const DiscoveryStack = () => (
     <Stack.Screen name="DiscoveryHome" component={DiscoveryScreen} />
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
     <Stack.Screen name="CompanyProfile" component={CompanyProfileScreen} />
+    <Stack.Screen 
+      name="Paywall" 
+      component={PaywallScreen}
+      options={{ presentation: 'modal' }}
+    />
   </Stack.Navigator>
 );
 
@@ -94,6 +104,11 @@ const ProfileStack = () => (
     <Stack.Screen name="Teaware" component={TeawareScreen} />
     <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
     <Stack.Screen name="Contact" component={ContactScreen} />
+    <Stack.Screen 
+      name="Paywall" 
+      component={PaywallScreen}
+      options={{ presentation: 'modal' }}
+    />
   </Stack.Navigator>
 );
 

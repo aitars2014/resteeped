@@ -7,15 +7,16 @@ import {
   ScrollView,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
-import { X, Check, Crown, Leaf, Sparkles } from 'lucide-react-native';
+import { X, Check, Crown, Leaf, Sparkles, NotebookPen } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme, useSubscription } from '../context';
 
 const FEATURES = [
   { icon: Leaf, text: 'Unlimited tea collection' },
-  { icon: Sparkles, text: 'Advanced tasting notes' },
-  { icon: Crown, text: 'Priority feature requests' },
+  { icon: Sparkles, text: 'Flavor profile radar charts' },
+  { icon: NotebookPen, text: 'Personal tasting notes & ratings' },
 ];
 
 export const PaywallScreen = ({ navigation, route }) => {
@@ -30,7 +31,16 @@ export const PaywallScreen = ({ navigation, route }) => {
 
   const handlePurchase = async () => {
     const pkg = selectedPackage === 'yearly' ? yearlyPackage : monthlyPackage;
-    if (!pkg) return;
+    
+    if (!pkg) {
+      // Packages not loaded yet - show user-friendly message
+      Alert.alert(
+        'Unable to Load',
+        'Subscription options are temporarily unavailable. Please try again later.',
+        [{ text: 'OK' }]
+      );
+      return;
+    }
 
     setIsLoading(true);
     const result = await purchasePackage(pkg);

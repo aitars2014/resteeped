@@ -11,12 +11,12 @@ import {
   Linking,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2 } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, HealthBenefits } from '../components';
 import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
-import { useAuth, useCollection, useTheme } from '../context';
+import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useReviews, useCompanies, useTeas } from '../hooks';
 
 const { width, height } = Dimensions.get('window');
@@ -29,7 +29,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const styles = createStyles(theme);
   
   const { user } = useAuth();
-  const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, updateInCollection } = useCollection();
+  const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, updateInCollection, collection } = useCollection();
+  const { canAddToCollection, isPremium } = useSubscription();
   const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
   const { companies } = useCompanies();
   const { teas } = useTeas();
@@ -79,6 +80,18 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     if (inCollection) {
       await removeFromCollection(tea.id);
     } else {
+      // Check if user can add more teas (free tier limit)
+      if (!canAddToCollection(collection.length)) {
+        Alert.alert(
+          'Collection Full',
+          'Free accounts can save up to 10 teas. Upgrade to Premium for unlimited teas in your collection!',
+          [
+            { text: 'Maybe Later', style: 'cancel' },
+            { text: 'Upgrade', onPress: () => navigation.navigate('Paywall') },
+          ]
+        );
+        return;
+      }
       await addToCollection(tea.id, 'want_to_try', tea);
     }
   };
@@ -292,54 +305,88 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             </View>
           )}
           
-          {/* Flavor Profile Radar */}
+          {/* Flavor Profile Radar - Premium Feature */}
           {tea.flavorNotes && tea.flavorNotes.length >= 2 && (
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Flavor Profile</Text>
-              <View style={styles.radarContainer}>
-                <FlavorRadar flavorNotes={tea.flavorNotes} size={220} />
-              </View>
+              {isPremium ? (
+                <View style={styles.radarContainer}>
+                  <FlavorRadar flavorNotes={tea.flavorNotes} size={220} />
+                </View>
+              ) : (
+                <TouchableOpacity 
+                  style={[styles.premiumLockCard, { backgroundColor: theme.background.secondary }]}
+                  onPress={() => navigation.navigate('Paywall')}
+                >
+                  <Crown size={32} color={theme.accent.primary} />
+                  <Text style={[styles.premiumLockTitle, { color: theme.text.primary }]}>
+                    Unlock Flavor Profiles
+                  </Text>
+                  <Text style={[styles.premiumLockText, { color: theme.text.secondary }]}>
+                    Upgrade to Premium to see detailed flavor radar charts
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           )}
           
-          {/* Personal Tasting Notes (only if in collection) */}
+          {/* Personal Tasting Notes (only if in collection) - Premium Feature */}
           {inCollection && (
             <View style={styles.section}>
               <View style={styles.tastingNotesHeader}>
                 <Text style={styles.sectionTitle}>My Tasting Notes</Text>
-                <TouchableOpacity 
-                  onPress={() => setShowTastingNotes(true)} 
-                  style={styles.editNotesButton}
-                >
-                  <NotebookPen size={16} color={theme.accent.primary} />
-                  <Text style={styles.editNotesText}>
-                    {collectionItem?.notes ? 'Edit' : 'Add Notes'}
-                  </Text>
-                </TouchableOpacity>
+                {isPremium && (
+                  <TouchableOpacity 
+                    onPress={() => setShowTastingNotes(true)} 
+                    style={styles.editNotesButton}
+                  >
+                    <NotebookPen size={16} color={theme.accent.primary} />
+                    <Text style={styles.editNotesText}>
+                      {collectionItem?.notes ? 'Edit' : 'Add Notes'}
+                    </Text>
+                  </TouchableOpacity>
+                )}
               </View>
               
-              {collectionItem?.user_rating > 0 && (
-                <View style={styles.myRating}>
-                  <Text style={styles.myRatingLabel}>My Rating:</Text>
-                  <StarRating rating={collectionItem.user_rating} size={18} />
-                </View>
-              )}
-              
-              {collectionItem?.notes ? (
-                <TouchableOpacity 
-                  style={styles.notesCard}
-                  onPress={() => setShowTastingNotes(true)}
-                >
-                  <Text style={styles.notesText}>{collectionItem.notes}</Text>
-                </TouchableOpacity>
+              {isPremium ? (
+                <>
+                  {collectionItem?.user_rating > 0 && (
+                    <View style={styles.myRating}>
+                      <Text style={styles.myRatingLabel}>My Rating:</Text>
+                      <StarRating rating={collectionItem.user_rating} size={18} />
+                    </View>
+                  )}
+                  
+                  {collectionItem?.notes ? (
+                    <TouchableOpacity 
+                      style={styles.notesCard}
+                      onPress={() => setShowTastingNotes(true)}
+                    >
+                      <Text style={styles.notesText}>{collectionItem.notes}</Text>
+                    </TouchableOpacity>
+                  ) : (
+                    <TouchableOpacity 
+                      style={styles.addNotesPrompt}
+                      onPress={() => setShowTastingNotes(true)}
+                    >
+                      <NotebookPen size={24} color={theme.text.secondary} />
+                      <Text style={styles.addNotesText}>
+                        Tap to add your tasting notes
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                </>
               ) : (
                 <TouchableOpacity 
-                  style={styles.addNotesPrompt}
-                  onPress={() => setShowTastingNotes(true)}
+                  style={[styles.premiumLockCard, { backgroundColor: theme.background.secondary }]}
+                  onPress={() => navigation.navigate('Paywall')}
                 >
-                  <NotebookPen size={24} color={theme.text.secondary} />
-                  <Text style={styles.addNotesText}>
-                    Tap to add your tasting notes
+                  <Crown size={32} color={theme.accent.primary} />
+                  <Text style={[styles.premiumLockTitle, { color: theme.text.primary }]}>
+                    Unlock Tasting Notes
+                  </Text>
+                  <Text style={[styles.premiumLockText, { color: theme.text.secondary }]}>
+                    Upgrade to Premium to add personal notes and ratings
                   </Text>
                 </TouchableOpacity>
               )}
@@ -822,5 +869,20 @@ const createStyles = (theme) => ({
   },
   similarTeaCard: {
     width: 160,
+  },
+  premiumLockCard: {
+    padding: spacing.lg,
+    borderRadius: spacing.cardBorderRadius,
+    alignItems: 'center',
+    gap: spacing.sm,
+  },
+  premiumLockTitle: {
+    ...typography.body,
+    fontWeight: '600',
+    marginTop: spacing.xs,
+  },
+  premiumLockText: {
+    ...typography.bodySmall,
+    textAlign: 'center',
   },
 });

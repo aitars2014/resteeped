@@ -17,6 +17,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
 import { useCollection } from '../context/CollectionContext';
+import { useSubscription } from '../context/SubscriptionContext';
 import { typography, spacing } from '../constants';
 import { Button } from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,7 +36,8 @@ const TEA_TYPES = [
 export default function AddTeaScreen({ navigation }) {
   const { theme } = useTheme();
   const { user, isDevMode } = useAuth();
-  const { refreshCollection, addToCollection } = useCollection();
+  const { refreshCollection, addToCollection, collection } = useCollection();
+  const { canAddToCollection } = useSubscription();
   const styles = createStyles(theme);
 
   const [name, setName] = useState('');
@@ -124,6 +126,19 @@ export default function AddTeaScreen({ navigation }) {
     }
     if (!teaType) {
       Alert.alert('Required', 'Please select a tea type');
+      return;
+    }
+
+    // Check if user can add more teas (free tier limit)
+    if (!canAddToCollection(collection.length)) {
+      Alert.alert(
+        'Collection Full',
+        'Free accounts can save up to 10 teas. Upgrade to Premium for unlimited teas in your collection!',
+        [
+          { text: 'Maybe Later', style: 'cancel' },
+          { text: 'Upgrade', onPress: () => navigation.navigate('Paywall') },
+        ]
+      );
       return;
     }
 

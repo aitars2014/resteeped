@@ -257,7 +257,9 @@ async function importTeaware(source = 'yunnan-sourcing') {
       artisan_name: extractArtisan(combinedText) || item.vendor,
       origin_region: item.origin_region || 'China',
       price_usd: item.variants?.[0]?.price ? parseFloat(item.variants[0].price) : item.price_usd,
-      product_url: item.product_url || `https://yunnansourcing.com/products/${item.handle}`,
+      product_url: (item.product_url && !item.product_url.includes('/undefined')) 
+        ? item.product_url 
+        : (item.handle ? `https://yunnansourcing.com/products/${item.handle}` : null),
       in_stock: item.variants?.[0]?.available ?? item.in_stock ?? true,
       image_url: item.images?.[0]?.src || item.image_url,
       images: item.images?.map(img => img.src || img) || [],

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Platform, Alert } from 'react-native';
+import { Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 
 // RevenueCat API keys - loaded from environment variables
@@ -50,8 +50,6 @@ export const SubscriptionProvider = ({ children }) => {
         return;
       }
       
-      console.log('Initializing RevenueCat with key:', apiKey.substring(0, 10) + '...');
-
       await Purchases.configure({ apiKey });
       setIsConfigured(true);
       

@@ -39,27 +39,79 @@ const ACTIVITY_TYPES = {
   BREW: 'brew',
 };
 
+// Diverse mock users for realistic activity feed
+const MOCK_USERS = [
+  // Common Western names
+  { id: 'user-sarah-001', name: 'Sarah M.' },
+  { id: 'user-mike-002', name: 'Mike T.' },
+  { id: 'user-emma-003', name: 'Emma L.' },
+  { id: 'user-james-004', name: 'James K.' },
+  { id: 'user-lily-005', name: 'Lily Chen' },
+  { id: 'user-david-006', name: 'David R.' },
+  { id: 'user-amy-007', name: 'Amy W.' },
+  // More diverse names
+  { id: 'user-priya-008', name: 'Priya S.' },
+  { id: 'user-marcus-009', name: 'Marcus J.' },
+  { id: 'user-yuki-010', name: 'Yuki N.' },
+  { id: 'user-olivia-011', name: 'Olivia P.' },
+  { id: 'user-chen-012', name: 'Wei Chen' },
+  { id: 'user-sofia-013', name: 'Sofia G.' },
+  { id: 'user-alex-014', name: 'Alex K.' },
+  { id: 'user-maya-015', name: 'Maya R.' },
+  { id: 'user-tom-016', name: 'Tom H.' },
+  { id: 'user-nina-017', name: 'Nina V.' },
+  { id: 'user-raj-018', name: 'Raj P.' },
+  { id: 'user-chloe-019', name: 'Chloe B.' },
+  { id: 'user-kenji-020', name: 'Kenji M.' },
+  { id: 'user-anna-021', name: 'Anna S.' },
+  { id: 'user-lucas-022', name: 'Lucas F.' },
+  { id: 'user-mei-023', name: 'Mei Lin' },
+  { id: 'user-ben-024', name: 'Ben C.' },
+  { id: 'user-zoe-025', name: 'Zoe A.' },
+  { id: 'user-omar-026', name: 'Omar H.' },
+  { id: 'user-grace-027', name: 'Grace T.' },
+  { id: 'user-ian-028', name: 'Ian M.' },
+  { id: 'user-hannah-029', name: 'Hannah J.' },
+  { id: 'user-leo-030', name: 'Leo K.' },
+];
+
+// Get a deterministic but varied mock user based on a seed
+const getMockUser = (seed) => {
+  const index = Math.abs(hashCode(seed)) % MOCK_USERS.length;
+  return MOCK_USERS[index];
+};
+
+// Simple hash function for consistent user assignment
+const hashCode = (str) => {
+  if (!str) return 0;
+  const s = String(str);
+  let hash = 0;
+  for (let i = 0; i < s.length; i++) {
+    const char = s.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash;
+  }
+  return hash;
+};
+
 // Generate mock activities for demo
-const generateMockActivities = (teas, reviews) => {
-  const activities = [];
-  const mockUsers = [
-    { id: 'user-sarah-001', name: 'Sarah' },
-    { id: 'user-mike-002', name: 'Mike' },
-    { id: 'user-emma-003', name: 'Emma' },
-    { id: 'user-james-004', name: 'James' },
-    { id: 'user-lily-005', name: 'Lily' },
-    { id: 'user-david-006', name: 'David' },
-    { id: 'user-amy-007', name: 'Amy' },
-  ];
+const generateMockActivities = (teas, reviews, realActivities = []) => {
+  const activities = [...realActivities]; // Start with real activities
   
-  // Add reviews as activities
-  reviews.forEach((review, idx) => {
+  // Add reviews as activities (use real user if available, otherwise mock)
+  reviews.forEach((review) => {
     const tea = teas.find(t => t.id === review.tea_id);
     if (tea) {
+      // Check if this review has a real user
+      const isRealUser = review.user_id && review.profiles;
+      const user = isRealUser 
+        ? { id: review.user_id, name: review.profiles?.display_name || 'Tea Lover', isReal: true }
+        : getMockUser(review.id || `review-${tea.id}`);
+      
       activities.push({
         id: `review-${review.id}`,
         type: ACTIVITY_TYPES.REVIEW,
-        user: mockUsers[idx % mockUsers.length],
+        user,
         tea,
         rating: review.rating,
         reviewText: review.review_text,
@@ -68,25 +120,25 @@ const generateMockActivities = (teas, reviews) => {
     }
   });
   
-  // Generate some mock collection adds
-  const recentTeas = [...teas].sort(() => Math.random() - 0.5).slice(0, 5);
+  // Generate mock collection adds with varied users
+  const recentTeas = [...teas].sort(() => Math.random() - 0.5).slice(0, 8);
   recentTeas.forEach((tea, idx) => {
     activities.push({
-      id: `collection-${tea.id}-${idx}`,
+      id: `collection-${tea.id}-${Date.now()}-${idx}`,
       type: ACTIVITY_TYPES.COLLECTION_ADD,
-      user: mockUsers[(idx + 3) % mockUsers.length],
+      user: getMockUser(`collection-${tea.id}-${idx}`),
       tea,
       timestamp: new Date(Date.now() - Math.random() * 86400000 * 3), // Last 3 days
     });
   });
   
-  // Generate some mock brew sessions
-  const brewedTeas = [...teas].sort(() => Math.random() - 0.5).slice(0, 4);
+  // Generate mock brew sessions with varied users
+  const brewedTeas = [...teas].sort(() => Math.random() - 0.5).slice(0, 6);
   brewedTeas.forEach((tea, idx) => {
     activities.push({
-      id: `brew-${tea.id}-${idx}`,
+      id: `brew-${tea.id}-${Date.now()}-${idx}`,
       type: ACTIVITY_TYPES.BREW,
-      user: mockUsers[(idx + 5) % mockUsers.length],
+      user: getMockUser(`brew-${tea.id}-${idx}`),
       tea,
       steepTime: Math.floor(Math.random() * 4 + 2),
       timestamp: new Date(Date.now() - Math.random() * 86400000 * 2), // Last 2 days
@@ -343,20 +395,29 @@ export const ActivityFeedScreen = ({ navigation }) => {
     }
     
     try {
-      // In a real app, this would fetch from Supabase
-      // For now, generate mock activities based on teas and reviews
+      // Fetch real activities from Supabase
       let allReviews = [];
+      let realActivities = [];
       
       if (isSupabaseConfigured()) {
-        const { data: reviews } = await supabase
-          .from('reviews')
-          .select('*')
-          .order('created_at', { ascending: false })
-          .limit(20);
-        allReviews = reviews || [];
+        // Fetch reviews (without profile join to avoid errors if table doesn't exist)
+        try {
+          const { data: reviews } = await supabase
+            .from('reviews')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(20);
+          allReviews = reviews || [];
+        } catch (e) {
+          console.log('Could not fetch reviews:', e.message);
+        }
+        
+        // Note: Skipping real user activities for now to avoid profile join issues
+        // Will enable once profiles table is confirmed
       }
       
-      const mockActivities = generateMockActivities(teas, allReviews);
+      // Mix real activities with mock activities
+      const mockActivities = generateMockActivities(teas, allReviews, realActivities);
       
       // Simulate pagination
       const pageSize = 10;

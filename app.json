@@ -13,8 +13,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#FAF9F6"
     },
+    "notification": {
+      "icon": "./assets/ios-icons/Default.png"
+    },
     "ios": {
-      "supportsTablet": true,
+      "supportsTablet": false,
       "bundleIdentifier": "com.resteeped.app",
       "icon": {
         "light": "./assets/ios-icons/Default.png",

@@ -68,7 +68,8 @@ export default function TeawareDetailScreen({ route, navigation }) {
 
   const handleBuyPress = () => {
     haptics.medium();
-    if (teaware.product_url) {
+    // Validate URL before opening - skip if it contains "/undefined"
+    if (teaware.product_url && !teaware.product_url.includes('/undefined')) {
       Linking.openURL(teaware.product_url);
     }
   };
