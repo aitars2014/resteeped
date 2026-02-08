@@ -145,9 +145,14 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   };
   
   const handleBuyTea = async () => {
-    const productUrl = tea.productUrl || tea.product_url;
+    let productUrl = tea.productUrl || tea.product_url;
     const companyUrl = company?.website_url;
     const brandName = tea.brandName || tea.brand_name || 'this tea';
+    
+    // Guard against malformed URLs with undefined slugs
+    if (productUrl && productUrl.includes('/undefined')) {
+      productUrl = null;
+    }
     
     // Try product URL first, then company website, then search
     const url = productUrl || companyUrl || `https://www.google.com/search?q=${encodeURIComponent(brandName + ' ' + tea.name + ' tea')}`;
