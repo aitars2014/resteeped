@@ -182,13 +182,7 @@
           <input type="text" id="totd-search" placeholder="Search by name..." style="flex: 1; min-width: 200px;">
           <select id="totd-type"><option value="">All Types</option></select>
           <select id="totd-company"><option value="">All Companies</option></select>
-          <select id="totd-caffeine">
-            <option value="">Any Caffeine</option>
-            <option value="none">Caffeine-Free</option>
-            <option value="low">Low Caffeine</option>
-            <option value="medium">Medium Caffeine</option>
-            <option value="high">High Caffeine</option>
-          </select>
+<!-- Caffeine filter removed - field not in DB -->
         </div>
         <div id="totd-results" style="max-height: 500px; overflow-y: auto;"></div>
       </div>
@@ -248,16 +242,16 @@
       async function init() {
         try {
           var [teasRes, companiesRes, typesRes] = await Promise.all([
-            supabase.from('teas').select('id, name, type, caffeine_level, company_id', { count: 'exact' }),
+            supabase.from('teas').select('id, name, tea_type, company_id', { count: 'exact' }),
             supabase.from('companies').select('*'),
-            supabase.from('teas').select('type').not('type', 'is', null)
+            supabase.from('teas').select('tea_type').not('tea_type', 'is', null)
           ]);
 
           allTeas = teasRes.data || [];
           companies = (companiesRes.data || []).sort(function(a, b) { return sortName(a.name).localeCompare(sortName(b.name)); });
           
           var typeSet = {};
-          (typesRes.data || []).forEach(function(t) { if (t.type) typeSet[t.type] = true; });
+          (typesRes.data || []).forEach(function(t) { if (t.tea_type) typeSet[t.tea_type] = true; });
           teaTypes = Object.keys(typeSet).sort();
 
           document.getElementById('stat-teas').textContent = teasRes.count || 0;
@@ -433,7 +427,7 @@
 
         var filtered = allTeas.filter(function(t) {
           if (query && t.name.toLowerCase().indexOf(query) === -1) return false;
-          if (type && t.type !== type) return false;
+          if (type && t.tea_type !== type) return false;
           if (company && t.company_id !== company) return false;
           return true;
         }).slice(0, 50);
@@ -445,7 +439,7 @@
           var comp = companies.find(function(c) { return c.id === t.company_id; });
           return '<div class="tea-result" data-add-tea="' + t.id + '">' +
             '<div class="tea-info"><div class="tea-name">' + t.name + '</div>' +
-            '<div class="tea-meta">' + (t.type || 'Unknown') + ' • ' + (comp ? comp.name : '') + '</div></div>' +
+            '<div class="tea-meta">' + (t.tea_type || 'Unknown') + ' • ' + (comp ? comp.name : '') + '</div></div>' +
             '<button class="btn btn-small">Add</button></div>';
         }).join('');
 
@@ -504,7 +498,7 @@
       document.getElementById('totd-search').oninput = searchTotd;
       document.getElementById('totd-type').onchange = searchTotd;
       document.getElementById('totd-company').onchange = searchTotd;
-      document.getElementById('totd-caffeine').onchange = searchTotd;
+      // caffeine filter removed
 
       async function loadTotd() {
         var date = document.getElementById('totd-date').value;
@@ -516,25 +510,23 @@
         var query = document.getElementById('totd-search').value.toLowerCase();
         var type = document.getElementById('totd-type').value;
         var company = document.getElementById('totd-company').value;
-        var caffeine = document.getElementById('totd-caffeine').value;
 
         var filtered = allTeas.filter(function(t) {
           if (query && t.name.toLowerCase().indexOf(query) === -1) return false;
-          if (type && t.type !== type) return false;
+          if (type && t.tea_type !== type) return false;
           if (company && t.company_id !== company) return false;
-          if (caffeine && t.caffeine_level !== caffeine) return false;
           return true;
         }).slice(0, 50);
 
         var container = document.getElementById('totd-results');
-        if (!query && !type && !company && !caffeine) { container.innerHTML = '<p style="padding:15px;color:#666;">Use the filters above to find a tea</p>'; return; }
+        if (!query && !type && !company) { container.innerHTML = '<p style="padding:15px;color:#666;">Use the filters above to find a tea</p>'; return; }
         if (!filtered.length) { container.innerHTML = '<p style="padding:15px;color:#666;">No teas found</p>'; return; }
 
         container.innerHTML = filtered.map(function(t) {
           var comp = companies.find(function(c) { return c.id === t.company_id; });
           return '<div class="tea-result" data-set-totd="' + t.id + '" data-name="' + t.name.replace(/"/g, '&quot;') + '">' +
             '<div class="tea-info"><div class="tea-name">' + t.name + '</div>' +
-            '<div class="tea-meta">' + (t.type || 'Unknown') + ' • ' + (comp ? comp.name : '') + (t.caffeine_level ? ' • ' + t.caffeine_level + ' caffeine' : '') + '</div></div>' +
+            '<div class="tea-meta">' + (t.tea_type || 'Unknown') + ' • ' + (comp ? comp.name : '') + '</div></div>' +
             '<button class="btn btn-small">Select</button></div>';
         }).join('');
 
