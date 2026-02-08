@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resteeped Admin</title>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -86,6 +85,7 @@
     .badge-danger { background: #f8d7da; color: #721c24; }
     .hidden { display: none; }
     #loading { text-align: center; padding: 40px; }
+    .error-msg { color: #dc3545; padding: 20px; text-align: center; }
     .toast {
       position: fixed;
       bottom: 20px;
@@ -96,6 +96,7 @@
       border-radius: 4px;
       opacity: 0;
       transition: opacity 0.3s;
+      z-index: 1000;
     }
     .toast.show { opacity: 1; }
     .section { display: none; }
@@ -107,9 +108,9 @@
     <div class="container">
       <div class="header-top">
         <h1>🍵 Resteeped Admin</h1>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+        <button class="logout-btn" id="logout-btn">Logout</button>
       </div>
-      <nav class="nav">
+      <nav class="nav" id="nav">
         <a data-section="dashboard" class="active">Dashboard</a>
         <a data-section="collections">Collections</a>
         <a data-section="featured">Featured Shops</a>
@@ -120,6 +121,7 @@
 
   <div class="container">
     <div id="loading">Loading...</div>
+    <div id="error" class="error-msg hidden"></div>
 
     <!-- Dashboard -->
     <div id="dashboard" class="section">
@@ -151,7 +153,7 @@
       <div class="card">
         <h2>Collections</h2>
         <p>Create curated lists of teas.</p>
-        <button class="btn" onclick="showCollectionForm()">+ New Collection</button>
+        <button class="btn" id="new-collection-btn">+ New Collection</button>
         <div id="collection-form" class="hidden" style="margin-top: 20px;">
           <div class="form-group">
             <label>Title</label>
@@ -165,8 +167,8 @@
             <label>Icon (Feather icon name)</label>
             <input type="text" id="collection-icon" placeholder="sun">
           </div>
-          <button class="btn" onclick="saveCollection()">Save Collection</button>
-          <button class="btn btn-secondary" onclick="hideCollectionForm()">Cancel</button>
+          <button class="btn" id="save-collection-btn">Save Collection</button>
+          <button class="btn btn-secondary" id="cancel-collection-btn">Cancel</button>
         </div>
         <table id="collections-table" style="margin-top: 20px;">
           <thead>
@@ -188,7 +190,7 @@
       <div class="card">
         <h2>Featured Shops</h2>
         <p>Manage sponsored shop placements on the home screen.</p>
-        <button class="btn" onclick="showFeaturedForm()">+ Add Featured Shop</button>
+        <button class="btn" id="new-featured-btn">+ Add Featured Shop</button>
         <div id="featured-form" class="hidden" style="margin-top: 20px;">
           <div class="form-group">
             <label>Company</label>
@@ -207,8 +209,8 @@
               <input type="checkbox" id="featured-exclusive"> Exclusive placement
             </label>
           </div>
-          <button class="btn" onclick="saveFeatured()">Save</button>
-          <button class="btn btn-secondary" onclick="hideFeaturedForm()">Cancel</button>
+          <button class="btn" id="save-featured-btn">Save</button>
+          <button class="btn btn-secondary" id="cancel-featured-btn">Cancel</button>
         </div>
         <table id="featured-table" style="margin-top: 20px;">
           <thead>
@@ -232,14 +234,14 @@
         <p>Set featured teas for specific dates.</p>
         <div class="form-group" style="max-width: 400px;">
           <label>Select Date</label>
-          <input type="date" id="totd-date" onchange="loadTotd()">
+          <input type="date" id="totd-date">
         </div>
         <div id="totd-current" style="margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 6px;">
           <strong>Current:</strong> <span id="totd-tea-name">None set</span>
         </div>
         <div class="form-group" style="max-width: 400px;">
           <label>Search Tea</label>
-          <input type="text" id="totd-search" placeholder="Start typing..." oninput="searchTeas()">
+          <input type="text" id="totd-search" placeholder="Start typing...">
         </div>
         <div id="totd-results"></div>
       </div>
@@ -248,280 +250,353 @@
 
   <div id="toast" class="toast"></div>
 
+  <!-- Load Supabase from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  
   <script>
-    // Config
-    const SUPABASE_URL = 'https://pakfofausiltnkojafpd.supabase.co';
-    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBha2ZvZmF1c2lsdG5rb2phZnBkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwODA0MDAsImV4cCI6MjA4NTY1NjQwMH0.PiFkQXWOZGmago4Qo7R7AnB7av6C-u4VOQKSQjQxoSg';
-    
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // Wait for DOM to be ready
+    document.addEventListener('DOMContentLoaded', function() {
+      // Config
+      const SUPABASE_URL = 'https://pakfofausiltnkojafpd.supabase.co';
+      const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBha2ZvZmF1c2lsdG5rb2phZnBkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwODA0MDAsImV4cCI6MjA4NTY1NjQwMH0.PiFkQXWOZGmago4Qo7R7AnB7av6C-u4VOQKSQjQxoSg';
+      
+      let supabase;
+      let companies = [];
 
-    let companies = [];
+      // Check if Supabase loaded
+      if (typeof window.supabase === 'undefined') {
+        showError('Failed to load Supabase library. Please refresh the page.');
+        return;
+      }
 
-    // Logout function - clears basic auth by redirecting with bad credentials
-    function logout() {
-      // This trick clears the cached basic auth credentials
-      const logoutUrl = window.location.href.replace('://', '://logout:logout@');
-      const iframe = document.createElement('iframe');
-      iframe.style.display = 'none';
-      iframe.src = logoutUrl;
-      document.body.appendChild(iframe);
-      setTimeout(() => {
-        document.body.removeChild(iframe);
-        window.location.href = '/admin';
-      }, 100);
-    }
-
-    // Navigation
-    document.querySelectorAll('.nav a').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const section = e.target.dataset.section;
-        if (!section) return;
-        document.querySelectorAll('.nav a').forEach(l => l.classList.remove('active'));
-        e.target.classList.add('active');
-        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        const sectionEl = document.getElementById(section);
-        if (sectionEl) sectionEl.classList.add('active');
-      });
-    });
-
-    // Toast notifications
-    function showToast(message, duration = 3000) {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), duration);
-    }
-
-    // Initialize
-    async function init() {
       try {
-        // Load stats
-        const [teasRes, companiesRes] = await Promise.all([
-          supabase.from('teas').select('id', { count: 'exact', head: true }),
-          supabase.from('companies').select('*')
-        ]);
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+      } catch (e) {
+        showError('Failed to initialize Supabase: ' + e.message);
+        return;
+      }
 
-        document.getElementById('stat-teas').textContent = teasRes.count || 0;
-        document.getElementById('stat-companies').textContent = companiesRes.data?.length || 0;
-        
-        companies = companiesRes.data || [];
-        populateCompanySelect();
+      // Logout - redirect to clear credentials
+      document.getElementById('logout-btn').addEventListener('click', function() {
+        // Clear auth by opening a request that will fail, then redirect
+        fetch('/admin', {
+          headers: {
+            'Authorization': 'Basic ' + btoa('logout:logout')
+          }
+        }).finally(function() {
+          // Force browser to forget credentials by navigating away and back
+          window.location.href = '/admin?logout=' + Date.now();
+        });
+      });
 
-        // Try to load admin tables (may not exist yet)
+      // Navigation
+      document.querySelectorAll('#nav a').forEach(function(link) {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          var section = this.getAttribute('data-section');
+          if (!section) return;
+          
+          document.querySelectorAll('#nav a').forEach(function(l) {
+            l.classList.remove('active');
+          });
+          this.classList.add('active');
+          
+          document.querySelectorAll('.section').forEach(function(s) {
+            s.classList.remove('active');
+          });
+          var sectionEl = document.getElementById(section);
+          if (sectionEl) sectionEl.classList.add('active');
+        });
+      });
+
+      // Button handlers
+      document.getElementById('new-collection-btn').addEventListener('click', function() {
+        document.getElementById('collection-form').classList.remove('hidden');
+      });
+      document.getElementById('cancel-collection-btn').addEventListener('click', function() {
+        document.getElementById('collection-form').classList.add('hidden');
+      });
+      document.getElementById('save-collection-btn').addEventListener('click', saveCollection);
+
+      document.getElementById('new-featured-btn').addEventListener('click', function() {
+        document.getElementById('featured-form').classList.remove('hidden');
+      });
+      document.getElementById('cancel-featured-btn').addEventListener('click', function() {
+        document.getElementById('featured-form').classList.add('hidden');
+      });
+      document.getElementById('save-featured-btn').addEventListener('click', saveFeatured);
+
+      document.getElementById('totd-date').addEventListener('change', loadTotd);
+      document.getElementById('totd-search').addEventListener('input', searchTeas);
+
+      // Toast notifications
+      function showToast(message, duration) {
+        duration = duration || 3000;
+        var toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        setTimeout(function() {
+          toast.classList.remove('show');
+        }, duration);
+      }
+
+      function showError(message) {
+        document.getElementById('loading').classList.add('hidden');
+        var errorEl = document.getElementById('error');
+        errorEl.textContent = message;
+        errorEl.classList.remove('hidden');
+      }
+
+      // Initialize
+      async function init() {
         try {
-          const [collectionsRes, featuredRes] = await Promise.all([
-            supabase.from('collections').select('*'),
-            supabase.from('featured_shops').select('*, companies(*)')
-          ]);
-          document.getElementById('stat-collections').textContent = collectionsRes.data?.length || 0;
-          document.getElementById('stat-featured').textContent = featuredRes.data?.length || 0;
+          // Load stats
+          var teasRes = await supabase.from('teas').select('id', { count: 'exact', head: true });
+          var companiesRes = await supabase.from('companies').select('*');
+
+          document.getElementById('stat-teas').textContent = teasRes.count || 0;
+          document.getElementById('stat-companies').textContent = (companiesRes.data && companiesRes.data.length) || 0;
+          
+          companies = companiesRes.data || [];
+          populateCompanySelect();
+
+          // Try to load admin tables
+          var collectionsRes = await supabase.from('collections').select('*');
+          var featuredRes = await supabase.from('featured_shops').select('*, companies(*)');
+          
+          document.getElementById('stat-collections').textContent = (collectionsRes.data && collectionsRes.data.length) || 0;
+          document.getElementById('stat-featured').textContent = (featuredRes.data && featuredRes.data.length) || 0;
           renderCollections(collectionsRes.data || []);
           renderFeatured(featuredRes.data || []);
-        } catch (e) {
-          console.log('Admin tables not yet created');
-          document.getElementById('stat-collections').textContent = '0';
-          document.getElementById('stat-featured').textContent = '0';
+
+          document.getElementById('loading').classList.add('hidden');
+          document.getElementById('dashboard').classList.add('active');
+
+          // Set default date for TOTD
+          document.getElementById('totd-date').value = new Date().toISOString().split('T')[0];
+
+        } catch (error) {
+          console.error('Init error:', error);
+          showError('Error loading data: ' + error.message);
+        }
+      }
+
+      function populateCompanySelect() {
+        var select = document.getElementById('featured-company');
+        select.innerHTML = '<option value="">Select a company...</option>';
+        companies.forEach(function(c) {
+          var opt = document.createElement('option');
+          opt.value = c.id;
+          opt.textContent = c.name;
+          select.appendChild(opt);
+        });
+      }
+
+      // Collections
+      async function saveCollection() {
+        var title = document.getElementById('collection-title').value;
+        var subtitle = document.getElementById('collection-subtitle').value;
+        var icon = document.getElementById('collection-icon').value;
+
+        if (!title) {
+          showToast('Title is required');
+          return;
         }
 
-        document.getElementById('loading').classList.add('hidden');
-        document.getElementById('dashboard').classList.add('active');
+        var result = await supabase.from('collections').insert({
+          title: title,
+          subtitle: subtitle,
+          icon_name: icon,
+          icon_type: 'feather'
+        });
 
-        // Set default date for TOTD
-        document.getElementById('totd-date').value = new Date().toISOString().split('T')[0];
-
-      } catch (error) {
-        console.error('Init error:', error);
-        showToast('Error loading data');
-      }
-    }
-
-    function populateCompanySelect() {
-      const select = document.getElementById('featured-company');
-      select.innerHTML = '<option value="">Select a company...</option>';
-      companies.forEach(c => {
-        select.innerHTML += `<option value="${c.id}">${c.name}</option>`;
-      });
-    }
-
-    // Collections
-    function showCollectionForm() {
-      document.getElementById('collection-form').classList.remove('hidden');
-    }
-    function hideCollectionForm() {
-      document.getElementById('collection-form').classList.add('hidden');
-    }
-
-    async function saveCollection() {
-      const title = document.getElementById('collection-title').value;
-      const subtitle = document.getElementById('collection-subtitle').value;
-      const icon = document.getElementById('collection-icon').value;
-
-      if (!title) {
-        showToast('Title is required');
-        return;
+        if (result.error) {
+          showToast('Error: ' + result.error.message);
+        } else {
+          showToast('Collection created!');
+          document.getElementById('collection-form').classList.add('hidden');
+          document.getElementById('collection-title').value = '';
+          document.getElementById('collection-subtitle').value = '';
+          document.getElementById('collection-icon').value = '';
+          init();
+        }
       }
 
-      const { error } = await supabase.from('collections').insert({
-        title,
-        subtitle,
-        icon_name: icon,
-        icon_type: 'feather'
-      });
+      function renderCollections(data) {
+        var tbody = document.querySelector('#collections-table tbody');
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5">No collections yet</td></tr>';
+          return;
+        }
+        tbody.innerHTML = data.map(function(c) {
+          return '<tr>' +
+            '<td>' + c.title + '</td>' +
+            '<td>' + (c.subtitle || '-') + '</td>' +
+            '<td>' + (c.icon_name || '-') + '</td>' +
+            '<td><span class="badge ' + (c.is_active ? 'badge-success' : 'badge-warning') + '">' + (c.is_active ? 'Active' : 'Inactive') + '</span></td>' +
+            '<td>' +
+              '<button class="btn btn-secondary" data-toggle-collection="' + c.id + '" data-active="' + (!c.is_active) + '">' + (c.is_active ? 'Disable' : 'Enable') + '</button> ' +
+              '<button class="btn btn-danger" data-delete-collection="' + c.id + '">Delete</button>' +
+            '</td>' +
+          '</tr>';
+        }).join('');
 
-      if (error) {
-        showToast('Error: ' + error.message);
-      } else {
-        showToast('Collection created!');
-        hideCollectionForm();
+        // Add event listeners
+        tbody.querySelectorAll('[data-toggle-collection]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            toggleCollection(this.getAttribute('data-toggle-collection'), this.getAttribute('data-active') === 'true');
+          });
+        });
+        tbody.querySelectorAll('[data-delete-collection]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            deleteCollection(this.getAttribute('data-delete-collection'));
+          });
+        });
+      }
+
+      async function toggleCollection(id, active) {
+        await supabase.from('collections').update({ is_active: active }).eq('id', id);
         init();
       }
-    }
 
-    function renderCollections(data) {
-      const tbody = document.querySelector('#collections-table tbody');
-      tbody.innerHTML = data.map(c => `
-        <tr>
-          <td>${c.title}</td>
-          <td>${c.subtitle || '-'}</td>
-          <td>${c.icon_name || '-'}</td>
-          <td><span class="badge ${c.is_active ? 'badge-success' : 'badge-warning'}">${c.is_active ? 'Active' : 'Inactive'}</span></td>
-          <td>
-            <button class="btn btn-secondary" onclick="toggleCollection('${c.id}', ${!c.is_active})">${c.is_active ? 'Disable' : 'Enable'}</button>
-            <button class="btn btn-danger" onclick="deleteCollection('${c.id}')">Delete</button>
-          </td>
-        </tr>
-      `).join('') || '<tr><td colspan="5">No collections yet</td></tr>';
-    }
-
-    async function toggleCollection(id, active) {
-      await supabase.from('collections').update({ is_active: active }).eq('id', id);
-      init();
-    }
-
-    async function deleteCollection(id) {
-      if (confirm('Delete this collection?')) {
-        await supabase.from('collections').delete().eq('id', id);
-        init();
-      }
-    }
-
-    // Featured Shops
-    function showFeaturedForm() {
-      document.getElementById('featured-form').classList.remove('hidden');
-    }
-    function hideFeaturedForm() {
-      document.getElementById('featured-form').classList.add('hidden');
-    }
-
-    async function saveFeatured() {
-      const company_id = document.getElementById('featured-company').value;
-      const start_date = document.getElementById('featured-start').value;
-      const end_date = document.getElementById('featured-end').value;
-      const is_exclusive = document.getElementById('featured-exclusive').checked;
-
-      if (!company_id || !start_date || !end_date) {
-        showToast('All fields required');
-        return;
+      async function deleteCollection(id) {
+        if (confirm('Delete this collection?')) {
+          await supabase.from('collections').delete().eq('id', id);
+          init();
+        }
       }
 
-      const { error } = await supabase.from('featured_shops').insert({
-        company_id,
-        start_date,
-        end_date,
-        is_exclusive
-      });
+      // Featured Shops
+      async function saveFeatured() {
+        var company_id = document.getElementById('featured-company').value;
+        var start_date = document.getElementById('featured-start').value;
+        var end_date = document.getElementById('featured-end').value;
+        var is_exclusive = document.getElementById('featured-exclusive').checked;
 
-      if (error) {
-        showToast('Error: ' + error.message);
-      } else {
-        showToast('Featured shop added!');
-        hideFeaturedForm();
-        init();
-      }
-    }
+        if (!company_id || !start_date || !end_date) {
+          showToast('All fields required');
+          return;
+        }
 
-    function renderFeatured(data) {
-      const tbody = document.querySelector('#featured-table tbody');
-      tbody.innerHTML = data.map(f => {
-        const today = new Date().toISOString().split('T')[0];
-        const isActive = f.is_active && f.start_date <= today && f.end_date >= today;
-        return `
-          <tr>
-            <td>${f.companies?.name || 'Unknown'}</td>
-            <td>${f.start_date} → ${f.end_date}</td>
-            <td>${f.is_exclusive ? '✓' : '-'}</td>
-            <td><span class="badge ${isActive ? 'badge-success' : 'badge-warning'}">${isActive ? 'Active' : 'Scheduled'}</span></td>
-            <td>
-              <button class="btn btn-danger" onclick="deleteFeatured('${f.id}')">Delete</button>
-            </td>
-          </tr>
-        `;
-      }).join('') || '<tr><td colspan="5">No featured shops yet</td></tr>';
-    }
+        var result = await supabase.from('featured_shops').insert({
+          company_id: company_id,
+          start_date: start_date,
+          end_date: end_date,
+          is_exclusive: is_exclusive
+        });
 
-    async function deleteFeatured(id) {
-      if (confirm('Delete this featured shop?')) {
-        await supabase.from('featured_shops').delete().eq('id', id);
-        init();
-      }
-    }
-
-    // Tea of the Day
-    async function loadTotd() {
-      const date = document.getElementById('totd-date').value;
-      const { data } = await supabase
-        .from('tea_of_the_day')
-        .select('*, teas(name)')
-        .eq('featured_date', date)
-        .single();
-      
-      document.getElementById('totd-tea-name').textContent = data?.teas?.name || 'None set';
-    }
-
-    let searchTimeout;
-    async function searchTeas() {
-      clearTimeout(searchTimeout);
-      const query = document.getElementById('totd-search').value;
-      if (query.length < 2) {
-        document.getElementById('totd-results').innerHTML = '';
-        return;
+        if (result.error) {
+          showToast('Error: ' + result.error.message);
+        } else {
+          showToast('Featured shop added!');
+          document.getElementById('featured-form').classList.add('hidden');
+          init();
+        }
       }
 
-      searchTimeout = setTimeout(async () => {
-        const { data } = await supabase
-          .from('teas')
-          .select('id, name, company:companies(name)')
-          .ilike('name', `%${query}%`)
-          .limit(10);
+      function renderFeatured(data) {
+        var tbody = document.querySelector('#featured-table tbody');
+        if (!data || data.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5">No featured shops yet</td></tr>';
+          return;
+        }
+        var today = new Date().toISOString().split('T')[0];
+        tbody.innerHTML = data.map(function(f) {
+          var isActive = f.is_active && f.start_date <= today && f.end_date >= today;
+          var companyName = (f.companies && f.companies.name) || 'Unknown';
+          return '<tr>' +
+            '<td>' + companyName + '</td>' +
+            '<td>' + f.start_date + ' → ' + f.end_date + '</td>' +
+            '<td>' + (f.is_exclusive ? '✓' : '-') + '</td>' +
+            '<td><span class="badge ' + (isActive ? 'badge-success' : 'badge-warning') + '">' + (isActive ? 'Active' : 'Scheduled') + '</span></td>' +
+            '<td><button class="btn btn-danger" data-delete-featured="' + f.id + '">Delete</button></td>' +
+          '</tr>';
+        }).join('');
 
-        document.getElementById('totd-results').innerHTML = data?.map(t => `
-          <div style="padding: 10px; border-bottom: 1px solid #eee; cursor: pointer;" onclick="setTotd('${t.id}', '${t.name.replace(/'/g, "\\'")}')">
-            <strong>${t.name}</strong> <span style="color: #666;">by ${t.company?.name}</span>
-          </div>
-        `).join('') || '<p>No results</p>';
-      }, 300);
-    }
+        tbody.querySelectorAll('[data-delete-featured]').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            deleteFeatured(this.getAttribute('data-delete-featured'));
+          });
+        });
+      }
 
-    async function setTotd(teaId, teaName) {
-      const date = document.getElementById('totd-date').value;
-      
-      // Upsert - update if exists, insert if not
-      const { error } = await supabase
-        .from('tea_of_the_day')
-        .upsert({ tea_id: teaId, featured_date: date, is_manual: true }, { onConflict: 'featured_date' });
+      async function deleteFeatured(id) {
+        if (confirm('Delete this featured shop?')) {
+          await supabase.from('featured_shops').delete().eq('id', id);
+          init();
+        }
+      }
 
-      if (error) {
-        showToast('Error: ' + error.message);
-      } else {
-        showToast(`Set "${teaName}" as Tea of the Day!`);
+      // Tea of the Day
+      async function loadTotd() {
+        var date = document.getElementById('totd-date').value;
+        var result = await supabase
+          .from('tea_of_the_day')
+          .select('*, teas(name)')
+          .eq('featured_date', date)
+          .single();
+        
+        var teaName = (result.data && result.data.teas && result.data.teas.name) || 'None set';
         document.getElementById('totd-tea-name').textContent = teaName;
-        document.getElementById('totd-search').value = '';
-        document.getElementById('totd-results').innerHTML = '';
       }
-    }
 
-    init();
+      var searchTimeout;
+      async function searchTeas() {
+        clearTimeout(searchTimeout);
+        var query = document.getElementById('totd-search').value;
+        if (query.length < 2) {
+          document.getElementById('totd-results').innerHTML = '';
+          return;
+        }
+
+        searchTimeout = setTimeout(async function() {
+          var result = await supabase
+            .from('teas')
+            .select('id, name, company:companies(name)')
+            .ilike('name', '%' + query + '%')
+            .limit(10);
+
+          var data = result.data || [];
+          if (data.length === 0) {
+            document.getElementById('totd-results').innerHTML = '<p>No results</p>';
+            return;
+          }
+
+          document.getElementById('totd-results').innerHTML = data.map(function(t) {
+            var companyName = (t.company && t.company.name) || 'Unknown';
+            return '<div style="padding: 10px; border-bottom: 1px solid #eee; cursor: pointer;" data-set-totd="' + t.id + '" data-tea-name="' + t.name.replace(/"/g, '&quot;') + '">' +
+              '<strong>' + t.name + '</strong> <span style="color: #666;">by ' + companyName + '</span>' +
+            '</div>';
+          }).join('');
+
+          document.querySelectorAll('[data-set-totd]').forEach(function(el) {
+            el.addEventListener('click', function() {
+              setTotd(this.getAttribute('data-set-totd'), this.getAttribute('data-tea-name'));
+            });
+          });
+        }, 300);
+      }
+
+      async function setTotd(teaId, teaName) {
+        var date = document.getElementById('totd-date').value;
+        
+        var result = await supabase
+          .from('tea_of_the_day')
+          .upsert({ tea_id: teaId, featured_date: date, is_manual: true }, { onConflict: 'featured_date' });
+
+        if (result.error) {
+          showToast('Error: ' + result.error.message);
+        } else {
+          showToast('Set "' + teaName + '" as Tea of the Day!');
+          document.getElementById('totd-tea-name').textContent = teaName;
+          document.getElementById('totd-search').value = '';
+          document.getElementById('totd-results').innerHTML = '';
+        }
+      }
+
+      // Start the app
+      init();
+    });
   </script>
 </body>
 </html>
