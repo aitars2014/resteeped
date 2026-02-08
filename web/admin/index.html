@@ -21,9 +21,12 @@
       margin-bottom: 20px;
     }
     header h1 { font-size: 1.5rem; }
+    .header-top { display: flex; justify-content: space-between; align-items: center; }
     .nav { display: flex; gap: 20px; margin-top: 10px; }
-    .nav a { color: white; text-decoration: none; opacity: 0.8; }
+    .nav a { color: white; text-decoration: none; opacity: 0.8; cursor: pointer; }
     .nav a:hover, .nav a.active { opacity: 1; border-bottom: 2px solid white; }
+    .logout-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; }
+    .logout-btn:hover { background: rgba(255,255,255,0.3); }
     .card {
       background: white;
       border-radius: 8px;
@@ -102,12 +105,15 @@
 <body>
   <header>
     <div class="container">
-      <h1>🍵 Resteeped Admin</h1>
+      <div class="header-top">
+        <h1>🍵 Resteeped Admin</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+      </div>
       <nav class="nav">
-        <a href="#" data-section="dashboard" class="active">Dashboard</a>
-        <a href="#" data-section="collections">Collections</a>
-        <a href="#" data-section="featured">Featured Shops</a>
-        <a href="#" data-section="totd">Tea of the Day</a>
+        <a data-section="dashboard" class="active">Dashboard</a>
+        <a data-section="collections">Collections</a>
+        <a data-section="featured">Featured Shops</a>
+        <a data-section="totd">Tea of the Day</a>
       </nav>
     </div>
   </header>
@@ -251,15 +257,31 @@
 
     let companies = [];
 
+    // Logout function - clears basic auth by redirecting with bad credentials
+    function logout() {
+      // This trick clears the cached basic auth credentials
+      const logoutUrl = window.location.href.replace('://', '://logout:logout@');
+      const iframe = document.createElement('iframe');
+      iframe.style.display = 'none';
+      iframe.src = logoutUrl;
+      document.body.appendChild(iframe);
+      setTimeout(() => {
+        document.body.removeChild(iframe);
+        window.location.href = '/admin';
+      }, 100);
+    }
+
     // Navigation
     document.querySelectorAll('.nav a').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const section = e.target.dataset.section;
+        if (!section) return;
         document.querySelectorAll('.nav a').forEach(l => l.classList.remove('active'));
         e.target.classList.add('active');
         document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-        document.getElementById(section).classList.add('active');
+        const sectionEl = document.getElementById(section);
+        if (sectionEl) sectionEl.classList.add('active');
       });
     });
 
