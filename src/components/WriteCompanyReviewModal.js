@@ -10,12 +10,49 @@ import {
   Platform,
   Pressable,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { X, Truck, Headphones, DollarSign, Award } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { Button } from './Button';
 import { StarRating } from './StarRating';
+
+// Content validation
+const validateReviewContent = (text) => {
+  if (!text || text.trim() === '') return { valid: true };
+  
+  // Check for URLs
+  const urlPattern = /(https?:\/\/|www\.|\.com|\.net|\.org|\.io|\.co|bit\.ly|tinyurl)/i;
+  if (urlPattern.test(text)) {
+    return { valid: false, reason: 'Links are not allowed in reviews' };
+  }
+  
+  // Check for spam patterns
+  const spamPatterns = [
+    'buy now', 'click here', 'free money', 'make money', 'earn cash',
+    'limited time', 'act now', 'order now', 'call now', 'visit our',
+    'check out my', 'follow me', 'subscribe to', 'dm me', 'dm for',
+    'promo code', 'discount code', 'use code', 'coupon',
+  ];
+  const lowerText = text.toLowerCase();
+  for (const pattern of spamPatterns) {
+    if (lowerText.includes(pattern)) {
+      return { valid: false, reason: 'Your review contains content that looks like spam' };
+    }
+  }
+  
+  // Check for profanity (basic list)
+  const profanityList = ['fuck', 'shit', 'bitch', 'cunt', 'nigger', 'faggot'];
+  const cleanText = text.toLowerCase().replace(/[^a-z\s]/g, '');
+  for (const word of profanityList) {
+    if (cleanText.includes(word)) {
+      return { valid: false, reason: 'Please keep your review family-friendly' };
+    }
+  }
+  
+  return { valid: true };
+};
 
 const RATING_CATEGORIES = [
   { id: 'quality', label: 'Tea Quality', icon: Award, description: 'Freshness and quality of the teas' },
@@ -61,6 +98,13 @@ export const WriteCompanyReviewModal = ({
 
   const handleSubmit = () => {
     if (overallRating === 0) return;
+    
+    // Validate content before submitting
+    const validation = validateReviewContent(reviewText);
+    if (!validation.valid) {
+      Alert.alert('Review Not Allowed', validation.reason);
+      return;
+    }
     
     onSubmit({
       rating: overallRating,

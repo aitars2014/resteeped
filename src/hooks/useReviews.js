@@ -93,7 +93,19 @@ export const useReviews = (teaId) => {
       // Refresh reviews list
       await fetchReviews();
       
-      return { data, error: null };
+      // Check if review was flagged by moderation
+      const wasFlagged = data?.moderation_status === 'flagged';
+      const moderationReason = data?.moderation_reason;
+      
+      return { 
+        data, 
+        error: null,
+        moderation: wasFlagged ? {
+          status: 'flagged',
+          reason: moderationReason,
+          message: 'Your review is being held for moderation and will be reviewed shortly.',
+        } : null,
+      };
     } catch (err) {
       console.error('Error submitting review:', err);
       return { error: err };

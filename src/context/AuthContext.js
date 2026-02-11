@@ -1,7 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, Platform } from 'react';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from '../utils/analytics';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -42,8 +43,14 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [initialized, setInitialized] = useState(false);
   const [isDevMode, setIsDevMode] = useState(false);
+  const [appleAuthAvailable, setAppleAuthAvailable] = useState(false);
 
   useEffect(() => {
+    // Check if Apple auth is available (iOS 13+)
+    if (Platform.OS === 'ios') {
+      AppleAuthentication.isAvailableAsync().then(setAppleAuthAvailable);
+    }
+
     // If dev mode is active and user wants to skip auth
     if (DEV_MODE) {
       console.log('🔧 Dev mode available - use signInWithGoogle() to activate fake user');
@@ -92,6 +99,46 @@ export const AuthProvider = ({ children }) => {
       setProfile(data);
     } catch (error) {
       console.error('Error fetching profile:', error);
+    }
+  };
+
+  const signInWithApple = async () => {
+    if (!isSupabaseConfigured()) {
+      console.warn('Supabase not configured');
+      return { error: { message: 'Supabase not configured' } };
+    }
+
+    try {
+      const credential = await AppleAuthentication.signInAsync({
+        requestedScopes: [
+          AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+          AppleAuthentication.AppleAuthenticationScope.EMAIL,
+        ],
+      });
+
+      // Sign in with Supabase using the Apple ID token
+      const { data, error } = await supabase.auth.signInWithIdToken({
+        provider: 'apple',
+        token: credential.identityToken,
+      });
+
+      if (error) throw error;
+
+      // Track sign in
+      if (data?.user) {
+        const isNewUser = new Date(data.user.created_at) > new Date(Date.now() - 60000);
+        trackEvent(isNewUser ? AnalyticsEvents.SIGN_UP : AnalyticsEvents.SIGN_IN, { method: 'apple' });
+        identifyUser(data.user.id, { email: data.user.email });
+      }
+
+      return { data, error: null };
+    } catch (error) {
+      if (error.code === 'ERR_REQUEST_CANCELED') {
+        // User cancelled the sign-in flow
+        return { data: null, error: null };
+      }
+      console.error('Apple sign in error:', error);
+      return { error };
     }
   };
 
@@ -233,6 +280,8 @@ export const AuthProvider = ({ children }) => {
     initialized,
     isConfigured: isSupabaseConfigured(),
     isDevMode,
+    appleAuthAvailable,
+    signInWithApple,
     signInWithGoogle,
     signOut,
     updateProfile,

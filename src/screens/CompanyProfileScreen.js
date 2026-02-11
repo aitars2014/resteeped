@@ -23,7 +23,7 @@ import {
 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
-import { Button, StarRating, TeaCard, WriteCompanyReviewModal, CompanyProfileSkeleton } from '../components';
+import { Button, StarRating, TeaCard, WriteCompanyReviewModal, CompanyProfileSkeleton, ReviewCard } from '../components';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
 import { useCompanyReviews } from '../hooks';
@@ -149,13 +149,24 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   };
 
   const handleSubmitReview = async (reviewData) => {
-    const { error } = await submitReview(reviewData);
+    const { error, moderation } = await submitReview(reviewData);
     if (error) {
       Alert.alert('Error', 'Failed to submit review. Please try again.');
       return;
     }
     setShowReviewModal(false);
     fetchReviews(); // Refresh the reviews list
+    
+    // Show moderation message if review was flagged
+    if (moderation) {
+      setTimeout(() => {
+        Alert.alert(
+          'Review Under Review',
+          moderation.message || 'Your review has been submitted and is pending moderation. It will appear once approved.',
+          [{ text: 'OK' }]
+        );
+      }, 300);
+    }
   };
 
   if (loading) {
@@ -401,17 +412,11 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
           {reviews.length > 0 ? (
             reviews.map((review) => (
-              <View key={review.id} style={[styles.reviewCard, { backgroundColor: theme.background.secondary }]}>
-                <View style={styles.reviewHeader}>
-                  <Text style={[styles.reviewerName, { color: theme.text.primary }]}>
-                    {review.profile?.display_name || 'Anonymous'}
-                  </Text>
-                  <StarRating rating={review.rating} size={14} />
-                </View>
-                {review.review_text && (
-                  <Text style={[styles.reviewText, { color: theme.text.secondary }]}>{review.review_text}</Text>
-                )}
-              </View>
+              <ReviewCard 
+                key={review.id} 
+                review={review} 
+                isOwnReview={user && review.user_id === user.id}
+              />
             ))
           ) : (
             <View style={styles.noReviews}>

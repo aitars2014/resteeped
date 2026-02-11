@@ -9,21 +9,24 @@ import {
   ActivityIndicator,
   ScrollView,
   Switch,
+  Platform,
 } from 'react-native';
-import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2 } from 'lucide-react-native';
+import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2, Crown } from 'lucide-react-native';
+import * as AppleAuthentication from 'expo-apple-authentication';
 import { typography, spacing } from '../constants';
 import { Button, Avatar, AvatarPicker, EditDisplayNameModal } from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useAuth, useCollection, useTheme } from '../context';
+import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useBrewHistory } from '../hooks';
 import { exportCollectionToJSON, exportCollectionToCSV } from '../utils/exportCollection';
 import { resetOnboarding } from './OnboardingScreen';
 
 export const ProfileScreen = ({ navigation }) => {
-  const { user, profile, loading, signInWithGoogle, signOut, updateProfile, isConfigured } = useAuth();
+  const { user, profile, loading, signInWithGoogle, signInWithApple, signOut, updateProfile, isConfigured, appleAuthAvailable } = useAuth();
   const { collection } = useCollection();
   const { brewSessions, todayBrewCount, weekBrewCount } = useBrewHistory();
   const { theme, isDark, themePreference, setThemePreference } = useTheme();
+  const { isPremium } = useSubscription();
   
   const [avatarPickerVisible, setAvatarPickerVisible] = useState(false);
   const [avatarStyle, setAvatarStyle] = useState('notionists');
@@ -59,7 +62,7 @@ export const ProfileScreen = ({ navigation }) => {
     }
   };
   
-  const handleSignIn = async () => {
+  const handleSignInWithGoogle = async () => {
     if (!isConfigured) {
       Alert.alert(
         'Coming Soon',
@@ -73,8 +76,25 @@ export const ProfileScreen = ({ navigation }) => {
       Alert.alert('Sign In Error', error.message);
     }
   };
+
+  const handleSignInWithApple = async () => {
+    if (!isConfigured) {
+      Alert.alert(
+        'Coming Soon',
+        'Sign in will be available once the backend is connected. For now, enjoy browsing and using the timer!',
+      );
+      return;
+    }
+    
+    const { error } = await signInWithApple();
+    if (error) {
+      Alert.alert('Sign In Error', error.message);
+    }
+  };
   
-  const handleSignOut = async () => {
+  const [signingOut, setSigningOut] = useState(false);
+  
+  const handleSignOut = () => {
     Alert.alert(
       'Sign Out',
       'Are you sure you want to sign out?',
@@ -83,15 +103,24 @@ export const ProfileScreen = ({ navigation }) => {
         { 
           text: 'Sign Out', 
           style: 'destructive',
-          onPress: async () => {
-            const { error } = await signOut();
-            if (error) {
-              Alert.alert('Error', error.message);
-            }
-          }
+          onPress: performSignOut,
         },
       ]
     );
+  };
+
+  const performSignOut = async () => {
+    setSigningOut(true);
+    try {
+      const { error } = await signOut();
+      if (error) {
+        Alert.alert('Error', error.message);
+      }
+    } catch (e) {
+      Alert.alert('Error', 'Failed to sign out. Please try again.');
+    } finally {
+      setSigningOut(false);
+    }
   };
   
   const handleExport = () => {
@@ -155,10 +184,22 @@ export const ProfileScreen = ({ navigation }) => {
         <Text style={[styles.authSubtitle, { color: theme.text.secondary }]}>
           Sign in to save your tea collection, track what you've tried, and sync across devices.
         </Text>
+        
+        {/* Sign in with Apple - Required by App Store when offering third-party login */}
+        {Platform.OS === 'ios' && appleAuthAvailable && (
+          <AppleAuthentication.AppleAuthenticationButton
+            buttonType={AppleAuthentication.AppleAuthenticationButtonType.SIGN_IN}
+            buttonStyle={isDark ? AppleAuthentication.AppleAuthenticationButtonStyle.WHITE : AppleAuthentication.AppleAuthenticationButtonStyle.BLACK}
+            cornerRadius={12}
+            style={styles.appleButton}
+            onPress={handleSignInWithApple}
+          />
+        )}
+        
         <Button 
           title="Sign in with Google"
-          onPress={handleSignIn}
-          variant="primary"
+          onPress={handleSignInWithGoogle}
+          variant="secondary"
           style={styles.authButton}
         />
       </View>
@@ -299,6 +340,34 @@ export const ProfileScreen = ({ navigation }) => {
           </View>
         </View>
       </View>
+
+      {/* Premium Banner - Only show for non-premium users */}
+      {!isPremium && (
+        <TouchableOpacity 
+          style={[styles.premiumBanner, { 
+            backgroundColor: theme.accent.primary + '15',
+            borderColor: theme.accent.primary,
+          }]}
+          onPress={() => navigation.navigate('Paywall')}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Upgrade to Premium"
+          accessibilityHint="Unlock unlimited teas, flavor profiles, and tasting notes"
+        >
+          <View style={styles.premiumBannerContent}>
+            <Crown size={28} color={theme.accent.primary} />
+            <View style={styles.premiumBannerText}>
+              <Text style={[styles.premiumBannerTitle, { color: theme.text.primary }]}>
+                Upgrade to Premium
+              </Text>
+              <Text style={[styles.premiumBannerSubtitle, { color: theme.text.secondary }]}>
+                Unlimited teas, flavor profiles & more
+              </Text>
+            </View>
+          </View>
+          <ChevronRight size={20} color={theme.accent.primary} />
+        </TouchableOpacity>
+      )}
       
       {/* Menu */}
       <View style={[styles.menuSection, { 
@@ -437,11 +506,18 @@ export const ProfileScreen = ({ navigation }) => {
         borderColor: theme.border.medium,
       }]}>
         <TouchableOpacity 
-          style={[styles.menuItem, styles.menuItemLast]}
+          style={[styles.menuItem, styles.menuItemLast, signingOut && styles.menuItemDisabled]}
           onPress={handleSignOut}
+          disabled={signingOut}
         >
-          <LogOut size={20} color={theme.status.error} />
-          <Text style={[styles.menuItemText, { color: theme.status.error }]}>Sign out</Text>
+          {signingOut ? (
+            <ActivityIndicator size="small" color={theme.status.error} />
+          ) : (
+            <LogOut size={20} color={theme.status.error} />
+          )}
+          <Text style={[styles.menuItemText, { color: theme.status.error }]}>
+            {signingOut ? 'Signing out...' : 'Sign out'}
+          </Text>
         </TouchableOpacity>
       </View>
     </ScrollView>
@@ -529,6 +605,11 @@ const styles = StyleSheet.create({
   },
   authButton: {
     minWidth: 250,
+  },
+  appleButton: {
+    width: 250,
+    height: 48,
+    marginBottom: spacing.sm,
   },
   browseNote: {
     ...typography.bodySmall,
@@ -624,6 +705,33 @@ const styles = StyleSheet.create({
   statLabel: {
     ...typography.caption,
   },
+  premiumBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.sectionSpacing,
+    padding: spacing.md,
+    borderRadius: spacing.cardBorderRadius,
+    borderWidth: 1,
+  },
+  premiumBannerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+  },
+  premiumBannerText: {
+    marginLeft: spacing.md,
+    flex: 1,
+  },
+  premiumBannerTitle: {
+    ...typography.body,
+    fontWeight: '600',
+  },
+  premiumBannerSubtitle: {
+    ...typography.caption,
+    marginTop: 2,
+  },
   menuSection: {
     marginHorizontal: spacing.screenHorizontal,
     borderRadius: spacing.cardBorderRadius,
@@ -640,6 +748,9 @@ const styles = StyleSheet.create({
   },
   menuItemLast: {
     borderBottomWidth: 0,
+  },
+  menuItemDisabled: {
+    opacity: 0.6,
   },
   menuItemText: {
     ...typography.body,

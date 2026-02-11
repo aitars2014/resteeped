@@ -69,13 +69,28 @@ const rankAndDiversifyTeas = (teas) => {
   return result;
 };
 
+// Helper to add timeout to promises
+const withTimeout = (promise, ms, fallbackError = 'Request timed out') => {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => 
+      setTimeout(() => reject(new Error(fallbackError)), ms)
+    )
+  ]);
+};
+
 export const useTeas = () => {
-  const [teas, setTeas] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Start with local data for instant loading, update with remote data when available
+  const [teas, setTeas] = useState(() => rankAndDiversifyTeas(localTeas));
+  const [loading, setLoading] = useState(false); // Start false since we have local data
   const [error, setError] = useState(null);
+  const [isRemoteData, setIsRemoteData] = useState(false);
 
   const fetchTeas = useCallback(async () => {
-    setLoading(true);
+    // Only show loading if we don't have data yet (shouldn't happen with local data init)
+    if (teas.length === 0) {
+      setLoading(true);
+    }
     setError(null);
 
     if (!isSupabaseConfigured()) {
@@ -87,8 +102,8 @@ export const useTeas = () => {
 
     try {
       // Optimized query: select only needed fields, use larger page size
-      // Note: Increase Supabase API max_rows to 10000 for single-request fetch
       const PAGE_SIZE = 5000;
+      const REQUEST_TIMEOUT = 15000; // 15 second timeout per request
       const SELECTED_FIELDS = `
         id,
         name,
@@ -111,16 +126,22 @@ export const useTeas = () => {
       let allTeas = [];
       let page = 0;
       let hasMore = true;
+      const maxPages = 5; // Safety limit to prevent infinite loops
 
-      while (hasMore) {
+      while (hasMore && page < maxPages) {
         const from = page * PAGE_SIZE;
         const to = from + PAGE_SIZE - 1;
         
-        const { data, error: fetchError } = await supabase
-          .from('teas')
-          .select(SELECTED_FIELDS)
-          .order('avg_rating', { ascending: false, nullsFirst: false })
-          .range(from, to);
+        // Add timeout to prevent hanging requests
+        const { data, error: fetchError } = await withTimeout(
+          supabase
+            .from('teas')
+            .select(SELECTED_FIELDS)
+            .order('avg_rating', { ascending: false, nullsFirst: false })
+            .range(from, to),
+          REQUEST_TIMEOUT,
+          `Tea fetch timed out (page ${page})`
+        );
 
         if (fetchError) throw fetchError;
         
@@ -157,15 +178,16 @@ export const useTeas = () => {
 
       // Rank and diversify teas for better discovery experience
       setTeas(rankAndDiversifyTeas(formattedTeas));
+      setIsRemoteData(true);
     } catch (err) {
       console.error('Error fetching teas:', err);
       setError(err.message);
-      // Fallback to local data
-      setTeas(rankAndDiversifyTeas(localTeas));
+      // Keep local data on error (already loaded)
+      setIsRemoteData(false);
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [teas.length]);
 
   useEffect(() => {
     fetchTeas();
@@ -249,6 +271,7 @@ export const useTeas = () => {
     teas,
     loading,
     error,
+    isRemoteData, // true if data came from Supabase, false if using local fallback
     refreshTeas: fetchTeas,
     searchTeas,
     filterTeas,

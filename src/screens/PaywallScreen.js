@@ -8,10 +8,14 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Linking,
 } from 'react-native';
 import { X, Check, Crown, Leaf, Sparkles, NotebookPen } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme, useSubscription } from '../context';
+
+const PRIVACY_URL = 'https://resteeped.com/privacy';
+const TERMS_URL = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
 
 const FEATURES = [
   { icon: Leaf, text: 'Unlimited tea collection' },
@@ -216,9 +220,36 @@ export const PaywallScreen = ({ navigation, route }) => {
           </Text>
         </TouchableOpacity>
 
+        {/* Required subscription disclosure */}
+        <View style={styles.subscriptionInfo}>
+          <Text style={[styles.subscriptionTitle, { color: theme.text.primary }]}>
+            Resteeped Premium
+          </Text>
+          <Text style={[styles.subscriptionDetails, { color: theme.text.secondary }]}>
+            {selectedPackage === 'yearly' 
+              ? `Yearly subscription: ${yearlyPackage?.product?.priceString || '$19.99'}/year`
+              : `Monthly subscription: ${monthlyPackage?.product?.priceString || '$2.99'}/month`
+            }
+          </Text>
+          <Text style={[styles.subscriptionDetails, { color: theme.text.secondary }]}>
+            Includes unlimited tea collection, flavor profiles, and tasting notes.
+          </Text>
+        </View>
+
         <Text style={[styles.terms, { color: theme.text.tertiary }]}>
-          Payment will be charged to your App Store account. Subscription automatically renews unless cancelled at least 24 hours before the end of the current period.
+          Payment will be charged to your App Store account. Subscription automatically renews unless cancelled at least 24 hours before the end of the current period. You can manage or cancel your subscription in your App Store account settings.
         </Text>
+
+        {/* Required legal links */}
+        <View style={styles.legalLinks}>
+          <TouchableOpacity onPress={() => Linking.openURL(TERMS_URL)}>
+            <Text style={[styles.legalLink, { color: theme.accent.primary }]}>Terms of Use</Text>
+          </TouchableOpacity>
+          <Text style={[styles.legalSeparator, { color: theme.text.tertiary }]}>•</Text>
+          <TouchableOpacity onPress={() => Linking.openURL(PRIVACY_URL)}>
+            <Text style={[styles.legalLink, { color: theme.accent.primary }]}>Privacy Policy</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -353,11 +384,39 @@ const styles = StyleSheet.create({
   restoreText: {
     ...typography.body,
   },
+  subscriptionInfo: {
+    marginBottom: spacing.md,
+    alignItems: 'center',
+  },
+  subscriptionTitle: {
+    ...typography.h3,
+    fontWeight: '600',
+    marginBottom: spacing.xs,
+  },
+  subscriptionDetails: {
+    ...typography.caption,
+    textAlign: 'center',
+    lineHeight: 18,
+  },
   terms: {
     ...typography.caption,
     textAlign: 'center',
-    marginTop: spacing.lg,
+    marginTop: spacing.md,
     lineHeight: 18,
+  },
+  legalLinks: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: spacing.md,
+    paddingBottom: spacing.lg,
+  },
+  legalLink: {
+    ...typography.caption,
+    fontWeight: '500',
+  },
+  legalSeparator: {
+    marginHorizontal: spacing.sm,
   },
   comingSoon: {
     flex: 1,

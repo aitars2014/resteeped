@@ -489,7 +489,20 @@ export const useCompanyReviews = (companyId) => {
       if (error) throw error;
 
       await fetchReviews();
-      return { data, error: null };
+      
+      // Check if review was flagged by moderation
+      const wasFlagged = data?.moderation_status === 'flagged';
+      const moderationReason = data?.moderation_reason;
+      
+      return { 
+        data, 
+        error: null,
+        moderation: wasFlagged ? {
+          status: 'flagged',
+          reason: moderationReason,
+          message: 'Your review is being held for moderation and will be reviewed shortly.',
+        } : null,
+      };
     } catch (err) {
       console.error('Error submitting company review:', err);
       return { error: err };

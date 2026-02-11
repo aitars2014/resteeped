@@ -112,7 +112,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   };
   
   const handleSubmitReview = async ({ rating, reviewText }) => {
-    const { error } = await submitReview({ rating, reviewText });
+    const { error, moderation } = await submitReview({ rating, reviewText });
     if (error) {
       Alert.alert('Error', 'Could not submit review. Please try again.');
     } else {
@@ -123,6 +123,17 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         has_text: !!reviewText,
       });
       setShowReviewModal(false);
+      
+      // Show moderation message if review was flagged
+      if (moderation) {
+        setTimeout(() => {
+          Alert.alert(
+            'Review Under Review',
+            moderation.message || 'Your review has been submitted and is pending moderation. It will appear once approved.',
+            [{ text: 'OK' }]
+          );
+        }, 300);
+      }
     }
   };
   
@@ -415,7 +426,11 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             {/* App reviews first */}
             {reviews.length > 0 ? (
               reviews.slice(0, 3).map((review) => (
-                <ReviewCard key={review.id} review={review} />
+                <ReviewCard 
+                  key={review.id} 
+                  review={review} 
+                  isOwnReview={user && review.user_id === user.id}
+                />
               ))
             ) : (
               <View style={styles.noReviews}>
