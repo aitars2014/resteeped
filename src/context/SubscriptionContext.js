@@ -40,6 +40,11 @@ export const SubscriptionProvider = ({ children }) => {
   }, []);
 
   const initializePurchases = async () => {
+    // Add overall timeout for RevenueCat initialization (10 seconds)
+    const timeoutPromise = new Promise((_, reject) => 
+      setTimeout(() => reject(new Error('RevenueCat initialization timed out')), 10000)
+    );
+
     try {
       // Check if keys are configured
       const apiKey = Platform.OS === 'ios' ? REVENUECAT_IOS_KEY : REVENUECAT_ANDROID_KEY;
@@ -50,23 +55,30 @@ export const SubscriptionProvider = ({ children }) => {
         return;
       }
       
-      await Purchases.configure({ apiKey });
-      setIsConfigured(true);
-      
-      // Get initial customer info
-      const info = await Purchases.getCustomerInfo();
-      updateCustomerInfo(info);
-      
-      // Get offerings
-      const offerings = await Purchases.getOfferings();
-      setOfferings(offerings);
-      
-      // Listen for customer info updates
-      Purchases.addCustomerInfoUpdateListener(updateCustomerInfo);
+      // Race against timeout
+      await Promise.race([
+        (async () => {
+          await Purchases.configure({ apiKey });
+          setIsConfigured(true);
+          
+          // Get initial customer info
+          const info = await Purchases.getCustomerInfo();
+          updateCustomerInfo(info);
+          
+          // Get offerings
+          const offerings = await Purchases.getOfferings();
+          setOfferings(offerings);
+          
+          // Listen for customer info updates
+          Purchases.addCustomerInfoUpdateListener(updateCustomerInfo);
+        })(),
+        timeoutPromise
+      ]);
       
       setIsLoading(false);
     } catch (error) {
       console.error('Failed to initialize purchases:', error);
+      // Still allow app to function without subscriptions
       setIsLoading(false);
     }
   };

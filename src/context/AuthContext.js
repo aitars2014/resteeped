@@ -62,15 +62,29 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
-    // Check for existing session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      if (session?.user) {
-        fetchProfile(session.user.id);
-      }
+    // Check for existing session with timeout
+    const sessionTimeout = setTimeout(() => {
+      console.warn('Auth session check timed out after 10s');
       setLoading(false);
       setInitialized(true);
-    });
+    }, 10000);
+
+    supabase.auth.getSession()
+      .then(({ data: { session } }) => {
+        clearTimeout(sessionTimeout);
+        setUser(session?.user ?? null);
+        if (session?.user) {
+          fetchProfile(session.user.id);
+        }
+        setLoading(false);
+        setInitialized(true);
+      })
+      .catch((error) => {
+        clearTimeout(sessionTimeout);
+        console.error('Auth session check failed:', error);
+        setLoading(false);
+        setInitialized(true);
+      });
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(

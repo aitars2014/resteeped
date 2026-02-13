@@ -90,26 +90,42 @@ const DEMO_TEAWARE = [
   },
 ];
 
+// Helper to add timeout to promises
+const withTimeout = (promise, ms, fallbackError = 'Request timed out') => {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => 
+      setTimeout(() => reject(new Error(fallbackError)), ms)
+    )
+  ]);
+};
+
 /**
  * useTeaware Hook
  * Fetches and manages teaware data
  */
 export const useTeaware = () => {
-  const [teaware, setTeaware] = useState([]);
+  // Start with demo data for instant loading
+  const [teaware, setTeaware] = useState(DEMO_TEAWARE);
   const [userTeaware, setUserTeaware] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false); // Start false since we have demo data
   const [error, setError] = useState(null);
+  const [isRemoteData, setIsRemoteData] = useState(false);
 
   // Fetch all teaware
   const fetchTeaware = useCallback(async () => {
     try {
-      setLoading(true);
       setError(null);
 
-      const { data, error: fetchError } = await supabase
-        .from('teaware')
-        .select('*, company:companies(name, slug)')
-        .order('created_at', { ascending: false });
+      // Add 10 second timeout
+      const { data, error: fetchError } = await withTimeout(
+        supabase
+          .from('teaware')
+          .select('*, company:companies(name, slug)')
+          .order('created_at', { ascending: false }),
+        10000,
+        'Teaware fetch timed out'
+      );
 
       if (fetchError) throw fetchError;
 
@@ -126,15 +142,14 @@ export const useTeaware = () => {
           return 0;
         });
         setTeaware(normalized);
-      } else {
-        // Use demo data only if database is empty
-        setTeaware(DEMO_TEAWARE);
+        setIsRemoteData(true);
       }
+      // If empty response, keep demo data
     } catch (err) {
       console.error('Error fetching teaware:', err);
       setError(err.message);
-      // Fallback to demo data
-      setTeaware(DEMO_TEAWARE);
+      // Keep demo data on error (already loaded)
+      setIsRemoteData(false);
     } finally {
       setLoading(false);
     }
