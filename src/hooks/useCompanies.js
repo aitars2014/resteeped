@@ -299,11 +299,23 @@ const DEMO_COMPANIES = [
   },
 ];
 
+// Helper to add timeout to promises
+const withTimeout = (promise, ms, fallbackError = 'Request timed out') => {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => 
+      setTimeout(() => reject(new Error(fallbackError)), ms)
+    )
+  ]);
+};
+
 export const useCompanies = () => {
   const { isDevMode } = useAuth();
-  const [companies, setCompanies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // Start with demo data for instant loading, update with remote data when available
+  const [companies, setCompanies] = useState(DEMO_COMPANIES);
+  const [loading, setLoading] = useState(false); // Start false since we have demo data
   const [error, setError] = useState(null);
+  const [isRemoteData, setIsRemoteData] = useState(false);
 
   const isLocalMode = !isSupabaseConfigured() || isDevMode;
 
@@ -311,23 +323,36 @@ export const useCompanies = () => {
     if (isLocalMode) {
       setCompanies(DEMO_COMPANIES);
       setLoading(false);
+      setIsRemoteData(false);
       return;
     }
 
-    setLoading(true);
+    // Don't show loading since we already have demo data
+    setError(null);
+    
     try {
-      const { data, error: fetchError } = await supabase
-        .from('companies')
-        .select('*')
-        .order('avg_rating', { ascending: false });
+      // Add 10 second timeout to prevent hanging
+      const { data, error: fetchError } = await withTimeout(
+        supabase
+          .from('companies')
+          .select('*')
+          .order('avg_rating', { ascending: false }),
+        10000,
+        'Companies fetch timed out'
+      );
 
       if (fetchError) throw fetchError;
-      setCompanies(data || []);
+      
+      if (data && data.length > 0) {
+        setCompanies(data);
+        setIsRemoteData(true);
+      }
+      // If empty response, keep demo data
     } catch (err) {
       console.error('Error fetching companies:', err);
       setError(err.message);
-      // Fallback to demo data on error
-      setCompanies(DEMO_COMPANIES);
+      // Keep demo data on error (already loaded)
+      setIsRemoteData(false);
     } finally {
       setLoading(false);
     }
@@ -349,6 +374,7 @@ export const useCompanies = () => {
     companies,
     loading,
     error,
+    isRemoteData, // true if data came from Supabase, false if using demo data
     refreshCompanies: fetchCompanies,
     getCompanyById,
     getCompanyBySlug,
