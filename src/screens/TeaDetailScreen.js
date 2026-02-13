@@ -450,7 +450,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             {tea.ratingCount > 0 && tea.url && (
               <TouchableOpacity 
                 style={styles.externalReviewsLink}
-                onPress={() => Linking.openURL(tea.url)}
+                onPress={() => Linking.openURL(tea.url).catch(() => {})}
               >
                 <ExternalLink size={16} color={theme.text.secondary} />
                 <Text style={styles.externalReviewsText}>

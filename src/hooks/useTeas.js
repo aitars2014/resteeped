@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { AppState } from 'react-native';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { teas as localTeas } from '../data/teas';
 
@@ -87,10 +88,7 @@ export const useTeas = () => {
   const [isRemoteData, setIsRemoteData] = useState(false);
 
   const fetchTeas = useCallback(async () => {
-    // Only show loading if we don't have data yet (shouldn't happen with local data init)
-    if (teas.length === 0) {
-      setLoading(true);
-    }
+    setLoading(true);
     setError(null);
 
     if (!isSupabaseConfigured()) {
@@ -180,17 +178,34 @@ export const useTeas = () => {
       setTeas(rankAndDiversifyTeas(formattedTeas));
       setIsRemoteData(true);
     } catch (err) {
-      console.error('Error fetching teas:', err);
-      setError(err.message);
+      console.error('Error fetching teas:', err?.message || err);
+      setError(err?.message || 'Unknown fetch error');
       // Keep local data on error (already loaded)
       setIsRemoteData(false);
     } finally {
       setLoading(false);
     }
-  }, [teas.length]);
+  }, []);
+
+  const isRemoteRef = useRef(false);
+
+  // Keep ref in sync with state
+  useEffect(() => {
+    isRemoteRef.current = isRemoteData;
+  }, [isRemoteData]);
 
   useEffect(() => {
     fetchTeas();
+  }, [fetchTeas]);
+
+  // Re-fetch when app comes back to foreground if still on local data
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active' && !isRemoteRef.current) {
+        fetchTeas();
+      }
+    });
+    return () => subscription?.remove();
   }, [fetchTeas]);
 
   // Basic search with type filter (backward compatible)

@@ -1,4 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { AppState } from 'react-native';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
 
@@ -358,8 +359,21 @@ export const useCompanies = () => {
     }
   }, [isLocalMode]);
 
+  const isRemoteRef = useRef(false);
+  useEffect(() => { isRemoteRef.current = isRemoteData; }, [isRemoteData]);
+
   useEffect(() => {
     fetchCompanies();
+  }, [fetchCompanies]);
+
+  // Re-fetch when app returns to foreground if still on local data
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active' && !isRemoteRef.current) {
+        fetchCompanies();
+      }
+    });
+    return () => subscription?.remove();
   }, [fetchCompanies]);
 
   const getCompanyById = useCallback((id) => {

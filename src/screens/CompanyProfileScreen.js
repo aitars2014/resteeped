@@ -121,15 +121,23 @@ const CompanyProfileScreen = ({ route, navigation }) => {
     }
   };
 
-  const openWebsite = () => {
+  const openWebsite = async () => {
     if (company?.website_url) {
-      Linking.openURL(company.website_url);
+      try {
+        await Linking.openURL(company.website_url);
+      } catch (e) {
+        Alert.alert('Unable to open link', company.website_url);
+      }
     }
   };
 
-  const openInstagram = () => {
+  const openInstagram = async () => {
     if (company?.instagram_handle) {
-      Linking.openURL(`https://instagram.com/${company.instagram_handle}`);
+      try {
+        await Linking.openURL(`https://instagram.com/${company.instagram_handle}`);
+      } catch (e) {
+        Alert.alert('Unable to open link', `instagram.com/${company.instagram_handle}`);
+      }
     }
   };
 

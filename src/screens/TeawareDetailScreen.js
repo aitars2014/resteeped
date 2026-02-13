@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   Linking,
+  Alert,
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -66,11 +67,15 @@ export default function TeawareDetailScreen({ route, navigation }) {
   const { teaware } = route.params;
   const styles = createStyles(theme);
 
-  const handleBuyPress = () => {
+  const handleBuyPress = async () => {
     haptics.medium();
     // Validate URL before opening - skip if it contains "/undefined"
     if (teaware.product_url && !teaware.product_url.includes('/undefined')) {
-      Linking.openURL(teaware.product_url);
+      try {
+        await Linking.openURL(teaware.product_url);
+      } catch (e) {
+        Alert.alert('Unable to open link', teaware.product_url);
+      }
     }
   };
 
