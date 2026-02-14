@@ -169,7 +169,12 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     const url = productUrl || companyUrl || `https://www.google.com/search?q=${encodeURIComponent(brandName + ' ' + tea.name + ' tea')}`;
     
     try {
-      await Linking.openURL(url);
+      const canOpen = await Linking.canOpenURL(url);
+      if (canOpen) {
+        await Linking.openURL(url);
+      } else {
+        Alert.alert('Error', 'Could not open the link.');
+      }
     } catch (error) {
       Alert.alert('Error', 'Could not open the link.');
     }
