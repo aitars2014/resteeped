@@ -52,6 +52,14 @@
       ],
       "expo-apple-authentication"
     ],
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/0388a37b-4987-42cd-a451-ed0624e305d8",
+      "checkAutomatically": "ON_LOAD",
+      "fallbackToCacheTimeout": 5000
+    },
     "extra": {
       "eas": {
         "projectId": "0388a37b-4987-42cd-a451-ed0624e305d8"
