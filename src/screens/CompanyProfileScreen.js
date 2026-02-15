@@ -124,12 +124,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   const openWebsite = async () => {
     if (company?.website_url) {
       try {
-        const canOpen = await Linking.canOpenURL(company.website_url);
-        if (canOpen) {
-          await Linking.openURL(company.website_url);
-        } else {
-          Alert.alert('Unable to open link', company.website_url);
-        }
+        await Linking.openURL(company.website_url);
       } catch (e) {
         Alert.alert('Unable to open link', company.website_url);
       }
