@@ -126,7 +126,7 @@ export const HomeScreen = ({ navigation }) => {
   };
 
   const handleSelectDiscover = () => {
-    navigation.navigate('Discover');
+    navigation.navigate('TeaFinder');
   };
 
   const handleSelectSurprise = () => {
