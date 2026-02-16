@@ -2,13 +2,14 @@ import React from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { ArrowLeft } from 'lucide-react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { TeaCard } from '../components';
 import { spacing, typography } from '../constants';
 import { useTheme } from '../context';
 
 export const SeasonalCollectionScreen = ({ route, navigation }) => {
   const { theme } = useTheme();
+  const insets = useSafeAreaInsets();
   const { teas = [], title, description, colors = ['#4A90A4', '#2C5F7C'] } = route.params || {};
 
   const renderHeader = () => (
@@ -16,10 +17,10 @@ export const SeasonalCollectionScreen = ({ route, navigation }) => {
       colors={colors}
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
-      style={styles.header}
+      style={[styles.header, { paddingTop: insets.top + 40 }]}
     >
       <TouchableOpacity
-        style={styles.backButton}
+        style={[styles.backButton, { top: insets.top + 8 }]}
         onPress={() => navigation.goBack()}
         hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
       >

@@ -95,7 +95,7 @@ const getSeasonalTeas = (teas, seasonKey, limit = 8) => {
 // Get full curated collection (capped at 25)
 const getSeasonalCollection = (teas, seasonKey) => getSeasonalTeas(teas, seasonKey, 25);
 
-export const SeasonalHighlights = ({ teas, onTeaPress, onSeeAll }) => {
+export const SeasonalHighlights = ({ teas, onTeaPress, onSeeAll, hideBanner = false }) => {
   const currentSeason = useMemo(() => getCurrentSeason(), []);
   const season = SEASONS[currentSeason];
   const seasonalTeas = useMemo(() => getSeasonalTeas(teas, currentSeason), [teas, currentSeason]);
@@ -111,29 +111,31 @@ export const SeasonalHighlights = ({ teas, onTeaPress, onSeeAll }) => {
   
   return (
     <View style={styles.container}>
-      {/* Header */}
-      <TouchableOpacity 
-        style={styles.headerCard}
-        onPress={handleSeeAll}
-        activeOpacity={0.8}
-      >
-        <LinearGradient
-          colors={season.colors}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-          style={styles.headerGradient}
+      {/* Header banner (can be hidden to reduce redundancy) */}
+      {!hideBanner && (
+        <TouchableOpacity 
+          style={styles.headerCard}
+          onPress={handleSeeAll}
+          activeOpacity={0.8}
         >
-          <View style={styles.headerContent}>
-            <View style={styles.iconContainer}>
-              <Icon size={28} color={colors.text.inverse} />
+          <LinearGradient
+            colors={season.colors}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={styles.headerGradient}
+          >
+            <View style={styles.headerContent}>
+              <View style={styles.iconContainer}>
+                <Icon size={28} color={colors.text.inverse} />
+              </View>
+              <View style={styles.headerText}>
+                <Text style={styles.seasonName}>{season.name}</Text>
+                <Text style={styles.seasonDescription}>{season.description}</Text>
+              </View>
             </View>
-            <View style={styles.headerText}>
-              <Text style={styles.seasonName}>{season.name}</Text>
-              <Text style={styles.seasonDescription}>{season.description}</Text>
-            </View>
-          </View>
-        </LinearGradient>
-      </TouchableOpacity>
+          </LinearGradient>
+        </TouchableOpacity>
+      )}
       
       {/* Tea list */}
       <ScrollView

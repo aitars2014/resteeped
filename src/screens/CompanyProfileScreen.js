@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   Linking,
   ActivityIndicator,
   Alert,
+  FlatList,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -18,39 +19,67 @@ import {
   ExternalLink,
   Instagram,
   Award,
-  Package,
   MessageSquare,
+  TrendingUp,
+  Star,
+  Users,
 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
-import { Button, StarRating, TeaCard, WriteCompanyReviewModal, CompanyProfileSkeleton, ReviewCard } from '../components';
+import { Button, StarRating, TeaCard, WriteCompanyReviewModal, CompanyProfileSkeleton, ReviewCard, FilterPills } from '../components';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
 import { useCompanyReviews } from '../hooks';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
+
+const SORT_OPTIONS = [
+  { key: 'popularity', label: 'Popular', icon: Users },
+  { key: 'trending', label: 'Trending', icon: TrendingUp },
+  { key: 'rating', label: 'Top Rated', icon: Star },
+];
 
 const CompanyProfileScreen = ({ route, navigation }) => {
   const { theme } = useTheme();
   const { companyId, company: passedCompany } = route.params || {};
   const { user, isDevMode } = useAuth();
   
+  // Derive effective company ID from params directly
+  const effectiveCompanyId = companyId || passedCompany?.id;
+  
   const [company, setCompany] = useState(passedCompany || null);
-  const [topTeas, setTopTeas] = useState([]);
+  const [allTeas, setAllTeas] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(!passedCompany);
   const [showReviewModal, setShowReviewModal] = useState(false);
+  const [selectedTeaType, setSelectedTeaType] = useState('all');
+  const [sortBy, setSortBy] = useState('popularity');
 
   // Get the company reviews hook for submitting reviews
-  const { submitReview, userReview, refreshReviews } = useCompanyReviews(companyId || passedCompany?.id);
+  const { submitReview, userReview, refreshReviews } = useCompanyReviews(effectiveCompanyId);
 
+  // Update company when passedCompany changes (fixes Bug 3 - stale state on reuse)
   useEffect(() => {
-    if (companyId && !passedCompany) {
+    if (passedCompany) {
+      setCompany(passedCompany);
+    }
+  }, [passedCompany?.id]);
+
+  // Fetch data when effectiveCompanyId changes
+  useEffect(() => {
+    if (!effectiveCompanyId) return;
+    
+    // Reset state for new company
+    setAllTeas([]);
+    setReviews([]);
+    setSelectedTeaType('all');
+    setSortBy('popularity');
+    
+    if (!passedCompany) {
       fetchCompany();
     }
-    if (companyId || passedCompany?.id) {
-      fetchTopTeas();
-      fetchReviews();
-    }
+    fetchAllTeas();
+    fetchReviews();
+    
     // Track company view
     const companyData = passedCompany || company;
     if (companyData) {
@@ -59,7 +88,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
         company_name: companyData.name,
       });
     }
-  }, [companyId, passedCompany]);
+  }, [effectiveCompanyId]);
 
   const fetchCompany = async () => {
     if (!isSupabaseConfigured() || isDevMode) return;
@@ -68,7 +97,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
       const { data, error } = await supabase
         .from('companies')
         .select('*')
-        .eq('id', companyId)
+        .eq('id', effectiveCompanyId)
         .single();
       
       if (error) throw error;
@@ -80,29 +109,26 @@ const CompanyProfileScreen = ({ route, navigation }) => {
     }
   };
 
-  const fetchTopTeas = async () => {
+  const fetchAllTeas = async () => {
     if (!isSupabaseConfigured() || isDevMode) return;
     
-    const id = companyId || passedCompany?.id;
     try {
       const { data, error } = await supabase
         .from('teas')
         .select('*')
-        .eq('company_id', id)
-        .order('avg_rating', { ascending: false })
-        .limit(5);
+        .eq('company_id', effectiveCompanyId)
+        .order('rating_count', { ascending: false });
       
       if (error) throw error;
-      setTopTeas(data || []);
+      setAllTeas(data || []);
     } catch (err) {
-      console.error('Error fetching top teas:', err);
+      console.error('Error fetching teas:', err);
     }
   };
 
   const fetchReviews = async () => {
     if (!isSupabaseConfigured() || isDevMode) return;
     
-    const id = companyId || passedCompany?.id;
     try {
       const { data, error } = await supabase
         .from('company_reviews')
@@ -110,7 +136,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
           *,
           profile:profiles(username, display_name, avatar_url)
         `)
-        .eq('company_id', id)
+        .eq('company_id', effectiveCompanyId)
         .order('created_at', { ascending: false })
         .limit(3);
       
@@ -120,6 +146,36 @@ const CompanyProfileScreen = ({ route, navigation }) => {
       console.error('Error fetching reviews:', err);
     }
   };
+
+  // Filter and sort teas
+  const filteredTeas = useMemo(() => {
+    let teas = [...allTeas];
+    
+    // Filter by type
+    if (selectedTeaType !== 'all') {
+      teas = teas.filter(t => t.type?.toLowerCase() === selectedTeaType.toLowerCase());
+    }
+    
+    // Sort
+    switch (sortBy) {
+      case 'popularity':
+        teas.sort((a, b) => (b.rating_count || 0) - (a.rating_count || 0));
+        break;
+      case 'trending':
+        teas.sort((a, b) => {
+          // Use updated_at or created_at as proxy for recent activity
+          const dateA = new Date(a.updated_at || a.created_at || 0);
+          const dateB = new Date(b.updated_at || b.created_at || 0);
+          return dateB - dateA;
+        });
+        break;
+      case 'rating':
+        teas.sort((a, b) => (b.avg_rating || 0) - (a.avg_rating || 0));
+        break;
+    }
+    
+    return teas;
+  }, [allTeas, selectedTeaType, sortBy]);
 
   const openWebsite = async () => {
     if (company?.website_url) {
@@ -163,9 +219,8 @@ const CompanyProfileScreen = ({ route, navigation }) => {
       return;
     }
     setShowReviewModal(false);
-    fetchReviews(); // Refresh the reviews list
+    fetchReviews();
     
-    // Show moderation message if review was flagged
     if (moderation) {
       setTimeout(() => {
         Alert.alert(
@@ -202,32 +257,33 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   return (
     <View style={[styles.container, { backgroundColor: theme.background.primary }]}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/* Header - Profile image as banner */}
+        {/* Header - Gradient with centered logo (Bug 4 fix) */}
         <View style={styles.header}>
-          {/* Use logo as the banner image if available, otherwise gradient */}
-          {company.logo_url ? (
-            <Image 
-              source={{ uri: company.logo_url }} 
-              style={styles.profileBanner}
-              resizeMode="cover"
-              accessible={true}
-              accessibilityRole="image"
-              accessibilityLabel={`${company.name} profile image`}
-            />
-          ) : (
-            <LinearGradient
-              colors={[
-                company.primary_color || theme.accent.primary,
-                company.primary_color 
-                  ? `${company.primary_color}88` 
-                  : `${theme.accent.primary}88`,
-                theme.background.secondary,
-              ]}
-              locations={[0, 0.6, 1]}
-              style={styles.banner}
-            />
+          <LinearGradient
+            colors={[
+              company.primary_color || theme.accent.primary,
+              company.primary_color 
+                ? `${company.primary_color}88` 
+                : theme.accent.secondary,
+              theme.background.primary,
+            ]}
+            locations={[0, 0.6, 1]}
+            style={styles.banner}
+          />
+          {/* Centered logo */}
+          {company.logo_url && (
+            <View style={styles.logoContainer}>
+              <Image 
+                source={{ uri: company.logo_url }} 
+                style={styles.centeredLogo}
+                resizeMode="contain"
+                accessible={true}
+                accessibilityRole="image"
+                accessibilityLabel={`${company.name} logo`}
+              />
+            </View>
           )}
-          {/* Overlay gradient for text readability */}
+          {/* Overlay gradient for back button readability */}
           <LinearGradient
             colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,0.1)', 'transparent']}
             style={styles.headerGradient}
@@ -248,7 +304,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
         {/* Company Info */}
         <View style={[styles.infoSection, { borderBottomColor: theme.border.light }]}>
-          <Text style={[styles.companyName, styles.companyNameNoLogo, { color: theme.text.primary }]}>{company.name}</Text>
+          <Text style={[styles.companyName, { color: theme.text.primary }]}>{company.name}</Text>
           
           {company.short_description && (
             <Text style={[styles.shortDescription, { color: theme.text.secondary }]}>{company.short_description}</Text>
@@ -269,26 +325,6 @@ const CompanyProfileScreen = ({ route, navigation }) => {
               <Text style={[styles.metaText, { color: theme.text.secondary }]}>{locationString}</Text>
             </View>
           )}
-
-          {/* Stats Row */}
-          <View style={[styles.statsRow, { backgroundColor: theme.background.secondary }]}>
-            <View style={styles.stat}>
-              <Text style={[styles.statNumber, { color: theme.text.primary }]}>{company.tea_count || 0}</Text>
-              <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Teas</Text>
-            </View>
-            <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
-            <View style={styles.stat}>
-              <Text style={[styles.statNumber, { color: theme.text.primary }]}>{company.founded_year || '—'}</Text>
-              <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Founded</Text>
-            </View>
-            <View style={[styles.statDivider, { backgroundColor: theme.border.light }]} />
-            <View style={styles.stat}>
-              <Text style={[styles.statNumber, { color: theme.text.primary }]}>
-                {company.price_range?.charAt(0).toUpperCase() + company.price_range?.slice(1) || '—'}
-              </Text>
-              <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Price Range</Text>
-            </View>
-          </View>
 
           {/* Action Buttons */}
           <View style={styles.actionRow}>
@@ -350,54 +386,62 @@ const CompanyProfileScreen = ({ route, navigation }) => {
           </View>
         )}
 
-        {/* Shipping Info */}
+        {/* Teas Section (Bug 2 fix - full list with filters) */}
         <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
-          <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Shipping</Text>
-          <View style={styles.shippingInfo}>
-            <Package size={16} color={theme.text.secondary} />
-            <Text style={[styles.shippingText, { color: theme.text.secondary }]}>
-              {company.ships_internationally 
-                ? 'Ships internationally' 
-                : 'Domestic shipping only'}
-            </Text>
+          <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>
+            Teas {allTeas.length > 0 && `(${allTeas.length})`}
+          </Text>
+          
+          {/* Filter pills */}
+          <FilterPills selectedType={selectedTeaType} onSelectType={setSelectedTeaType} />
+          
+          {/* Sort options */}
+          <View style={styles.sortRow}>
+            {SORT_OPTIONS.map((opt) => {
+              const isActive = sortBy === opt.key;
+              const IconComp = opt.icon;
+              return (
+                <TouchableOpacity
+                  key={opt.key}
+                  style={[
+                    styles.sortPill,
+                    { backgroundColor: isActive ? theme.accent.primary : theme.background.secondary },
+                  ]}
+                  onPress={() => setSortBy(opt.key)}
+                >
+                  <IconComp size={14} color={isActive ? theme.text.inverse : theme.text.secondary} />
+                  <Text style={[
+                    styles.sortPillText,
+                    { color: isActive ? theme.text.inverse : theme.text.secondary },
+                  ]}>
+                    {opt.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
-          {company.free_shipping_minimum && (
-            <Text style={[styles.shippingNote, { color: theme.text.secondary }]}>
-              Free shipping on orders over ${company.free_shipping_minimum}
-            </Text>
+
+          {/* Tea grid */}
+          {filteredTeas.length > 0 ? (
+            <View style={styles.teaGrid}>
+              {filteredTeas.map((tea) => (
+                <View key={tea.id} style={styles.teaGridItem}>
+                  <TeaCard
+                    tea={tea}
+                    onPress={() => navigation.navigate('TeaDetail', { tea })}
+                    compact
+                  />
+                </View>
+              ))}
+            </View>
+          ) : (
+            <View style={styles.noTeas}>
+              <Text style={[styles.noTeasText, { color: theme.text.secondary }]}>
+                {allTeas.length > 0 ? 'No teas match this filter' : 'No teas found'}
+              </Text>
+            </View>
           )}
         </View>
-
-        {/* Top Rated Teas */}
-        {topTeas.length > 0 && (
-          <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
-            <View style={styles.sectionHeader}>
-              <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>Top Rated Teas</Text>
-              <TouchableOpacity
-                onPress={() => navigation.navigate('Discover', { 
-                  screen: 'DiscoveryHome', 
-                  params: { initialCompanyFilter: company.id } 
-                })}
-                accessible={true}
-                accessibilityRole="button"
-                accessibilityLabel="See all teas from this company"
-              >
-                <Text style={[styles.seeAllText, { color: theme.accent.primary }]}>See All</Text>
-              </TouchableOpacity>
-            </View>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              {topTeas.map((tea) => (
-                <TeaCard
-                  key={tea.id}
-                  tea={tea}
-                  onPress={() => navigation.navigate('TeaDetail', { tea })}
-                  style={styles.teaCard}
-                  compact
-                />
-              ))}
-            </ScrollView>
-          </View>
-        )}
 
         {/* Reviews */}
         <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
@@ -485,9 +529,19 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
   },
-  profileBanner: {
-    width: '100%',
-    height: '100%',
+  logoContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  centeredLogo: {
+    width: 120,
+    height: 120,
+    borderRadius: 20,
   },
   headerGradient: {
     position: 'absolute',
@@ -523,9 +577,6 @@ const styles = StyleSheet.create({
     ...typography.h1,
     marginBottom: spacing.xs,
   },
-  companyNameNoLogo: {
-    // No extra padding needed since logo overlay is removed
-  },
   shortDescription: {
     ...typography.body,
     marginBottom: spacing.sm,
@@ -547,25 +598,6 @@ const styles = StyleSheet.create({
   metaText: {
     ...typography.caption,
     marginLeft: spacing.xs,
-  },
-  statsRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: spacing.md,
-    marginBottom: spacing.md,
-    borderRadius: 12,
-  },
-  stat: {
-    alignItems: 'center',
-  },
-  statNumber: {
-    ...typography.h2,
-  },
-  statLabel: {
-    ...typography.caption,
-  },
-  statDivider: {
-    width: 1,
   },
   actionRow: {
     flexDirection: 'row',
@@ -596,9 +628,6 @@ const styles = StyleSheet.create({
     ...typography.h3,
     marginBottom: spacing.sm,
   },
-  seeAllText: {
-    ...typography.caption,
-  },
   description: {
     ...typography.body,
     lineHeight: 22,
@@ -620,22 +649,39 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  shippingInfo: {
+  sortRow: {
+    flexDirection: 'row',
+    gap: spacing.xs,
+    marginTop: spacing.sm,
+    marginBottom: spacing.md,
+  },
+  sortPill: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: spacing.xs,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 6,
+    borderRadius: 16,
+    gap: 4,
   },
-  shippingText: {
-    ...typography.body,
-    marginLeft: spacing.xs,
-  },
-  shippingNote: {
+  sortPillText: {
     ...typography.caption,
-    marginLeft: 24,
+    fontWeight: '500',
   },
-  teaCard: {
-    width: 160,
-    marginRight: spacing.sm,
+  teaGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+  },
+  teaGridItem: {
+    width: '48%',
+  },
+  noTeas: {
+    padding: spacing.lg,
+    alignItems: 'center',
+  },
+  noTeasText: {
+    ...typography.body,
+    textAlign: 'center',
   },
   writeReviewButton: {
     flexDirection: 'row',
@@ -644,23 +690,6 @@ const styles = StyleSheet.create({
   },
   writeReviewText: {
     ...typography.caption,
-  },
-  reviewCard: {
-    borderRadius: 12,
-    padding: spacing.md,
-    marginBottom: spacing.sm,
-  },
-  reviewHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: spacing.xs,
-  },
-  reviewerName: {
-    ...typography.bodyBold,
-  },
-  reviewText: {
-    ...typography.body,
   },
   noReviews: {
     padding: spacing.lg,

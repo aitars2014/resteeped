@@ -92,17 +92,18 @@ async function main() {
     try {
       const embeddings = await getEmbeddings(texts);
 
-      // Update each tea with its embedding
-      for (let j = 0; j < batch.length; j++) {
-        const { error: updateError } = await supabase
-          .from('teas')
-          .update({ embedding: embeddings[j] })
-          .eq('id', batch[j].id);
-
-        if (updateError) {
-          console.error(`Error updating tea ${batch[j].name}:`, updateError.message);
-        }
-      }
+      // Update teas with embeddings in parallel
+      const updateResults = await Promise.all(
+        batch.map((tea, j) =>
+          supabase
+            .from('teas')
+            .update({ embedding: embeddings[j] })
+            .eq('id', tea.id)
+            .then(({ error }) => {
+              if (error) console.error(`Error updating tea ${tea.name}:`, error.message);
+            })
+        )
+      );
 
       processed += batch.length;
       console.log(`  ✓ ${processed}/${teas.length} teas processed`);

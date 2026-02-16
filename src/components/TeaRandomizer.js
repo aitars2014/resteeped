@@ -20,14 +20,22 @@ import { TeaCup, Teapot } from './icons';
 
 const { width, height } = Dimensions.get('window');
 
-export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
+/**
+ * TeaRandomizer — now a controlled modal.
+ * Props:
+ *   visible: boolean — whether the modal is shown
+ *   source: 'collection' | 'all' — which tea pool to use
+ *   teas: array — all available teas
+ *   onClose: () => void
+ *   onBrewTea: (tea) => void
+ *   onViewTea: (tea) => void
+ *   onAddTea: () => void — navigate to add teas when collection empty
+ */
+export const TeaRandomizer = ({ visible, source = 'all', teas, onClose, onBrewTea, onViewTea, onAddTea }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const { collection } = useCollection();
-  const [modalVisible, setModalVisible] = useState(false);
   const [selectedTea, setSelectedTea] = useState(null);
   const [isSpinning, setIsSpinning] = useState(false);
-  const [showEmptyChoice, setShowEmptyChoice] = useState(false);
-  const [useAllTeas, setUseAllTeas] = useState(false);
   
   // Animation values
   const spinValue = useRef(new Animated.Value(0)).current;
@@ -35,10 +43,8 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
   const opacityValue = useRef(new Animated.Value(0)).current;
   const shuffleEmojis = useRef(new Animated.Value(0)).current;
   
-  // Get teas to pick from - prefer user's collection, or all teas if user chose that
-  const getTeaPool = (forceAll = false) => {
-    if (!forceAll && collection.length > 0) {
-      // Map collection items to their full tea data
+  const getTeaPool = () => {
+    if (source === 'collection' && collection.length > 0) {
       return collection
         .map(item => item.tea || teas.find(t => t.id === item.tea_id))
         .filter(Boolean);
@@ -46,20 +52,26 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
     return teas;
   };
   
-  const hasCollection = collection.length > 0;
+  // Auto-start spin when modal becomes visible
+  useEffect(() => {
+    if (visible) {
+      runSpinAnimation();
+    } else {
+      // Reset state when hidden
+      setSelectedTea(null);
+      setIsSpinning(false);
+    }
+  }, [visible]);
   
-  const runSpinAnimation = (forceAll = false) => {
+  const runSpinAnimation = () => {
     setIsSpinning(true);
     setSelectedTea(null);
-    setShowEmptyChoice(false);
     
-    // Reset animations
     spinValue.setValue(0);
     scaleValue.setValue(0.8);
     opacityValue.setValue(0);
     shuffleEmojis.setValue(0);
     
-    // Shuffle animation
     Animated.loop(
       Animated.sequence([
         Animated.timing(shuffleEmojis, {
@@ -76,21 +88,36 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
       { iterations: 5 }
     ).start();
     
-    // Spin animation
     Animated.timing(spinValue, {
       toValue: 3,
       duration: 1500,
       useNativeDriver: true,
     }).start();
     
-    // After spinning, reveal the tea
     setTimeout(() => {
-      const pool = getTeaPool(forceAll);
-      const tea = pool.length > 0 ? pool[Math.floor(Math.random() * pool.length)] : null;
+      const pool = getTeaPool();
+      let tea = null;
+      if (pool.length > 0) {
+        if (source === 'all') {
+          // Weight toward higher-rated teas
+          const weighted = pool.map(t => ({
+            tea: t,
+            weight: Math.max(1, (t.avgRating || t.avg_rating || 3)) + ((t.ratingCount || t.rating_count || 0) > 5 ? 1 : 0),
+          }));
+          const totalWeight = weighted.reduce((sum, w) => sum + w.weight, 0);
+          let rand = Math.random() * totalWeight;
+          for (const w of weighted) {
+            rand -= w.weight;
+            if (rand <= 0) { tea = w.tea; break; }
+          }
+          if (!tea) tea = pool[Math.floor(Math.random() * pool.length)];
+        } else {
+          tea = pool[Math.floor(Math.random() * pool.length)];
+        }
+      }
       setSelectedTea(tea);
       setIsSpinning(false);
       
-      // Reveal animation
       Animated.parallel([
         Animated.spring(scaleValue, {
           toValue: 1,
@@ -107,47 +134,21 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
     }, 1500);
   };
   
-  const startRandomize = () => {
-    setModalVisible(true);
-    
-    // If user has no collection, show choice prompt
-    if (!hasCollection && teas.length > 0) {
-      setShowEmptyChoice(true);
-      setIsSpinning(false);
-      setSelectedTea(null);
-    } else {
-      runSpinAnimation(useAllTeas);
-    }
-  };
-  
-  const handleUseAllTeas = () => {
-    setUseAllTeas(true);
-    runSpinAnimation(true);
-  };
-  
-  const handleGoToAddTea = () => {
-    handleClose();
-    if (onAddTea) onAddTea();
-  };
-  
   const handleClose = () => {
-    setModalVisible(false);
-    setSelectedTea(null);
-    setIsSpinning(false);
-    setShowEmptyChoice(false);
+    onClose?.();
   };
   
   const handleBrewTea = () => {
     if (selectedTea) {
       handleClose();
-      onBrewTea(selectedTea);
+      onBrewTea?.(selectedTea);
     }
   };
   
   const handleViewTea = () => {
     if (selectedTea) {
       handleClose();
-      onViewTea(selectedTea);
+      onViewTea?.(selectedTea);
     }
   };
   
@@ -158,224 +159,147 @@ export const TeaRandomizer = ({ teas, onBrewTea, onViewTea, onAddTea }) => {
   
   const teaColor = selectedTea ? getTeaTypeColor(selectedTea.teaType) : null;
   const teaPool = getTeaPool();
-  const isFromCollection = collection.length > 0;
+  const isFromCollection = source === 'collection';
   
   return (
-    <>
-      {/* Trigger Button */}
-      <TouchableOpacity
-        style={[styles.triggerButton, { backgroundColor: theme.accent.primary }]}
-        onPress={startRandomize}
-        activeOpacity={0.8}
-        disabled={teaPool.length === 0}
-      >
-        <LinearGradient
-          colors={[theme.accent.primary, theme.accent.secondary]}
-          style={styles.triggerGradient}
-          start={{ x: 0, y: 0 }}
-          end={{ x: 1, y: 1 }}
-        >
-          <Shuffle size={20} color={theme.text.inverse} />
-          <Text style={[styles.triggerText, { color: theme.text.inverse }]}>
-            What should I brew?
-          </Text>
-        </LinearGradient>
-      </TouchableOpacity>
-      
-      {/* Randomizer Modal */}
-      <Modal
-        visible={modalVisible}
-        animationType="fade"
-        transparent={true}
-        onRequestClose={handleClose}
-      >
-        <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.8)' }]}>
-          <View style={[styles.modalContent, { backgroundColor: theme.background.primary }]}>
-            {/* Close button */}
-            <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
-              <X size={24} color={theme.text.secondary} />
-            </TouchableOpacity>
-            
-            {showEmptyChoice ? (
-              // Empty collection - show choice
-              <View style={styles.emptyChoiceContainer}>
-                <View style={[styles.emptyIconContainer, { backgroundColor: theme.background.secondary }]}>
-                  <Coffee size={48} color={theme.accent.primary} strokeWidth={1.5} />
-                </View>
-                <Text style={[styles.emptyChoiceTitle, { color: theme.text.primary }]}>
-                  Your collection is empty
-                </Text>
-                <Text style={[styles.emptyChoiceSubtext, { color: theme.text.secondary }]}>
-                  Add teas to your collection for personalized recommendations, or get a random suggestion from all teas.
-                </Text>
-                <View style={styles.emptyChoiceButtons}>
-                  <Button
-                    title="Add Teas to Collection"
-                    onPress={handleGoToAddTea}
-                    variant="primary"
-                    style={styles.choiceButton}
-                  />
-                  <Button
-                    title="Get a Random Suggestion"
-                    onPress={handleUseAllTeas}
-                    variant="secondary"
-                    style={styles.choiceButton}
-                  />
-                </View>
-              </View>
-            ) : isSpinning ? (
-              // Spinning state
-              <View style={styles.spinningContainer}>
-                <Animated.View style={[styles.spinningIcon, { transform: [{ rotate: spinRotation }] }]}>
-                  <TeaCup size={80} color={theme.accent.primary} strokeWidth={1.5} />
-                </Animated.View>
-                <Animated.Text style={[styles.spinningText, { 
-                  color: theme.text.primary,
-                  opacity: shuffleEmojis.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [1, 0.5],
-                  }),
-                }]}>
-                  Finding your perfect brew...
-                </Animated.Text>
-                
-                {/* Floating tea icons */}
-                <Animated.View style={[styles.floatingIcon, styles.floatingIcon1, {
-                  opacity: shuffleEmojis,
-                  transform: [{
-                    translateY: shuffleEmojis.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, -20],
-                    }),
-                  }],
-                }]}>
-                  <Coffee size={32} color={theme.text.secondary} strokeWidth={1.5} />
-                </Animated.View>
-                <Animated.View style={[styles.floatingIcon, styles.floatingIcon2, {
-                  opacity: shuffleEmojis,
-                  transform: [{
-                    translateY: shuffleEmojis.interpolate({
-                      inputRange: [0, 1],
-                      outputRange: [0, 20],
-                    }),
-                  }],
-                }]}>
-                  <Teapot size={32} color={theme.text.secondary} strokeWidth={1.5} />
-                </Animated.View>
-              </View>
-            ) : selectedTea ? (
-              // Tea reveal
-              <Animated.View style={[styles.teaReveal, {
-                transform: [{ scale: scaleValue }],
-                opacity: opacityValue,
-              }]}>
-                <View style={styles.revealHeader}>
-                  <Sparkles size={24} color={theme.accent.primary} />
-                  <Text style={[styles.revealTitle, { color: theme.accent.primary }]}>
-                    You should brew...
-                  </Text>
-                </View>
-                
-                {/* Tea Card */}
-                <View style={[styles.teaCard, { 
-                  backgroundColor: theme.background.secondary,
-                  borderColor: teaColor?.primary || theme.border.light,
-                }]}>
-                  {/* Tea Image */}
-                  <View style={[styles.teaImageContainer, { backgroundColor: teaColor?.gradient || theme.background.tertiary }]}>
-                    <Image 
-                      source={selectedTea.imageUrl ? { uri: selectedTea.imageUrl } : getPlaceholderImage(selectedTea.teaType)} 
-                      style={styles.teaImage}
-                    />
-                  </View>
-                  
-                  <View style={styles.teaInfo}>
-                    <TeaTypeBadge teaType={selectedTea.teaType} size="small" />
-                    <Text style={[styles.teaName, { color: theme.text.primary }]} numberOfLines={2}>
-                      {selectedTea.name}
-                    </Text>
-                    <Text style={[styles.brandName, { color: theme.text.secondary }]}>
-                      {selectedTea.brandName}
-                    </Text>
-                    {selectedTea.avgRating > 0 && (
-                      <StarRating rating={selectedTea.avgRating} size={14} />
-                    )}
-                  </View>
-                </View>
-                
-                {/* Source info */}
-                <Text style={[styles.sourceText, { color: theme.text.secondary }]}>
-                  {isFromCollection 
-                    ? `Selected from your collection of ${collection.length} teas`
-                    : `Selected from ${teaPool.length} teas`}
-                </Text>
-                
-                {/* Action Buttons */}
-                <View style={styles.actionButtons}>
-                  <Button
-                    title="Brew This Tea!"
-                    onPress={handleBrewTea}
-                    variant="primary"
-                    icon={<Coffee size={18} color={theme.text.inverse} />}
-                    style={styles.brewButton}
-                  />
-                  <Button
-                    title="View Details"
-                    onPress={handleViewTea}
-                    variant="secondary"
-                    style={styles.detailsButton}
-                  />
-                  <TouchableOpacity 
-                    style={[styles.rerollButton, { borderColor: theme.border.medium }]}
-                    onPress={startRandomize}
-                  >
-                    <Shuffle size={16} color={theme.text.secondary} />
-                    <Text style={[styles.rerollText, { color: theme.text.secondary }]}>
-                      Pick again
-                    </Text>
-                  </TouchableOpacity>
-                </View>
+    <Modal
+      visible={visible}
+      animationType="fade"
+      transparent={true}
+      onRequestClose={handleClose}
+    >
+      <View style={[styles.modalOverlay, { backgroundColor: 'rgba(0,0,0,0.8)' }]}>
+        <View style={[styles.modalContent, { backgroundColor: theme.background.primary }]}>
+          <TouchableOpacity style={styles.closeButton} onPress={handleClose}>
+            <X size={24} color={theme.text.secondary} />
+          </TouchableOpacity>
+          
+          {isSpinning ? (
+            <View style={styles.spinningContainer}>
+              <Animated.View style={[styles.spinningIcon, { transform: [{ rotate: spinRotation }] }]}>
+                <TeaCup size={80} color={theme.accent.primary} strokeWidth={1.5} />
               </Animated.View>
-            ) : (
-              // No tea available
-              <View style={styles.emptyState}>
-                <View style={[styles.emptyIconContainer, { backgroundColor: theme.background.secondary }]}>
-                  <Leaf size={48} color={theme.text.secondary} strokeWidth={1.5} />
-                </View>
-                <Text style={[styles.emptyText, { color: theme.text.primary }]}>
-                  No teas available
-                </Text>
-                <Text style={[styles.emptySubtext, { color: theme.text.secondary }]}>
-                  Add some teas to your collection first!
+              <Animated.Text style={[styles.spinningText, { 
+                color: theme.text.primary,
+                opacity: shuffleEmojis.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [1, 0.5],
+                }),
+              }]}>
+                Finding your perfect brew...
+              </Animated.Text>
+              
+              <Animated.View style={[styles.floatingIcon, styles.floatingIcon1, {
+                opacity: shuffleEmojis,
+                transform: [{
+                  translateY: shuffleEmojis.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, -20],
+                  }),
+                }],
+              }]}>
+                <Coffee size={32} color={theme.text.secondary} strokeWidth={1.5} />
+              </Animated.View>
+              <Animated.View style={[styles.floatingIcon, styles.floatingIcon2, {
+                opacity: shuffleEmojis,
+                transform: [{
+                  translateY: shuffleEmojis.interpolate({
+                    inputRange: [0, 1],
+                    outputRange: [0, 20],
+                  }),
+                }],
+              }]}>
+                <Teapot size={32} color={theme.text.secondary} strokeWidth={1.5} />
+              </Animated.View>
+            </View>
+          ) : selectedTea ? (
+            <Animated.View style={[styles.teaReveal, {
+              transform: [{ scale: scaleValue }],
+              opacity: opacityValue,
+            }]}>
+              <View style={styles.revealHeader}>
+                <Sparkles size={24} color={theme.accent.primary} />
+                <Text style={[styles.revealTitle, { color: theme.accent.primary }]}>
+                  You should brew...
                 </Text>
               </View>
-            )}
-          </View>
+              
+              <View style={[styles.teaCard, { 
+                backgroundColor: theme.background.secondary,
+                borderColor: teaColor?.primary || theme.border.light,
+              }]}>
+                <View style={[styles.teaImageContainer, { backgroundColor: teaColor?.gradient || theme.background.tertiary }]}>
+                  <Image 
+                    source={selectedTea.imageUrl ? { uri: selectedTea.imageUrl } : getPlaceholderImage(selectedTea.teaType)} 
+                    style={styles.teaImage}
+                  />
+                </View>
+                
+                <View style={styles.teaInfo}>
+                  <TeaTypeBadge teaType={selectedTea.teaType} size="small" />
+                  <Text style={[styles.teaName, { color: theme.text.primary }]} numberOfLines={2}>
+                    {selectedTea.name}
+                  </Text>
+                  <Text style={[styles.brandName, { color: theme.text.secondary }]}>
+                    {selectedTea.brandName}
+                  </Text>
+                  {selectedTea.avgRating > 0 && (
+                    <StarRating rating={selectedTea.avgRating} size={14} />
+                  )}
+                </View>
+              </View>
+              
+              <Text style={[styles.sourceText, { color: theme.text.secondary }]}>
+                {isFromCollection 
+                  ? `Selected from your collection of ${collection.length} teas`
+                  : `Selected from ${teaPool.length} teas`}
+              </Text>
+              
+              <View style={styles.actionButtons}>
+                <Button
+                  title="Brew This Tea!"
+                  onPress={handleBrewTea}
+                  variant="primary"
+                  icon={<Coffee size={18} color={theme.text.inverse} />}
+                  style={styles.brewButton}
+                />
+                <Button
+                  title="View Details"
+                  onPress={handleViewTea}
+                  variant="secondary"
+                  style={styles.detailsButton}
+                />
+                <TouchableOpacity 
+                  style={[styles.rerollButton, { borderColor: theme.border.medium }]}
+                  onPress={runSpinAnimation}
+                >
+                  <Shuffle size={16} color={theme.text.secondary} />
+                  <Text style={[styles.rerollText, { color: theme.text.secondary }]}>
+                    Pick again
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </Animated.View>
+          ) : (
+            <View style={styles.emptyState}>
+              <View style={[styles.emptyIconContainer, { backgroundColor: theme.background.secondary }]}>
+                <Leaf size={48} color={theme.text.secondary} strokeWidth={1.5} />
+              </View>
+              <Text style={[styles.emptyText, { color: theme.text.primary }]}>
+                No teas available
+              </Text>
+              <Text style={[styles.emptySubtext, { color: theme.text.secondary }]}>
+                Add some teas to your collection first!
+              </Text>
+            </View>
+          )}
         </View>
-      </Modal>
-    </>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
-  triggerButton: {
-    borderRadius: spacing.buttonBorderRadius,
-    overflow: 'hidden',
-    marginHorizontal: spacing.screenHorizontal,
-    marginBottom: spacing.sectionSpacing,
-  },
-  triggerGradient: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    gap: 10,
-  },
-  triggerText: {
-    ...typography.body,
-    fontWeight: '600',
-  },
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
@@ -516,30 +440,6 @@ const styles = StyleSheet.create({
   emptySubtext: {
     ...typography.body,
     textAlign: 'center',
-  },
-  emptyChoiceContainer: {
-    alignItems: 'center',
-    paddingVertical: 30,
-    paddingHorizontal: 10,
-  },
-  emptyChoiceTitle: {
-    ...typography.headingSmall,
-    marginBottom: 12,
-    textAlign: 'center',
-  },
-  emptyChoiceSubtext: {
-    ...typography.body,
-    textAlign: 'center',
-    marginBottom: 24,
-    lineHeight: 22,
-  },
-  emptyChoiceButtons: {
-    width: '100%',
-    gap: 12,
-  },
-  choiceButton: {
-    width: '100%',
-    minHeight: 56,
   },
 });
 

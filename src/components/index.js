@@ -16,6 +16,7 @@ export { TeaOfTheDay } from './TeaOfTheDay';
 export { SeasonalHighlights } from './SeasonalHighlights';
 export { TeaPickerModal } from './TeaPickerModal';
 export { TeaRandomizer } from './TeaRandomizer';
+export { BrewPicker } from './BrewPicker';
 export { BrewingGuide } from './BrewingGuide';
 export { HealthBenefits } from './HealthBenefits';
 export { TeaBattle } from './TeaBattle';

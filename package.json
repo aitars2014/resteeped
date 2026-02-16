@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@amplitude/analytics-react-native": "^1.5.37",
+    "@gorhom/bottom-sheet": "^5.2.8",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-navigation/bottom-tabs": "^7.12.0",
     "@react-navigation/native": "^7.1.28",
@@ -36,8 +37,10 @@
     "playwright": "^1.58.1",
     "react": "19.1.0",
     "react-native": "0.81.5",
+    "react-native-gesture-handler": "~2.28.0",
     "react-native-purchases": "^9.7.6",
     "react-native-purchases-ui": "^9.7.6",
+    "react-native-reanimated": "~4.1.1",
     "react-native-safe-area-context": "^5.6.2",
     "react-native-screens": "~4.16.0",
     "react-native-svg": "15.12.1",

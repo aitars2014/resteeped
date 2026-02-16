@@ -11,7 +11,7 @@ import {
   TouchableOpacity,
   Animated,
 } from 'react-native';
-import { SlidersHorizontal, Clock, X, ArrowUp } from 'lucide-react-native';
+import { SlidersHorizontal, Clock, X, ArrowUp, Sparkles } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { SearchBar, FilterPills, FilterModal, TeaCard, TeaCardSkeleton } from '../components';
 import { useTeas, useSearchHistory } from '../hooks';
@@ -291,6 +291,18 @@ export const DiscoveryScreen = ({ navigation, route }) => {
               <Text style={[styles.filterBadgeText, { color: theme.text.inverse }]}>{activeFilterCount}</Text>
             </View>
           )}
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[
+            styles.filterButton,
+            { 
+              backgroundColor: theme.accent.primary,
+              borderColor: theme.accent.primary,
+            }
+          ]}
+          onPress={() => navigation.navigate('TeaFinder')}
+        >
+          <Sparkles size={20} color={theme.text.inverse} />
         </TouchableOpacity>
       </View>
 
