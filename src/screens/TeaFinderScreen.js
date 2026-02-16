@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,7 +12,7 @@ import {
   Platform,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Search, Sparkles } from 'lucide-react-native';
+import { Search, Sparkles, X } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { TeaCard } from '../components';
 import { useTeaRecommendations } from '../hooks/useTeaRecommendations';
@@ -35,6 +35,7 @@ export const TeaFinderScreen = ({ navigation }) => {
   const { theme } = useTheme();
   const { recommendations, loading, error, findTeas } = useTeaRecommendations();
   const [query, setQuery] = useState('');
+  const inputRef = useRef(null);
   const [hasSearched, setHasSearched] = useState(false);
 
   const handleSearch = useCallback((text) => {
@@ -87,17 +88,39 @@ export const TeaFinderScreen = ({ navigation }) => {
           <View style={styles.inputContainer}>
             <Search size={18} color={theme.text.secondary} style={styles.searchIcon} />
             <TextInput
+              ref={inputRef}
               style={styles.input}
               placeholder="e.g. calming tea for evening..."
               placeholderTextColor={theme.text.tertiary}
               value={query}
               onChangeText={setQuery}
               onSubmitEditing={() => handleSearch()}
+              onFocus={() => {
+                // Move cursor to end on focus
+                if (query.length > 0) {
+                  inputRef.current?.setNativeProps({
+                    selection: { start: query.length, end: query.length },
+                  });
+                }
+              }}
               returnKeyType="search"
               numberOfLines={1}
               multiline={false}
               scrollEnabled={false}
             />
+            {query.length > 0 && (
+              <TouchableOpacity
+                onPress={() => {
+                  setQuery('');
+                  setHasSearched(false);
+                  inputRef.current?.focus();
+                }}
+                hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+                style={styles.clearButton}
+              >
+                <X size={16} color={theme.text.tertiary} />
+              </TouchableOpacity>
+            )}
           </View>
           <TouchableOpacity style={styles.searchButton} onPress={() => handleSearch()}>
             <Sparkles size={20} color="#fff" />
@@ -198,6 +221,10 @@ const createStyles = (theme) => StyleSheet.create({
   },
   searchIcon: {
     marginRight: 8,
+  },
+  clearButton: {
+    marginLeft: 4,
+    padding: 4,
   },
   input: {
     flex: 1,
