@@ -94,6 +94,9 @@ export const TeaFinderScreen = ({ navigation }) => {
               onChangeText={setQuery}
               onSubmitEditing={() => handleSearch()}
               returnKeyType="search"
+              numberOfLines={1}
+              multiline={false}
+              scrollEnabled={false}
             />
           </View>
           <TouchableOpacity style={styles.searchButton} onPress={() => handleSearch()}>
@@ -191,16 +194,19 @@ const createStyles = (theme) => StyleSheet.create({
     borderRadius: 12,
     paddingHorizontal: 12,
     height: 48,
+    overflow: 'hidden',
   },
   searchIcon: {
     marginRight: 8,
   },
   input: {
     flex: 1,
-    ...typography.body,
+    fontSize: 15,
+    lineHeight: 20,
     color: theme.text.primary,
     height: 48,
-    paddingVertical: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
     textAlignVertical: 'center',
     includeFontPadding: false,
   },
