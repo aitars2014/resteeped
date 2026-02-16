@@ -207,6 +207,7 @@ const createStyles = (theme) => StyleSheet.create({
     flexDirection: 'row',
     paddingHorizontal: spacing.screenHorizontal,
     marginTop: spacing.md,
+    marginBottom: spacing.lg,
     gap: spacing.sm,
   },
   inputContainer: {
