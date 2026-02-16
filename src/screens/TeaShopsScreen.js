@@ -89,7 +89,7 @@ const SORT_OPTIONS = [
 
 export const TeaShopsScreen = ({ navigation, route }) => {
   const { theme } = useTheme();
-  const { companies, loading, refreshCompanies } = useCompanies();
+  const { companies, loading, refreshing, refreshCompanies } = useCompanies();
   const { teas } = useTeas();
   
   // Location state

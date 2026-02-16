@@ -53,7 +53,7 @@ const cardWidth = (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2;
 
 export const DiscoveryScreen = ({ navigation, route }) => {
   const { theme } = useTheme();
-  const { teas, loading, refreshTeas, filterTeas } = useTeas();
+  const { teas, loading, refreshing, refreshTeas, filterTeas, dataSource } = useTeas();
   const { history, addToHistory, removeFromHistory, clearHistory } = useSearchHistory();
   
   // Scroll to top functionality

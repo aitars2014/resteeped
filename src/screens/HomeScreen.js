@@ -9,6 +9,7 @@ import {
   Dimensions,
   RefreshControl,
   Image,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -54,8 +55,8 @@ const TEA_TYPES = [
 
 export const HomeScreen = ({ navigation }) => {
   const { theme, isDark, getTeaTypeColor } = useTheme();
-  const { teas, loading: teasLoading, refreshTeas } = useTeas();
-  const { companies } = useCompanies();
+  const { teas, loading: teasLoading, refreshing: teasRefreshing, refreshTeas, dataSource } = useTeas();
+  const { companies, refreshing: companiesRefreshing, refreshCompanies } = useCompanies();
   const { teaware } = useTeaware();
   const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
   const [refreshing, setRefreshing] = useState(false);
@@ -80,9 +81,9 @@ export const HomeScreen = ({ navigation }) => {
 
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
-    await refreshTeas();
+    await Promise.all([refreshTeas(), refreshCompanies()]);
     setRefreshing(false);
-  }, [refreshTeas]);
+  }, [refreshTeas, refreshCompanies]);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
@@ -205,6 +206,16 @@ export const HomeScreen = ({ navigation }) => {
             resizeMode="contain"
           />
         </View>
+
+        {/* Subtle loading indicator when fetching fresh data */}
+        {(teasLoading || teasRefreshing) && dataSource !== 'remote' && (
+          <View style={[styles.loadingBanner, { backgroundColor: theme.accent.primary + '15' }]}>
+            <ActivityIndicator size="small" color={theme.accent.primary} style={{ marginRight: 8 }} />
+            <Text style={[styles.loadingBannerText, { color: theme.text.secondary }]}>
+              Loading latest teas...
+            </Text>
+          </View>
+        )}
 
         {/* Search Bar */}
         <TouchableOpacity
@@ -682,6 +693,19 @@ const styles = StyleSheet.create({
   },
   communitySubtitle: {
     ...typography.caption,
+  },
+  loadingBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    marginHorizontal: 20,
+    marginBottom: 8,
+    borderRadius: 8,
+  },
+  loadingBannerText: {
+    fontSize: 13,
   },
 });
 

@@ -1,7 +1,31 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { AppState } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
+
+const CACHE_KEY = '@resteeped_companies_cache';
+
+const loadCachedCompanies = async () => {
+  try {
+    const cached = await AsyncStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const parsed = JSON.parse(cached);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (err) {
+    console.warn('Failed to load companies cache:', err?.message);
+  }
+  return null;
+};
+
+const saveCompaniesToCache = async (companies) => {
+  try {
+    await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(companies));
+  } catch (err) {
+    console.warn('Failed to save companies cache:', err?.message);
+  }
+};
 
 // Demo companies for local/dev mode - all 17 companies from production database
 const DEMO_COMPANIES = [
@@ -312,27 +336,43 @@ const withTimeout = (promise, ms, fallbackError = 'Request timed out') => {
 
 export const useCompanies = () => {
   const { isDevMode } = useAuth();
-  // Start with demo data for instant loading, update with remote data when available
   const [companies, setCompanies] = useState(DEMO_COMPANIES);
-  const [loading, setLoading] = useState(false); // Start false since we have demo data
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
   const [isRemoteData, setIsRemoteData] = useState(false);
+  const [dataSource, setDataSource] = useState('local'); // 'local' | 'cache' | 'remote'
 
   const isLocalMode = !isSupabaseConfigured() || isDevMode;
 
-  const fetchCompanies = useCallback(async () => {
+  // Load cached data on mount
+  useEffect(() => {
+    if (isLocalMode) return;
+    const loadCache = async () => {
+      const cached = await loadCachedCompanies();
+      if (cached && cached.length > 0) {
+        setCompanies(cached);
+        setDataSource('cache');
+      }
+    };
+    loadCache();
+  }, [isLocalMode]);
+
+  const fetchCompanies = useCallback(async ({ isRefresh = false } = {}) => {
     if (isLocalMode) {
       setCompanies(DEMO_COMPANIES);
       setLoading(false);
+      setRefreshing(false);
       setIsRemoteData(false);
       return;
     }
 
-    // Don't show loading since we already have demo data
+    if (isRefresh) {
+      setRefreshing(true);
+    }
     setError(null);
     
     try {
-      // Add 10 second timeout to prevent hanging
       const { data, error: fetchError } = await withTimeout(
         supabase
           .from('companies')
@@ -347,15 +387,16 @@ export const useCompanies = () => {
       if (data && data.length > 0) {
         setCompanies(data);
         setIsRemoteData(true);
+        setDataSource('remote');
+        await saveCompaniesToCache(data);
       }
-      // If empty response, keep demo data
     } catch (err) {
       console.error('Error fetching companies:', err);
       setError(err.message);
-      // Keep demo data on error (already loaded)
       setIsRemoteData(false);
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   }, [isLocalMode]);
 
@@ -366,11 +407,11 @@ export const useCompanies = () => {
     fetchCompanies();
   }, [fetchCompanies]);
 
-  // Re-fetch when app returns to foreground if still on local data
+  // Re-fetch when app returns to foreground if still on local/cached data
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (nextAppState === 'active' && !isRemoteRef.current) {
-        fetchCompanies();
+        fetchCompanies({ isRefresh: true });
       }
     });
     return () => subscription?.remove();
@@ -387,9 +428,11 @@ export const useCompanies = () => {
   return {
     companies,
     loading,
+    refreshing,
     error,
-    isRemoteData, // true if data came from Supabase, false if using demo data
-    refreshCompanies: fetchCompanies,
+    isRemoteData,
+    dataSource,
+    refreshCompanies: () => fetchCompanies({ isRefresh: true }),
     getCompanyById,
     getCompanyBySlug,
   };
