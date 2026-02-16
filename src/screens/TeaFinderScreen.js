@@ -17,6 +17,7 @@ import { typography, spacing } from '../constants';
 import { TeaCard } from '../components';
 import { useTeaRecommendations } from '../hooks/useTeaRecommendations';
 import { useTheme } from '../context';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const { width } = Dimensions.get('window');
 const cardWidth = (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2;
@@ -41,12 +42,14 @@ export const TeaFinderScreen = ({ navigation }) => {
     if (!searchQuery.trim()) return;
     setQuery(searchQuery);
     setHasSearched(true);
+    trackEvent(AnalyticsEvents.TEA_FINDER_SEARCH, { query: searchQuery.trim(), source: 'typed' });
     findTeas(searchQuery);
   }, [query, findTeas]);
 
   const handleChipPress = useCallback((chip) => {
     setQuery(chip);
     setHasSearched(true);
+    trackEvent(AnalyticsEvents.TEA_FINDER_SEARCH, { query: chip, source: 'chip' });
     findTeas(chip);
   }, [findTeas]);
 
@@ -54,7 +57,15 @@ export const TeaFinderScreen = ({ navigation }) => {
     <View style={[styles.cardContainer, index % 2 === 0 ? styles.cardLeft : styles.cardRight]}>
       <TeaCard
         tea={item}
-        onPress={() => navigation.navigate('TeaDetail', { tea: item })}
+        onPress={() => {
+          trackEvent(AnalyticsEvents.TEA_FINDER_RESULT_TAP, {
+            query,
+            tea_id: item.id,
+            tea_name: item.name,
+            position: index,
+          });
+          navigation.navigate('TeaDetail', { tea: item });
+        }}
       />
     </View>
   );

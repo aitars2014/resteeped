@@ -157,4 +157,8 @@ export const AnalyticsEvents = {
   // Teaware
   TEAWARE_VIEWED: 'teaware_viewed',
   TEAWARE_ADDED: 'teaware_added',
+  
+  // Tea Finder
+  TEA_FINDER_SEARCH: 'tea_finder_search',
+  TEA_FINDER_RESULT_TAP: 'tea_finder_result_tap',
 };

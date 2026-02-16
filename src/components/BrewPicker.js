@@ -1,7 +1,6 @@
-import React, { useRef, useCallback, useMemo } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import BottomSheet, { BottomSheetBackdrop } from '@gorhom/bottom-sheet';
-import { Coffee, Search, Shuffle } from 'lucide-react-native';
+import React, { useCallback, useImperativeHandle, forwardRef, useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Pressable, Dimensions } from 'react-native';
+import { Coffee, Search, Shuffle, X } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme, useCollection } from '../context';
 
@@ -27,30 +26,26 @@ const OPTIONS = [
   },
 ];
 
-export const BrewPicker = ({ bottomSheetRef, onSelectCollection, onSelectDiscover, onSelectSurprise }) => {
+export const BrewPicker = forwardRef(({ onSelectCollection, onSelectDiscover, onSelectSurprise }, ref) => {
   const { theme } = useTheme();
   const { collection } = useCollection();
-  const snapPoints = useMemo(() => ['38%'], []);
+  const [visible, setVisible] = useState(false);
   const hasCollection = collection.length > 0;
 
-  const renderBackdrop = useCallback(
-    (props) => (
-      <BottomSheetBackdrop
-        {...props}
-        disappearsOnIndex={-1}
-        appearsOnIndex={0}
-        opacity={0.5}
-      />
-    ),
-    []
-  );
+  // Expose open/close via ref (snapToIndex(0) = open, close() = close)
+  useImperativeHandle(ref, () => ({
+    snapToIndex: (index) => {
+      if (index >= 0) setVisible(true);
+    },
+    close: () => setVisible(false),
+  }));
 
   const handlePress = (key) => {
+    setVisible(false);
     if (key === 'collection') {
       if (hasCollection) {
         onSelectCollection?.();
       } else {
-        // Navigate to discover when collection empty
         onSelectDiscover?.();
       }
     } else if (key === 'discover') {
@@ -58,57 +53,76 @@ export const BrewPicker = ({ bottomSheetRef, onSelectCollection, onSelectDiscove
     } else if (key === 'surprise') {
       onSelectSurprise?.();
     }
-    bottomSheetRef.current?.close();
   };
 
   return (
-    <BottomSheet
-      ref={bottomSheetRef}
-      index={-1}
-      snapPoints={snapPoints}
-      enablePanDownToClose
-      backdropComponent={renderBackdrop}
-      backgroundStyle={{ backgroundColor: theme.background.primary }}
-      handleIndicatorStyle={{ backgroundColor: theme.text.tertiary }}
+    <Modal
+      visible={visible}
+      animationType="slide"
+      transparent
+      onRequestClose={() => setVisible(false)}
     >
-      <View style={styles.content}>
-        <Text style={[styles.title, { color: theme.text.primary }]}>What should I brew?</Text>
-        {OPTIONS.map((option) => {
-          const { key, Icon, label, subtitle, emptySubtitle } = option;
-          const isDisabled = key === 'collection' && !hasCollection;
-          const displaySubtitle = isDisabled ? emptySubtitle : subtitle;
+      <Pressable style={styles.backdrop} onPress={() => setVisible(false)}>
+        <View />
+      </Pressable>
+      <View style={[styles.sheet, { backgroundColor: theme.background.primary }]}>  
+        <View style={[styles.handle, { backgroundColor: theme.text.tertiary }]} />
+        <View style={styles.content}>
+          <Text style={[styles.title, { color: theme.text.primary }]}>What should I brew?</Text>
+          {OPTIONS.map((option) => {
+            const { key, Icon, label, subtitle, emptySubtitle } = option;
+            const isDisabled = key === 'collection' && !hasCollection;
+            const displaySubtitle = isDisabled ? emptySubtitle : subtitle;
 
-          return (
-            <TouchableOpacity
-              key={key}
-              style={[
-                styles.optionCard,
-                { backgroundColor: theme.background.secondary, borderColor: theme.border.light },
-                isDisabled && styles.optionDisabled,
-              ]}
-              onPress={() => handlePress(key)}
-              activeOpacity={0.7}
-            >
-              <View style={[styles.iconContainer, { backgroundColor: theme.accent.primary + '15' }]}>
-                <Icon size={22} color={isDisabled ? theme.text.tertiary : theme.accent.primary} />
-              </View>
-              <View style={styles.optionText}>
-                <Text style={[styles.optionLabel, { color: isDisabled ? theme.text.tertiary : theme.text.primary }]}>
-                  {label}
-                </Text>
-                <Text style={[styles.optionSubtitle, { color: isDisabled ? theme.text.tertiary : theme.text.secondary }]}>
-                  {displaySubtitle}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          );
-        })}
+            return (
+              <TouchableOpacity
+                key={key}
+                style={[
+                  styles.optionCard,
+                  { backgroundColor: theme.background.secondary, borderColor: theme.border.light },
+                  isDisabled && styles.optionDisabled,
+                ]}
+                onPress={() => handlePress(key)}
+                activeOpacity={0.7}
+              >
+                <View style={[styles.iconContainer, { backgroundColor: theme.accent.primary + '15' }]}>
+                  <Icon size={22} color={isDisabled ? theme.text.tertiary : theme.accent.primary} />
+                </View>
+                <View style={styles.optionText}>
+                  <Text style={[styles.optionLabel, { color: isDisabled ? theme.text.tertiary : theme.text.primary }]}>
+                    {label}
+                  </Text>
+                  <Text style={[styles.optionSubtitle, { color: isDisabled ? theme.text.tertiary : theme.text.secondary }]}>
+                    {displaySubtitle}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </View>
-    </BottomSheet>
+    </Modal>
   );
-};
+});
 
 const styles = StyleSheet.create({
+  backdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+  },
+  sheet: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    paddingBottom: 40,
+  },
+  handle: {
+    width: 40,
+    height: 4,
+    borderRadius: 2,
+    alignSelf: 'center',
+    marginTop: 8,
+    marginBottom: 4,
+  },
   content: {
     paddingHorizontal: spacing.screenHorizontal,
     paddingBottom: spacing.lg,

@@ -396,7 +396,9 @@ const CompanyProfileScreen = ({ route, navigation }) => {
           </Text>
           
           {/* Filter pills */}
-          <FilterPills selectedType={selectedTeaType} onSelectType={setSelectedTeaType} />
+          <View style={styles.filterContainer}>
+            <FilterPills selectedType={selectedTeaType} onSelectType={setSelectedTeaType} />
+          </View>
           
           {/* Sort options */}
           <View style={styles.sortRow}>
@@ -651,6 +653,10 @@ const styles = StyleSheet.create({
   certTag: {
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  filterContainer: {
+    marginHorizontal: -spacing.lg,
+    marginBottom: 0,
   },
   sortRow: {
     flexDirection: 'row',

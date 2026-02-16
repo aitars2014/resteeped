@@ -14,8 +14,10 @@ export const useTeaRecommendations = () => {
 
     try {
       const { data, error: fnError } = await supabase.functions.invoke('recommend-teas', {
-        body: { query: query.trim(), match_count: 20 },
+        body: { query: query.trim(), match_count: 20, match_threshold: 0.3 },
       });
+
+      console.log('recommend response:', JSON.stringify(data), fnError);
 
       if (fnError) throw fnError;
 

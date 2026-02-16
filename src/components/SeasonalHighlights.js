@@ -95,7 +95,7 @@ const getSeasonalTeas = (teas, seasonKey, limit = 8) => {
 // Get full curated collection (capped at 25)
 const getSeasonalCollection = (teas, seasonKey) => getSeasonalTeas(teas, seasonKey, 25);
 
-export const SeasonalHighlights = ({ teas, onTeaPress, onSeeAll, hideBanner = false }) => {
+export const SeasonalHighlights = ({ teas, onTeaPress, onSeeAll, hideBanner = false, hideCarousel = false }) => {
   const currentSeason = useMemo(() => getCurrentSeason(), []);
   const season = SEASONS[currentSeason];
   const seasonalTeas = useMemo(() => getSeasonalTeas(teas, currentSeason), [teas, currentSeason]);
@@ -138,17 +138,19 @@ export const SeasonalHighlights = ({ teas, onTeaPress, onSeeAll, hideBanner = fa
       )}
       
       {/* Tea list */}
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={styles.teaList}
-      >
-        {seasonalTeas.map(tea => (
-          <View key={tea.id} style={styles.teaCardWrapper}>
-            <TeaCard tea={tea} onPress={() => onTeaPress(tea)} />
-          </View>
-        ))}
-      </ScrollView>
+      {!hideCarousel && (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.teaList}
+        >
+          {seasonalTeas.map(tea => (
+            <View key={tea.id} style={styles.teaCardWrapper}>
+              <TeaCard tea={tea} onPress={() => onTeaPress(tea)} />
+            </View>
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 };

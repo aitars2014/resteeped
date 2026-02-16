@@ -369,7 +369,7 @@ export const HomeScreen = ({ navigation }) => {
               colors: season.colors,
             });
           }}
-          hideBanner
+          hideCarousel
         />
 
         {/* 8. Tea Battle */}
@@ -517,7 +517,7 @@ export const HomeScreen = ({ navigation }) => {
 
       {/* BrewPicker Bottom Sheet */}
       <BrewPicker
-        bottomSheetRef={brewPickerRef}
+        ref={brewPickerRef}
         onSelectCollection={handleSelectCollection}
         onSelectDiscover={handleSelectDiscover}
         onSelectSurprise={handleSelectSurprise}
