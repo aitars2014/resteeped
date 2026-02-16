@@ -337,7 +337,7 @@ const withTimeout = (promise, ms, fallbackError = 'Request timed out') => {
 export const useCompanies = () => {
   const { isDevMode } = useAuth();
   const [companies, setCompanies] = useState(DEMO_COMPANIES);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(!isLocalMode);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
   const [isRemoteData, setIsRemoteData] = useState(false);
@@ -378,7 +378,7 @@ export const useCompanies = () => {
           .from('companies')
           .select('*')
           .order('avg_rating', { ascending: false }),
-        10000,
+        30000,
         'Companies fetch timed out'
       );
 

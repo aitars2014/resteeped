@@ -4,7 +4,6 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  SafeAreaView,
   Dimensions,
   ActivityIndicator,
   TextInput,
@@ -12,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Search, Sparkles } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { TeaCard } from '../components';
@@ -147,7 +147,7 @@ export const TeaFinderScreen = ({ navigation }) => {
 const createStyles = (theme) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: theme.background,
+    backgroundColor: theme.background.primary,
   },
   flex: {
     flex: 1,
@@ -176,7 +176,7 @@ const createStyles = (theme) => StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.card?.background || theme.surface,
+    backgroundColor: theme.background.secondary,
     borderRadius: 12,
     paddingHorizontal: 12,
     height: 48,
@@ -188,6 +188,8 @@ const createStyles = (theme) => StyleSheet.create({
     flex: 1,
     ...typography.body,
     color: theme.text.primary,
+    paddingVertical: 12,
+    textAlignVertical: 'center',
   },
   searchButton: {
     width: 48,
@@ -215,7 +217,7 @@ const createStyles = (theme) => StyleSheet.create({
     paddingHorizontal: 14,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: theme.card?.background || theme.surface,
+    backgroundColor: theme.background.secondary,
   },
   chipText: {
     ...typography.caption,
@@ -234,7 +236,7 @@ const createStyles = (theme) => StyleSheet.create({
   },
   errorText: {
     ...typography.body,
-    color: theme.error || '#e74c3c',
+    color: theme.status?.error || '#e74c3c',
     textAlign: 'center',
   },
   emptyTitle: {

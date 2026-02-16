@@ -46,6 +46,9 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   // Derive effective company ID from params directly
   const effectiveCompanyId = companyId || passedCompany?.id;
   
+  // Brand color with fallback
+  const brandColor = company?.primary_color || theme.accent.primary;
+  
   const [company, setCompany] = useState(passedCompany || null);
   const [allTeas, setAllTeas] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -153,7 +156,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
     
     // Filter by type
     if (selectedTeaType !== 'all') {
-      teas = teas.filter(t => t.type?.toLowerCase() === selectedTeaType.toLowerCase());
+      teas = teas.filter(t => (t.tea_type || t.type)?.toLowerCase() === selectedTeaType.toLowerCase());
     }
     
     // Sort
@@ -332,7 +335,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
               title="Visit Website"
               onPress={openWebsite}
               icon={<ExternalLink size={16} color={theme.text.inverse} />}
-              style={styles.actionButton}
+              style={[styles.actionButton, { backgroundColor: brandColor }]}
             />
             {company.instagram_handle && (
               <TouchableOpacity 
@@ -343,7 +346,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
                 accessibilityLabel={`Visit ${company.name} on Instagram`}
                 accessibilityHint="Opens Instagram in browser"
               >
-                <Instagram size={20} color={theme.accent.primary} />
+                <Instagram size={20} color={brandColor} />
               </TouchableOpacity>
             )}
           </View>
@@ -405,7 +408,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
                   key={opt.key}
                   style={[
                     styles.sortPill,
-                    { backgroundColor: isActive ? theme.accent.primary : theme.background.secondary },
+                    { backgroundColor: isActive ? brandColor : theme.background.secondary },
                   ]}
                   onPress={() => setSortBy(opt.key)}
                 >
@@ -457,8 +460,8 @@ const CompanyProfileScreen = ({ route, navigation }) => {
               accessibilityLabel="Write a review"
               accessibilityHint={`Share your experience with ${company.name}`}
             >
-              <MessageSquare size={16} color={theme.accent.primary} />
-              <Text style={[styles.writeReviewText, { color: theme.accent.primary }]}>Write Review</Text>
+              <MessageSquare size={16} color={brandColor} />
+              <Text style={[styles.writeReviewText, { color: brandColor }]}>Write Review</Text>
             </TouchableOpacity>
           </View>
 
@@ -539,8 +542,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   centeredLogo: {
-    width: 120,
-    height: 120,
+    width: 220,
+    height: 180,
     borderRadius: 20,
   },
   headerGradient: {

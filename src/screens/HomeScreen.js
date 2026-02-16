@@ -117,7 +117,7 @@ export const HomeScreen = ({ navigation }) => {
 
   // BrewPicker handlers
   const handleOpenBrewPicker = () => {
-    brewPickerRef.current?.expand();
+    brewPickerRef.current?.snapToIndex(0);
   };
 
   const handleSelectCollection = () => {

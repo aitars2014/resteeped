@@ -136,7 +136,7 @@ const fetchAllTeasPaginated = async () => {
   const allData = [];
   let from = 0;
   let hasMore = true;
-  const PAGE_TIMEOUT = 12000; // 12s per page (smaller payloads = faster)
+  const PAGE_TIMEOUT = 30000; // 30s per page
 
   while (hasMore) {
     const to = from + PAGE_SIZE - 1;
