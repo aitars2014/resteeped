@@ -23,6 +23,7 @@ import {
   ContactScreen,
   PaywallScreen,
   SeasonalCollectionScreen,
+  TeaFinderScreen,
 } from '../screens';
 
 const Tab = createBottomTabNavigator();
@@ -40,6 +41,7 @@ const HomeStack = () => (
     <Stack.Screen name="CompareTeas" component={CompareTeasScreen} />
     <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
     <Stack.Screen name="SeasonalCollection" component={SeasonalCollectionScreen} />
+    <Stack.Screen name="TeaFinder" component={TeaFinderScreen} />
     <Stack.Screen 
       name="Paywall" 
       component={PaywallScreen}
@@ -52,6 +54,7 @@ const HomeStack = () => (
 const DiscoveryStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="DiscoveryHome" component={DiscoveryScreen} />
+    <Stack.Screen name="TeaFinder" component={TeaFinderScreen} />
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
     <Stack.Screen name="CompanyProfile" component={CompanyProfileScreen} />
     <Stack.Screen 

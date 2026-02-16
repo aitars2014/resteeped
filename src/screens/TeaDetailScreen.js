@@ -33,7 +33,17 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { canAddToCollection, isPremium } = useSubscription();
   const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
   const { companies } = useCompanies();
-  const { teas } = useTeas();
+  const { teas, getTeaDetails } = useTeas();
+  
+  // Fetch full tea details (description, steep params, flavor notes) on-demand
+  const [fullTea, setFullTea] = useState(tea);
+  useEffect(() => {
+    let cancelled = false;
+    getTeaDetails(tea.id).then(details => {
+      if (!cancelled && details) setFullTea(details);
+    });
+    return () => { cancelled = true; };
+  }, [tea.id, getTeaDetails]);
   
   // Find similar teas (same type, excluding current tea)
   const similarTeas = useMemo(() => {
@@ -185,10 +195,10 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const hasDirectLink = tea.productUrl || tea.product_url || company?.website_url;
   
   const formatSteepTime = () => {
-    if (tea.steepTimeMin && tea.steepTimeMax) {
-      return `${tea.steepTimeMin}-${tea.steepTimeMax} min`;
+    if (fullTea.steepTimeMin && fullTea.steepTimeMax) {
+      return `${fullTea.steepTimeMin}-${fullTea.steepTimeMax} min`;
     }
-    return tea.steepTimeMin ? `${tea.steepTimeMin} min` : '—';
+    return fullTea.steepTimeMin ? `${fullTea.steepTimeMin} min` : '—';
   };
   
   const displayRating = reviewCount > 0 ? averageRating : (tea.avgRating || 0);
@@ -273,13 +283,13 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           
           {/* Quick Facts Row */}
           <View style={styles.quickFacts}>
-            {tea.steepTempF && (
+            {fullTea.steepTempF && (
               <View style={styles.quickFact}>
                 <Thermometer size={18} color={theme.accent.primary} />
-                <Text style={styles.quickFactText}>{tea.steepTempF}°F</Text>
+                <Text style={styles.quickFactText}>{fullTea.steepTempF}°F</Text>
               </View>
             )}
-            {tea.steepTimeMin && (
+            {fullTea.steepTimeMin && (
               <View style={styles.quickFact}>
                 <Clock size={18} color={theme.accent.primary} />
                 <Text style={styles.quickFactText}>{formatSteepTime()}</Text>
@@ -305,19 +315,19 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <HealthBenefits tea={tea} />
           
           {/* Description */}
-          {tea.description && (
+          {fullTea.description && (
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>About</Text>
-              <Text style={styles.description}>{tea.description}</Text>
+              <Text style={styles.description}>{fullTea.description}</Text>
             </View>
           )}
           
           {/* Flavor Notes */}
-          {tea.flavorNotes && tea.flavorNotes.length > 0 && (
+          {fullTea.flavorNotes && fullTea.flavorNotes.length > 0 && (
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Flavor Notes</Text>
               <View style={styles.flavorTags}>
-                {tea.flavorNotes.map((note, index) => (
+                {fullTea.flavorNotes.map((note, index) => (
                   <View key={index} style={styles.flavorTag}>
                     <Text style={styles.flavorTagText}>{note}</Text>
                   </View>
@@ -327,12 +337,12 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           )}
           
           {/* Flavor Profile Radar - Premium Feature */}
-          {tea.flavorNotes && tea.flavorNotes.length >= 2 && (
+          {fullTea.flavorNotes && fullTea.flavorNotes.length >= 2 && (
             <View style={styles.section}>
               <Text style={styles.sectionTitle}>Flavor Profile</Text>
               {isPremium ? (
                 <View style={styles.radarContainer}>
-                  <FlavorRadar flavorNotes={tea.flavorNotes} size={220} />
+                  <FlavorRadar flavorNotes={fullTea.flavorNotes} size={220} />
                 </View>
               ) : (
                 <TouchableOpacity 

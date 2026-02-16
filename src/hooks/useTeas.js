@@ -99,68 +99,43 @@ export const useTeas = () => {
     }
 
     try {
-      // Optimized query: select only needed fields, use larger page size
-      const PAGE_SIZE = 5000;
-      const REQUEST_TIMEOUT = 15000; // 15 second timeout per request
-      const SELECTED_FIELDS = `
+      // Light query for list view: only fields needed for browsing/search
+      // Description, steep params, flavor notes fetched on-demand in detail view
+      const LIST_FIELDS = `
         id,
         name,
         brand_name,
         tea_type,
-        description,
         origin,
-        steep_temp_f,
-        steep_time_min,
-        steep_time_max,
         flavor_notes,
         image_url,
-        price_per_oz,
         avg_rating,
         rating_count,
         company_id,
         created_at
       `;
+      const REQUEST_TIMEOUT = 15000; // 15 second timeout
       
-      let allTeas = [];
-      let page = 0;
-      let hasMore = true;
-      const maxPages = 5; // Safety limit to prevent infinite loops
+      // Single query, no pagination needed (~2.5MB for 8k teas with minimal fields)
+      const { data, error: fetchError } = await withTimeout(
+        supabase
+          .from('teas')
+          .select(LIST_FIELDS)
+          .order('avg_rating', { ascending: false, nullsFirst: false }),
+        REQUEST_TIMEOUT,
+        'Tea fetch timed out'
+      );
 
-      while (hasMore && page < maxPages) {
-        const from = page * PAGE_SIZE;
-        const to = from + PAGE_SIZE - 1;
-        
-        // Add timeout to prevent hanging requests
-        const { data, error: fetchError } = await withTimeout(
-          supabase
-            .from('teas')
-            .select(SELECTED_FIELDS)
-            .order('avg_rating', { ascending: false, nullsFirst: false })
-            .range(from, to),
-          REQUEST_TIMEOUT,
-          `Tea fetch timed out (page ${page})`
-        );
-
-        if (fetchError) throw fetchError;
-        
-        if (data && data.length > 0) {
-          allTeas = [...allTeas, ...data];
-          hasMore = data.length === PAGE_SIZE;
-          page++;
-        } else {
-          hasMore = false;
-        }
-      }
-
-      const data = allTeas;
+      if (fetchError) throw fetchError;
 
       // Transform to match app's expected format
+      // Note: description, steep params, flavor notes, price are loaded on-demand in detail view
       const formattedTeas = data.map(tea => ({
         id: tea.id,
         name: tea.name,
         brandName: tea.brand_name,
         teaType: tea.tea_type,
-        description: tea.description,
+        description: tea.description || '',
         origin: tea.origin,
         steepTempF: tea.steep_temp_f,
         steepTimeMin: tea.steep_time_min,
@@ -282,6 +257,47 @@ export const useTeas = () => {
     return teas.find(tea => tea.id === id);
   }, [teas]);
 
+  // Fetch full tea details on-demand (for detail screen)
+  const getTeaDetails = useCallback(async (teaId) => {
+    if (!isSupabaseConfigured()) {
+      return teas.find(t => t.id === teaId) || null;
+    }
+    try {
+      const { data, error: fetchError } = await withTimeout(
+        supabase
+          .from('teas')
+          .select('*')
+          .eq('id', teaId)
+          .single(),
+        10000,
+        'Tea detail fetch timed out'
+      );
+      if (fetchError) throw fetchError;
+      return {
+        id: data.id,
+        name: data.name,
+        brandName: data.brand_name,
+        teaType: data.tea_type,
+        description: data.description || '',
+        origin: data.origin,
+        steepTempF: data.steep_temp_f,
+        steepTimeMin: data.steep_time_min,
+        steepTimeMax: data.steep_time_max,
+        flavorNotes: data.flavor_notes || [],
+        imageUrl: data.image_url,
+        pricePerOz: data.price_per_oz,
+        avgRating: data.avg_rating,
+        ratingCount: data.rating_count,
+        companyId: data.company_id,
+        createdAt: data.created_at,
+      };
+    } catch (err) {
+      console.error('Error fetching tea details:', err?.message || err);
+      // Fall back to list data
+      return teas.find(t => t.id === teaId) || null;
+    }
+  }, [teas]);
+
   return {
     teas,
     loading,
@@ -291,5 +307,6 @@ export const useTeas = () => {
     searchTeas,
     filterTeas,
     getTeaById,
+    getTeaDetails,
   };
 };

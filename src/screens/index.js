@@ -17,3 +17,4 @@ export { default as UserProfileScreen } from './UserProfileScreen';
 export { ContactScreen } from './ContactScreen';
 export { PaywallScreen } from './PaywallScreen';
 export { SeasonalCollectionScreen } from './SeasonalCollectionScreen';
+export { TeaFinderScreen } from './TeaFinderScreen';
