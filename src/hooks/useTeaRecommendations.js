@@ -1,5 +1,7 @@
 import { useState, useCallback } from 'react';
-import { supabase } from '../lib/supabase';
+
+const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL;
+const SUPABASE_ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
 // Normalize Supabase snake_case rows to camelCase app format
 const formatTea = (tea) => ({
@@ -28,15 +30,37 @@ export const useTeaRecommendations = () => {
     setError(null);
 
     try {
-      const { data, error: fnError } = await supabase.functions.invoke('recommend-teas', {
-        body: { query: query.trim(), match_count: 20, match_threshold: 0.3 },
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 25000);
+
+      const response = await fetch(`${SUPABASE_URL}/functions/v1/recommend-teas`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+          'apikey': SUPABASE_ANON_KEY,
+        },
+        body: JSON.stringify({ query: query.trim(), match_count: 20, match_threshold: 0.3 }),
+        signal: controller.signal,
       });
 
-      console.log('recommend response:', JSON.stringify(data), fnError);
+      clearTimeout(timeoutId);
 
-      if (fnError) throw fnError;
+      if (!response.ok) {
+        const errBody = await response.text();
+        console.error('recommend-teas error:', response.status, errBody);
+        throw new Error('Failed to find teas. Please try again.');
+      }
 
-      setRecommendations((data?.teas || []).map(formatTea));
+      const data = await response.json();
+      console.log('recommend response:', JSON.stringify(data));
+
+      if (!data || !data.teas) {
+        console.warn('Unexpected response shape:', data);
+        throw new Error('Unexpected response from server. Please try again.');
+      }
+
+      setRecommendations(data.teas.map(formatTea));
     } catch (err) {
       console.error('Tea recommendation error:', err);
       setError(err.message || 'Failed to find teas. Please try again.');
