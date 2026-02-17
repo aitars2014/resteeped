@@ -23,6 +23,7 @@ import {
   Leaf,
 } from 'lucide-react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as WebBrowser from 'expo-web-browser';
 import { useTheme } from '../context/ThemeContext';
 import { typography, spacing } from '../constants';
 import { Button } from '../components';
@@ -72,9 +73,13 @@ export default function TeawareDetailScreen({ route, navigation }) {
     // Validate URL before opening - skip if it contains "/undefined"
     if (teaware.product_url && !teaware.product_url.includes('/undefined')) {
       try {
-        await Linking.openURL(teaware.product_url);
+        await WebBrowser.openBrowserAsync(teaware.product_url);
       } catch (e) {
-        Alert.alert('Unable to open link', teaware.product_url);
+        try {
+          await Linking.openURL(teaware.product_url);
+        } catch (e2) {
+          Alert.alert('Unable to open link', teaware.product_url);
+        }
       }
     }
   };

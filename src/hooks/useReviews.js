@@ -13,7 +13,9 @@ export const useReviews = (teaId) => {
   const isLocalMode = !isSupabaseConfigured() || isDevMode;
 
   const fetchReviews = useCallback(async () => {
-    if (!teaId || isLocalMode) {
+    // Skip if no teaId, local mode, or teaId is not a valid UUID
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!teaId || isLocalMode || !uuidRegex.test(teaId)) {
       setLoading(false);
       return;
     }

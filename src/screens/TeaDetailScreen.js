@@ -11,6 +11,7 @@ import {
   Linking,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as WebBrowser from 'expo-web-browser';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, HealthBenefits } from '../components';
@@ -179,14 +180,14 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     const url = productUrl || companyUrl || `https://www.google.com/search?q=${encodeURIComponent(brandName + ' ' + tea.name + ' tea')}`;
     
     try {
-      const canOpen = await Linking.canOpenURL(url);
-      if (canOpen) {
+      await WebBrowser.openBrowserAsync(url);
+    } catch (error) {
+      // Fallback to Linking if in-app browser fails
+      try {
         await Linking.openURL(url);
-      } else {
+      } catch (e) {
         Alert.alert('Error', 'Could not open the link.');
       }
-    } catch (error) {
-      Alert.alert('Error', 'Could not open the link.');
     }
   };
   

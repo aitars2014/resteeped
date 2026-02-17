@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import * as WebBrowser from 'expo-web-browser';
 import {
   ChevronLeft,
   MapPin,
@@ -183,9 +184,13 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   const openWebsite = async () => {
     if (company?.website_url) {
       try {
-        await Linking.openURL(company.website_url);
+        await WebBrowser.openBrowserAsync(company.website_url);
       } catch (e) {
-        Alert.alert('Unable to open link', company.website_url);
+        try {
+          await Linking.openURL(company.website_url);
+        } catch (e2) {
+          Alert.alert('Unable to open link', company.website_url);
+        }
       }
     }
   };
@@ -193,9 +198,13 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   const openInstagram = async () => {
     if (company?.instagram_handle) {
       try {
-        await Linking.openURL(`https://instagram.com/${company.instagram_handle}`);
+        await WebBrowser.openBrowserAsync(`https://instagram.com/${company.instagram_handle}`);
       } catch (e) {
-        Alert.alert('Unable to open link', `instagram.com/${company.instagram_handle}`);
+        try {
+          await Linking.openURL(`https://instagram.com/${company.instagram_handle}`);
+        } catch (e2) {
+          Alert.alert('Unable to open link', `instagram.com/${company.instagram_handle}`);
+        }
       }
     }
   };
