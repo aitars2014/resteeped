@@ -287,6 +287,47 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const deleteAccount = async () => {
+    if (!user || isDevMode) {
+      setUser(null);
+      setProfile(null);
+      return { error: null };
+    }
+
+    if (!isSupabaseConfigured()) {
+      return { error: { message: 'Not configured' } };
+    }
+
+    try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) throw new Error('No active session');
+
+      const response = await fetch(
+        `${process.env.EXPO_PUBLIC_SUPABASE_URL}/functions/v1/delete-account`,
+        {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${session.access_token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Deletion failed');
+
+      // Clear local state
+      await supabase.auth.signOut();
+      setUser(null);
+      setProfile(null);
+      resetUser();
+      return { error: null };
+    } catch (error) {
+      console.error('Account deletion error:', error);
+      return { error };
+    }
+  };
+
   const value = {
     user,
     profile,
@@ -298,6 +339,7 @@ export const AuthProvider = ({ children }) => {
     signInWithApple,
     signInWithGoogle,
     signOut,
+    deleteAccount,
     updateProfile,
     refreshProfile: () => user && fetchProfile(user.id),
   };

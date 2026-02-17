@@ -11,7 +11,7 @@ import {
   Switch,
   Platform,
 } from 'react-native';
-import { User, LogOut, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2, Crown } from 'lucide-react-native';
+import { User, LogOut, Trash2, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2, Crown } from 'lucide-react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { typography, spacing } from '../constants';
 import { Button, Avatar, AvatarPicker, EditDisplayNameModal } from '../components';
@@ -22,7 +22,7 @@ import { exportCollectionToJSON, exportCollectionToCSV } from '../utils/exportCo
 import { resetOnboarding } from './OnboardingScreen';
 
 export const ProfileScreen = ({ navigation }) => {
-  const { user, profile, loading, signInWithGoogle, signInWithApple, signOut, updateProfile, isConfigured, appleAuthAvailable } = useAuth();
+  const { user, profile, loading, signInWithGoogle, signInWithApple, signOut, deleteAccount, updateProfile, isConfigured, appleAuthAvailable } = useAuth();
   const { collection } = useCollection();
   const { brewSessions, todayBrewCount, weekBrewCount } = useBrewHistory();
   const { theme, isDark, themePreference, setThemePreference } = useTheme();
@@ -123,6 +123,51 @@ export const ProfileScreen = ({ navigation }) => {
     }
   };
   
+  const [deleting, setDeleting] = useState(false);
+
+  const handleDeleteAccount = () => {
+    Alert.alert(
+      'Delete Account',
+      'This will permanently delete your account and all associated data (collection, reviews, profile). This cannot be undone.',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Delete Account',
+          style: 'destructive',
+          onPress: () => {
+            // Second confirmation
+            Alert.alert(
+              'Are you absolutely sure?',
+              'All your data will be permanently removed.',
+              [
+                { text: 'Cancel', style: 'cancel' },
+                {
+                  text: 'Yes, Delete My Account',
+                  style: 'destructive',
+                  onPress: performDeleteAccount,
+                },
+              ]
+            );
+          },
+        },
+      ]
+    );
+  };
+
+  const performDeleteAccount = async () => {
+    setDeleting(true);
+    try {
+      const { error } = await deleteAccount();
+      if (error) {
+        Alert.alert('Error', error.message || 'Failed to delete account. Please try again.');
+      }
+    } catch (e) {
+      Alert.alert('Error', 'Failed to delete account. Please try again.');
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   const handleExport = () => {
     Alert.alert(
       'Export Collection',
@@ -506,7 +551,7 @@ export const ProfileScreen = ({ navigation }) => {
         borderColor: theme.border.medium,
       }]}>
         <TouchableOpacity 
-          style={[styles.menuItem, styles.menuItemLast, signingOut && styles.menuItemDisabled]}
+          style={[styles.menuItem, signingOut && styles.menuItemDisabled]}
           onPress={handleSignOut}
           disabled={signingOut}
         >
@@ -517,6 +562,20 @@ export const ProfileScreen = ({ navigation }) => {
           )}
           <Text style={[styles.menuItemText, { color: theme.status.error }]}>
             {signingOut ? 'Signing out...' : 'Sign out'}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity 
+          style={[styles.menuItem, styles.menuItemLast, deleting && styles.menuItemDisabled]}
+          onPress={handleDeleteAccount}
+          disabled={deleting}
+        >
+          {deleting ? (
+            <ActivityIndicator size="small" color={theme.status.error} />
+          ) : (
+            <Trash2 size={20} color={theme.status.error} />
+          )}
+          <Text style={[styles.menuItemText, { color: theme.status.error }]}>
+            {deleting ? 'Deleting account...' : 'Delete account'}
           </Text>
         </TouchableOpacity>
       </View>
