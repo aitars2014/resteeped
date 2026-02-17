@@ -337,7 +337,7 @@ const withTimeout = (promise, ms, fallbackError = 'Request timed out') => {
 export const useCompanies = () => {
   const { isDevMode } = useAuth();
   const [companies, setCompanies] = useState(DEMO_COMPANIES);
-  const [loading, setLoading] = useState(!isLocalMode);
+  const [loading, setLoading] = useState(false); // Start false — we always have DEMO_COMPANIES
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState(null);
   const [isRemoteData, setIsRemoteData] = useState(false);

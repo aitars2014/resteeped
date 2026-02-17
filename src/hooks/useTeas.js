@@ -191,8 +191,11 @@ export const useTeas = () => {
     loadCache();
   }, []);
 
-  const fetchTeas = useCallback(async ({ isRefresh = false } = {}) => {
-    if (isRefresh) {
+  const fetchTeas = useCallback(async ({ isRefresh = false, silent = false } = {}) => {
+    if (silent) {
+      // Don't show any loading state — content already visible
+      setRefreshing(true);
+    } else if (isRefresh) {
       setRefreshing(true);
     } else {
       setLoading(true);
@@ -235,9 +238,9 @@ export const useTeas = () => {
     isRemoteRef.current = isRemoteData;
   }, [isRemoteData]);
 
-  // Initial fetch
+  // Initial fetch — silent since we already show local/cached data
   useEffect(() => {
-    fetchTeas();
+    fetchTeas({ silent: true });
   }, [fetchTeas]);
 
   // Re-fetch when app comes back to foreground if still on local/cached data
