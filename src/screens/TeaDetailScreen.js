@@ -25,7 +25,7 @@ const HERO_HEIGHT = height * 0.32;
 export const TeaDetailScreen = ({ route, navigation }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const { tea } = route.params;
-  const teaColor = getTeaTypeColor(tea.teaType);
+  const teaColor = getTeaTypeColor(tea.teaType || tea.tea_type);
   const styles = createStyles(theme);
   
   const { user } = useAuth();
@@ -210,7 +210,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         {/* Hero Image */}
         <View style={styles.heroContainer}>
           <Image 
-            source={tea.imageUrl ? { uri: tea.imageUrl } : getPlaceholderImage(tea.teaType)} 
+            source={(tea.imageUrl || tea.image_url) ? { uri: tea.imageUrl || tea.image_url } : getPlaceholderImage(tea.teaType || tea.tea_type)} 
             style={styles.heroImage}
             resizeMode="cover"
             accessible={true}
@@ -305,7 +305,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           
           {/* Caffeine Level */}
           <View style={styles.caffeineRow}>
-            <CaffeineIndicator teaType={tea.teaType} size="medium" />
+            <CaffeineIndicator teaType={tea.teaType || tea.tea_type} size="medium" />
           </View>
           
           {/* Expert Brewing Guide */}

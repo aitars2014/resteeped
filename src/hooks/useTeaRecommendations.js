@@ -1,6 +1,21 @@
 import { useState, useCallback } from 'react';
 import { supabase } from '../lib/supabase';
 
+// Normalize Supabase snake_case rows to camelCase app format
+const formatTea = (tea) => ({
+  ...tea,
+  brandName: tea.brand_name ?? tea.brandName,
+  teaType: tea.tea_type ?? tea.teaType,
+  imageUrl: tea.image_url ?? tea.imageUrl,
+  avgRating: tea.avg_rating ?? tea.avgRating,
+  ratingCount: tea.rating_count ?? tea.ratingCount,
+  companyId: tea.company_id ?? tea.companyId,
+  flavorNotes: tea.flavor_notes ?? tea.flavorNotes ?? [],
+  steepTempF: tea.steep_temp_f ?? tea.steepTempF,
+  steepTimeMin: tea.steep_time_min ?? tea.steepTimeMin,
+  createdAt: tea.created_at ?? tea.createdAt,
+});
+
 export const useTeaRecommendations = () => {
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -21,7 +36,7 @@ export const useTeaRecommendations = () => {
 
       if (fnError) throw fnError;
 
-      setRecommendations(data?.teas || []);
+      setRecommendations((data?.teas || []).map(formatTea));
     } catch (err) {
       console.error('Tea recommendation error:', err);
       setError(err.message || 'Failed to find teas. Please try again.');
