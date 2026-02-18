@@ -47,9 +47,6 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   // Derive effective company ID from params directly
   const effectiveCompanyId = companyId || passedCompany?.id;
   
-  // Brand color with fallback
-  const brandColor = company?.primary_color || theme.accent.primary;
-  
   const [company, setCompany] = useState(passedCompany || null);
   const [allTeas, setAllTeas] = useState([]);
   const [reviews, setReviews] = useState([]);
@@ -57,6 +54,9 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [selectedTeaType, setSelectedTeaType] = useState('all');
   const [sortBy, setSortBy] = useState('popularity');
+
+  // Brand color with fallback (must be after company state declaration)
+  const brandColor = company?.primary_color || theme.accent.primary;
 
   // Get the company reviews hook for submitting reviews
   const { submitReview, userReview, refreshReviews } = useCompanyReviews(effectiveCompanyId);
