@@ -451,8 +451,16 @@ const CompanyProfileScreen = ({ route, navigation }) => {
           ) : (
             <View style={styles.noTeas}>
               <Text style={[styles.noTeasText, { color: theme.text.secondary }]}>
-                {allTeas.length > 0 ? 'No teas match this filter' : 'No teas found'}
+                {allTeas.length > 0 ? 'No teas match this filter' : 'Loading teas...'}
               </Text>
+              {allTeas.length > 0 && selectedTeaType !== 'all' && (
+                <TouchableOpacity 
+                  onPress={() => setSelectedTeaType('all')}
+                  style={[styles.resetButton, { backgroundColor: theme.accent.primary + '20' }]}
+                >
+                  <Text style={[styles.resetButtonText, { color: theme.accent.primary }]}>Show all teas</Text>
+                </TouchableOpacity>
+              )}
             </View>
           )}
         </View>
@@ -700,6 +708,16 @@ const styles = StyleSheet.create({
   noTeasText: {
     ...typography.body,
     textAlign: 'center',
+  },
+  resetButton: {
+    marginTop: spacing.sm,
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.xs,
+    borderRadius: 8,
+  },
+  resetButtonText: {
+    ...typography.caption,
+    fontWeight: '600',
   },
   writeReviewButton: {
     flexDirection: 'row',

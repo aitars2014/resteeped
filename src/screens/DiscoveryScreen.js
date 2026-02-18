@@ -170,7 +170,17 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     return (
       <View style={styles.emptyState}>
         <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>No teas found</Text>
-        <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>Try a different search or filter</Text>
+        <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
+          {searchQuery ? 'Try a different search term' : 'Try adjusting your filters'}
+        </Text>
+        {(searchQuery || selectedTypes.length > 0) && (
+          <TouchableOpacity 
+            onPress={() => { setSearchQuery(''); setSelectedTypes([]); }}
+            style={[styles.resetFiltersButton, { backgroundColor: theme.accent.primary + '20' }]}
+          >
+            <Text style={[styles.resetFiltersText, { color: theme.accent.primary }]}>Reset filters</Text>
+          </TouchableOpacity>
+        )}
       </View>
     );
   };
@@ -498,6 +508,16 @@ const styles = StyleSheet.create({
   emptySubtitle: {
     ...typography.body,
     textAlign: 'center',
+  },
+  resetFiltersButton: {
+    marginTop: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+  },
+  resetFiltersText: {
+    ...typography.caption,
+    fontWeight: '600',
   },
   scrollToTopButton: {
     position: 'absolute',
