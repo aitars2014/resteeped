@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useTeas } from './useTeas';
-import { useCollection } from '../context';
+import { useCollection, useAuth } from '../context';
 
 /**
  * Generate personalized tea recommendations based on user's collection and preferences.
@@ -14,6 +14,7 @@ import { useCollection } from '../context';
 export const useRecommendations = (limit = 10) => {
   const { teas } = useTeas();
   const { collection } = useCollection();
+  const { profile } = useAuth();
 
   const recommendations = useMemo(() => {
     if (teas.length === 0) return { forYou: [], explore: [], topRated: [] };
@@ -46,6 +47,20 @@ export const useRecommendations = (limit = 10) => {
           (preferences.flavors[flavor.toLowerCase()] || 0) + 1;
       });
     });
+
+    // If user has no usage history but has onboarding preferences, seed from those
+    const onboardingPrefs = profile || {};
+    const hasOnboardingPrefs = (onboardingPrefs.preferred_tea_types || []).length > 0;
+
+    if (likedTeas.length === 0 && hasOnboardingPrefs) {
+      // Seed preferences from onboarding selections
+      (onboardingPrefs.preferred_tea_types || []).forEach(type => {
+        preferences.teaTypes[type] = (preferences.teaTypes[type] || 0) + 3;
+      });
+      (onboardingPrefs.preferred_flavors || []).forEach(flavor => {
+        preferences.flavors[flavor.toLowerCase()] = (preferences.flavors[flavor.toLowerCase()] || 0) + 2;
+      });
+    }
 
     // Get preferred tea types (top 3)
     const preferredTypes = Object.entries(preferences.teaTypes)
@@ -91,6 +106,21 @@ export const useRecommendations = (limit = 10) => {
         ).length;
         score += matchingFlavors * 8;
 
+        // Caffeine preference boost (from onboarding)
+        if (onboardingPrefs.caffeine_preference) {
+          const cafPref = onboardingPrefs.caffeine_preference;
+          const teaType = (tea.teaType || '').toLowerCase();
+          const highCaf = ['black', 'puerh', 'matcha'];
+          const modCaf = ['green', 'oolong', 'white'];
+          const noCaf = ['herbal', 'rooibos'];
+
+          if (cafPref === 'high' && highCaf.includes(teaType)) score += 10;
+          if (cafPref === 'moderate' && modCaf.includes(teaType)) score += 10;
+          if (cafPref === 'low' && [...modCaf, ...noCaf].includes(teaType)) score += 8;
+          if (cafPref === 'none' && noCaf.includes(teaType)) score += 15;
+          if (cafPref === 'none' && highCaf.includes(teaType)) score -= 10;
+        }
+
         // Slight boost for popular teas (many reviews)
         score += Math.min((tea.ratingCount || 0) * 0.5, 10);
 
@@ -132,7 +162,7 @@ export const useRecommendations = (limit = 10) => {
       },
       hasPreferences: preferredTypes.length > 0,
     };
-  }, [teas, collection, limit]);
+  }, [teas, collection, limit, profile]);
 
   return recommendations;
 };

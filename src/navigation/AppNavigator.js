@@ -3,15 +3,18 @@ import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TabNavigator } from './TabNavigator';
 import { OnboardingScreen, isOnboardingComplete } from '../screens';
-import { useTheme } from '../context';
+import { PreferenceCaptureScreen } from '../screens/PreferenceCaptureScreen';
+import { useTheme, useAuth } from '../context';
 
 const Stack = createNativeStackNavigator();
 const { width } = Dimensions.get('window');
 
 export const AppNavigator = () => {
   const { theme, isDark } = useTheme();
+  const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showPreferences, setShowPreferences] = useState(false);
 
   useEffect(() => {
     checkOnboarding();
@@ -24,7 +27,17 @@ export const AppNavigator = () => {
   };
 
   const handleOnboardingComplete = () => {
-    setShowOnboarding(false);
+    // After onboarding slides, show preference capture if user is logged in
+    if (user) {
+      setShowOnboarding(false);
+      setShowPreferences(true);
+    } else {
+      setShowOnboarding(false);
+    }
+  };
+
+  const handlePreferencesComplete = () => {
+    setShowPreferences(false);
   };
 
   if (isLoading) {
@@ -48,6 +61,12 @@ export const AppNavigator = () => {
         <Stack.Screen name="Onboarding">
           {(props) => (
             <OnboardingScreen {...props} onComplete={handleOnboardingComplete} />
+          )}
+        </Stack.Screen>
+      ) : showPreferences ? (
+        <Stack.Screen name="Preferences">
+          {(props) => (
+            <PreferenceCaptureScreen {...props} onComplete={handlePreferencesComplete} />
           )}
         </Stack.Screen>
       ) : (
