@@ -93,9 +93,17 @@ export const TeaFinderScreen = ({ navigation }) => {
 
     try {
       // Build conversation history for API (exclude greeting, limit to last 10)
+      // Include recommendation names in assistant messages so model knows what was already suggested
       const apiMessages = [...messages.filter(m => m.id !== '0'), userMsg]
         .slice(-10)
-        .map(m => ({ role: m.role, content: m.content }));
+        .map(m => {
+          let content = m.content;
+          if (m.role === 'assistant' && m.recommendations?.length > 0) {
+            const recNames = m.recommendations.map(r => r.tea?.name || r.name).filter(Boolean);
+            content += `\n[Previously recommended: ${recNames.join(', ')}]`;
+          }
+          return { role: m.role, content };
+        });
 
       const response = await fetch(`${SUPABASE_URL}/functions/v1/tea-sommelier`, {
         method: 'POST',

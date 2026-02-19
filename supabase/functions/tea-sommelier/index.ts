@@ -81,70 +81,74 @@ serve(async (req) => {
       }
     }
 
-    // First, determine if we should search for teas based on the conversation
-    const shouldSearchResponse = await fetch('https://api.openai.com/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openaiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages: [
-          {
-            role: 'system',
-            content: `Based on the conversation, determine if the user has given ANY indication of what kind of tea they want (mood, flavor, type, occasion, caffeine preference, or any descriptive words). If they have given even a vague hint, search. Output a JSON object: {"search": true, "query": "description of ideal tea based on ALL conversation context combined"} or {"search": false} ONLY if the user hasn't mentioned anything about tea preferences yet (like they just said hello). Err on the side of searching. Output ONLY valid JSON.`
-          },
-          ...messages.map((m: any) => ({ role: m.role, content: m.content })),
-        ],
-        max_tokens: 200,
-        temperature: 0.3,
-      }),
-    })
-
     let teaContext = ''
     let searchResults: any[] = []
 
-    if (shouldSearchResponse.ok) {
-      const searchData = await shouldSearchResponse.json()
-      const searchDecision = searchData.choices?.[0]?.message?.content?.trim() || '{}'
-      
-      try {
-        const parsed = JSON.parse(searchDecision)
-        if (parsed.search && parsed.query) {
-          // Generate embedding for the search query
-          const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${openaiKey}`,
-              'Content-Type': 'application/json',
+    // Build a search query from the full conversation context
+    // Always search — let the sommelier decide whether to recommend or ask more questions
+    const lastUserMsg = [...messages].reverse().find((m: any) => m.role === 'user')?.content || ''
+    const conversationSummary = messages
+      .filter((m: any) => m.role === 'user')
+      .map((m: any) => m.content)
+      .join('. ')
+
+    if (conversationSummary.length > 5) {
+      // Use a quick rewrite to build the best search query from all context
+      const rewriteResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openaiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'gpt-4o-mini',
+          messages: [
+            {
+              role: 'system',
+              content: 'Combine all the user messages into a single tea search query. Include all preferences mentioned: tea types, flavors, moods, caffeine needs, occasions. Output ONLY the search text, nothing else. Keep it under 80 words.'
             },
-            body: JSON.stringify({
-              model: 'text-embedding-3-small',
-              input: parsed.query,
-            }),
-          })
+            { role: 'user', content: conversationSummary },
+          ],
+          max_tokens: 150,
+          temperature: 0.2,
+        }),
+      })
 
-          if (embeddingResponse.ok) {
-            const embeddingData = await embeddingResponse.json()
-            const embedding = embeddingData.data[0].embedding
+      let searchQuery = conversationSummary
+      if (rewriteResponse.ok) {
+        const rewriteData = await rewriteResponse.json()
+        searchQuery = rewriteData.choices?.[0]?.message?.content?.trim() || conversationSummary
+      }
 
-            const { data: teas, error } = await supabase.rpc('match_teas', {
-              query_embedding: embedding,
-              match_threshold: 0.2,
-              match_count: 20,
-            })
+      // Generate embedding
+      const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openaiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: 'text-embedding-3-small',
+          input: searchQuery,
+        }),
+      })
 
-            if (!error && teas?.length > 0) {
-              searchResults = teas
-              teaContext = `\n\nHere are teas from your catalog that match what they're looking for. You MUST pick 2-4 of these and include the RECOMMENDATIONS_JSON block in your response:\n${teas.map((t: any) => 
-                `- "${t.name}" by ${t.brand_name} (${t.tea_type}) — ${t.description?.slice(0, 120) || 'No description'}${t.flavor_notes?.length ? ` | Flavors: ${t.flavor_notes.join(', ')}` : ''}`
-              ).join('\n')}\n\nONLY recommend teas from this list. Use exact tea names. You MUST include the RECOMMENDATIONS_JSON: block at the end of your response.`
-            }
-          }
+      if (embeddingResponse.ok) {
+        const embeddingData = await embeddingResponse.json()
+        const embedding = embeddingData.data[0].embedding
+
+        const { data: teas, error } = await supabase.rpc('match_teas', {
+          query_embedding: embedding,
+          match_threshold: 0.2,
+          match_count: 20,
+        })
+
+        if (!error && teas?.length > 0) {
+          searchResults = teas
+          teaContext = `\n\nHere are teas from your catalog that match what they're looking for. Pick 2-4 of the BEST matches and include the RECOMMENDATIONS_JSON block in your response:\n${teas.map((t: any) => 
+            `- "${t.name}" by ${t.brand_name} (${t.tea_type}) — ${t.description?.slice(0, 120) || 'No description'}${t.flavor_notes?.length ? ` | Flavors: ${t.flavor_notes.join(', ')}` : ''}`
+          ).join('\n')}\n\nONLY recommend teas from this list. Use exact tea names. You MUST include the RECOMMENDATIONS_JSON: block at the end of your response.`
         }
-      } catch (_) {
-        // Search decision parsing failed, continue without search
       }
     }
 
