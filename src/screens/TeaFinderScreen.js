@@ -24,15 +24,15 @@ const { width } = Dimensions.get('window');
 const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
-const GREETING = "Welcome, friend! I'm Teabeard — I've been tending these leaves for longer than most trees have stood. 🌿 Now then... what kind of tea experience are you in the mood for today? Whether you know exactly what you want or just have a feeling, I'd love to help you find the perfect cup.";
+const GREETING = "I'm Teabeard. Former tactical AI, current tea sommelier. The mission changed, but the precision didn't. Tell me what you're looking for — mood, flavor, caffeine requirements — and I'll narrow down 7,000+ teas to the ones that matter.";
 
 const CONVERSATION_STARTERS = [
   "Something cozy for a rainy evening",
   "I need energy but not coffee",
-  "I'm new to tea — help me start!",
-  "A soothing tea for bedtime",
-  "Something bold and full-bodied",
-  "Surprise me!",
+  "I'm new to tea, what's the mission?",
+  "Help me wind down for sleep",
+  "Something bold that doesn't mess around",
+  "Surprise me, robot",
 ];
 
 // Normalize Supabase snake_case rows to camelCase app format
@@ -254,7 +254,7 @@ export const TeaFinderScreen = ({ navigation }) => {
             </View>
             <View>
               <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Teabeard</Text>
-              <Text style={[styles.headerSubtitle, { color: theme.text.secondary }]}>Your tea sommelier</Text>
+              <Text style={[styles.headerSubtitle, { color: theme.text.secondary }]}>Humor: 75% · Honesty: 90%</Text>
             </View>
           </View>
           {messages.length > 2 && (
