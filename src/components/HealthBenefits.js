@@ -66,7 +66,7 @@ export const HealthBenefits = ({ tea }) => {
       moderate: 2,
       high: 3,
     };
-    return levels[benefits.caffeineLevel] || 2;
+    return levels[benefits.caffeineLevel] ?? 2;
   };
   
   const caffeineLevel = getCaffeineBars();
