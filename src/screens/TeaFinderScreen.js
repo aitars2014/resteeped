@@ -202,7 +202,7 @@ export const TeaFinderScreen = ({ navigation }) => {
       <View style={[styles.messageRow, isUser && styles.messageRowUser]}>
         {!isUser && (
           <View style={[styles.avatar, { backgroundColor: `${theme.accent?.primary || '#4A90A4'}20` }]}>
-            TreeDeciduous size={16} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
+            <TreeDeciduous size={16} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
           </View>
         )}
         <View style={[
@@ -242,7 +242,7 @@ export const TeaFinderScreen = ({ navigation }) => {
         <View style={styles.header}>
           <View style={styles.headerLeft}>
             <View style={[styles.headerAvatar, { backgroundColor: `${theme.accent?.primary || '#4A90A4'}20` }]}>
-              TreeDeciduous size={20} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
+              <TreeDeciduous size={20} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
             </View>
             <View>
               <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Teabeard</Text>
@@ -288,7 +288,7 @@ export const TeaFinderScreen = ({ navigation }) => {
               {loading && (
                 <View style={[styles.messageRow]}>
                   <View style={[styles.avatar, { backgroundColor: `${theme.accent?.primary || '#4A90A4'}20` }]}>
-                    TreeDeciduous size={16} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
+                    <TreeDeciduous size={16} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
                   </View>
                   <View style={[styles.typingBubble, { backgroundColor: theme.background.secondary }]}>
                     <View style={styles.typingDots}>

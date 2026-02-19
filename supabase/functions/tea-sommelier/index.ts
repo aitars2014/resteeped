@@ -93,7 +93,7 @@ serve(async (req) => {
         messages: [
           {
             role: 'system',
-            content: `Based on the conversation, determine if you have enough information to search for specific teas. If yes, output a JSON object: {"search": true, "query": "description of ideal tea based on conversation context"}. If you need to ask more questions first, output: {"search": false}. Output ONLY valid JSON.`
+            content: `Based on the conversation, determine if the user has given ANY indication of what kind of tea they want (mood, flavor, type, occasion, caffeine preference, or any descriptive words). If they have given even a vague hint, search. Output a JSON object: {"search": true, "query": "description of ideal tea based on ALL conversation context combined"} or {"search": false} ONLY if the user hasn't mentioned anything about tea preferences yet (like they just said hello). Err on the side of searching. Output ONLY valid JSON.`
           },
           ...messages.map((m: any) => ({ role: m.role, content: m.content })),
         ],
@@ -131,15 +131,15 @@ serve(async (req) => {
 
             const { data: teas, error } = await supabase.rpc('match_teas', {
               query_embedding: embedding,
-              match_threshold: 0.25,
-              match_count: 15,
+              match_threshold: 0.2,
+              match_count: 20,
             })
 
             if (!error && teas?.length > 0) {
               searchResults = teas
-              teaContext = `\n\nHere are teas from your catalog that match what they're looking for (pick the best 2-4):\n${teas.map((t: any) => 
+              teaContext = `\n\nHere are teas from your catalog that match what they're looking for. You MUST pick 2-4 of these and include the RECOMMENDATIONS_JSON block in your response:\n${teas.map((t: any) => 
                 `- "${t.name}" by ${t.brand_name} (${t.tea_type}) — ${t.description?.slice(0, 120) || 'No description'}${t.flavor_notes?.length ? ` | Flavors: ${t.flavor_notes.join(', ')}` : ''}`
-              ).join('\n')}\n\nONLY recommend teas from this list. Use exact names.`
+              ).join('\n')}\n\nONLY recommend teas from this list. Use exact tea names. You MUST include the RECOMMENDATIONS_JSON: block at the end of your response.`
             }
           }
         }
