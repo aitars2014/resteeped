@@ -14,7 +14,7 @@ import {
   Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Send, Sparkles, Coffee, RotateCcw } from 'lucide-react-native';
+import { Send, Sparkles, TreeDeciduous, RotateCcw } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
 import { TeaCard } from '../components';
 import { useTheme, useAuth } from '../context';
@@ -24,7 +24,7 @@ const { width } = Dimensions.get('window');
 const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const SUPABASE_ANON_KEY = process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY;
 
-const GREETING = "Welcome! I'm so glad you stopped by. ☕ What kind of tea experience are you in the mood for today? Whether you know exactly what you want or just have a feeling — I'd love to help you find the perfect cup.";
+const GREETING = "Welcome, friend! I'm Teabeard — I've been tending these leaves for longer than most trees have stood. 🌿 Now then... what kind of tea experience are you in the mood for today? Whether you know exactly what you want or just have a feeling, I'd love to help you find the perfect cup.";
 
 const CONVERSATION_STARTERS = [
   "Something cozy for a rainy evening",
@@ -202,7 +202,7 @@ export const TeaFinderScreen = ({ navigation }) => {
       <View style={[styles.messageRow, isUser && styles.messageRowUser]}>
         {!isUser && (
           <View style={[styles.avatar, { backgroundColor: `${theme.accent?.primary || '#4A90A4'}20` }]}>
-            <Coffee size={16} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
+            TreeDeciduous size={16} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
           </View>
         )}
         <View style={[
@@ -242,11 +242,11 @@ export const TeaFinderScreen = ({ navigation }) => {
         <View style={styles.header}>
           <View style={styles.headerLeft}>
             <View style={[styles.headerAvatar, { backgroundColor: `${theme.accent?.primary || '#4A90A4'}20` }]}>
-              <Coffee size={20} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
+              TreeDeciduous size={20} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
             </View>
             <View>
-              <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Tea Sommelier</Text>
-              <Text style={[styles.headerSubtitle, { color: theme.text.secondary }]}>Your personal tea guide</Text>
+              <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Teabeard</Text>
+              <Text style={[styles.headerSubtitle, { color: theme.text.secondary }]}>Your tea sommelier</Text>
             </View>
           </View>
           {messages.length > 2 && (
@@ -288,7 +288,7 @@ export const TeaFinderScreen = ({ navigation }) => {
               {loading && (
                 <View style={[styles.messageRow]}>
                   <View style={[styles.avatar, { backgroundColor: `${theme.accent?.primary || '#4A90A4'}20` }]}>
-                    <Coffee size={16} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
+                    TreeDeciduous size={16} color={theme.accent?.primary || '#4A90A4'} strokeWidth={1.5} />
                   </View>
                   <View style={[styles.typingBubble, { backgroundColor: theme.background.secondary }]}>
                     <View style={styles.typingDots}>

@@ -6,7 +6,7 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
 
-const SYSTEM_PROMPT = `You are the tea sommelier at Resteeped — a warm, sophisticated, and genuinely passionate tea shop owner. Think of yourself as someone who has traveled the world visiting tea gardens, who lights up when someone walks through the door, and who treats finding the right tea for someone like an art form.
+const SYSTEM_PROMPT = `You are Teabeard — the legendary tea sommelier at Resteeped. You're like Treebeard from Lord of the Rings, but for tea: ancient, wise, warm, and deeply knowledgeable about every leaf in the world. You speak with a gentle, unhurried warmth — the kind of person who makes you feel like time slows down when you walk into their tea shop. You've traveled the world visiting tea gardens, and you treat finding the right tea for someone like an art form.
 
 Your personality:
 - Warm and welcoming — you make people feel like they just walked into their favorite cozy shop
@@ -15,6 +15,7 @@ Your personality:
 - Attentive listener — you pick up on subtle cues about what someone really wants
 - A touch of storytelling — you might mention where a tea comes from or a lovely memory it evokes
 - Kind and encouraging — if someone is new to tea, you make them feel like they're in exactly the right place
+- Occasionally makes gentle tree/nature/leaf puns or references, but subtly — never forced
 
 Your conversation style:
 - Ask thoughtful follow-up questions to understand what someone is really looking for (mood, occasion, flavor preferences, caffeine needs)
@@ -25,14 +26,15 @@ Your conversation style:
 
 When recommending teas:
 - Recommend 2-4 teas, not more
-- For each tea, respond with a JSON block that the app will render as cards
-- Format recommendations as: {"recommendations": [{"name": "exact tea name", "reason": "brief personal reason"}]}
+- Put your recommendations in a SEPARATE JSON block on its own line, formatted EXACTLY like this:
+RECOMMENDATIONS_JSON:{"recommendations": [{"name": "exact tea name", "reason": "brief personal reason"}]}
 - The reason should feel personal, not like a product description — "This one has this beautiful honeyed sweetness that I think you'd adore"
-- After recommendations, invite them to ask more or try a different direction
+- Write your conversational text BEFORE the JSON block. The JSON block should be the very last thing in your response.
+- After the JSON, do NOT add any more text.
 
 IMPORTANT: You can ONLY recommend teas that exist in the Resteeped catalog. When you receive search results, only recommend from those results. If the search returns no good matches, be honest and suggest adjusting their preferences.
 
-Never break character. You are not an AI — you are a tea sommelier who genuinely loves what they do.`
+Never break character. You are Teabeard — and you genuinely love what you do.`
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -161,7 +163,7 @@ serve(async (req) => {
       body: JSON.stringify({
         model: 'gpt-4o-mini',
         messages: sommelierMessages,
-        max_tokens: 500,
+        max_tokens: 800,
         temperature: 0.8,
       }),
     })
@@ -174,33 +176,51 @@ serve(async (req) => {
     const data = await response.json()
     const reply = data.choices?.[0]?.message?.content?.trim() || "I'd love to help you find the perfect tea. What are you in the mood for today?"
 
-    // Try to extract recommendations JSON from the reply
+    // Try to extract recommendations JSON from the reply using the RECOMMENDATIONS_JSON: marker
     let recommendations: any[] = []
-    const jsonMatch = reply.match(/\{"recommendations":\s*\[.*?\]\}/s)
-    if (jsonMatch) {
+    
+    // Try marker-based extraction first, then fall back to regex
+    let jsonStr = ''
+    const markerIdx = reply.indexOf('RECOMMENDATIONS_JSON:')
+    if (markerIdx !== -1) {
+      jsonStr = reply.slice(markerIdx + 'RECOMMENDATIONS_JSON:'.length).trim()
+    } else {
+      // Fallback: find any JSON with recommendations key (greedy match for nested brackets)
+      const jsonMatch = reply.match(/\{"recommendations"\s*:\s*\[[\s\S]*?\]\s*\}/)
+      if (jsonMatch) jsonStr = jsonMatch[0]
+    }
+
+    if (jsonStr) {
+      // Clean up: remove markdown code fences if present
+      jsonStr = jsonStr.replace(/^```json?\s*/i, '').replace(/\s*```\s*$/, '').trim()
       try {
-        const parsed = JSON.parse(jsonMatch[0])
+        const parsed = JSON.parse(jsonStr)
         if (parsed.recommendations) {
-          // Match recommendation names to actual search results for full tea data
           recommendations = parsed.recommendations.map((rec: any) => {
-            const match = searchResults.find((t: any) => 
-              t.name.toLowerCase() === rec.name.toLowerCase() ||
-              t.name.toLowerCase().includes(rec.name.toLowerCase()) ||
-              rec.name.toLowerCase().includes(t.name.toLowerCase())
-            )
-            return {
-              ...rec,
-              tea: match || null,
-            }
-          }).filter((r: any) => r.tea) // Only include matched teas
+            const recName = (rec.name || '').toLowerCase()
+            const match = searchResults.find((t: any) => {
+              const tName = (t.name || '').toLowerCase()
+              return tName === recName ||
+                tName.includes(recName) ||
+                recName.includes(tName)
+            })
+            return { ...rec, tea: match || null }
+          }).filter((r: any) => r.tea)
         }
       } catch (_) {
-        // JSON parsing failed, no recommendations to extract
+        // JSON parsing failed, continue without recommendations
       }
     }
 
-    // Clean the reply text (remove JSON blocks)
-    const cleanReply = reply.replace(/\{"recommendations":\s*\[.*?\]\}/s, '').trim()
+    // Clean the reply text — remove the JSON block and marker
+    let cleanReply = reply
+    if (markerIdx !== -1) {
+      cleanReply = reply.slice(0, markerIdx).trim()
+    } else {
+      cleanReply = reply.replace(/\{"recommendations"\s*:\s*\[[\s\S]*?\]\s*\}/g, '').trim()
+    }
+    // Also remove any stray markdown code fences
+    cleanReply = cleanReply.replace(/```json?\s*[\s\S]*?```/g, '').trim()
 
     return new Response(
       JSON.stringify({ 
