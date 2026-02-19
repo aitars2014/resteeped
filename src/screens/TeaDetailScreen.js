@@ -14,11 +14,11 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
-import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, HealthBenefits } from '../components';
+import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, HealthBenefits, EditorialTastingNote } from '../components';
 import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
-import { useReviews, useCompanies, useTeas } from '../hooks';
+import { useReviews, useCompanies, useTeas, useTastingNotes } from '../hooks';
 
 const { width, height } = Dimensions.get('window');
 const HERO_HEIGHT = height * 0.32;
@@ -33,6 +33,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, updateInCollection, collection } = useCollection();
   const { canAddToCollection, isPremium } = useSubscription();
   const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
+  const { tastingNote } = useTastingNotes(tea.id);
   const { companies } = useCompanies();
   const { teas, getTeaDetails } = useTeas();
   
@@ -425,6 +426,16 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             </View>
           )}
           
+          {/* Editorial Tasting Notes */}
+          {tastingNote && (
+            <View style={styles.section}>
+              <EditorialTastingNote
+                note={tastingNote.note_text}
+                attribution={tastingNote.source_attribution}
+              />
+            </View>
+          )}
+
           {/* Reviews Section */}
           <View style={styles.section}>
             <View style={styles.reviewsHeader}>
