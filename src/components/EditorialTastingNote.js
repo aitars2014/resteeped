@@ -44,17 +44,17 @@ const styles = StyleSheet.create({
     marginRight: spacing.xs,
   },
   title: {
-    fontSize: typography.sizes.md,
-    fontWeight: typography.weights.semibold,
+    fontSize: 16,
+    fontWeight: '600',
     letterSpacing: -0.3,
   },
   noteText: {
-    fontSize: typography.sizes.sm,
+    fontSize: 14,
     lineHeight: 22,
     fontStyle: 'italic',
   },
   attribution: {
-    fontSize: typography.sizes.xs,
+    fontSize: 12,
     marginTop: spacing.sm,
   },
 });
