@@ -5,21 +5,21 @@ import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 
 export const EditorialTastingNote = ({ note, attribution }) => {
-  const { colors } = useTheme();
+  const { theme } = useTheme();
 
   if (!note) return null;
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.card, borderColor: colors.border }]}>
+    <View style={[styles.container, { backgroundColor: theme.background.secondary, borderColor: theme.border.medium }]}>
       <View style={styles.header}>
         <Text style={[styles.icon]}>🍵</Text>
-        <Text style={[styles.title, { color: colors.text }]}>Tasting Notes</Text>
+        <Text style={[styles.title, { color: theme.text.primary }]}>Tasting Notes</Text>
       </View>
-      <Text style={[styles.noteText, { color: colors.textSecondary }]}>
+      <Text style={[styles.noteText, { color: theme.text.secondary }]}>
         {note}
       </Text>
       {attribution && (
-        <Text style={[styles.attribution, { color: colors.textMuted }]}>
+        <Text style={[styles.attribution, { color: theme.text.tertiary }]}>
           {attribution}
         </Text>
       )}
