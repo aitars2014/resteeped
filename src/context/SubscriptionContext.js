@@ -47,6 +47,24 @@ export const SubscriptionProvider = ({ children }) => {
     initializePurchases();
   }, []);
 
+  // Sync RevenueCat identity when user changes (sign in/out)
+  useEffect(() => {
+    if (!isConfigured) return;
+    const syncRevenueCatUser = async () => {
+      try {
+        if (user?.id) {
+          await Purchases.logIn(user.id);
+          if (user.email) await Purchases.setEmail(user.email);
+        } else {
+          await Purchases.logOut();
+        }
+      } catch (e) {
+        console.warn('RevenueCat user sync failed:', e);
+      }
+    };
+    syncRevenueCatUser();
+  }, [user?.id, isConfigured]);
+
   const initializePurchases = async () => {
     // Add overall timeout for RevenueCat initialization (10 seconds)
     const timeoutPromise = new Promise((_, reject) => 
@@ -68,6 +86,12 @@ export const SubscriptionProvider = ({ children }) => {
         (async () => {
           await Purchases.configure({ apiKey });
           setIsConfigured(true);
+          
+          // Identify user in RevenueCat if already signed in
+          if (user?.id) {
+            await Purchases.logIn(user.id);
+            if (user.email) await Purchases.setEmail(user.email);
+          }
           
           // Get initial customer info
           const info = await Purchases.getCustomerInfo();
