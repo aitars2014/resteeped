@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
+import { useAuth } from './AuthContext';
 
 // RevenueCat API keys - loaded from environment variables
 // Set EXPO_PUBLIC_REVENUECAT_IOS_KEY and EXPO_PUBLIC_REVENUECAT_ANDROID_KEY in .env
@@ -28,12 +29,19 @@ export const useSubscription = () => {
   return context;
 };
 
+// Owner emails that always get premium (app owner accounts)
+const OWNER_EMAILS = ['pratt.taylor@gmail.com'];
+
 export const SubscriptionProvider = ({ children }) => {
+  const { user } = useAuth();
   const [isConfigured, setIsConfigured] = useState(false);
   const [isPremium, setIsPremium] = useState(false);
   const [offerings, setOfferings] = useState(null);
   const [customerInfo, setCustomerInfo] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Owner override — always premium
+  const isOwner = user?.email && OWNER_EMAILS.includes(user.email.toLowerCase());
 
   useEffect(() => {
     initializePurchases();
@@ -140,21 +148,24 @@ export const SubscriptionProvider = ({ children }) => {
     }
   };
 
+  // Effective premium status (owner override OR paid subscription)
+  const effectivePremium = isOwner || isPremium;
+
   // Helper to check if user can add more teas
   const canAddToCollection = (currentCollectionSize) => {
-    if (isPremium) return true;
+    if (effectivePremium) return true;
     return currentCollectionSize < FREE_TIER_LIMITS.MAX_COLLECTION_SIZE;
   };
 
   // Get remaining free slots
   const getRemainingFreeSlots = (currentCollectionSize) => {
-    if (isPremium) return Infinity;
+    if (effectivePremium) return Infinity;
     return Math.max(0, FREE_TIER_LIMITS.MAX_COLLECTION_SIZE - currentCollectionSize);
   };
 
   const value = {
     isConfigured,
-    isPremium,
+    isPremium: effectivePremium,
     offerings,
     customerInfo,
     isLoading,

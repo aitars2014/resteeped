@@ -4,6 +4,7 @@ import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from '../utils/analytics';
+import Purchases from 'react-native-purchases';
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -75,6 +76,10 @@ export const AuthProvider = ({ children }) => {
         setUser(session?.user ?? null);
         if (session?.user) {
           fetchProfile(session.user.id);
+          // Identify user in RevenueCat
+          Purchases.logIn(session.user.id).then(() => {
+            if (session.user.email) Purchases.setEmail(session.user.email);
+          }).catch(e => console.warn('RevenueCat logIn failed:', e));
         }
         setLoading(false);
         setInitialized(true);
@@ -92,8 +97,23 @@ export const AuthProvider = ({ children }) => {
         setUser(session?.user ?? null);
         if (session?.user) {
           await fetchProfile(session.user.id);
+          // Identify user in RevenueCat for subscription tracking
+          try {
+            await Purchases.logIn(session.user.id);
+            if (session.user.email) {
+              await Purchases.setEmail(session.user.email);
+            }
+          } catch (e) {
+            console.warn('RevenueCat logIn failed:', e);
+          }
         } else {
           setProfile(null);
+          // Reset RevenueCat to anonymous user on sign out
+          try {
+            await Purchases.logOut();
+          } catch (e) {
+            console.warn('RevenueCat logOut failed:', e);
+          }
         }
       }
     );

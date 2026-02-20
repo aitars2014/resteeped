@@ -18,7 +18,7 @@
     },
     "ios": {
       "supportsTablet": false,
-      "buildNumber": "35",
+      "buildNumber": "36",
       "bundleIdentifier": "com.resteeped.app",
       "icon": {
         "light": "./assets/ios-icons/Default.png",
