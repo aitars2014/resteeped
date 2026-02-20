@@ -104,7 +104,11 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         );
         return;
       }
-      await addToCollection(tea.id, 'want_to_try', tea);
+      const result = await addToCollection(tea.id, 'want_to_try', tea);
+      if (result?.error) {
+        Alert.alert('Error', 'Could not add to collection. Please try again.');
+        console.error('Add to collection failed:', result.error);
+      }
     }
   };
   

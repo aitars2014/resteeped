@@ -8,10 +8,17 @@
 
 require('dotenv').config();
 const { createClient } = require('@supabase/supabase-js');
+const fs = require('fs');
+const path = require('path');
 
 const SUPABASE_URL = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+if (!OPENAI_API_KEY) {
+  console.error('No OpenAI API key found');
+  process.exit(1);
+}
 
 const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
 
@@ -70,8 +77,8 @@ async function generateNotesForBatch(teas) {
 
   const data = await response.json();
   const content = JSON.parse(data.choices[0].message.content);
-  // Handle both {notes: [...]} and direct array
-  return Array.isArray(content) ? content : content.notes || content.tasting_notes || [];
+  if (DRY_RUN && process.env.DEBUG) console.log('RAW:', JSON.stringify(content).substring(0, 200));
+  return Array.isArray(content) ? content : content.notes || content.tasting_notes || Object.values(content).find(v => Array.isArray(v)) || [];
 }
 
 async function main() {
