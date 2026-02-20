@@ -3,7 +3,7 @@
     "name": "Resteeped",
     "slug": "resteeped",
     "scheme": "resteeped",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/ios-icons/Default.png",
     "userInterfaceStyle": "light",
@@ -18,7 +18,7 @@
     },
     "ios": {
       "supportsTablet": false,
-      "buildNumber": "37",
+      "buildNumber": "1",
       "bundleIdentifier": "com.resteeped.app",
       "icon": {
         "light": "./assets/ios-icons/Default.png",
