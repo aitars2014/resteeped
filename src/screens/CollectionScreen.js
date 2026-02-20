@@ -74,12 +74,24 @@ export const CollectionScreen = ({ navigation }) => {
   );
   
   const renderTeaItem = ({ item }) => {
-    const tea = item.tea || {
+    const rawTea = item.tea || {
       id: item.tea_id,
       name: 'Tea',
-      brandName: 'Unknown',
-      teaType: 'black',
-      avgRating: item.user_rating || 0,
+      brand_name: 'Unknown',
+      tea_type: 'black',
+      avg_rating: item.user_rating || 0,
+    };
+    // Normalize snake_case DB fields to camelCase app format
+    const tea = {
+      ...rawTea,
+      brandName: rawTea.brandName || rawTea.brand_name,
+      teaType: rawTea.teaType || rawTea.tea_type,
+      avgRating: rawTea.avgRating || rawTea.avg_rating,
+      imageUrl: rawTea.imageUrl || rawTea.image_url,
+      companyId: rawTea.companyId || rawTea.company_id,
+      ratingCount: rawTea.ratingCount || rawTea.rating_count,
+      flavorNotes: rawTea.flavorNotes || rawTea.flavor_notes || [],
+      productUrl: rawTea.productUrl || rawTea.product_url,
     };
     
     return (

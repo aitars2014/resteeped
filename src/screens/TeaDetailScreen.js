@@ -69,9 +69,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   }, [tea.id]);
   
   // Find company by brand name or company_id
-  const company = tea.companyId 
-    ? companies.find(c => c.id === tea.companyId)
-    : companies.find(c => c.name === tea.brandName);
+  const company = (tea.companyId || tea.company_id)
+    ? companies.find(c => c.id === (tea.companyId || tea.company_id))
+    : companies.find(c => c.name === (tea.brandName || tea.brand_name));
   
   const inCollection = isInCollection(tea.id);
   const collectionItem = getCollectionItem(tea.id);
@@ -273,7 +273,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             accessibilityHint={company ? "Double tap to view company profile" : undefined}
           >
             <Text style={[styles.brandName, company && styles.brandNameTappable]}>
-              {tea.brandName}
+              {fullTea.brandName || fullTea.brand_name || tea.brandName || tea.brand_name}
             </Text>
           </TouchableOpacity>
           
