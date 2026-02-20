@@ -50,6 +50,7 @@ export const CollectionProvider = ({ children }) => {
   // Add tea to collection
   // In dev mode, pass the full tea object so we can display it properly
   const addToCollection = async (teaId, status = 'want_to_try', teaData = null) => {
+    console.log('[Collection] addToCollection called', { teaId, status, userId: user?.id, isLocalMode });
     if (!user) {
       return { error: { message: 'Must be signed in' } };
     }

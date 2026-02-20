@@ -77,38 +77,43 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const collectionItem = getCollectionItem(tea.id);
   
   const handleToggleCollection = async () => {
-    if (!user) {
-      Alert.alert(
-        'Sign In Required',
-        'Please sign in to save teas to your collection.',
-        [
-          { text: 'Cancel', style: 'cancel' },
-          { text: 'Sign In', onPress: () => navigation.navigate('Profile') },
-        ]
-      );
-      return;
-    }
-    
-    if (inCollection) {
-      await removeFromCollection(tea.id);
-    } else {
-      // Check if user can add more teas (free tier limit)
-      if (!canAddToCollection(collection.length)) {
+    try {
+      if (!user) {
         Alert.alert(
-          'Collection Full',
-          'Free accounts can save up to 10 teas. Upgrade to Premium for unlimited teas in your collection!',
+          'Sign In Required',
+          'Please sign in to save teas to your collection.',
           [
-            { text: 'Maybe Later', style: 'cancel' },
-            { text: 'Upgrade', onPress: () => navigation.navigate('Paywall') },
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'Sign In', onPress: () => navigation.navigate('Profile') },
           ]
         );
         return;
       }
-      const result = await addToCollection(tea.id, 'want_to_try', tea);
-      if (result?.error) {
-        Alert.alert('Error', 'Could not add to collection. Please try again.');
-        console.error('Add to collection failed:', result.error);
+      
+      if (inCollection) {
+        await removeFromCollection(tea.id);
+      } else {
+        // Check if user can add more teas (free tier limit)
+        if (!canAddToCollection(collection.length)) {
+          Alert.alert(
+            'Collection Full',
+            'Free accounts can save up to 10 teas. Upgrade to Premium for unlimited teas in your collection!',
+            [
+              { text: 'Maybe Later', style: 'cancel' },
+              { text: 'Upgrade', onPress: () => navigation.navigate('Paywall') },
+            ]
+          );
+          return;
+        }
+        const result = await addToCollection(tea.id, 'want_to_try', tea);
+        if (result?.error) {
+          Alert.alert('Error', `Could not add to collection: ${result.error.message || JSON.stringify(result.error)}`);
+          console.error('Add to collection failed:', result.error);
+        }
       }
+    } catch (err) {
+      Alert.alert('Unexpected Error', err.message || String(err));
+      console.error('handleToggleCollection error:', err);
     }
   };
   
