@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
+import { AppState } from 'react-native';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from './AuthContext';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
@@ -45,6 +46,18 @@ export const CollectionProvider = ({ children }) => {
 
   useEffect(() => {
     fetchCollection();
+  }, [fetchCollection]);
+
+  // Re-fetch collection when app returns from background
+  const appState = useRef(AppState.currentState);
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
+        fetchCollection();
+      }
+      appState.current = nextAppState;
+    });
+    return () => subscription?.remove();
   }, [fetchCollection]);
 
   // Add tea to collection

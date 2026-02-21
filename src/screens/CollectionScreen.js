@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { 
   View, 
   Text, 
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   RefreshControl,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { Bookmark, Plus } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { TeaCard, Button } from '../components';
@@ -19,6 +20,13 @@ export const CollectionScreen = ({ navigation }) => {
   const { collection, loading, refreshCollection } = useCollection();
   const { isPremium, canAddToCollection, getRemainingFreeSlots, FREE_TIER_LIMITS } = useSubscription();
   const [filter, setFilter] = useState('all');
+  
+  // Re-fetch collection whenever this screen gains focus
+  useFocusEffect(
+    useCallback(() => {
+      refreshCollection();
+    }, [refreshCollection])
+  );
   
   const remainingSlots = getRemainingFreeSlots(collection.length);
   const showUpgradeBanner = !isPremium && collection.length >= FREE_TIER_LIMITS.MAX_COLLECTION_SIZE - 3;
