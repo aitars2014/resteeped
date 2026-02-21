@@ -190,7 +190,16 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     }
   };
   
-  const handleBrewTea = () => {
+  const handleBrewTea = async () => {
+    // Auto-add to collection as tried if not already there
+    if (user && !inCollection) {
+      if (canAddToCollection(collection.length)) {
+        await addTeaWithStatus('tried');
+      }
+    } else if (user && isOnWishlist) {
+      // Move from wishlist to tried
+      await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
+    }
     navigation.navigate('Timer', { 
       screen: 'TimerHome',
       params: { tea } 
@@ -588,23 +597,23 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             onPress={handleWishlist}
             variant={isOnWishlist ? "primary" : "secondary"}
             icon={<Heart size={18} color={isOnWishlist ? theme.text.inverse : theme.text.primary} fill={isOnWishlist ? theme.text.inverse : 'none'} />}
-            style={[styles.actionButton, !isOnWishlist && { backgroundColor: theme.background.secondary, height: 56 }, isOnWishlist && { height: 56 }]}
+            style={[styles.actionButton, !isOnWishlist && { backgroundColor: theme.background.secondary, height: 48 }, isOnWishlist && { height: 48 }]}
           />
           <Button 
             title="My Teas"
             onPress={handleMyTeas}
             variant={isInMyTeas ? "primary" : "secondary"}
             icon={<Bookmark size={18} color={isInMyTeas ? theme.text.inverse : theme.text.primary} fill={isInMyTeas ? theme.text.inverse : 'none'} />}
-            style={[styles.actionButton, !isInMyTeas && { backgroundColor: theme.background.secondary, height: 56 }, isInMyTeas && { height: 56 }]}
-          />
-          <Button 
-            title="Steep"
-            onPress={handleBrewTea}
-            variant="primary"
-            icon={<Coffee size={18} color={theme.text.inverse} />}
-            style={styles.actionButton}
+            style={[styles.actionButton, !isInMyTeas && { backgroundColor: theme.background.secondary, height: 48 }, isInMyTeas && { height: 48 }]}
           />
         </View>
+        <Button 
+          title="Steep This Tea"
+          onPress={handleBrewTea}
+          variant="primary"
+          icon={<Coffee size={18} color={theme.text.inverse} />}
+          style={{ width: '100%' }}
+        />
       </View>
       
       {/* Review Modal */}
