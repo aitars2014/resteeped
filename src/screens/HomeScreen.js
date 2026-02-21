@@ -83,9 +83,12 @@ export const HomeScreen = ({ navigation }) => {
 
   // Featured shop: check featured_shops table first, fall back to highest-rated
   const [featuredCompany, setFeaturedCompany] = useState(null);
-  const featuredAdminLoaded = useRef(false);
+  const adminFeatured = useRef({ loaded: false, company: null });
+
+  // Query admin table once on mount
   useEffect(() => {
-    const loadFeatured = async () => {
+    let cancelled = false;
+    const loadAdmin = async () => {
       try {
         const today = new Date().toISOString().split('T')[0];
         const { data } = await require('../lib/supabase').supabase
@@ -97,21 +100,27 @@ export const HomeScreen = ({ navigation }) => {
           .order('priority', { ascending: false })
           .limit(1)
           .single();
-        if (data?.companies) {
-          featuredAdminLoaded.current = true;
+        if (!cancelled && data?.companies) {
+          adminFeatured.current = { loaded: true, company: data.companies };
           setFeaturedCompany(data.companies);
-          return;
         }
       } catch (e) {
-        // No featured shop set or query failed — fall back
+        // No featured shop set in admin
       }
-      // Fallback: highest-rated company (only if admin never set one)
-      if (!featuredAdminLoaded.current) {
-        const fallback = [...companies].sort((a, b) => (b.avg_rating || 0) - (a.avg_rating || 0))[0];
-        setFeaturedCompany(fallback || null);
+      if (!cancelled) {
+        adminFeatured.current.loaded = true;
       }
     };
-    if (companies.length > 0) loadFeatured();
+    loadAdmin();
+    return () => { cancelled = true; };
+  }, []);
+
+  // Fallback: use highest-rated company only if admin didn't set one
+  useEffect(() => {
+    if (companies.length > 0 && adminFeatured.current.loaded && !adminFeatured.current.company) {
+      const fallback = [...companies].sort((a, b) => (b.avg_rating || 0) - (a.avg_rating || 0))[0];
+      setFeaturedCompany(fallback || null);
+    }
   }, [companies]);
 
   const onRefresh = useCallback(async () => {
