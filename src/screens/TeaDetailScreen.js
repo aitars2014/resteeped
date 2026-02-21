@@ -9,8 +9,6 @@ import {
   Alert,
   FlatList,
   Linking,
-  ActionSheetIOS,
-  Platform,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
@@ -108,38 +106,13 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       if (inCollection) {
         // Show options for teas already in collection
         const currentStatus = collectionItem?.status || 'want_to_try';
-        const options = currentStatus === 'tried'
-          ? ['Remove from Collection', 'Cancel']
-          : ['Mark as Tried', 'Remove from Collection', 'Cancel'];
-        const cancelIndex = options.length - 1;
-        const destructiveIndex = options.indexOf('Remove from Collection');
-        
-        if (Platform.OS === 'ios') {
-          ActionSheetIOS.showActionSheetWithOptions(
-            {
-              options,
-              cancelButtonIndex: cancelIndex,
-              destructiveButtonIndex: destructiveIndex,
-            },
-            (buttonIndex) => {
-              const selected = options[buttonIndex];
-              if (selected === 'Mark as Tried') {
-                updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
-              } else if (selected === 'Remove from Collection') {
-                removeFromCollection(tea.id);
-              }
-            }
-          );
-        } else {
-          // Android fallback
-          const buttons = [];
-          if (currentStatus !== 'tried') {
-            buttons.push({ text: 'Mark as Tried', onPress: () => updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() }) });
-          }
-          buttons.push({ text: 'Remove', style: 'destructive', onPress: () => removeFromCollection(tea.id) });
-          buttons.push({ text: 'Cancel', style: 'cancel' });
-          Alert.alert('My Teas', 'What would you like to do?', buttons);
+        const buttons = [];
+        if (currentStatus !== 'tried') {
+          buttons.push({ text: 'Mark as Tried', onPress: () => updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() }) });
         }
+        buttons.push({ text: 'Remove from Collection', style: 'destructive', onPress: () => removeFromCollection(tea.id) });
+        buttons.push({ text: 'Cancel', style: 'cancel' });
+        Alert.alert('My Teas', 'What would you like to do?', buttons);
       } else {
         // Check free tier limit
         if (!canAddToCollection(collection.length)) {
@@ -155,25 +128,11 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         }
         
         // Ask: Want to Try or Tried It?
-        if (Platform.OS === 'ios') {
-          ActionSheetIOS.showActionSheetWithOptions(
-            {
-              title: 'Add to My Teas',
-              options: ['Want to Try', 'Tried It', 'Cancel'],
-              cancelButtonIndex: 2,
-            },
-            (buttonIndex) => {
-              if (buttonIndex === 0) addTeaWithStatus('want_to_try');
-              else if (buttonIndex === 1) addTeaWithStatus('tried');
-            }
-          );
-        } else {
-          Alert.alert('Add to My Teas', 'How would you like to save this tea?', [
-            { text: 'Want to Try', onPress: () => addTeaWithStatus('want_to_try') },
-            { text: 'Tried It', onPress: () => addTeaWithStatus('tried') },
-            { text: 'Cancel', style: 'cancel' },
-          ]);
-        }
+        Alert.alert('Add to My Teas', 'How would you like to save this tea?', [
+          { text: 'Want to Try', onPress: () => addTeaWithStatus('want_to_try') },
+          { text: 'Tried It', onPress: () => addTeaWithStatus('tried') },
+          { text: 'Cancel', style: 'cancel' },
+        ]);
       }
     } catch (err) {
       Alert.alert('Unexpected Error', err.message || String(err));
