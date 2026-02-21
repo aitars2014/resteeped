@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Bookmark, Coffee } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, HealthBenefits, EditorialTastingNote } from '../components';
 import { shareTea } from '../utils/sharing';
@@ -89,52 +89,63 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     }
   };
 
-  const handleSaveTea = async () => {
-    try {
-      if (!user) {
-        Alert.alert(
-          'Sign In Required',
-          'Create an account to save teas to your collection.',
-          [
-            { text: 'Cancel', style: 'cancel' },
-            { text: 'Sign In', onPress: () => navigation.navigate('Profile') },
-          ]
-        );
-        return;
-      }
-      
-      if (inCollection) {
-        // Already saved — show manage options
-        const currentStatus = collectionItem?.status || 'want_to_try';
-        const buttons = [];
-        if (currentStatus !== 'tried') {
-          buttons.push({ text: 'Mark as Tried', onPress: () => updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() }) });
-        }
-        buttons.push({ text: 'Remove', style: 'destructive', onPress: () => removeFromCollection(tea.id) });
-        buttons.push({ text: 'Cancel', style: 'cancel' });
-        Alert.alert(
-          currentStatus === 'tried' ? 'Tried' : 'Saved',
-          'What would you like to do?',
-          buttons
-        );
-      } else {
-        // One-tap save — no dialog
-        if (!canAddToCollection(collection.length)) {
-          Alert.alert(
-            'Collection Full',
-            'Free accounts can save up to 10 teas. Upgrade to Premium for unlimited teas in your collection!',
-            [
-              { text: 'Maybe Later', style: 'cancel' },
-              { text: 'Upgrade', onPress: () => navigation.navigate('Paywall') },
-            ]
-          );
-          return;
-        }
-        await addTeaWithStatus('want_to_try');
-      }
-    } catch (err) {
-      Alert.alert('Unexpected Error', err.message || String(err));
-      console.error('handleSaveTea error:', err);
+  const requireAuth = () => {
+    if (!user) {
+      Alert.alert(
+        'Sign In Required',
+        'Create an account to save teas to your collection.',
+        [
+          { text: 'Cancel', style: 'cancel' },
+          { text: 'Sign In', onPress: () => navigation.navigate('Profile') },
+        ]
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const checkCollectionLimit = () => {
+    if (!canAddToCollection(collection.length)) {
+      Alert.alert(
+        'Collection Full',
+        'Free accounts can save up to 10 teas. Upgrade to Premium for unlimited teas in your collection!',
+        [
+          { text: 'Maybe Later', style: 'cancel' },
+          { text: 'Upgrade', onPress: () => navigation.navigate('Paywall') },
+        ]
+      );
+      return false;
+    }
+    return true;
+  };
+
+  const isOnWishlist = inCollection && collectionItem?.status === 'want_to_try';
+  const isInMyTeas = inCollection && collectionItem?.status === 'tried';
+
+  const handleWishlist = async () => {
+    if (!requireAuth()) return;
+    if (isOnWishlist) {
+      // Already on wishlist — remove
+      await removeFromCollection(tea.id);
+      return;
+    }
+    if (!inCollection && !checkCollectionLimit()) return;
+    await addTeaWithStatus('want_to_try');
+  };
+
+  const handleMyTeas = async () => {
+    if (!requireAuth()) return;
+    if (isInMyTeas) {
+      // Already in my teas — remove
+      await removeFromCollection(tea.id);
+      return;
+    }
+    if (!inCollection && !checkCollectionLimit()) return;
+    if (inCollection) {
+      // Move from wishlist to tried
+      await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
+    } else {
+      await addTeaWithStatus('tried');
     }
   };
   
@@ -573,13 +584,18 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       <View style={styles.buttonContainer}>
         <View style={styles.buttonRow}>
           <Button 
-            title={inCollection 
-              ? (collectionItem?.status === 'tried' ? "Tried" : "Saved") 
-              : "Save"}
-            onPress={handleSaveTea}
-            variant={inCollection ? "primary" : "secondary"}
-            icon={<Bookmark size={18} color={inCollection ? theme.text.inverse : theme.text.primary} fill={inCollection ? theme.text.inverse : 'none'} />}
-            style={[styles.actionButton, !inCollection && { backgroundColor: theme.background.secondary, height: 56 }, inCollection && { height: 56 }]}
+            title="Wishlist"
+            onPress={handleWishlist}
+            variant={isOnWishlist ? "primary" : "secondary"}
+            icon={<Heart size={18} color={isOnWishlist ? theme.text.inverse : theme.text.primary} fill={isOnWishlist ? theme.text.inverse : 'none'} />}
+            style={[styles.actionButton, !isOnWishlist && { backgroundColor: theme.background.secondary, height: 56 }, isOnWishlist && { height: 56 }]}
+          />
+          <Button 
+            title="My Teas"
+            onPress={handleMyTeas}
+            variant={isInMyTeas ? "primary" : "secondary"}
+            icon={<Bookmark size={18} color={isInMyTeas ? theme.text.inverse : theme.text.primary} fill={isInMyTeas ? theme.text.inverse : 'none'} />}
+            style={[styles.actionButton, !isInMyTeas && { backgroundColor: theme.background.secondary, height: 56 }, isInMyTeas && { height: 56 }]}
           />
           <Button 
             title="Steep"
