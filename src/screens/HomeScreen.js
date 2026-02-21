@@ -83,6 +83,7 @@ export const HomeScreen = ({ navigation }) => {
 
   // Featured shop: check featured_shops table first, fall back to highest-rated
   const [featuredCompany, setFeaturedCompany] = useState(null);
+  const featuredAdminLoaded = useRef(false);
   useEffect(() => {
     const loadFeatured = async () => {
       try {
@@ -97,15 +98,18 @@ export const HomeScreen = ({ navigation }) => {
           .limit(1)
           .single();
         if (data?.companies) {
+          featuredAdminLoaded.current = true;
           setFeaturedCompany(data.companies);
           return;
         }
       } catch (e) {
         // No featured shop set or query failed — fall back
       }
-      // Fallback: highest-rated company
-      const fallback = [...companies].sort((a, b) => (b.avg_rating || 0) - (a.avg_rating || 0))[0];
-      setFeaturedCompany(fallback || null);
+      // Fallback: highest-rated company (only if admin never set one)
+      if (!featuredAdminLoaded.current) {
+        const fallback = [...companies].sort((a, b) => (b.avg_rating || 0) - (a.avg_rating || 0))[0];
+        setFeaturedCompany(fallback || null);
+      }
     };
     if (companies.length > 0) loadFeatured();
   }, [companies]);
