@@ -582,7 +582,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             style={[styles.actionButton, !inCollection && { backgroundColor: theme.background.secondary, height: 56 }, inCollection && { height: 56 }]}
           />
           <Button 
-            title="Brew"
+            title="Steep"
             onPress={handleBrewTea}
             variant="primary"
             icon={<Coffee size={18} color={theme.text.inverse} />}
