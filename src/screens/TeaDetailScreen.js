@@ -579,14 +579,14 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             onPress={handleSaveTea}
             variant={inCollection ? "primary" : "secondary"}
             icon={<Bookmark size={18} color={inCollection ? theme.text.inverse : theme.text.primary} fill={inCollection ? theme.text.inverse : 'none'} />}
-            style={styles.saveButton}
+            style={[styles.actionButton, !inCollection && { backgroundColor: theme.background.secondary, height: 56 }, inCollection && { height: 56 }]}
           />
           <Button 
-            title="Brew This Tea"
+            title="Brew"
             onPress={handleBrewTea}
             variant="primary"
             icon={<Coffee size={18} color={theme.text.inverse} />}
-            style={styles.brewButton}
+            style={styles.actionButton}
           />
         </View>
       </View>
@@ -897,11 +897,7 @@ const createStyles = (theme) => ({
     flexDirection: 'row',
     gap: 10,
   },
-  saveButton: {
-    flex: 0,
-    paddingHorizontal: 16,
-  },
-  brewButton: {
+  actionButton: {
     flex: 1,
   },
   buyCard: {
