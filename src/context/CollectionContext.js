@@ -98,7 +98,7 @@ export const CollectionProvider = ({ children }) => {
           tea_id: teaId,
           status,
           added_at: new Date().toISOString(),
-        })
+        }, { onConflict: 'user_id,tea_id' })
         .select()
         .single();
 
