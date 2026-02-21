@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Bookmark, Coffee } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, HealthBenefits, EditorialTastingNote } from '../components';
 import { shareTea } from '../utils/sharing';
@@ -89,12 +89,12 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     }
   };
 
-  const handleToggleCollection = async () => {
+  const handleSaveTea = async () => {
     try {
       if (!user) {
         Alert.alert(
           'Sign In Required',
-          'Please sign in to save teas to your collection.',
+          'Create an account to save teas to your collection.',
           [
             { text: 'Cancel', style: 'cancel' },
             { text: 'Sign In', onPress: () => navigation.navigate('Profile') },
@@ -104,17 +104,21 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       }
       
       if (inCollection) {
-        // Show options for teas already in collection
+        // Already saved — show manage options
         const currentStatus = collectionItem?.status || 'want_to_try';
         const buttons = [];
         if (currentStatus !== 'tried') {
           buttons.push({ text: 'Mark as Tried', onPress: () => updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() }) });
         }
-        buttons.push({ text: 'Remove from Collection', style: 'destructive', onPress: () => removeFromCollection(tea.id) });
+        buttons.push({ text: 'Remove', style: 'destructive', onPress: () => removeFromCollection(tea.id) });
         buttons.push({ text: 'Cancel', style: 'cancel' });
-        Alert.alert('My Teas', 'What would you like to do?', buttons);
+        Alert.alert(
+          currentStatus === 'tried' ? 'Tried' : 'Saved',
+          'What would you like to do?',
+          buttons
+        );
       } else {
-        // Check free tier limit
+        // One-tap save — no dialog
         if (!canAddToCollection(collection.length)) {
           Alert.alert(
             'Collection Full',
@@ -126,17 +130,11 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           );
           return;
         }
-        
-        // Ask: Want to Try or Tried It?
-        Alert.alert('Add to My Teas', 'How would you like to save this tea?', [
-          { text: 'Want to Try', onPress: () => addTeaWithStatus('want_to_try') },
-          { text: 'Tried It', onPress: () => addTeaWithStatus('tried') },
-          { text: 'Cancel', style: 'cancel' },
-        ]);
+        await addTeaWithStatus('want_to_try');
       }
     } catch (err) {
       Alert.alert('Unexpected Error', err.message || String(err));
-      console.error('handleToggleCollection error:', err);
+      console.error('handleSaveTea error:', err);
     }
   };
   
@@ -573,20 +571,24 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       
       {/* Sticky Action Buttons */}
       <View style={styles.buttonContainer}>
-        <Button 
-          title={inCollection 
-            ? (collectionItem?.status === 'tried' ? "Tried ✓" : "Want to Try ✓") 
-            : "Add to My Teas"}
-          onPress={handleToggleCollection}
-          variant="primary"
-          style={[styles.button, inCollection && styles.inCollectionButton]}
-        />
-        <Button 
-          title="Brew This Tea"
-          onPress={handleBrewTea}
-          variant="secondary"
-          style={styles.button}
-        />
+        <View style={styles.buttonRow}>
+          <Button 
+            title={inCollection 
+              ? (collectionItem?.status === 'tried' ? "Tried" : "Saved") 
+              : "Save"}
+            onPress={handleSaveTea}
+            variant={inCollection ? "primary" : "secondary"}
+            icon={<Bookmark size={18} color={inCollection ? theme.text.inverse : theme.text.primary} fill={inCollection ? theme.text.inverse : 'none'} />}
+            style={styles.saveButton}
+          />
+          <Button 
+            title="Brew This Tea"
+            onPress={handleBrewTea}
+            variant="primary"
+            icon={<Coffee size={18} color={theme.text.inverse} />}
+            style={styles.brewButton}
+          />
+        </View>
       </View>
       
       {/* Review Modal */}
@@ -891,11 +893,16 @@ const createStyles = (theme) => ({
     borderTopColor: theme.border.medium,
     gap: 10,
   },
-  button: {
-    width: '100%',
+  buttonRow: {
+    flexDirection: 'row',
+    gap: 10,
   },
-  inCollectionButton: {
-    backgroundColor: theme.accent.secondary,
+  saveButton: {
+    flex: 0,
+    paddingHorizontal: 16,
+  },
+  brewButton: {
+    flex: 1,
   },
   buyCard: {
     backgroundColor: theme.background.secondary,
