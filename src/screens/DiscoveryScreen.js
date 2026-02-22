@@ -173,9 +173,9 @@ export const DiscoveryScreen = ({ navigation, route }) => {
         <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
           {searchQuery ? 'Try a different search term' : 'Try adjusting your filters'}
         </Text>
-        {(searchQuery || selectedTypes.length > 0) && (
+        {(searchQuery || filters.teaType !== 'all') && (
           <TouchableOpacity 
-            onPress={() => { setSearchQuery(''); setSelectedTypes([]); }}
+            onPress={() => { setSearchQuery(''); setFilters(f => ({ ...f, teaType: 'all', company: 'all', minRating: 'all' })); }}
             style={[styles.resetFiltersButton, { backgroundColor: theme.accent.primary + '20' }]}
           >
             <Text style={[styles.resetFiltersText, { color: theme.accent.primary }]}>Reset filters</Text>
