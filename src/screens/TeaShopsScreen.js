@@ -276,14 +276,6 @@ export const TeaShopsScreen = ({ navigation, route }) => {
           )}
           
           <View style={styles.statsRow}>
-            {company.avg_rating > 0 && (
-              <View style={[styles.ratingBadge, { backgroundColor: theme.background.primary }]}>
-                <Star size={12} color={theme.rating.star} fill={theme.rating.star} />
-                <Text style={[styles.ratingText, { color: theme.text.primary }]}>
-                  {company.avg_rating.toFixed(1)}
-                </Text>
-              </View>
-            )}
             {company.teaCount > 0 && (
               <Text style={[styles.teaCount, { color: theme.text.secondary }]}>
                 {company.teaCount} teas

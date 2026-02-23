@@ -82,6 +82,23 @@ export const BREWING_GUIDES = {
     bestTimeOfDay: 'After meals - aids digestion',
     caffeineNote: 'Moderate caffeine - smooth energy',
   },
+  yellow: {
+    waterTemp: { fahrenheit: 170, celsius: 77 },
+    steepTime: { min: 2, max: 5 },
+    leafAmount: '2 tsp per 8oz',
+    infusions: 3,
+    waterType: 'Filtered spring water',
+    tips: [
+      'Similar to green tea but more mellow',
+      'The "sealed yellowing" process gives it a unique sweet flavor',
+      'Lower temperature preserves delicate character',
+      'Slightly warmer than green tea is fine',
+      'Re-steep for evolving flavors',
+      'One of the rarest tea types - savor it',
+    ],
+    bestTimeOfDay: 'Morning or early afternoon',
+    caffeineNote: 'Moderate caffeine - gentle and smooth',
+  },
   herbal: {
     waterTemp: { fahrenheit: 212, celsius: 100 },
     steepTime: { min: 5, max: 10 },

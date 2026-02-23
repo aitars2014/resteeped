@@ -46,6 +46,7 @@ export const lightTheme = {
     white: { primary: '#D4D4D8', gradient: '#F0F0F5' },
     puerh: { primary: '#6B4423', gradient: '#8B6F47' },
     herbal: { primary: '#B565A7', gradient: '#D4A5C7' },
+    yellow: { primary: '#DAA520', gradient: '#F0D060' },
   },
   shadow: {
     card: 'rgba(0, 0, 0, 0.08)',
@@ -111,6 +112,7 @@ export const darkTheme = {
     white: { primary: '#E8E8E8', gradient: '#C8C8C8' },
     puerh: { primary: '#C0A080', gradient: '#8B6F47' },
     herbal: { primary: '#E0B0D8', gradient: '#C080B0' },
+    yellow: { primary: '#F0D060', gradient: '#DAA520' },
   },
   shadow: {
     card: 'rgba(0, 0, 0, 0.4)',

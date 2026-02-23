@@ -30,6 +30,7 @@ export const colors = {
     white: { primary: '#D4D4D8', gradient: '#F0F0F5' },
     puerh: { primary: '#6B4423', gradient: '#8B6F47' },
     herbal: { primary: '#B565A7', gradient: '#D4A5C7' },
+    yellow: { primary: '#DAA520', gradient: '#F0D060' },
   },
   shadow: {
     card: 'rgba(0, 0, 0, 0.08)',

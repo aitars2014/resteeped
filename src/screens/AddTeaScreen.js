@@ -30,6 +30,7 @@ const TEA_TYPES = [
   { value: 'oolong', label: 'Oolong', color: '#DAA520' },
   { value: 'white', label: 'White', color: '#F5F5DC' },
   { value: 'puerh', label: 'Pu-erh', color: '#4A0E0E' },
+  { value: 'yellow', label: 'Yellow', color: '#DAA520' },
   { value: 'herbal', label: 'Herbal', color: '#9370DB' },
 ];
 

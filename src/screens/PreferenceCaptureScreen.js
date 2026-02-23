@@ -27,6 +27,7 @@ const TEA_TYPE_OPTIONS = [
   { id: 'oolong', label: 'Oolong', Icon: TreeDeciduous, color: '#B8860B' },
   { id: 'white', label: 'White', Icon: Sprout, color: '#9CAF88' },
   { id: 'puerh', label: "Pu'erh", Icon: Mountain, color: '#654321' },
+  { id: 'yellow', label: 'Yellow', Icon: Sun, color: '#DAA520' },
   { id: 'herbal', label: 'Herbal', Icon: Flower2, color: '#9C27B0' },
 ];
 

@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
 import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton, BrewPicker } from '../components';
 import { useTeas, useCompanies, useRecommendations, useTeaware } from '../hooks';
@@ -50,6 +50,7 @@ const TEA_TYPES = [
   { type: 'oolong', name: 'Oolong', Icon: TreeDeciduous },
   { type: 'white', name: 'White', Icon: Sprout },
   { type: 'puerh', name: "Pu'erh", Icon: Mountain },
+  { type: 'yellow', name: 'Yellow', Icon: Sun },
   { type: 'herbal', name: 'Herbal', Icon: Flower2 },
 ];
 
@@ -383,13 +384,6 @@ export const HomeScreen = ({ navigation }) => {
                       {featuredCompany.short_description || featuredCompany.description}
                     </Text>
                     <View style={styles.featuredShopStats}>
-                      <View style={styles.featuredShopStat}>
-                        <Star size={14} color="#FFD700" fill="#FFD700" />
-                        <Text style={[styles.featuredShopStatText, { color: theme.text.inverse }]}>
-                          {(featuredCompany.avg_rating || 0).toFixed(1)}
-                        </Text>
-                      </View>
-                      <Text style={styles.featuredShopStatDivider}>•</Text>
                       <Text style={[styles.featuredShopStatText, { color: theme.text.inverse }]}>
                         {featuredCompany.tea_count || 0} teas
                       </Text>

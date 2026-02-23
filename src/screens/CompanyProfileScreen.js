@@ -322,14 +322,6 @@ const CompanyProfileScreen = ({ route, navigation }) => {
             <Text style={[styles.shortDescription, { color: theme.text.secondary }]}>{company.short_description}</Text>
           )}
 
-          {/* Rating */}
-          <View style={styles.ratingRow}>
-            <StarRating rating={company.avg_rating || 0} size={18} />
-            <Text style={[styles.ratingText, { color: theme.text.secondary }]}>
-              {company.avg_rating?.toFixed(1) || '0.0'} ({company.rating_count || 0} reviews)
-            </Text>
-          </View>
-
           {/* Location */}
           {locationString && (
             <View style={styles.metaRow}>
@@ -465,60 +457,8 @@ const CompanyProfileScreen = ({ route, navigation }) => {
           )}
         </View>
 
-        {/* Reviews */}
-        <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
-          <View style={styles.sectionHeader}>
-            <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>
-              Reviews {company.rating_count > 0 && `(${company.rating_count})`}
-            </Text>
-            <TouchableOpacity 
-              style={styles.writeReviewButton} 
-              onPress={handleWriteReview}
-              accessible={true}
-              accessibilityRole="button"
-              accessibilityLabel="Write a review"
-              accessibilityHint={`Share your experience with ${company.name}`}
-            >
-              <MessageSquare size={16} color={brandColor} />
-              <Text style={[styles.writeReviewText, { color: brandColor }]}>Write Review</Text>
-            </TouchableOpacity>
-          </View>
-
-          {reviews.length > 0 ? (
-            reviews.map((review) => (
-              <ReviewCard 
-                key={review.id} 
-                review={review} 
-                isOwnReview={user && review.user_id === user.id}
-              />
-            ))
-          ) : (
-            <View style={styles.noReviews}>
-              <Text style={[styles.noReviewsText, { color: theme.text.secondary }]}>
-                No reviews yet. Be the first to review {company.name}!
-              </Text>
-            </View>
-          )}
-        </View>
-
         <View style={{ height: 40 }} />
       </ScrollView>
-
-      {/* Write Review Modal */}
-      <WriteCompanyReviewModal
-        visible={showReviewModal}
-        onClose={() => setShowReviewModal(false)}
-        onSubmit={handleSubmitReview}
-        companyName={company?.name}
-        initialRating={userReview?.rating || 0}
-        initialText={userReview?.review_text || ''}
-        initialCategoryRatings={{
-          quality: userReview?.quality_rating || 0,
-          shipping: userReview?.shipping_rating || 0,
-          service: userReview?.service_rating || 0,
-          value: userReview?.value_rating || 0,
-        }}
-      />
     </View>
   );
 };
