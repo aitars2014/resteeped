@@ -400,23 +400,94 @@ export const ActivityFeedScreen = ({ navigation }) => {
       let realActivities = [];
       
       if (isSupabaseConfigured()) {
-        // Fetch reviews (without profile join to avoid errors if table doesn't exist)
+        // Fetch reviews with profile info
         try {
           const { data: reviews } = await supabase
             .from('reviews')
-            .select('*')
+            .select('*, profiles:user_id(id, display_name, avatar_url)')
             .order('created_at', { ascending: false })
             .limit(20);
           allReviews = reviews || [];
         } catch (e) {
-          console.log('Could not fetch reviews:', e.message);
+          // Fallback: fetch without profile join
+          try {
+            const { data: reviews } = await supabase
+              .from('reviews')
+              .select('*')
+              .order('created_at', { ascending: false })
+              .limit(20);
+            allReviews = reviews || [];
+          } catch (e2) {
+            console.log('Could not fetch reviews:', e2.message);
+          }
         }
-        
-        // Note: Skipping real user activities for now to avoid profile join issues
-        // Will enable once profiles table is confirmed
+
+        // Fetch recent brew sessions and collection adds for real activity
+        try {
+          const { data: recentBrews } = await supabase
+            .from('brew_sessions')
+            .select('*, profiles:user_id(id, display_name, avatar_url), tea:tea_id(id, name, tea_type, brand_name, image_url)')
+            .order('created_at', { ascending: false })
+            .limit(15);
+          
+          (recentBrews || []).forEach(brew => {
+            if (brew.tea) {
+              const isRealUser = brew.profiles?.display_name;
+              realActivities.push({
+                id: `brew-real-${brew.id}`,
+                type: ACTIVITY_TYPES.BREW,
+                user: isRealUser
+                  ? { id: brew.user_id, name: brew.profiles.display_name, isReal: true }
+                  : getMockUser(`brew-${brew.id}`),
+                tea: {
+                  id: brew.tea.id,
+                  name: brew.tea.name,
+                  teaType: brew.tea.tea_type,
+                  brandName: brew.tea.brand_name,
+                  imageUrl: brew.tea.image_url,
+                },
+                steepTime: brew.steep_time_seconds ? Math.round(brew.steep_time_seconds / 60) : null,
+                timestamp: new Date(brew.created_at),
+              });
+            }
+          });
+        } catch (e) {
+          console.log('Could not fetch brew sessions:', e.message);
+        }
+
+        try {
+          const { data: recentAdds } = await supabase
+            .from('user_teas')
+            .select('*, profiles:user_id(id, display_name, avatar_url), tea:tea_id(id, name, tea_type, brand_name, image_url)')
+            .order('added_at', { ascending: false })
+            .limit(15);
+          
+          (recentAdds || []).forEach(add => {
+            if (add.tea) {
+              const isRealUser = add.profiles?.display_name;
+              realActivities.push({
+                id: `collection-real-${add.id}`,
+                type: ACTIVITY_TYPES.COLLECTION_ADD,
+                user: isRealUser
+                  ? { id: add.user_id, name: add.profiles.display_name, isReal: true }
+                  : getMockUser(`add-${add.id}`),
+                tea: {
+                  id: add.tea.id,
+                  name: add.tea.name,
+                  teaType: add.tea.tea_type,
+                  brandName: add.tea.brand_name,
+                  imageUrl: add.tea.image_url,
+                },
+                timestamp: new Date(add.added_at),
+              });
+            }
+          });
+        } catch (e) {
+          console.log('Could not fetch collection adds:', e.message);
+        }
       }
       
-      // Mix real activities with mock activities
+      // If we have real activities, use them; otherwise generate mock data with variety
       const mockActivities = generateMockActivities(teas, allReviews, realActivities);
       
       // Simulate pagination

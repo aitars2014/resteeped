@@ -1,30 +1,72 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import { AppState } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from './AuthContext';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const CollectionContext = createContext({});
+const COLLECTION_CACHE_KEY = '@resteeped_collection_cache';
+const CACHE_MAX_AGE_MS = 5 * 60 * 1000; // 5 minutes
 
 export const useCollection = () => useContext(CollectionContext);
 
 export const CollectionProvider = ({ children }) => {
-  const { user, isDevMode } = useAuth();
+  const { user, isDevMode, initialized: authInitialized } = useAuth();
   const [collection, setCollection] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [cacheLoaded, setCacheLoaded] = useState(false);
 
   // Check if we should use local-only mode (no Supabase calls for user data)
   const isLocalMode = !isSupabaseConfigured() || isDevMode;
 
-  // Fetch user's tea collection
-  const fetchCollection = useCallback(async () => {
+  // Load cached collection immediately on mount (before auth resolves)
+  useEffect(() => {
+    const loadCache = async () => {
+      try {
+        const cached = await AsyncStorage.getItem(COLLECTION_CACHE_KEY);
+        if (cached) {
+          const { data, timestamp } = JSON.parse(cached);
+          if (data && Array.isArray(data) && data.length > 0) {
+            setCollection(data);
+          }
+        }
+      } catch (error) {
+        console.warn('Failed to load collection cache:', error);
+      } finally {
+        setCacheLoaded(true);
+      }
+    };
+    loadCache();
+  }, []);
+
+  // Save collection to cache whenever it changes
+  const saveCache = useCallback(async (data) => {
+    try {
+      await AsyncStorage.setItem(COLLECTION_CACHE_KEY, JSON.stringify({
+        data,
+        timestamp: Date.now(),
+      }));
+    } catch (error) {
+      console.warn('Failed to save collection cache:', error);
+    }
+  }, []);
+
+  // Fetch user's tea collection from Supabase
+  const fetchCollection = useCallback(async (opts = {}) => {
+    const { silent = false } = opts;
     if (!user || isLocalMode) {
-      // In dev mode, keep whatever is in local state
-      if (!user) setCollection([]);
+      // Only clear collection on explicit sign-out (when auth is initialized but no user)
+      // Don't clear during initial auth loading
+      if (!user && authInitialized) {
+        setCollection([]);
+        AsyncStorage.removeItem(COLLECTION_CACHE_KEY).catch(() => {});
+      }
+      if (!silent) setLoading(false);
       return;
     }
 
-    setLoading(true);
+    if (!silent) setLoading(true);
     try {
       const { data, error } = await supabase
         .from('user_teas')
@@ -36,24 +78,30 @@ export const CollectionProvider = ({ children }) => {
         .order('added_at', { ascending: false });
 
       if (error) throw error;
-      setCollection(data || []);
+      const result = data || [];
+      setCollection(result);
+      saveCache(result);
     } catch (error) {
       console.error('Error fetching collection:', error);
+      // On failure, keep existing cached data — don't clear
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
-  }, [user]);
+  }, [user, authInitialized, saveCache]);
 
+  // Fetch from server once auth is ready
   useEffect(() => {
-    fetchCollection();
-  }, [fetchCollection]);
+    if (authInitialized) {
+      fetchCollection();
+    }
+  }, [authInitialized, fetchCollection]);
 
-  // Re-fetch collection when app returns from background
+  // Re-fetch collection when app returns from background (silent refresh)
   const appState = useRef(AppState.currentState);
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
       if (appState.current.match(/inactive|background/) && nextAppState === 'active') {
-        fetchCollection();
+        fetchCollection({ silent: true });
       }
       appState.current = nextAppState;
     });

@@ -174,10 +174,29 @@ export default function TeawareDetailScreen({ route, navigation }) {
           </Text>
         )}
 
+        {/* Shop / Seller */}
+        {teaware.company?.name && (
+          <TouchableOpacity
+            style={styles.shopRow}
+            onPress={() => teaware.company && navigation.navigate('CompanyProfile', { company: teaware.company })}
+            accessible={true}
+            accessibilityLabel={`Sold by ${teaware.company.name}`}
+          >
+            <MapPin size={14} color={theme.accent.primary} />
+            <Text style={[styles.shopName, { color: theme.accent.primary }]}>
+              {teaware.company.name}
+            </Text>
+          </TouchableOpacity>
+        )}
+
         {/* Description */}
-        {teaware.description && (
+        {teaware.description ? (
           <Text style={[styles.description, { color: theme.text.secondary }]}>
             {teaware.description}
+          </Text>
+        ) : (
+          <Text style={[styles.description, { color: theme.text.tertiary, fontStyle: 'italic' }]}>
+            No description available.
           </Text>
         )}
 
@@ -263,9 +282,9 @@ export default function TeawareDetailScreen({ route, navigation }) {
         )}
 
         {/* Buy Button */}
-        {teaware.product_url && (
+        {teaware.product_url && !teaware.product_url.includes('/undefined') && (
           <Button
-            title="View on Store"
+            title={teaware.company?.name ? `Buy from ${teaware.company.name}` : 'View on Store'}
             onPress={handleBuyPress}
             variant="primary"
             icon={<ExternalLink size={18} color="#fff" />}
@@ -375,6 +394,16 @@ const createStyles = (theme) => StyleSheet.create({
     fontSize: 15,
     fontWeight: '600',
     marginBottom: spacing.md,
+  },
+  shopRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
+    marginBottom: spacing.md,
+  },
+  shopName: {
+    fontSize: 14,
+    fontWeight: '600',
   },
   description: {
     ...typography.body,

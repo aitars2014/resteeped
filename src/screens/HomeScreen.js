@@ -99,26 +99,32 @@ export const HomeScreen = ({ navigation }) => {
           .gte('end_date', today)
           .order('priority', { ascending: false })
           .limit(1)
-          .single();
+          .maybeSingle();
         if (!cancelled && data?.companies) {
           adminFeatured.current = { loaded: true, company: data.companies };
           setFeaturedCompany(data.companies);
+          return;
         }
       } catch (e) {
-        // No featured shop set in admin
+        console.warn('Featured shop query failed:', e.message);
       }
+      // Mark loaded even on error/empty so fallback can trigger
       if (!cancelled) {
-        adminFeatured.current.loaded = true;
+        adminFeatured.current = { ...adminFeatured.current, loaded: true };
       }
     };
     loadAdmin();
     return () => { cancelled = true; };
   }, []);
 
-  // Fallback: use highest-rated company only if admin didn't set one
+  // Fallback: rotate through local tea shops daily if admin didn't set one
   useEffect(() => {
     if (companies.length > 0 && adminFeatured.current.loaded && !adminFeatured.current.company) {
-      const fallback = [...companies].sort((a, b) => (b.avg_rating || 0) - (a.avg_rating || 0))[0];
+      // Deterministic daily rotation: use day-of-year as index
+      const now = new Date();
+      const dayOfYear = Math.floor((now - new Date(now.getFullYear(), 0, 0)) / 86400000);
+      const sorted = [...companies].sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+      const fallback = sorted[dayOfYear % sorted.length];
       setFeaturedCompany(fallback || null);
     }
   }, [companies]);

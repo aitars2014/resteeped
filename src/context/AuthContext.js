@@ -62,29 +62,35 @@ export const AuthProvider = ({ children }) => {
       return;
     }
 
-    // Check for existing session with timeout
-    const sessionTimeout = setTimeout(() => {
-      console.warn('Auth session check timed out after 10s');
-      setLoading(false);
-      setInitialized(true);
-    }, 10000);
+    // Load cached session from AsyncStorage first for instant startup
+    const loadSession = async () => {
+      try {
+        // getSession reads from the persisted storage (AsyncStorage) first,
+        // then validates with the server. Add a reasonable timeout.
+        const sessionPromise = supabase.auth.getSession();
+        const timeoutPromise = new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('timeout')), 5000)
+        );
 
-    supabase.auth.getSession()
-      .then(({ data: { session } }) => {
-        clearTimeout(sessionTimeout);
+        const { data: { session } } = await Promise.race([sessionPromise, timeoutPromise]);
         setUser(session?.user ?? null);
         if (session?.user) {
           fetchProfile(session.user.id);
         }
+      } catch (error) {
+        if (error.message === 'timeout') {
+          console.warn('Auth session check timed out — using cached state');
+          // On timeout, Supabase may still have a cached session in AsyncStorage.
+          // The onAuthStateChange listener will update when it resolves.
+        } else {
+          console.error('Auth session check failed:', error);
+        }
+      } finally {
         setLoading(false);
         setInitialized(true);
-      })
-      .catch((error) => {
-        clearTimeout(sessionTimeout);
-        console.error('Auth session check failed:', error);
-        setLoading(false);
-        setInitialized(true);
-      });
+      }
+    };
+    loadSession();
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
