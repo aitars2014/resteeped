@@ -586,31 +586,46 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         </View>
       </ScrollView>
       
-      {/* Sticky Action Buttons */}
+      {/* Sticky Action Buttons - 4 CTAs */}
       <View style={styles.buttonContainer}>
         <View style={styles.buttonRow}>
-          <Button 
-            title="Wishlist"
+          <TouchableOpacity
+            style={[styles.iconAction, { backgroundColor: isOnWishlist ? theme.accent.primary : theme.background.secondary }]}
             onPress={handleWishlist}
-            variant={isOnWishlist ? "primary" : "secondary"}
-            icon={<Heart size={18} color={isOnWishlist ? theme.text.inverse : theme.text.primary} fill={isOnWishlist ? theme.text.inverse : 'none'} />}
-            style={[styles.actionButton, !isOnWishlist && { backgroundColor: theme.background.secondary, height: 48 }, isOnWishlist && { height: 48 }]}
-          />
-          <Button 
-            title="My Teas"
+            accessible={true}
+            accessibilityLabel={isOnWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
+          >
+            <Heart size={20} color={isOnWishlist ? theme.text.inverse : theme.text.primary} fill={isOnWishlist ? theme.text.inverse : 'none'} />
+            <Text style={[styles.iconActionLabel, { color: isOnWishlist ? theme.text.inverse : theme.text.secondary }]} numberOfLines={1}>Wishlist</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.iconAction, { backgroundColor: isInMyTeas ? theme.accent.primary : theme.background.secondary }]}
             onPress={handleMyTeas}
-            variant={isInMyTeas ? "primary" : "secondary"}
-            icon={<Bookmark size={18} color={isInMyTeas ? theme.text.inverse : theme.text.primary} fill={isInMyTeas ? theme.text.inverse : 'none'} />}
-            style={[styles.actionButton, !isInMyTeas && { backgroundColor: theme.background.secondary, height: 48 }, isInMyTeas && { height: 48 }]}
-          />
+            accessible={true}
+            accessibilityLabel={isInMyTeas ? 'Remove from my teas' : 'Add to my teas'}
+          >
+            <Bookmark size={20} color={isInMyTeas ? theme.text.inverse : theme.text.primary} fill={isInMyTeas ? theme.text.inverse : 'none'} />
+            <Text style={[styles.iconActionLabel, { color: isInMyTeas ? theme.text.inverse : theme.text.secondary }]} numberOfLines={1}>My Teas</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.iconAction, { backgroundColor: theme.background.secondary }]}
+            onPress={handleBrewTea}
+            accessible={true}
+            accessibilityLabel="Steep this tea"
+          >
+            <Coffee size={20} color={theme.text.primary} />
+            <Text style={[styles.iconActionLabel, { color: theme.text.secondary }]} numberOfLines={1}>Steep</Text>
+          </TouchableOpacity>
         </View>
-        <Button 
-          title="Steep This Tea"
-          onPress={handleBrewTea}
-          variant="primary"
-          icon={<Coffee size={18} color={theme.text.inverse} />}
-          style={{ width: '100%' }}
-        />
+        {brandName && (
+          <Button 
+            title={hasDirectLink ? `Buy from ${brandName}` : `Find at ${brandName}`}
+            onPress={handleBuyTea}
+            variant="primary"
+            icon={<ShoppingCart size={18} color={theme.text.inverse} />}
+            style={{ width: '100%' }}
+          />
+        )}
       </View>
       
       {/* Review Modal */}
@@ -921,6 +936,18 @@ const createStyles = (theme) => ({
   },
   actionButton: {
     flex: 1,
+  },
+  iconAction: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 8,
+    borderRadius: 12,
+    gap: 4,
+  },
+  iconActionLabel: {
+    fontSize: 11,
+    fontWeight: '600',
   },
   buyCard: {
     backgroundColor: theme.background.secondary,

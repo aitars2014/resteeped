@@ -121,7 +121,7 @@ export const useTeaware = () => {
       const { data, error: fetchError } = await withTimeout(
         supabase
           .from('teaware')
-          .select('*, company:companies(name, slug)')
+          .select('*, company:companies(name, slug, website_url)')
           .order('created_at', { ascending: false }),
         10000,
         'Teaware fetch timed out'

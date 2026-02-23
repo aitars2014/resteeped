@@ -68,17 +68,22 @@ export default function TeawareDetailScreen({ route, navigation }) {
   const { teaware } = route.params;
   const styles = createStyles(theme);
 
+  // Determine the best external URL: product page first, then company website
+  const buyUrl = (teaware.product_url && !teaware.product_url.includes('/undefined'))
+    ? teaware.product_url
+    : teaware.company?.website_url || null;
+  const hasDirectProductLink = teaware.product_url && !teaware.product_url.includes('/undefined');
+
   const handleBuyPress = async () => {
     haptics.medium();
-    // Validate URL before opening - skip if it contains "/undefined"
-    if (teaware.product_url && !teaware.product_url.includes('/undefined')) {
+    if (buyUrl) {
       try {
-        await WebBrowser.openBrowserAsync(teaware.product_url);
+        await WebBrowser.openBrowserAsync(buyUrl);
       } catch (e) {
         try {
-          await Linking.openURL(teaware.product_url);
+          await Linking.openURL(buyUrl);
         } catch (e2) {
-          Alert.alert('Unable to open link', teaware.product_url);
+          Alert.alert('Unable to open link', buyUrl);
         }
       }
     }
@@ -282,9 +287,13 @@ export default function TeawareDetailScreen({ route, navigation }) {
         )}
 
         {/* Buy Button */}
-        {teaware.product_url && !teaware.product_url.includes('/undefined') && (
+        {buyUrl && (
           <Button
-            title={teaware.company?.name ? `Buy from ${teaware.company.name}` : 'View on Store'}
+            title={
+              hasDirectProductLink
+                ? (teaware.company?.name ? `Buy from ${teaware.company.name}` : 'View on Store')
+                : (teaware.company?.name ? `Visit ${teaware.company.name}` : 'Visit Shop')
+            }
             onPress={handleBuyPress}
             variant="primary"
             icon={<ExternalLink size={18} color="#fff" />}

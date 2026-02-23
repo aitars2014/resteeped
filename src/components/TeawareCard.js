@@ -92,6 +92,13 @@ export const TeawareCard = ({ item, onPress, style, compact = false }) => {
           {item.capacity_ml && ` • ${item.capacity_ml}ml`}
         </Text>
 
+        {/* Shop Name */}
+        {item.company?.name && (
+          <Text style={[styles.shopName, { color: theme.text.tertiary }]} numberOfLines={1}>
+            {item.company.name}
+          </Text>
+        )}
+
         {/* Price */}
         {item.price_usd && (
           <Text style={[styles.price, { color: theme.accent.primary }]}>
@@ -160,6 +167,10 @@ const styles = StyleSheet.create({
   details: {
     ...typography.caption,
     marginBottom: 4,
+  },
+  shopName: {
+    fontSize: 12,
+    marginTop: 2,
   },
   price: {
     ...typography.body,
