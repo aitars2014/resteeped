@@ -394,6 +394,10 @@ export const ActivityFeedScreen = ({ navigation }) => {
       setRefreshing(true);
     }
     
+    // Timeout helper to prevent Supabase queries from hanging
+    const withTimeout = (promise, ms = 8000) => 
+      Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('Query timeout')), ms))]);
+    
     try {
       // Fetch real activities from Supabase
       let allReviews = [];
@@ -402,34 +406,35 @@ export const ActivityFeedScreen = ({ navigation }) => {
       if (isSupabaseConfigured()) {
         // Fetch reviews with profile info
         try {
-          const { data: reviews } = await supabase
+          const { data: reviews, error: reviewsError } = await withTimeout(supabase
             .from('reviews')
             .select('*, profiles:user_id(id, display_name, avatar_url)')
             .order('created_at', { ascending: false })
-            .limit(20);
-          allReviews = reviews || [];
-        } catch (e) {
-          // Fallback: fetch without profile join
-          try {
-            const { data: reviews } = await supabase
+            .limit(20));
+          if (reviewsError) {
+            // Fallback: fetch without profile join
+            const { data: fallbackReviews } = await withTimeout(supabase
               .from('reviews')
               .select('*')
               .order('created_at', { ascending: false })
-              .limit(20);
+              .limit(20));
+            allReviews = fallbackReviews || [];
+          } else {
             allReviews = reviews || [];
-          } catch (e2) {
-            console.log('Could not fetch reviews:', e2.message);
           }
+        } catch (e) {
+          console.log('Could not fetch reviews:', e.message);
         }
 
         // Fetch recent brew sessions and collection adds for real activity
         try {
-          const { data: recentBrews } = await supabase
+          const { data: recentBrews, error: brewsError } = await withTimeout(supabase
             .from('brew_sessions')
             .select('*, profiles:user_id(id, display_name, avatar_url), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('created_at', { ascending: false })
-            .limit(15);
+            .limit(15));
           
+          if (brewsError) console.log('Brew sessions query error:', brewsError.message);
           (recentBrews || []).forEach(brew => {
             if (brew.tea) {
               const isRealUser = brew.profiles?.display_name;
@@ -456,12 +461,13 @@ export const ActivityFeedScreen = ({ navigation }) => {
         }
 
         try {
-          const { data: recentAdds } = await supabase
+          const { data: recentAdds, error: addsError } = await withTimeout(supabase
             .from('user_teas')
             .select('*, profiles:user_id(id, display_name, avatar_url), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('added_at', { ascending: false })
-            .limit(15);
+            .limit(15));
           
+          if (addsError) console.log('User teas query error:', addsError.message);
           (recentAdds || []).forEach(add => {
             if (add.tea) {
               const isRealUser = add.profiles?.display_name;
@@ -516,6 +522,12 @@ export const ActivityFeedScreen = ({ navigation }) => {
   useEffect(() => {
     if (teas.length > 0) {
       loadActivities(1);
+    } else {
+      // If teas haven't loaded, still clear loading state after a timeout
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 5000);
+      return () => clearTimeout(timeout);
     }
   }, [teas, loadActivities]);
   
