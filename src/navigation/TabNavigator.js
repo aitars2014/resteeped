@@ -57,6 +57,8 @@ const DiscoveryStack = () => (
     <Stack.Screen name="TeaFinder" component={TeaFinderScreen} />
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
     <Stack.Screen name="CompanyProfile" component={CompanyProfileScreen} />
+    <Stack.Screen name="Teaware" component={TeawareScreen} />
+    <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
     <Stack.Screen 
       name="Paywall" 
       component={PaywallScreen}

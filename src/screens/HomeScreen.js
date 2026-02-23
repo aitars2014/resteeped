@@ -483,7 +483,7 @@ export const HomeScreen = ({ navigation }) => {
             {renderSectionHeader(
               <Cuboid size={18} color={theme.accent.primary} />,
               'Teaware',
-              () => navigation.navigate('Profile', { screen: 'TeawareCollection' })
+              () => navigation.navigate('Discover', { screen: 'Teaware' })
             )}
             <ScrollView
               horizontal
