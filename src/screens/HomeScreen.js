@@ -657,12 +657,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     paddingHorizontal: spacing.screenHorizontal,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     gap: spacing.sm,
   },
   teaTypeButton: {
     alignItems: 'center',
-    width: (width - (spacing.screenHorizontal * 2) - 40) / 6,
+    width: (width - (spacing.screenHorizontal * 2) - 48) / 4,
     paddingVertical: spacing.xs,
   },
   teaTypeGradient: {

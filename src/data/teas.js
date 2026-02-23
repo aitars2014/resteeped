@@ -211,5 +211,6 @@ export const teaTypes = [
   { id: 'oolong', label: 'Oolong' },
   { id: 'white', label: 'White' },
   { id: 'puerh', label: 'Pu-erh' },
+  { id: 'yellow', label: 'Yellow' },
   { id: 'herbal', label: 'Herbal' },
 ];
