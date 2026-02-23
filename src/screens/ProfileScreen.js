@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { User, LogOut, Trash2, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2, Crown } from 'lucide-react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Application from 'expo-application';
 import { typography, spacing } from '../constants';
 import { Button, Avatar, AvatarPicker, EditDisplayNameModal } from '../components';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -592,7 +593,7 @@ export const ProfileScreen = ({ navigation }) => {
         {user ? renderLoggedIn() : renderLoggedOut()}
         
         <View style={[styles.footer, { borderTopColor: theme.border.light }]}>
-          <Text style={[styles.footerText, { color: theme.text.secondary }]}>Resteeped v1.0.0</Text>
+          <Text style={[styles.footerText, { color: theme.text.secondary }]}>Resteeped v{Application.nativeApplicationVersion || '1.1.0'}</Text>
           <Text style={[styles.footerSubtext, { color: theme.text.tertiary }]}>Made with 🍵 for tea lovers</Text>
         </View>
       </SafeAreaView>
