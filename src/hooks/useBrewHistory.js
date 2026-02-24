@@ -58,7 +58,7 @@ export const useBrewHistory = () => {
     fetchBrewHistory();
   }, [fetchBrewHistory]);
 
-  const logBrewSession = async ({ teaId, steepTimeSeconds, temperatureF, teaData = null, infusionNumber = null, note = null }) => {
+  const logBrewSession = async ({ teaId, steepTimeSeconds, temperatureF, teaData = null, infusionNumber = null, note = null, rating = null, tastingNotes = null, brewMethod = null }) => {
     if (isLocalMode) {
       // Store locally for dev mode or non-logged-in users
       const session = {
@@ -69,6 +69,9 @@ export const useBrewHistory = () => {
         temperature_f: temperatureF,
         infusion_number: infusionNumber,
         note: note,
+        rating: rating,
+        tasting_notes: tastingNotes,
+        brew_method: brewMethod,
         created_at: new Date().toISOString(),
         tea: teaData, // Store tea data for display in dev mode
       };

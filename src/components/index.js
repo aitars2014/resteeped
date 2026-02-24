@@ -18,6 +18,8 @@ export { SeasonalHighlights } from './SeasonalHighlights';
 export { TeaPickerModal } from './TeaPickerModal';
 export { TeaRandomizer } from './TeaRandomizer';
 export { BrewPicker } from './BrewPicker';
+export { TemperatureSlider } from './TemperatureSlider';
+export { PostBrewReviewModal } from './PostBrewReviewModal';
 export { BrewingGuide } from './BrewingGuide';
 export { HealthBenefits } from './HealthBenefits';
 export { TeaBattle } from './TeaBattle';

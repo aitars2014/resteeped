@@ -20,10 +20,10 @@ import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
 import { Audio } from 'expo-av';
 import { typography, spacing } from '../constants';
-import { Button, TeaTypeBadge } from '../components';
+import { Button, TeaTypeBadge, TemperatureSlider, PostBrewReviewModal } from '../components';
 import { useBrewHistory } from '../hooks';
 import { useAuth, useTheme, useCollection } from '../context';
-import { getBrewingGuide } from '../constants/brewingGuides';
+import { getBrewingGuide, getColdBrewGuide, BREW_METHODS } from '../constants/brewingGuides';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const { width } = Dimensions.get('window');
@@ -137,6 +137,18 @@ export const TimerScreen = ({ route, navigation }) => {
   const [infusionNotes, setInfusionNotes] = useState({});
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [currentNote, setCurrentNote] = useState('');
+  
+  // Brew method state
+  const [brewMethod, setBrewMethod] = useState(
+    isMultiSteep ? BREW_METHODS.GONGFU : BREW_METHODS.WESTERN
+  );
+  
+  // Temperature state - default from tea data or guide
+  const defaultTempF = tea?.steepTempF || guide?.waterTemp?.fahrenheit || 200;
+  const [temperatureF, setTemperatureF] = useState(defaultTempF);
+  
+  // Post-brew review modal
+  const [showReviewModal, setShowReviewModal] = useState(false);
   
   // Timer state
   const [totalSeconds, setTotalSeconds] = useState(defaultTimeSeconds);
@@ -306,14 +318,15 @@ export const TimerScreen = ({ route, navigation }) => {
         infusion: multiSteepMode ? currentInfusion : null,
       });
       
-      // Log the brew session
+      // Log the brew session (rating/notes added via review modal callback)
       logBrewSession({
         teaId: tea?.id,
         steepTimeSeconds: totalSeconds,
-        temperatureF: tea?.steepTempF,
+        temperatureF: temperatureF,
         teaData: tea,
         infusionNumber: multiSteepMode ? currentInfusion : null,
         note: infusionNotes[currentInfusion] || null,
+        brewMethod: brewMethod,
       });
 
       // Mark tea as tried in collection if it exists
@@ -325,23 +338,13 @@ export const TimerScreen = ({ route, navigation }) => {
             tried_at: new Date().toISOString(),
           });
         }
-        
-        // Prompt for review if not yet reviewed
-        if (!collectionItem?.user_rating) {
-          setTimeout(() => {
-            Alert.alert(
-              'How was your tea?',
-              `Would you like to rate "${tea.name}"?`,
-              [
-                { text: 'Later', style: 'cancel' },
-                { 
-                  text: 'Rate Now', 
-                  onPress: () => navigation.navigate('TeaDetail', { tea, openReview: true })
-                },
-              ]
-            );
-          }, 1500); // Delay to let the completion UI show first
-        }
+      }
+      
+      // Show post-brew review modal for tea brews
+      if (tea) {
+        setTimeout(() => {
+          setShowReviewModal(true);
+        }, 1500);
       }
     }
   }, [isComplete, hasLogged, tea, totalSeconds, currentInfusion, multiSteepMode, infusionNotes, logBrewSession, isInCollection, getCollectionItem, updateInCollection, navigation]);
@@ -355,7 +358,8 @@ export const TimerScreen = ({ route, navigation }) => {
   const adjustTime = (delta) => {
     if (isRunning) return;
     
-    const newTime = Math.max(10, Math.min(900, totalSeconds + delta));
+    const maxTime = brewMethod === BREW_METHODS.COLD_BREW ? 86400 : 900; // 24h for cold brew
+    const newTime = Math.max(10, Math.min(maxTime, totalSeconds + delta));
     setTotalSeconds(newTime);
     setRemainingSeconds(newTime);
     setIsComplete(false);
@@ -467,6 +471,38 @@ export const TimerScreen = ({ route, navigation }) => {
     setShowNotesModal(true);
   };
   
+  // Handle brew method change
+  const handleBrewMethodChange = (method) => {
+    if (isRunning) return;
+    setBrewMethod(method);
+    setIsComplete(false);
+    setHasLogged(false);
+    
+    if (method === BREW_METHODS.COLD_BREW) {
+      const coldGuide = getColdBrewGuide(tea);
+      const coldSeconds = coldGuide.steepTimeHours * 3600; // hours to seconds
+      setTotalSeconds(coldSeconds);
+      setRemainingSeconds(coldSeconds);
+      setTemperatureF(coldGuide.temperatureF);
+      setMultiSteepMode(false);
+      setCurrentInfusion(1);
+    } else if (method === BREW_METHODS.GONGFU) {
+      setMultiSteepMode(true);
+      const times = getInfusionTimes(tea, totalInfusions);
+      setInfusionTimes(times);
+      setTotalSeconds(times[0] || defaultTimeSeconds);
+      setRemainingSeconds(times[0] || defaultTimeSeconds);
+      setTemperatureF(defaultTempF);
+    } else {
+      // Western
+      setMultiSteepMode(false);
+      setTotalSeconds(defaultTimeSeconds);
+      setRemainingSeconds(defaultTimeSeconds);
+      setTemperatureF(defaultTempF);
+      setCurrentInfusion(1);
+    }
+  };
+  
   const progress = remainingSeconds / totalSeconds;
   const strokeDashoffset = CIRCUMFERENCE * (1 - progress);
   
@@ -507,63 +543,43 @@ export const TimerScreen = ({ route, navigation }) => {
           </View>
         )}
         
-        {/* Multi-Steep Toggle (only show if tea supports it) */}
-        {tea && maxInfusions > 1 && (
+        {/* Brew Method Selector */}
+        {tea && (
           <View style={styles.multiSteepToggle}>
-            <TouchableOpacity
-              style={[
-                styles.modeButton,
-                { borderColor: theme.border.medium },
-                !multiSteepMode && { backgroundColor: theme.accent.primary, borderColor: theme.accent.primary },
-              ]}
-              onPress={() => {
-                setMultiSteepMode(false);
-                setTotalSeconds(defaultTimeSeconds);
-                setRemainingSeconds(defaultTimeSeconds);
-                setCurrentInfusion(1);
-                setIsComplete(false);
-                setHasLogged(false);
-              }}
-              accessible={true}
-              accessibilityRole="button"
-              accessibilityLabel="Single steep mode"
-              accessibilityState={{ selected: !multiSteepMode }}
-            >
-              <Text style={[
-                styles.modeButtonText,
-                { color: theme.text.secondary },
-                !multiSteepMode && { color: theme.text.inverse },
-              ]}>
-                Single Steep
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={[
-                styles.modeButton,
-                { borderColor: theme.border.medium },
-                multiSteepMode && { backgroundColor: theme.accent.primary, borderColor: theme.accent.primary },
-              ]}
-              onPress={() => {
-                setMultiSteepMode(true);
-                const times = getInfusionTimes(tea, totalInfusions);
-                setInfusionTimes(times);
-                setTotalSeconds(times[0] || defaultTimeSeconds);
-                setRemainingSeconds(times[0] || defaultTimeSeconds);
-              }}
-              accessible={true}
-              accessibilityRole="button"
-              accessibilityLabel={`Gongfu mode, ${maxInfusions} infusions`}
-              accessibilityState={{ selected: multiSteepMode }}
-            >
-              <Repeat size={14} color={multiSteepMode ? theme.text.inverse : theme.text.secondary} style={{ marginRight: 4 }} />
-              <Text style={[
-                styles.modeButtonText,
-                { color: theme.text.secondary },
-                multiSteepMode && { color: theme.text.inverse },
-              ]}>
-                Gongfu ({maxInfusions})
-              </Text>
-            </TouchableOpacity>
+            {[
+              { method: BREW_METHODS.WESTERN, label: 'Western' },
+              ...(maxInfusions > 1 ? [{ method: BREW_METHODS.GONGFU, label: `Gongfu (${maxInfusions})` }] : []),
+              { method: BREW_METHODS.COLD_BREW, label: 'Cold Brew' },
+            ].map(({ method, label }) => {
+              const isActive = brewMethod === method;
+              return (
+                <TouchableOpacity
+                  key={method}
+                  style={[
+                    styles.modeButton,
+                    { borderColor: theme.border.medium },
+                    isActive && { backgroundColor: theme.accent.primary, borderColor: theme.accent.primary },
+                  ]}
+                  onPress={() => handleBrewMethodChange(method)}
+                  disabled={isRunning}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${label} brewing method`}
+                  accessibilityState={{ selected: isActive }}
+                >
+                  {method === BREW_METHODS.GONGFU && (
+                    <Repeat size={14} color={isActive ? theme.text.inverse : theme.text.secondary} style={{ marginRight: 4 }} />
+                  )}
+                  <Text style={[
+                    styles.modeButtonText,
+                    { color: theme.text.secondary },
+                    isActive && { color: theme.text.inverse },
+                  ]}>
+                    {label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
           </View>
         )}
         
@@ -667,11 +683,13 @@ export const TimerScreen = ({ route, navigation }) => {
         {/* Recommended time label */}
         {!isComplete && (
           <Text style={[styles.recommendedLabel, { color: theme.text.secondary }]}>
-            {multiSteepMode 
-              ? `Steep ${currentInfusion}: ${formatTime(infusionTimes[currentInfusion - 1] || totalSeconds)}`
-              : recommendedTime 
-                ? `Recommended: ${recommendedTime}${isCustomTime ? ' • Custom' : ''}`
-                : 'Set your steep time'
+            {brewMethod === BREW_METHODS.COLD_BREW
+              ? `Cold brew: ${Math.round(totalSeconds / 3600)}h in fridge`
+              : multiSteepMode 
+                ? `Steep ${currentInfusion}: ${formatTime(infusionTimes[currentInfusion - 1] || totalSeconds)}`
+                : recommendedTime 
+                  ? `Recommended: ${recommendedTime}${isCustomTime ? ' • Custom' : ''}`
+                  : 'Set your steep time'
             }
           </Text>
         )}
@@ -681,11 +699,11 @@ export const TimerScreen = ({ route, navigation }) => {
           <View style={styles.adjustControls}>
             <TouchableOpacity 
               style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
-              onPress={() => adjustTime(-15)}
+              onPress={() => adjustTime(brewMethod === BREW_METHODS.COLD_BREW ? -1800 : -15)}
               disabled={isRunning}
               accessible={true}
               accessibilityRole="button"
-              accessibilityLabel="Decrease time by 15 seconds"
+              accessibilityLabel={`Decrease time by ${brewMethod === BREW_METHODS.COLD_BREW ? '30 minutes' : '15 seconds'}`}
               accessibilityState={{ disabled: isRunning }}
             >
               <Minus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
@@ -697,17 +715,22 @@ export const TimerScreen = ({ route, navigation }) => {
               accessibilityRole="text"
               accessibilityLabel={`Total steep time: ${formatTime(totalSeconds)}`}
             >
-              <Text style={[styles.adjustTimeText, { color: theme.text.primary }]}>{formatTime(totalSeconds)}</Text>
+              <Text style={[styles.adjustTimeText, { color: theme.text.primary }]}>
+                {brewMethod === BREW_METHODS.COLD_BREW 
+                  ? `${Math.floor(totalSeconds / 3600)}h ${Math.floor((totalSeconds % 3600) / 60)}m`
+                  : formatTime(totalSeconds)
+                }
+              </Text>
               <Text style={[styles.adjustTimeLabel, { color: theme.text.secondary }]}>total</Text>
             </View>
             
             <TouchableOpacity 
               style={[styles.adjustButton, { borderColor: isRunning ? theme.text.secondary : theme.text.primary }]}
-              onPress={() => adjustTime(15)}
+              onPress={() => adjustTime(brewMethod === BREW_METHODS.COLD_BREW ? 1800 : 15)}
               disabled={isRunning}
               accessible={true}
               accessibilityRole="button"
-              accessibilityLabel="Increase time by 15 seconds"
+              accessibilityLabel={`Increase time by ${brewMethod === BREW_METHODS.COLD_BREW ? '30 minutes' : '15 seconds'}`}
               accessibilityState={{ disabled: isRunning }}
             >
               <Plus size={24} color={isRunning ? theme.text.secondary : theme.text.primary} />
@@ -737,10 +760,16 @@ export const TimerScreen = ({ route, navigation }) => {
           </Text>
         )}
         
-        {/* Temperature display */}
-        {tea?.steepTempF && !isComplete && (
+        {/* Temperature controls */}
+        {tea && !isComplete && (
           <View style={styles.tempContainer}>
-            <Text style={[styles.tempText, { color: theme.text.secondary }]}>🌡️ {tea.steepTempF}°F</Text>
+            <TemperatureSlider
+              value={temperatureF}
+              onValueChange={setTemperatureF}
+              minTemp={brewMethod === BREW_METHODS.COLD_BREW ? 32 : 100}
+              maxTemp={212}
+              disabled={isRunning}
+            />
           </View>
         )}
         
@@ -796,6 +825,30 @@ export const TimerScreen = ({ route, navigation }) => {
           </Text>
         )}
       </ScrollView>
+      
+      {/* Post-Brew Review Modal */}
+      <PostBrewReviewModal
+        visible={showReviewModal}
+        onClose={() => setShowReviewModal(false)}
+        onSave={({ rating, notes }) => {
+          setShowReviewModal(false);
+          // Log the review as a separate update to the most recent session
+          logBrewSession({
+            teaId: tea?.id,
+            steepTimeSeconds: totalSeconds,
+            temperatureF: temperatureF,
+            teaData: tea,
+            infusionNumber: multiSteepMode ? currentInfusion : null,
+            brewMethod: brewMethod,
+            rating: rating,
+            tastingNotes: notes,
+          });
+        }}
+        teaName={tea?.name}
+        brewMethod={brewMethod}
+        steepTimeSeconds={totalSeconds}
+        temperatureF={temperatureF}
+      />
       
       {/* Notes Modal */}
       <Modal
