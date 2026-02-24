@@ -3,7 +3,7 @@
     "name": "Resteeped",
     "slug": "resteeped",
     "scheme": "resteeped",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "orientation": "portrait",
     "icon": "./assets/ios-icons/Default.png",
     "userInterfaceStyle": "light",
