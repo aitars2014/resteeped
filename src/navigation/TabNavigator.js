@@ -165,6 +165,13 @@ export const TabNavigator = () => {
         name="Discover" 
         component={DiscoveryStack}
         options={{ tabBarLabel: 'Discover' }}
+        listeners={({ navigation }) => ({
+          tabPress: (e) => {
+            // Reset Discovery stack to root when tab is pressed
+            // This ensures tapping Discover always shows teas, not teaware
+            navigation.navigate('Discover', { screen: 'DiscoveryHome', params: {} });
+          },
+        })}
       />
       <Tab.Screen 
         name="MyTeas" 

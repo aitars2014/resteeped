@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Sparkles, Star, ChevronRight } from 'lucide-react-native';
+import { Sparkles, ChevronRight } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
 import { TeaTypeBadge } from './TeaTypeBadge';
 
@@ -16,8 +16,8 @@ const getTeaOfTheDay = (teas, date = new Date()) => {
   const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
   const seed = dateStr.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
   
-  // Filter to well-rated teas
-  const eligibleTeas = teas.filter(t => (t.avgRating || 0) >= 3.5);
+  // All teas are eligible (ratings removed)
+  const eligibleTeas = teas.filter(t => t.imageUrl); // prefer teas with images
   if (eligibleTeas.length === 0) return teas[0];
   
   const index = seed % eligibleTeas.length;
@@ -58,12 +58,6 @@ export const TeaOfTheDay = ({ teas, onPress }) => {
             
             <View style={styles.meta}>
               <TeaTypeBadge teaType={tea.teaType} size="small" inverted />
-              {tea.avgRating > 0 && (
-                <View style={styles.ratingBadge}>
-                  <Star size={12} color="#FFF" fill="#FFF" />
-                  <Text style={styles.ratingText}>{tea.avgRating.toFixed(1)}</Text>
-                </View>
-              )}
             </View>
           </View>
           
@@ -136,16 +130,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: spacing.sm,
-  },
-  ratingBadge: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 4,
-  },
-  ratingText: {
-    ...typography.caption,
-    color: colors.text.inverse,
-    fontWeight: '600',
   },
   image: {
     width: 80,

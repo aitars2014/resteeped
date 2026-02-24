@@ -75,7 +75,19 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   });
   
   // Update filters when navigating from Home with new params
+  // Reset to defaults when params are cleared (e.g., tab press)
   useEffect(() => {
+    if (!initialFilter && !initialCompanyFilter && !initialSearch) {
+      // Tab press or direct navigation — reset to defaults
+      setSearchQuery('');
+      setFilters({
+        teaType: 'all',
+        company: 'all',
+        minRating: 'all',
+        sortBy: 'relevance',
+      });
+      return;
+    }
     // If navigating with a filter/section but no search, clear the search
     if ((initialFilter !== undefined || initialCompanyFilter !== undefined) && initialSearch === undefined) {
       setSearchQuery('');
