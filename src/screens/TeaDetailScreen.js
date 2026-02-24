@@ -122,30 +122,46 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const isOnWishlist = inCollection && collectionItem?.status === 'want_to_try';
   const isInMyTeas = inCollection && collectionItem?.status === 'tried';
 
+  const [wishlistLoading, setWishlistLoading] = useState(false);
+  const [myTeasLoading, setMyTeasLoading] = useState(false);
+
   const handleWishlist = async () => {
+    if (wishlistLoading) return;
     if (!requireAuth()) return;
-    if (isOnWishlist) {
-      // Already on wishlist — remove
-      await removeFromCollection(tea.id);
-      return;
+    setWishlistLoading(true);
+    try {
+      if (isOnWishlist) {
+        await removeFromCollection(tea.id);
+      } else {
+        if (!inCollection && !checkCollectionLimit()) return;
+        await addTeaWithStatus('want_to_try');
+      }
+    } catch (err) {
+      console.error('handleWishlist error:', err);
+    } finally {
+      setWishlistLoading(false);
     }
-    if (!inCollection && !checkCollectionLimit()) return;
-    await addTeaWithStatus('want_to_try');
   };
 
   const handleMyTeas = async () => {
+    if (myTeasLoading) return;
     if (!requireAuth()) return;
-    if (isInMyTeas) {
-      // Already in my teas — remove
-      await removeFromCollection(tea.id);
-      return;
-    }
-    if (!inCollection && !checkCollectionLimit()) return;
-    if (inCollection) {
-      // Move from wishlist to tried
-      await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
-    } else {
-      await addTeaWithStatus('tried');
+    setMyTeasLoading(true);
+    try {
+      if (isInMyTeas) {
+        await removeFromCollection(tea.id);
+      } else {
+        if (!inCollection && !checkCollectionLimit()) return;
+        if (inCollection) {
+          await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
+        } else {
+          await addTeaWithStatus('tried');
+        }
+      }
+    } catch (err) {
+      console.error('handleMyTeas error:', err);
+    } finally {
+      setMyTeasLoading(false);
     }
   };
   
@@ -542,8 +558,11 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       <View style={styles.buttonContainer}>
         <View style={styles.buttonRow}>
           <TouchableOpacity
-            style={[styles.iconAction, { backgroundColor: isOnWishlist ? theme.accent.primary : theme.background.secondary }]}
+            style={[styles.iconAction, { backgroundColor: isOnWishlist ? theme.accent.primary : theme.background.secondary, opacity: wishlistLoading ? 0.5 : 1 }]}
             onPress={handleWishlist}
+            activeOpacity={0.6}
+            disabled={wishlistLoading}
+            hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
             accessible={true}
             accessibilityLabel={isOnWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
           >
@@ -551,8 +570,11 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             <Text style={[styles.iconActionLabel, { color: isOnWishlist ? theme.text.inverse : theme.text.secondary }]} numberOfLines={1}>Wishlist</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.iconAction, { backgroundColor: isInMyTeas ? theme.accent.primary : theme.background.secondary }]}
+            style={[styles.iconAction, { backgroundColor: isInMyTeas ? theme.accent.primary : theme.background.secondary, opacity: myTeasLoading ? 0.5 : 1 }]}
             onPress={handleMyTeas}
+            activeOpacity={0.6}
+            disabled={myTeasLoading}
+            hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
             accessible={true}
             accessibilityLabel={isInMyTeas ? 'Remove from my teas' : 'Add to my teas'}
           >
