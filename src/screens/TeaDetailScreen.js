@@ -613,6 +613,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <TouchableOpacity
             style={[styles.iconAction, { backgroundColor: theme.background.secondary }]}
             onPress={handleBrewTea}
+            activeOpacity={0.6}
+            hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
             accessible={true}
             accessibilityLabel="Steep this tea"
           >
@@ -622,6 +624,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <TouchableOpacity
             style={[styles.iconAction, { backgroundColor: personalRating > 0 ? theme.accent.primary : theme.background.secondary }]}
             onPress={handleWriteReview}
+            activeOpacity={0.6}
+            hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
             accessible={true}
             accessibilityLabel={personalRating > 0 ? `Rated ${personalRating.toFixed(1)} stars. Tap to edit` : 'Rate this tea'}
           >
