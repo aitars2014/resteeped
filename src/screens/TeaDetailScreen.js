@@ -873,6 +873,8 @@ const createStyles = (theme) => ({
     bottom: 0,
     left: 0,
     right: 0,
+    zIndex: 10,
+    elevation: 10,
     backgroundColor: theme.background.primary,
     paddingHorizontal: spacing.screenHorizontal,
     paddingTop: 12,
