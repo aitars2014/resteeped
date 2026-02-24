@@ -385,6 +385,11 @@ export const TimerScreen = ({ route, navigation }) => {
     const { error } = await setPreferredSteepTime(teaId, totalSeconds);
     if (!error) {
       setTimeModified(false);
+      trackEvent(AnalyticsEvents.STEEP_PREFERENCE_SAVED, {
+        tea_id: teaId,
+        tea_name: tea.name,
+        steep_time_seconds: totalSeconds,
+      });
       Alert.alert(
         'Saved!',
         `${formatTime(totalSeconds)} is now your preferred steep time for ${tea.name}.`,

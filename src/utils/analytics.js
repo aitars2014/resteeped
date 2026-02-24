@@ -161,4 +161,24 @@ export const AnalyticsEvents = {
   // Tea Finder
   TEA_FINDER_SEARCH: 'tea_finder_search',
   TEA_FINDER_RESULT_TAP: 'tea_finder_result_tap',
+  
+  // Community Feed
+  FEED_VIEWED: 'feed_viewed',
+  FEED_REFRESHED: 'feed_refreshed',
+  
+  // Brew History
+  BREW_HISTORY_VIEWED: 'brew_history_viewed',
+  
+  // Paywall
+  PAYWALL_VIEWED: 'paywall_viewed',
+  SUBSCRIPTION_STARTED: 'subscription_started',
+  
+  // Timer
+  STEEP_PREFERENCE_SAVED: 'steep_preference_saved',
+  
+  // Tasting Notes
+  TASTING_NOTES_SAVED: 'tasting_notes_saved',
+  
+  // Collection
+  COLLECTION_VIEWED: 'collection_viewed',
 };

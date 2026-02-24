@@ -28,6 +28,7 @@ import { StarRating, TeaTypeBadge, Avatar } from '../components';
 import { useTheme, useAuth } from '../context';
 import { useReviews, useTeas, useBrewHistory } from '../hooks';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const { width } = Dimensions.get('window');
 
@@ -531,6 +532,7 @@ export const ActivityFeedScreen = ({ navigation }) => {
   }, [teas]);
   
   useEffect(() => {
+    trackEvent(AnalyticsEvents.FEED_VIEWED);
     loadActivities(1);
   }, []);
   

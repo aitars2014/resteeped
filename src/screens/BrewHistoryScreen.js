@@ -13,9 +13,11 @@ import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const BrewHistoryScreen = ({ navigation }) => {
   const { theme, getTeaTypeColor } = useTheme();
+  React.useEffect(() => { trackEvent(AnalyticsEvents.BREW_HISTORY_VIEWED); }, []);
   const { 
     brewSessions, 
     loading, 
