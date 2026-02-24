@@ -22,7 +22,14 @@ export const useReviews = (teaId) => {
 
     setLoading(true);
     try {
-      // Fetch all reviews for this tea
+      // Only fetch the current user's review for this tea
+      if (!user) {
+        setReviews([]);
+        setUserReview(null);
+        setLoading(false);
+        return;
+      }
+
       const { data, error: fetchError } = await supabase
         .from('reviews')
         .select(`
@@ -30,17 +37,13 @@ export const useReviews = (teaId) => {
           profile:profiles(username, display_name, avatar_url)
         `)
         .eq('tea_id', teaId)
+        .eq('user_id', user.id)
         .order('created_at', { ascending: false });
 
       if (fetchError) throw fetchError;
 
       setReviews(data || []);
-
-      // Find user's review if logged in
-      if (user) {
-        const myReview = data?.find(r => r.user_id === user.id);
-        setUserReview(myReview || null);
-      }
+      setUserReview(data?.[0] || null);
     } catch (err) {
       console.error('Error fetching reviews:', err);
       setError(err.message);
@@ -150,8 +153,6 @@ export const useReviews = (teaId) => {
     deleteReview,
     refreshReviews: fetchReviews,
     reviewCount: reviews.length,
-    averageRating: reviews.length > 0 
-      ? reviews.reduce((sum, r) => sum + r.rating, 0) / reviews.length 
-      : 0,
+    averageRating: userReview?.rating || 0,
   };
 };
