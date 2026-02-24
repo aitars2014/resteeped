@@ -118,6 +118,30 @@ export const BREWING_GUIDES = {
   },
 };
 
+// Cold brew defaults by tea type (time in hours, temp in °F)
+export const COLD_BREW_GUIDES = {
+  black: { steepTimeHours: 8, temperatureF: 40, tips: 'Smooth and naturally sweet. Steep 8-12 hours in fridge.' },
+  green: { steepTimeHours: 6, temperatureF: 40, tips: 'Refreshing and light. 6-8 hours in fridge works great.' },
+  oolong: { steepTimeHours: 8, temperatureF: 40, tips: 'Complex and smooth. 8-10 hours brings out layers.' },
+  white: { steepTimeHours: 6, temperatureF: 40, tips: 'Delicate and sweet. 6-8 hours, don\'t over-steep.' },
+  puerh: { steepTimeHours: 10, temperatureF: 40, tips: 'Rich and earthy. 10-12 hours for full body.' },
+  yellow: { steepTimeHours: 6, temperatureF: 40, tips: 'Gentle and mellow. 6-8 hours in fridge.' },
+  herbal: { steepTimeHours: 12, temperatureF: 40, tips: 'Bold flavors. 12+ hours for strong extraction.' },
+};
+
+// Brewing method types
+export const BREW_METHODS = {
+  WESTERN: 'Western',
+  GONGFU: 'Gongfu',
+  COLD_BREW: 'Cold Brew',
+};
+
+// Get cold brew guide for a tea type
+export const getColdBrewGuide = (tea) => {
+  const teaType = tea?.teaType?.toLowerCase() || 'black';
+  return COLD_BREW_GUIDES[teaType] || COLD_BREW_GUIDES.black;
+};
+
 // Get brewing guide for a tea, merging defaults with tea-specific data
 export const getBrewingGuide = (tea) => {
   const teaType = tea?.teaType?.toLowerCase() || 'black';
