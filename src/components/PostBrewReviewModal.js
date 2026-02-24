@@ -14,6 +14,7 @@ const THUMB_SIZE = 28;
 const RatingSlider = ({ value, onValueChange }) => {
   const { theme } = useTheme();
   const currentValue = useRef(value);
+  const grantPosition = useRef(0);
 
   const clamp = (val) => Math.round(Math.min(50, Math.max(1, val))) / 10;
 
@@ -31,12 +32,12 @@ const RatingSlider = ({ value, onValueChange }) => {
       onPanResponderTerminationRequest: () => false,
       onPanResponderGrant: (evt) => {
         const newVal = positionToValue(evt.nativeEvent.locationX);
+        grantPosition.current = valueToPosition(newVal);
         currentValue.current = newVal;
         onValueChange?.(newVal);
       },
       onPanResponderMove: (evt, gs) => {
-        const startPos = valueToPosition(currentValue.current);
-        const newVal = positionToValue(startPos + gs.dx);
+        const newVal = positionToValue(grantPosition.current + gs.dx);
         if (newVal !== currentValue.current) {
           currentValue.current = newVal;
           onValueChange?.(newVal);

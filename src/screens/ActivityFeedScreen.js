@@ -97,12 +97,15 @@ const hashCode = (str) => {
 // Generate mock activities for demo
 const generateMockActivities = (teas, reviews, realActivities = []) => {
   const activities = [...realActivities]; // Start with real activities
+
+  // Build lookup map for O(1) tea resolution
+  const teaMap = new Map();
+  teas.forEach(t => teaMap.set(t.id, t));
   
-  // Add reviews as activities (use real user if available, otherwise mock)
+  // Add reviews as activities (use joined tea data first, fall back to teaMap)
   reviews.forEach((review) => {
-    const tea = teas.find(t => t.id === review.tea_id);
+    const tea = review.tea || teaMap.get(review.tea_id);
     if (tea) {
-      // Check if this review has a real user
       const isRealUser = review.user_id && review.profiles;
       const user = isRealUser 
         ? { id: review.user_id, name: review.profiles?.display_name || 'Tea Lover', isReal: true }
@@ -120,20 +123,25 @@ const generateMockActivities = (teas, reviews, realActivities = []) => {
     }
   });
   
-  // Generate mock collection adds with varied users
-  const recentTeas = [...teas].sort(() => Math.random() - 0.5).slice(0, 8);
+  // Generate mock collection adds with varied users (use fewer mock items)
+  const shuffled = [...teas];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  const recentTeas = shuffled.slice(0, 6);
   recentTeas.forEach((tea, idx) => {
     activities.push({
       id: `collection-${tea.id}-${Date.now()}-${idx}`,
       type: ACTIVITY_TYPES.COLLECTION_ADD,
       user: getMockUser(`collection-${tea.id}-${idx}`),
       tea,
-      timestamp: new Date(Date.now() - Math.random() * 86400000 * 3), // Last 3 days
+      timestamp: new Date(Date.now() - Math.random() * 86400000 * 3),
     });
   });
   
   // Generate mock brew sessions with varied users
-  const brewedTeas = [...teas].sort(() => Math.random() - 0.5).slice(0, 6);
+  const brewedTeas = shuffled.slice(6, 10);
   brewedTeas.forEach((tea, idx) => {
     activities.push({
       id: `brew-${tea.id}-${Date.now()}-${idx}`,
@@ -141,7 +149,7 @@ const generateMockActivities = (teas, reviews, realActivities = []) => {
       user: getMockUser(`brew-${tea.id}-${idx}`),
       tea,
       steepTime: Math.floor(Math.random() * 4 + 2),
-      timestamp: new Date(Date.now() - Math.random() * 86400000 * 2), // Last 2 days
+      timestamp: new Date(Date.now() - Math.random() * 86400000 * 2),
     });
   });
   
@@ -405,35 +413,34 @@ export const ActivityFeedScreen = ({ navigation }) => {
       
       if (isSupabaseConfigured()) {
         const [reviewsResult, brewsResult, addsResult] = await Promise.allSettled([
-          // Reviews
+          // Reviews — include tea join for direct resolution
           withTimeout(supabase
             .from('reviews')
-            .select('*, profiles:user_id(id, display_name, avatar_url, is_private)')
+            .select('id, user_id, tea_id, rating, review_text, created_at, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('created_at', { ascending: false })
             .limit(20)),
-          // Brew sessions
+          // Brew sessions — select only needed columns
           withTimeout(supabase
             .from('brew_sessions')
-            .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
+            .select('id, user_id, tea_id, steep_time_seconds, created_at, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('created_at', { ascending: false })
             .limit(15)),
-          // Collection adds
+          // Collection adds — select only needed columns
           withTimeout(supabase
             .from('user_teas')
-            .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
+            .select('id, user_id, tea_id, status, added_at, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('added_at', { ascending: false })
             .limit(15)),
         ]);
 
-        // Process reviews
+        // Process reviews — now includes tea join
         if (reviewsResult.status === 'fulfilled') {
           const { data: reviews, error: reviewsError } = reviewsResult.value;
           if (reviewsError) {
-            // Fallback without profile join
             try {
               const { data: fallbackReviews } = await withTimeout(supabase
                 .from('reviews')
-                .select('*')
+                .select('id, user_id, tea_id, rating, review_text, created_at, tea:tea_id(id, name, tea_type, brand_name, image_url)')
                 .order('created_at', { ascending: false })
                 .limit(20));
               allReviews = fallbackReviews || [];
@@ -524,16 +531,10 @@ export const ActivityFeedScreen = ({ navigation }) => {
   }, [teas]);
   
   useEffect(() => {
-    if (teas.length > 0) {
-      loadActivities(1);
-    } else {
-      // If teas haven't loaded, still clear loading state after a timeout
-      const timeout = setTimeout(() => {
-        setLoading(false);
-      }, 5000);
-      return () => clearTimeout(timeout);
-    }
-  }, [teas, loadActivities]);
+    // Load activities immediately — Supabase queries include tea joins,
+    // so we don't need to wait for the full tea catalog
+    loadActivities(1);
+  }, [loadActivities]);
   
   const handleRefresh = () => {
     loadActivities(1, true);

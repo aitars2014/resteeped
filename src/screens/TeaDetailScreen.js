@@ -123,9 +123,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const isInMyTeas = inCollection && collectionItem?.status === 'tried';
 
   const handleWishlist = async () => {
+    console.log('[TeaDetail] handleWishlist tapped', { teaId: tea.id, user: !!user, isOnWishlist, inCollection });
     if (!requireAuth()) return;
     if (isOnWishlist) {
-      // Already on wishlist — remove
       await removeFromCollection(tea.id);
       return;
     }
@@ -134,15 +134,14 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   };
 
   const handleMyTeas = async () => {
+    console.log('[TeaDetail] handleMyTeas tapped', { teaId: tea.id, user: !!user, isInMyTeas, inCollection });
     if (!requireAuth()) return;
     if (isInMyTeas) {
-      // Already in my teas — remove
       await removeFromCollection(tea.id);
       return;
     }
     if (!inCollection && !checkCollectionLimit()) return;
     if (inCollection) {
-      // Move from wishlist to tried
       await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
     } else {
       await addTeaWithStatus('tried');
@@ -544,6 +543,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <TouchableOpacity
             style={[styles.iconAction, { backgroundColor: isOnWishlist ? theme.accent.primary : theme.background.secondary }]}
             onPress={handleWishlist}
+            activeOpacity={0.6}
+            hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
             accessible={true}
             accessibilityLabel={isOnWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
           >
@@ -553,6 +554,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           <TouchableOpacity
             style={[styles.iconAction, { backgroundColor: isInMyTeas ? theme.accent.primary : theme.background.secondary }]}
             onPress={handleMyTeas}
+            activeOpacity={0.6}
+            hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
             accessible={true}
             accessibilityLabel={isInMyTeas ? 'Remove from my teas' : 'Add to my teas'}
           >

@@ -14,6 +14,7 @@ export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
   const lastValue = useRef(value);
   const onValueChangeRef = useRef(onValueChange);
   onValueChangeRef.current = onValueChange;
+  const trackPageX = useRef(0);
 
   const clamp = (val) => {
     const rounded = Math.round(val * 10) / 10;
@@ -43,10 +44,14 @@ export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: (evt) => {
+        // Use locationX for the initial tap (accurate for the track view)
+        trackPageX.current = evt.nativeEvent.pageX - evt.nativeEvent.locationX;
         handleMove(evt.nativeEvent.locationX);
       },
       onPanResponderMove: (evt) => {
-        handleMove(evt.nativeEvent.locationX);
+        // Use pageX minus track origin — stays accurate even when finger drifts off track
+        const x = evt.nativeEvent.pageX - trackPageX.current;
+        handleMove(x);
       },
     }),
   [handleMove]);
