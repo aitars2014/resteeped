@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -13,6 +13,7 @@ import {
   Alert,
 } from 'react-native';
 import { X } from 'lucide-react-native';
+import { VoiceInputHint } from './VoiceInputHint';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { Button } from './Button';
@@ -66,6 +67,7 @@ export const WriteReviewModal = ({
   const [rating, setRating] = useState(initialRating);
   const [reviewText, setReviewText] = useState(initialText);
   const [submitting, setSubmitting] = useState(false);
+  const reviewInputRef = useRef(null);
 
   const handleSubmit = async () => {
     if (rating === 0) return;
@@ -127,8 +129,12 @@ export const WriteReviewModal = ({
 
               {/* Review Text */}
               <View style={styles.textSection}>
-                <Text style={[styles.label, { color: theme.text.secondary }]}>Your Review (optional)</Text>
+                <View style={styles.labelRow}>
+                  <Text style={[styles.label, { color: theme.text.secondary }]}>Your Review (optional)</Text>
+                  <VoiceInputHint inputRef={reviewInputRef} />
+                </View>
                 <TextInput
+                  ref={reviewInputRef}
                   style={[styles.textInput, { 
                     backgroundColor: theme.background.secondary,
                     color: theme.text.primary,
@@ -204,6 +210,11 @@ const styles = StyleSheet.create({
   },
   textSection: {
     marginBottom: spacing.sectionSpacing,
+  },
+  labelRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   textInput: {
     borderRadius: spacing.cardBorderRadius,

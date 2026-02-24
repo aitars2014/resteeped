@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { X, Lightbulb } from 'lucide-react-native';
+import { VoiceInputHint } from './VoiceInputHint';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { Button } from './Button';
@@ -36,6 +37,7 @@ export const TastingNotesModal = ({
   const [notes, setNotes] = useState(initialNotes);
   const [rating, setRating] = useState(initialRating);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const notesInputRef = useRef(null);
 
   useEffect(() => {
     if (visible) {
@@ -112,18 +114,22 @@ export const TastingNotesModal = ({
               <View style={styles.section}>
                 <View style={styles.labelRow}>
                   <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Your Notes</Text>
-                  <TouchableOpacity 
-                    style={styles.suggestionsToggle}
-                    onPress={() => setShowSuggestions(!showSuggestions)}
-                  >
-                    <Lightbulb size={16} color={theme.accent.primary} />
-                    <Text style={[styles.suggestionsToggleText, { color: theme.accent.primary }]}>
-                      {showSuggestions ? 'Hide suggestions' : 'Show suggestions'}
-                    </Text>
-                  </TouchableOpacity>
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                    <VoiceInputHint inputRef={notesInputRef} size={16} />
+                    <TouchableOpacity 
+                      style={styles.suggestionsToggle}
+                      onPress={() => setShowSuggestions(!showSuggestions)}
+                    >
+                      <Lightbulb size={16} color={theme.accent.primary} />
+                      <Text style={[styles.suggestionsToggleText, { color: theme.accent.primary }]}>
+                        {showSuggestions ? 'Hide suggestions' : 'Show suggestions'}
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 
                 <TextInput
+                  ref={notesInputRef}
                   style={[styles.notesInput, { 
                     backgroundColor: theme.background.secondary,
                     color: theme.text.primary,
