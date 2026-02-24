@@ -198,7 +198,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     if (!user) {
       Alert.alert(
         'Sign In Required',
-        'Please sign in to write a review.',
+        'Please sign in to rate this tea.',
         [
           { text: 'Cancel', style: 'cancel' },
           { text: 'Sign In', onPress: () => navigation.navigate('Profile') },
@@ -206,7 +206,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       );
       return;
     }
-    setShowReviewModal(true);
+    // Open the tasting notes modal (which includes rating)
+    setShowTastingNotes(true);
   };
   
   const handleSubmitReview = async ({ rating, reviewText }) => {
