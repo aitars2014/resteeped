@@ -18,6 +18,7 @@ import {
 import { Minus, Plus, Coffee, Bell, BellOff, Repeat, ChevronLeft, ChevronRight, NotebookPen, X, Check } from 'lucide-react-native';
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
+import { VoiceInputHint } from '../components/VoiceInputHint';
 import { Audio } from 'expo-av';
 import { typography, spacing } from '../constants';
 import { Button, TeaTypeBadge } from '../components';
@@ -137,6 +138,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const [infusionNotes, setInfusionNotes] = useState({});
   const [showNotesModal, setShowNotesModal] = useState(false);
   const [currentNote, setCurrentNote] = useState('');
+  const infusionNoteRef = useRef(null);
   
   // Timer state
   const [totalSeconds, setTotalSeconds] = useState(defaultTimeSeconds);
@@ -818,11 +820,15 @@ export const TimerScreen = ({ route, navigation }) => {
               </TouchableOpacity>
             </View>
             
-            <Text style={[styles.notesModalSubtitle, { color: theme.text.secondary }]}>
-              Record your impressions of this steep
-            </Text>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+              <Text style={[styles.notesModalSubtitle, { color: theme.text.secondary }]}>
+                Record your impressions of this steep
+              </Text>
+              <VoiceInputHint inputRef={infusionNoteRef} size={16} />
+            </View>
             
             <TextInput
+              ref={infusionNoteRef}
               style={[styles.notesInput, { 
                 backgroundColor: theme.background.secondary,
                 borderColor: theme.border.light,
