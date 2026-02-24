@@ -100,24 +100,31 @@ const generateMockActivities = (teas, reviews, realActivities = []) => {
   
   // Add reviews as activities (use real user if available, otherwise mock)
   reviews.forEach((review) => {
-    const tea = teas.find(t => t.id === review.tea_id);
-    if (tea) {
-      // Check if this review has a real user
-      const isRealUser = review.user_id && review.profiles;
-      const user = isRealUser 
-        ? { id: review.user_id, name: review.profiles?.display_name || 'Tea Lover', isReal: true }
-        : getMockUser(review.id || `review-${tea.id}`);
-      
-      activities.push({
-        id: `review-${review.id}`,
-        type: ACTIVITY_TYPES.REVIEW,
-        user,
-        tea,
-        rating: review.rating,
-        reviewText: review.review_text,
-        timestamp: new Date(review.created_at),
-      });
-    }
+    // Use joined tea data if available, fall back to teas array lookup
+    const teaData = review.tea || teas.find(t => t.id === review.tea_id);
+    if (!teaData) return;
+    const tea = review.tea ? {
+      id: teaData.id,
+      name: teaData.name,
+      teaType: teaData.tea_type,
+      brandName: teaData.brand_name,
+      imageUrl: teaData.image_url,
+    } : teaData;
+
+    const isRealUser = review.user_id && review.profiles;
+    const user = isRealUser 
+      ? { id: review.user_id, name: review.profiles?.display_name || 'Tea Lover', isReal: true }
+      : getMockUser(review.id || `review-${tea.id}`);
+    
+    activities.push({
+      id: `review-${review.id}`,
+      type: ACTIVITY_TYPES.REVIEW,
+      user,
+      tea,
+      rating: review.rating,
+      reviewText: review.review_text,
+      timestamp: new Date(review.created_at),
+    });
   });
   
   // Generate mock collection adds with varied users
@@ -395,7 +402,7 @@ export const ActivityFeedScreen = ({ navigation }) => {
     }
     
     // Timeout helper to prevent Supabase queries from hanging
-    const withTimeout = (promise, ms = 8000) => 
+    const withTimeout = (promise, ms = 6000) => 
       Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('Query timeout')), ms))]);
     
     try {
@@ -405,24 +412,24 @@ export const ActivityFeedScreen = ({ navigation }) => {
       
       if (isSupabaseConfigured()) {
         const [reviewsResult, brewsResult, addsResult] = await Promise.allSettled([
-          // Reviews
+          // Reviews (join tea data directly)
           withTimeout(supabase
             .from('reviews')
-            .select('*, profiles:user_id(id, display_name, avatar_url, is_private)')
+            .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('created_at', { ascending: false })
-            .limit(20)),
+            .limit(15)),
           // Brew sessions
           withTimeout(supabase
             .from('brew_sessions')
             .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('created_at', { ascending: false })
-            .limit(15)),
+            .limit(10)),
           // Collection adds
           withTimeout(supabase
             .from('user_teas')
             .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('added_at', { ascending: false })
-            .limit(15)),
+            .limit(10)),
         ]);
 
         // Process reviews
@@ -524,16 +531,8 @@ export const ActivityFeedScreen = ({ navigation }) => {
   }, [teas]);
   
   useEffect(() => {
-    if (teas.length > 0) {
-      loadActivities(1);
-    } else {
-      // If teas haven't loaded, still clear loading state after a timeout
-      const timeout = setTimeout(() => {
-        setLoading(false);
-      }, 5000);
-      return () => clearTimeout(timeout);
-    }
-  }, [teas, loadActivities]);
+    loadActivities(1);
+  }, []);
   
   const handleRefresh = () => {
     loadActivities(1, true);
