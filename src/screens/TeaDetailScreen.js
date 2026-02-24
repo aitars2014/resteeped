@@ -19,6 +19,7 @@ import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useReviews, useCompanies, useTeas, useTastingNotes } from '../hooks';
+import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
 import * as Haptics from 'expo-haptics';
 
 const { width, height } = Dimensions.get('window');
@@ -38,41 +39,17 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { companies } = useCompanies();
   const { teas, getTeaDetails } = useTeas();
   
-  // Resolve local/numeric tea IDs to Supabase UUIDs
-  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  const [resolvedTeaId, setResolvedTeaId] = useState(uuidRegex.test(tea.id) ? tea.id : null);
-
-  useEffect(() => {
-    if (uuidRegex.test(tea.id)) {
-      setResolvedTeaId(tea.id);
-      return;
-    }
-    // Look up UUID by tea name
-    let cancelled = false;
-    require('../lib/supabase').supabase
-      .from('teas')
-      .select('id')
-      .eq('name', tea.name)
-      .limit(1)
-      .single()
-      .then(({ data }) => {
-        if (!cancelled && data?.id) setResolvedTeaId(data.id);
-      });
-    return () => { cancelled = true; };
-  }, [tea.id, tea.name]);
-
-  const teaId = resolvedTeaId || tea.id;
+  const teaId = useResolvedTeaId(tea);
 
   // Fetch full tea details (description, steep params, flavor notes) on-demand
   const [fullTea, setFullTea] = useState(tea);
   useEffect(() => {
-    if (!resolvedTeaId) return;
     let cancelled = false;
-    getTeaDetails(resolvedTeaId).then(details => {
+    getTeaDetails(teaId).then(details => {
       if (!cancelled && details) setFullTea(details);
     });
     return () => { cancelled = true; };
-  }, [resolvedTeaId, getTeaDetails]);
+  }, [teaId, getTeaDetails]);
   
   // Find similar teas (same type, excluding current tea)
   const similarTeas = useMemo(() => {

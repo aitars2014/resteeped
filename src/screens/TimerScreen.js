@@ -23,6 +23,7 @@ import { Audio } from 'expo-av';
 import { typography, spacing } from '../constants';
 import { Button, TeaTypeBadge, TemperatureSlider, PostBrewReviewModal } from '../components';
 import { useBrewHistory } from '../hooks';
+import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
 import { useAuth, useTheme, useCollection } from '../context';
 import { getBrewingGuide, getColdBrewGuide, BREW_METHODS } from '../constants/brewingGuides';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
@@ -111,6 +112,7 @@ const getInfusionTimes = (tea, totalInfusions) => {
 export const TimerScreen = ({ route, navigation }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const tea = route?.params?.tea;
+  const teaId = useResolvedTeaId(tea);
   const teaColor = tea ? getTeaTypeColor(tea.teaType) : null;
   
   const { user } = useAuth();
@@ -123,7 +125,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const isMultiSteep = maxInfusions > 1;
   
   // Check for user's preferred steep time first
-  const preferredTime = tea?.id ? getPreferredSteepTime(tea.id) : null;
+  const preferredTime = teaId ? getPreferredSteepTime(teaId) : null;
   const teaDefaultTime = tea?.steepTimeMin 
     ? Math.round(tea.steepTimeMin * 60) 
     : 180;
@@ -332,10 +334,10 @@ export const TimerScreen = ({ route, navigation }) => {
       });
 
       // Mark tea as tried in collection if it exists
-      if (tea?.id && isInCollection(tea.id)) {
-        const collectionItem = getCollectionItem(tea.id);
+      if (teaId && isInCollection(teaId)) {
+        const collectionItem = getCollectionItem(teaId);
         if (collectionItem?.status !== 'tried') {
-          updateInCollection(tea.id, { 
+          updateInCollection(teaId, { 
             status: 'tried',
             tried_at: new Date().toISOString(),
           });
@@ -380,7 +382,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const handleSavePreferredTime = async () => {
     if (!tea?.id || !isInCollection(tea.id)) return;
     
-    const { error } = await setPreferredSteepTime(tea.id, totalSeconds);
+    const { error } = await setPreferredSteepTime(teaId, totalSeconds);
     if (!error) {
       setTimeModified(false);
       Alert.alert(
@@ -741,7 +743,7 @@ export const TimerScreen = ({ route, navigation }) => {
         )}
         
         {/* Save as preferred steep time */}
-        {tea?.id && isInCollection(tea.id) && timeModified && !isRunning && !isComplete && (
+        {teaId && isInCollection(teaId) && timeModified && !isRunning && !isComplete && (
           <TouchableOpacity
             style={[styles.savePreferredButton, { borderColor: theme.accent.primary }]}
             onPress={handleSavePreferredTime}
