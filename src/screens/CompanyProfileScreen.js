@@ -435,6 +435,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
                   <TeaCard
                     tea={tea}
                     onPress={() => navigation.navigate('TeaDetail', { tea })}
+                    hideRating
                     compact
                   />
                 </View>

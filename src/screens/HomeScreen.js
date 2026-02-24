@@ -231,6 +231,7 @@ export const HomeScreen = ({ navigation }) => {
             tea={tea}
             onPress={() => navigation.navigate('TeaDetail', { tea })}
             style={styles.horizontalTeaCard}
+            hideRating
             compact
           />
         ))}

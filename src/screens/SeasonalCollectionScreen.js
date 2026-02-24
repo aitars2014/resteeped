@@ -39,6 +39,7 @@ export const SeasonalCollectionScreen = ({ route, navigation }) => {
       <TeaCard
         tea={item}
         onPress={() => navigation.navigate('TeaDetail', { tea: item })}
+        hideRating
         variant="full"
       />
     </View>

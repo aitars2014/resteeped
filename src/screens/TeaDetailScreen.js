@@ -550,6 +550,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
                     <TeaCard 
                       tea={similarTea}
                       onPress={() => navigation.push('TeaDetail', { tea: similarTea })}
+                      hideRating
                     />
                   </View>
                 ))}
