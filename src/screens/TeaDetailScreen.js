@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -37,7 +37,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
   const { tastingNote } = useTastingNotes(tea.id);
   const { companies } = useCompanies();
-  const { teas, getTeaDetails } = useTeas();
+  const { getTeaDetails } = useTeas();
   
   // Fetch full tea details (description, steep params, flavor notes) on-demand
   const [fullTea, setFullTea] = useState(tea);
@@ -49,13 +49,35 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     return () => { cancelled = true; };
   }, [tea.id, getTeaDetails]);
   
-  // Find similar teas (same type, excluding current tea)
-  const similarTeas = useMemo(() => {
-    return teas
-      .filter(t => t.id !== tea.id && t.teaType === tea.teaType)
-      .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0))
-      .slice(0, 6);
-  }, [teas, tea.id, tea.teaType]);
+  // Find similar teas via Supabase query instead of filtering all teas in memory
+  const [similarTeas, setSimilarTeas] = useState([]);
+  useEffect(() => {
+    let cancelled = false;
+    const teaType = tea.teaType || tea.tea_type;
+    if (!teaType) return;
+    require('../lib/supabase').supabase
+      .from('teas')
+      .select('id, name, brand_name, tea_type, image_url, avg_rating, rating_count, company_id, flavor_notes')
+      .eq('tea_type', teaType)
+      .neq('id', tea.id)
+      .order('avg_rating', { ascending: false, nullsFirst: false })
+      .limit(6)
+      .then(({ data }) => {
+        if (!cancelled && data) {
+          setSimilarTeas(data.map(t => ({
+            ...t,
+            teaType: t.tea_type,
+            brandName: t.brand_name,
+            imageUrl: t.image_url,
+            avgRating: t.avg_rating,
+            ratingCount: t.rating_count,
+            companyId: t.company_id,
+            flavorNotes: t.flavor_notes,
+          })));
+        }
+      });
+    return () => { cancelled = true; };
+  }, [tea.id, tea.teaType, tea.tea_type]);
   
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showTastingNotes, setShowTastingNotes] = useState(false);
