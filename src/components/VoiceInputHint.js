@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { TouchableOpacity, Alert, Platform, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Mic } from 'lucide-react-native';
 import { useTheme } from '../context';
 
@@ -16,16 +16,10 @@ export const VoiceInputHint = ({ inputRef, style, size = 18 }) => {
   const { theme } = useTheme();
 
   const handlePress = useCallback(() => {
-    // Focus the input so the keyboard appears
+    // Focus the input so the keyboard appears — user can then tap the mic on their keyboard
     if (inputRef?.current) {
       inputRef.current.focus();
     }
-
-    const message = Platform.OS === 'ios'
-      ? 'Tap the microphone 🎤 button on your keyboard to dictate your text.'
-      : 'Tap the microphone 🎤 on your Google keyboard to use voice typing.';
-
-    Alert.alert('Voice-to-Text', message);
   }, [inputRef]);
 
   return (

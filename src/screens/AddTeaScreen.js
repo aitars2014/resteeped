@@ -94,7 +94,8 @@ export default function AddTeaScreen({ navigation }) {
   const uploadImage = async () => {
     if (!image) return null;
 
-    const ext = image.uri.split('.').pop();
+    const ext = (image.uri.split('.').pop() || 'jpg').toLowerCase().split('?')[0];
+    const mimeType = ext === 'png' ? 'image/png' : 'image/jpeg';
     const fileName = `${user?.id || 'dev'}-${Date.now()}.${ext}`;
     const filePath = `custom-teas/${fileName}`;
 
@@ -105,7 +106,7 @@ export default function AddTeaScreen({ navigation }) {
     const { error: uploadError } = await supabase.storage
       .from('tea-photos')
       .upload(filePath, blob, {
-        contentType: `image/${ext}`,
+        contentType: mimeType,
       });
 
     if (uploadError) {
@@ -148,8 +149,13 @@ export default function AddTeaScreen({ navigation }) {
 
     try {
       let imageUrl = null;
-      if (image && !isDevMode) {
-        imageUrl = await uploadImage();
+      if (image) {
+        if (isDevMode) {
+          // In dev mode, use the local file URI directly
+          imageUrl = image.uri;
+        } else {
+          imageUrl = await uploadImage();
+        }
       }
 
       // Dev mode: store locally (no real auth)

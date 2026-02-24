@@ -107,6 +107,7 @@ export const CollectionScreen = ({ navigation }) => {
         <TeaCard 
           tea={tea} 
           onPress={() => navigation.navigate('TeaDetail', { tea })}
+          hideRating={!item.user_rating}
         />
         {item.user_rating && (
           <View style={[styles.ratingBadge, { backgroundColor: theme.accent.primary }]}>

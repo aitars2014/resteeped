@@ -1,5 +1,6 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Sparkles, ChevronRight } from 'lucide-react-native';
 import { colors, typography, spacing, getTeaTypeColor } from '../constants';
@@ -24,8 +25,42 @@ const getTeaOfTheDay = (teas, date = new Date()) => {
   return eligibleTeas[index];
 };
 
+const TEA_OF_DAY_KEY = '@resteeped_tea_of_day';
+
 export const TeaOfTheDay = ({ teas, onPress }) => {
-  const tea = useMemo(() => getTeaOfTheDay(teas), [teas]);
+  const [tea, setTea] = useState(null);
+  const resolved = useRef(false);
+
+  useEffect(() => {
+    if (!teas || teas.length === 0 || resolved.current) return;
+
+    const today = new Date().toISOString().split('T')[0];
+
+    (async () => {
+      try {
+        const cached = await AsyncStorage.getItem(TEA_OF_DAY_KEY);
+        if (cached) {
+          const { date, teaId } = JSON.parse(cached);
+          if (date === today) {
+            const found = teas.find(t => t.id === teaId);
+            if (found) {
+              resolved.current = true;
+              setTea(found);
+              return;
+            }
+          }
+        }
+      } catch {}
+
+      // Select new tea for today
+      const selected = getTeaOfTheDay(teas);
+      if (selected) {
+        resolved.current = true;
+        setTea(selected);
+        AsyncStorage.setItem(TEA_OF_DAY_KEY, JSON.stringify({ date: today, teaId: selected.id })).catch(() => {});
+      }
+    })();
+  }, [teas]);
   
   if (!tea) return null;
   

@@ -12,9 +12,9 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, MessageSquare, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
-import { Button, TeaTypeBadge, StarRating, FactCard, ReviewCard, WriteReviewModal, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote } from '../components';
+import { Button, TeaTypeBadge, StarRating, FactCard, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote } from '../components';
 import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
@@ -411,7 +411,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             </View>
           )}
           
-          {/* Personal Tasting Notes (only if in collection) - Premium Feature */}
+          {/* Personal Tasting Notes & Rating - Premium Feature */}
           {inCollection && (
             <View style={styles.section}>
               <View style={styles.tastingNotesHeader}>
@@ -484,32 +484,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             </View>
           )}
 
-          {/* My Review Section */}
-          <View style={styles.section}>
-            <View style={styles.reviewsHeader}>
-              <Text style={styles.sectionTitle}>My Review</Text>
-              <TouchableOpacity onPress={handleWriteReview} style={styles.writeReviewButton}>
-                <MessageSquare size={16} color={theme.accent.primary} />
-                <Text style={styles.writeReviewText}>
-                  {userReview ? 'Edit Review' : 'Write Review'}
-                </Text>
-              </TouchableOpacity>
-            </View>
-            
-            {userReview ? (
-              <ReviewCard 
-                key={userReview.id} 
-                review={userReview} 
-                isOwnReview={true}
-              />
-            ) : (
-              <View style={styles.noReviews}>
-                <Text style={styles.noReviewsText}>
-                  You haven't reviewed this tea yet. Tap "Write Review" to add your rating and notes.
-                </Text>
-              </View>
-            )}
-          </View>
+          {/* My Review section removed — consolidated into My Tasting Notes (TARS-48) */}
           
           {/* Buy This Tea */}
           {brandName && (
@@ -614,17 +589,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         )}
       </View>
       
-      {/* Review Modal */}
-      <WriteReviewModal
-        visible={showReviewModal}
-        onClose={() => setShowReviewModal(false)}
-        onSubmit={handleSubmitReview}
-        teaName={tea.name}
-        initialRating={userReview?.rating || 0}
-        initialText={userReview?.review_text || ''}
-      />
-      
-      {/* Tasting Notes Modal */}
+      {/* Tasting Notes Modal (consolidated with reviews — TARS-48) */}
       <TastingNotesModal
         visible={showTastingNotes}
         onClose={() => setShowTastingNotes(false)}

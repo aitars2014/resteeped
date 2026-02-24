@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
-import { Feather } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
+import { TeaLeaf } from './icons';
 
 export const EditorialTastingNote = ({ note, attribution }) => {
   const { theme } = useTheme();
@@ -12,8 +12,8 @@ export const EditorialTastingNote = ({ note, attribution }) => {
   return (
     <View style={[styles.container, { backgroundColor: theme.background.secondary, borderColor: theme.border.medium }]}>
       <View style={styles.header}>
-        <Text style={[styles.icon]}>🍵</Text>
-        <Text style={[styles.title, { color: theme.text.primary }]}>Tasting Notes</Text>
+        <TeaLeaf size={18} color={theme.accent.primary} style={{ marginRight: spacing.xs }} />
+        <Text style={[styles.title, { color: theme.text.primary }]}>Brew Notes</Text>
       </View>
       <Text style={[styles.noteText, { color: theme.text.secondary }]}>
         {note}
@@ -38,10 +38,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginBottom: spacing.sm,
-  },
-  icon: {
-    fontSize: 18,
-    marginRight: spacing.xs,
   },
   title: {
     fontSize: 16,

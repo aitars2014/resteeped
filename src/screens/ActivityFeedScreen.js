@@ -399,41 +399,53 @@ export const ActivityFeedScreen = ({ navigation }) => {
       Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('Query timeout')), ms))]);
     
     try {
-      // Fetch real activities from Supabase
+      // Fetch real activities from Supabase — all queries in parallel
       let allReviews = [];
       let realActivities = [];
       
       if (isSupabaseConfigured()) {
-        // Fetch reviews with profile info
-        try {
-          const { data: reviews, error: reviewsError } = await withTimeout(supabase
+        const [reviewsResult, brewsResult, addsResult] = await Promise.allSettled([
+          // Reviews
+          withTimeout(supabase
             .from('reviews')
             .select('*, profiles:user_id(id, display_name, avatar_url, is_private)')
             .order('created_at', { ascending: false })
-            .limit(20));
-          if (reviewsError) {
-            // Fallback: fetch without profile join
-            const { data: fallbackReviews } = await withTimeout(supabase
-              .from('reviews')
-              .select('*')
-              .order('created_at', { ascending: false })
-              .limit(20));
-            allReviews = fallbackReviews || [];
-          } else {
-            allReviews = (reviews || []).filter(r => !r.profiles?.is_private);
-          }
-        } catch (e) {
-          console.log('Could not fetch reviews:', e.message);
-        }
-
-        // Fetch recent brew sessions and collection adds for real activity
-        try {
-          const { data: recentBrews, error: brewsError } = await withTimeout(supabase
+            .limit(20)),
+          // Brew sessions
+          withTimeout(supabase
             .from('brew_sessions')
             .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('created_at', { ascending: false })
-            .limit(15));
-          
+            .limit(15)),
+          // Collection adds
+          withTimeout(supabase
+            .from('user_teas')
+            .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
+            .order('added_at', { ascending: false })
+            .limit(15)),
+        ]);
+
+        // Process reviews
+        if (reviewsResult.status === 'fulfilled') {
+          const { data: reviews, error: reviewsError } = reviewsResult.value;
+          if (reviewsError) {
+            // Fallback without profile join
+            try {
+              const { data: fallbackReviews } = await withTimeout(supabase
+                .from('reviews')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(20));
+              allReviews = fallbackReviews || [];
+            } catch {}
+          } else {
+            allReviews = (reviews || []).filter(r => !r.profiles?.is_private);
+          }
+        }
+
+        // Process brew sessions
+        if (brewsResult.status === 'fulfilled') {
+          const { data: recentBrews, error: brewsError } = brewsResult.value;
           if (brewsError) console.log('Brew sessions query error:', brewsError.message);
           (recentBrews || []).filter(b => !b.profiles?.is_private).forEach(brew => {
             if (brew.tea) {
@@ -456,17 +468,11 @@ export const ActivityFeedScreen = ({ navigation }) => {
               });
             }
           });
-        } catch (e) {
-          console.log('Could not fetch brew sessions:', e.message);
         }
 
-        try {
-          const { data: recentAdds, error: addsError } = await withTimeout(supabase
-            .from('user_teas')
-            .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
-            .order('added_at', { ascending: false })
-            .limit(15));
-          
+        // Process collection adds
+        if (addsResult.status === 'fulfilled') {
+          const { data: recentAdds, error: addsError } = addsResult.value;
           if (addsError) console.log('User teas query error:', addsError.message);
           (recentAdds || []).filter(a => !a.profiles?.is_private).forEach(add => {
             if (add.tea) {
@@ -488,8 +494,6 @@ export const ActivityFeedScreen = ({ navigation }) => {
               });
             }
           });
-        } catch (e) {
-          console.log('Could not fetch collection adds:', e.message);
         }
       }
       

@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useMemo } from 'react';
 import { View, Text, StyleSheet, PanResponder, Dimensions } from 'react-native';
 import { Star } from 'lucide-react-native';
 import { useTheme } from '../context';
@@ -12,7 +12,8 @@ const STEP = 0.1;
 export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
   const { theme } = useTheme();
   const lastValue = useRef(value);
-  const sliderRef = useRef(null);
+  const onValueChangeRef = useRef(onValueChange);
+  onValueChangeRef.current = onValueChange;
 
   const clamp = (val) => {
     const rounded = Math.round(val * 10) / 10;
@@ -33,24 +34,22 @@ export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
     if (newValue !== lastValue.current) {
       lastValue.current = newValue;
       haptics.selection();
-      onValueChange?.(newValue);
+      onValueChangeRef.current?.(newValue);
     }
-  }, [onValueChange]);
+  }, []);
 
-  const panResponder = useRef(
+  const panResponder = useMemo(() =>
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: (evt) => {
-        const x = evt.nativeEvent.locationX;
-        handleMove(x);
+        handleMove(evt.nativeEvent.locationX);
       },
       onPanResponderMove: (evt) => {
-        const x = evt.nativeEvent.locationX;
-        handleMove(x);
+        handleMove(evt.nativeEvent.locationX);
       },
-    })
-  ).current;
+    }),
+  [handleMove]);
 
   const fillWidth = value > 0 ? valueToPosition(value) : 0;
   const displayValue = value > 0 ? value.toFixed(1) : '—';
