@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -9,9 +9,7 @@ import {
   Alert,
   FlatList,
   Linking,
-  Platform,
 } from 'react-native';
-import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee } from 'lucide-react-native';
@@ -37,7 +35,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
   const { tastingNote } = useTastingNotes(tea.id);
   const { companies } = useCompanies();
-  const { getTeaDetails } = useTeas();
+  const { teas, getTeaDetails } = useTeas();
   
   // Fetch full tea details (description, steep params, flavor notes) on-demand
   const [fullTea, setFullTea] = useState(tea);
@@ -49,35 +47,13 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     return () => { cancelled = true; };
   }, [tea.id, getTeaDetails]);
   
-  // Find similar teas via Supabase query instead of filtering all teas in memory
-  const [similarTeas, setSimilarTeas] = useState([]);
-  useEffect(() => {
-    let cancelled = false;
-    const teaType = tea.teaType || tea.tea_type;
-    if (!teaType) return;
-    require('../lib/supabase').supabase
-      .from('teas')
-      .select('id, name, brand_name, tea_type, image_url, avg_rating, rating_count, company_id, flavor_notes')
-      .eq('tea_type', teaType)
-      .neq('id', tea.id)
-      .order('avg_rating', { ascending: false, nullsFirst: false })
-      .limit(6)
-      .then(({ data }) => {
-        if (!cancelled && data) {
-          setSimilarTeas(data.map(t => ({
-            ...t,
-            teaType: t.tea_type,
-            brandName: t.brand_name,
-            imageUrl: t.image_url,
-            avgRating: t.avg_rating,
-            ratingCount: t.rating_count,
-            companyId: t.company_id,
-            flavorNotes: t.flavor_notes,
-          })));
-        }
-      });
-    return () => { cancelled = true; };
-  }, [tea.id, tea.teaType, tea.tea_type]);
+  // Find similar teas (same type, excluding current tea)
+  const similarTeas = useMemo(() => {
+    return teas
+      .filter(t => t.id !== tea.id && t.teaType === tea.teaType)
+      .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0))
+      .slice(0, 6);
+  }, [teas, tea.id, tea.teaType]);
   
   const [showReviewModal, setShowReviewModal] = useState(false);
   const [showTastingNotes, setShowTastingNotes] = useState(false);
@@ -146,50 +122,30 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const isOnWishlist = inCollection && collectionItem?.status === 'want_to_try';
   const isInMyTeas = inCollection && collectionItem?.status === 'tried';
 
-  const [wishlistLoading, setWishlistLoading] = useState(false);
-  const [myTeasLoading, setMyTeasLoading] = useState(false);
-
   const handleWishlist = async () => {
-    if (wishlistLoading) return;
     if (!requireAuth()) return;
-    setWishlistLoading(true);
-    try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
-      if (isOnWishlist) {
-        await removeFromCollection(tea.id);
-      } else {
-        if (!inCollection && !checkCollectionLimit()) return;
-        await addTeaWithStatus('want_to_try');
-      }
-    } catch (err) {
-      console.error('handleWishlist error:', err);
-      Alert.alert('Error', 'Could not update wishlist. Please try again.');
-    } finally {
-      setWishlistLoading(false);
+    if (isOnWishlist) {
+      // Already on wishlist — remove
+      await removeFromCollection(tea.id);
+      return;
     }
+    if (!inCollection && !checkCollectionLimit()) return;
+    await addTeaWithStatus('want_to_try');
   };
 
   const handleMyTeas = async () => {
-    if (myTeasLoading) return;
     if (!requireAuth()) return;
-    setMyTeasLoading(true);
-    try {
-      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
-      if (isInMyTeas) {
-        await removeFromCollection(tea.id);
-      } else {
-        if (!inCollection && !checkCollectionLimit()) return;
-        if (inCollection) {
-          await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
-        } else {
-          await addTeaWithStatus('tried');
-        }
-      }
-    } catch (err) {
-      console.error('handleMyTeas error:', err);
-      Alert.alert('Error', 'Could not update collection. Please try again.');
-    } finally {
-      setMyTeasLoading(false);
+    if (isInMyTeas) {
+      // Already in my teas — remove
+      await removeFromCollection(tea.id);
+      return;
+    }
+    if (!inCollection && !checkCollectionLimit()) return;
+    if (inCollection) {
+      // Move from wishlist to tried
+      await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
+    } else {
+      await addTeaWithStatus('tried');
     }
   };
   
@@ -586,10 +542,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       <View style={styles.buttonContainer}>
         <View style={styles.buttonRow}>
           <TouchableOpacity
-            style={[styles.iconAction, { backgroundColor: isOnWishlist ? theme.accent.primary : theme.background.secondary, opacity: wishlistLoading ? 0.5 : 1 }]}
+            style={[styles.iconAction, { backgroundColor: isOnWishlist ? theme.accent.primary : theme.background.secondary }]}
             onPress={handleWishlist}
-            activeOpacity={0.6}
-            disabled={wishlistLoading}
             accessible={true}
             accessibilityLabel={isOnWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
           >
@@ -597,10 +551,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             <Text style={[styles.iconActionLabel, { color: isOnWishlist ? theme.text.inverse : theme.text.secondary }]} numberOfLines={1}>Wishlist</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.iconAction, { backgroundColor: isInMyTeas ? theme.accent.primary : theme.background.secondary, opacity: myTeasLoading ? 0.5 : 1 }]}
+            style={[styles.iconAction, { backgroundColor: isInMyTeas ? theme.accent.primary : theme.background.secondary }]}
             onPress={handleMyTeas}
-            activeOpacity={0.6}
-            disabled={myTeasLoading}
             accessible={true}
             accessibilityLabel={isInMyTeas ? 'Remove from my teas' : 'Add to my teas'}
           >
@@ -921,8 +873,6 @@ const createStyles = (theme) => ({
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 10,
-    elevation: 10,
     backgroundColor: theme.background.primary,
     paddingHorizontal: spacing.screenHorizontal,
     paddingTop: 12,

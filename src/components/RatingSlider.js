@@ -12,7 +12,6 @@ const STEP = 0.1;
 export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
   const { theme } = useTheme();
   const lastValue = useRef(value);
-  const grantPosition = useRef(0);
   const onValueChangeRef = useRef(onValueChange);
   onValueChangeRef.current = onValueChange;
 
@@ -30,7 +29,8 @@ export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
     return ((val - MIN_VALUE) / (MAX_VALUE - MIN_VALUE)) * SLIDER_WIDTH;
   };
 
-  const handleValueUpdate = useCallback((newValue) => {
+  const handleMove = useCallback((x) => {
+    const newValue = positionToValue(x);
     if (newValue !== lastValue.current) {
       lastValue.current = newValue;
       haptics.selection();
@@ -42,20 +42,14 @@ export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
-      onPanResponderTerminationRequest: () => false,
       onPanResponderGrant: (evt) => {
-        const x = evt.nativeEvent.locationX;
-        const newVal = positionToValue(x);
-        grantPosition.current = valueToPosition(newVal);
-        handleValueUpdate(newVal);
+        handleMove(evt.nativeEvent.locationX);
       },
-      onPanResponderMove: (evt, gestureState) => {
-        const x = grantPosition.current + gestureState.dx;
-        const newVal = positionToValue(x);
-        handleValueUpdate(newVal);
+      onPanResponderMove: (evt) => {
+        handleMove(evt.nativeEvent.locationX);
       },
     }),
-  [handleValueUpdate]);
+  [handleMove]);
 
   const fillWidth = value > 0 ? valueToPosition(value) : 0;
   const displayValue = value > 0 ? value.toFixed(1) : '—';

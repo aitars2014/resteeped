@@ -9,7 +9,7 @@ export const FactCard = ({ icon, value, label }) => {
   return (
     <View style={[styles.card, { 
       backgroundColor: theme.background.secondary,
-      shadowColor: theme.shadow?.card || 'rgba(0, 0, 0, 0.08)',
+      shadowColor: theme.shadow.card,
     }]}>
       <View style={styles.iconContainer}>
         {icon}

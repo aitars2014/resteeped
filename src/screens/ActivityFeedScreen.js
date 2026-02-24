@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,6 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { 
@@ -29,7 +28,6 @@ import { StarRating, TeaTypeBadge, Avatar } from '../components';
 import { useTheme, useAuth } from '../context';
 import { useReviews, useTeas, useBrewHistory } from '../hooks';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
-import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const { width } = Dimensions.get('window');
 
@@ -380,9 +378,6 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
   );
 };
 
-const FEED_CACHE_KEY = '@resteeped_activity_feed_cache';
-const FEED_CACHE_MAX_AGE = 5 * 60 * 1000; // 5 minutes
-
 export const ActivityFeedScreen = ({ navigation }) => {
   const { theme } = useTheme();
   const { user } = useAuth();
@@ -392,51 +387,7 @@ export const ActivityFeedScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const cacheLoaded = useRef(false);
   
-  // Track screen view
-  useEffect(() => {
-    trackEvent(AnalyticsEvents.ACTIVITY_FEED_VIEWED);
-  }, []);
-
-  // Load cached feed immediately on mount
-  useEffect(() => {
-    const loadCache = async () => {
-      try {
-        const cached = await AsyncStorage.getItem(FEED_CACHE_KEY);
-        if (cached) {
-          const { data, timestamp } = JSON.parse(cached);
-          if (data && Array.isArray(data) && data.length > 0) {
-            // Restore timestamps as Date objects
-            const restored = data.map(a => ({ ...a, timestamp: new Date(a.timestamp) }));
-            setActivities(restored);
-            // If cache is fresh enough, skip loading state
-            if (Date.now() - timestamp < FEED_CACHE_MAX_AGE) {
-              setLoading(false);
-            }
-          }
-        }
-      } catch (e) {
-        console.warn('Failed to load feed cache:', e);
-      } finally {
-        cacheLoaded.current = true;
-      }
-    };
-    loadCache();
-  }, []);
-
-  // Save feed to cache
-  const saveCache = useCallback(async (data) => {
-    try {
-      await AsyncStorage.setItem(FEED_CACHE_KEY, JSON.stringify({
-        data: data.slice(0, 20), // Cache first 20 items
-        timestamp: Date.now(),
-      }));
-    } catch (e) {
-      console.warn('Failed to save feed cache:', e);
-    }
-  }, []);
-
   // Load activities
   const loadActivities = useCallback(async (pageNum = 1, refresh = false) => {
     if (refresh) {
@@ -444,7 +395,7 @@ export const ActivityFeedScreen = ({ navigation }) => {
     }
     
     // Timeout helper to prevent Supabase queries from hanging
-    const withTimeout = (promise, ms = 6000) => 
+    const withTimeout = (promise, ms = 8000) => 
       Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('Query timeout')), ms))]);
     
     try {
@@ -465,13 +416,13 @@ export const ActivityFeedScreen = ({ navigation }) => {
             .from('brew_sessions')
             .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('created_at', { ascending: false })
-            .limit(10)),
+            .limit(15)),
           // Collection adds
           withTimeout(supabase
             .from('user_teas')
             .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('added_at', { ascending: false })
-            .limit(10)),
+            .limit(15)),
         ]);
 
         // Process reviews
@@ -557,7 +508,6 @@ export const ActivityFeedScreen = ({ navigation }) => {
       
       if (refresh || pageNum === 1) {
         setActivities(pageActivities);
-        saveCache(mockActivities); // Cache full list for fast restore
       } else {
         setActivities(prev => [...prev, ...pageActivities]);
       }

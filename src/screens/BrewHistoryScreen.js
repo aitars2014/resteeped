@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,6 @@ import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
-import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const BrewHistoryScreen = ({ navigation }) => {
   const { theme, getTeaTypeColor } = useTheme();
@@ -27,10 +26,6 @@ const BrewHistoryScreen = ({ navigation }) => {
     getBrewStats,
     getBrewsByDate,
   } = useBrewHistory();
-
-  useEffect(() => {
-    trackEvent(AnalyticsEvents.BREW_HISTORY_VIEWED);
-  }, []);
 
   const stats = getBrewStats();
   const mostBrewed = getMostBrewedTeas(3);

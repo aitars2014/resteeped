@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -13,7 +13,6 @@ import {
 import { X, Check, Crown, Leaf, Sparkles, NotebookPen } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme, useSubscription } from '../context';
-import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const PRIVACY_URL = 'https://resteeped.com/privacy';
 const TERMS_URL = 'https://www.apple.com/legal/internet-services/itunes/dev/stdeula/';
@@ -29,12 +28,6 @@ export const PaywallScreen = ({ navigation, route }) => {
   const { offerings, purchasePackage, restorePurchases, isConfigured } = useSubscription();
   const [isLoading, setIsLoading] = useState(false);
   const [selectedPackage, setSelectedPackage] = useState('yearly');
-
-  useEffect(() => {
-    trackEvent(AnalyticsEvents.PAYWALL_VIEWED, {
-      source: route?.params?.source || 'unknown',
-    });
-  }, []);
 
   const currentOffering = offerings?.current;
   const monthlyPackage = currentOffering?.monthly;
@@ -58,10 +51,6 @@ export const PaywallScreen = ({ navigation, route }) => {
     setIsLoading(false);
 
     if (result.success) {
-      trackEvent(AnalyticsEvents.PAYWALL_SUBSCRIBED, {
-        package: selectedPackage,
-        source: route?.params?.source || 'unknown',
-      });
       navigation.goBack();
     }
   };
