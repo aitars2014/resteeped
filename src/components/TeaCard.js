@@ -20,13 +20,16 @@ export const TeaCard = ({
   compact = false,
   featured = false, // Larger, hero-style card
   horizontal = false, // Compact horizontal layout
+  hideRating = false, // Hide community ratings (only show personal ratings)
 }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const teaColor = getTeaTypeColor(tea.teaType || tea.tea_type);
   const placeholderImage = getPlaceholderImage(tea.teaType || tea.tea_type);
   
-  const rating = tea.avgRating || tea.avg_rating || 0;
-  const ratingCount = tea.ratingCount || tea.rating_count || 0;
+  // Show personal rating if available, otherwise community rating (unless hidden)
+  const personalRating = tea.user_rating || tea.userRating || 0;
+  const rating = personalRating > 0 ? personalRating : (hideRating ? 0 : (tea.avgRating || tea.avg_rating || 0));
+  const ratingCount = personalRating > 0 ? 0 : (hideRating ? 0 : (tea.ratingCount || tea.rating_count || 0));
   const teaName = tea.name;
   const brandName = tea.brandName || tea.brand_name || tea.company?.name || '';
   

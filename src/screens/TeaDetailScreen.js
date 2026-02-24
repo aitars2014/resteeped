@@ -593,6 +593,15 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             <Coffee size={20} color={theme.text.primary} />
             <Text style={[styles.iconActionLabel, { color: theme.text.secondary }]} numberOfLines={1}>Steep</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.iconAction, { backgroundColor: personalRating > 0 ? theme.accent.primary : theme.background.secondary }]}
+            onPress={handleWriteReview}
+            accessible={true}
+            accessibilityLabel={personalRating > 0 ? `Rated ${personalRating.toFixed(1)} stars. Tap to edit` : 'Rate this tea'}
+          >
+            <Star size={20} color={personalRating > 0 ? theme.text.inverse : theme.text.primary} fill={personalRating > 0 ? theme.text.inverse : 'none'} />
+            <Text style={[styles.iconActionLabel, { color: personalRating > 0 ? theme.text.inverse : theme.text.secondary }]} numberOfLines={1}>{personalRating > 0 ? `${personalRating.toFixed(1)}` : 'Rate'}</Text>
+          </TouchableOpacity>
         </View>
         {brandName && (
           <Button 

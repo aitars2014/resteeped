@@ -23,6 +23,7 @@ export const TemperatureSlider = ({
   const { theme } = useTheme();
   const sliderRef = useRef(null);
   const currentValue = useRef(value);
+  const grantPosition = useRef(0); // track position at touch start
 
   const clamp = (val) => Math.round(Math.min(maxTemp, Math.max(minTemp, val)));
 
@@ -43,12 +44,12 @@ export const TemperatureSlider = ({
       onPanResponderGrant: (evt) => {
         const x = evt.nativeEvent.locationX;
         const newVal = positionToValue(x);
+        grantPosition.current = valueToPosition(newVal); // snapshot position at grant
         currentValue.current = newVal;
         onValueChange?.(newVal);
       },
       onPanResponderMove: (evt, gestureState) => {
-        const startPos = valueToPosition(currentValue.current);
-        const x = startPos + gestureState.dx;
+        const x = grantPosition.current + gestureState.dx;
         const newVal = positionToValue(x);
         if (newVal !== currentValue.current) {
           currentValue.current = newVal;

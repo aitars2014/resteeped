@@ -170,6 +170,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
       <TeaCard 
         tea={item} 
         onPress={() => navigation.navigate('TeaDetail', { tea: item })}
+        hideRating
       />
     </View>
   );
