@@ -116,6 +116,23 @@ export const CollectionProvider = ({ children }) => {
       return { error: { message: 'Must be signed in' } };
     }
 
+    // Resolve non-UUID tea IDs (from local/scraped data) to Supabase UUIDs
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(teaId) && teaData?.name) {
+      const { data: match } = await supabase
+        .from('teas')
+        .select('id')
+        .eq('name', teaData.name)
+        .limit(1)
+        .single();
+      if (match?.id) {
+        console.log('[Collection] Resolved local ID', teaId, 'to UUID', match.id);
+        teaId = match.id;
+      } else {
+        return { error: { message: 'Could not find this tea in the database. Try refreshing.' } };
+      }
+    }
+
     if (isLocalMode) {
       // Local-only mode: store tea data alongside the collection item
       setCollection(prev => [
