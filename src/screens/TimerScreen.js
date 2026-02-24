@@ -380,7 +380,7 @@ export const TimerScreen = ({ route, navigation }) => {
 
   // Save current time as preferred steep time for this tea
   const handleSavePreferredTime = async () => {
-    if (!tea?.id || !isInCollection(tea.id)) return;
+    if (!teaId || !isInCollection(teaId)) return;
     
     const { error } = await setPreferredSteepTime(teaId, totalSeconds);
     if (!error) {
