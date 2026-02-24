@@ -9,7 +9,9 @@ import {
   Alert,
   FlatList,
   Linking,
+  Platform,
 } from 'react-native';
+import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee } from 'lucide-react-native';
@@ -122,30 +124,50 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const isOnWishlist = inCollection && collectionItem?.status === 'want_to_try';
   const isInMyTeas = inCollection && collectionItem?.status === 'tried';
 
+  const [wishlistLoading, setWishlistLoading] = useState(false);
+  const [myTeasLoading, setMyTeasLoading] = useState(false);
+
   const handleWishlist = async () => {
+    if (wishlistLoading) return;
     if (!requireAuth()) return;
-    if (isOnWishlist) {
-      // Already on wishlist — remove
-      await removeFromCollection(tea.id);
-      return;
+    setWishlistLoading(true);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+      if (isOnWishlist) {
+        await removeFromCollection(tea.id);
+      } else {
+        if (!inCollection && !checkCollectionLimit()) return;
+        await addTeaWithStatus('want_to_try');
+      }
+    } catch (err) {
+      console.error('handleWishlist error:', err);
+      Alert.alert('Error', 'Could not update wishlist. Please try again.');
+    } finally {
+      setWishlistLoading(false);
     }
-    if (!inCollection && !checkCollectionLimit()) return;
-    await addTeaWithStatus('want_to_try');
   };
 
   const handleMyTeas = async () => {
+    if (myTeasLoading) return;
     if (!requireAuth()) return;
-    if (isInMyTeas) {
-      // Already in my teas — remove
-      await removeFromCollection(tea.id);
-      return;
-    }
-    if (!inCollection && !checkCollectionLimit()) return;
-    if (inCollection) {
-      // Move from wishlist to tried
-      await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
-    } else {
-      await addTeaWithStatus('tried');
+    setMyTeasLoading(true);
+    try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
+      if (isInMyTeas) {
+        await removeFromCollection(tea.id);
+      } else {
+        if (!inCollection && !checkCollectionLimit()) return;
+        if (inCollection) {
+          await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
+        } else {
+          await addTeaWithStatus('tried');
+        }
+      }
+    } catch (err) {
+      console.error('handleMyTeas error:', err);
+      Alert.alert('Error', 'Could not update collection. Please try again.');
+    } finally {
+      setMyTeasLoading(false);
     }
   };
   
@@ -542,8 +564,10 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       <View style={styles.buttonContainer}>
         <View style={styles.buttonRow}>
           <TouchableOpacity
-            style={[styles.iconAction, { backgroundColor: isOnWishlist ? theme.accent.primary : theme.background.secondary }]}
+            style={[styles.iconAction, { backgroundColor: isOnWishlist ? theme.accent.primary : theme.background.secondary, opacity: wishlistLoading ? 0.5 : 1 }]}
             onPress={handleWishlist}
+            activeOpacity={0.6}
+            disabled={wishlistLoading}
             accessible={true}
             accessibilityLabel={isOnWishlist ? 'Remove from wishlist' : 'Add to wishlist'}
           >
@@ -551,8 +575,10 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             <Text style={[styles.iconActionLabel, { color: isOnWishlist ? theme.text.inverse : theme.text.secondary }]} numberOfLines={1}>Wishlist</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.iconAction, { backgroundColor: isInMyTeas ? theme.accent.primary : theme.background.secondary }]}
+            style={[styles.iconAction, { backgroundColor: isInMyTeas ? theme.accent.primary : theme.background.secondary, opacity: myTeasLoading ? 0.5 : 1 }]}
             onPress={handleMyTeas}
+            activeOpacity={0.6}
+            disabled={myTeasLoading}
             accessible={true}
             accessibilityLabel={isInMyTeas ? 'Remove from my teas' : 'Add to my teas'}
           >
@@ -873,6 +899,8 @@ const createStyles = (theme) => ({
     bottom: 0,
     left: 0,
     right: 0,
+    zIndex: 10,
+    elevation: 10,
     backgroundColor: theme.background.primary,
     paddingHorizontal: spacing.screenHorizontal,
     paddingTop: 12,
