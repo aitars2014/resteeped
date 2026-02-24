@@ -408,7 +408,7 @@ export const ActivityFeedScreen = ({ navigation }) => {
         try {
           const { data: reviews, error: reviewsError } = await withTimeout(supabase
             .from('reviews')
-            .select('*, profiles:user_id(id, display_name, avatar_url)')
+            .select('*, profiles:user_id(id, display_name, avatar_url, is_private)')
             .order('created_at', { ascending: false })
             .limit(20));
           if (reviewsError) {
@@ -420,7 +420,7 @@ export const ActivityFeedScreen = ({ navigation }) => {
               .limit(20));
             allReviews = fallbackReviews || [];
           } else {
-            allReviews = reviews || [];
+            allReviews = (reviews || []).filter(r => !r.profiles?.is_private);
           }
         } catch (e) {
           console.log('Could not fetch reviews:', e.message);
@@ -430,12 +430,12 @@ export const ActivityFeedScreen = ({ navigation }) => {
         try {
           const { data: recentBrews, error: brewsError } = await withTimeout(supabase
             .from('brew_sessions')
-            .select('*, profiles:user_id(id, display_name, avatar_url), tea:tea_id(id, name, tea_type, brand_name, image_url)')
+            .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('created_at', { ascending: false })
             .limit(15));
           
           if (brewsError) console.log('Brew sessions query error:', brewsError.message);
-          (recentBrews || []).forEach(brew => {
+          (recentBrews || []).filter(b => !b.profiles?.is_private).forEach(brew => {
             if (brew.tea) {
               const isRealUser = brew.profiles?.display_name;
               realActivities.push({
@@ -463,12 +463,12 @@ export const ActivityFeedScreen = ({ navigation }) => {
         try {
           const { data: recentAdds, error: addsError } = await withTimeout(supabase
             .from('user_teas')
-            .select('*, profiles:user_id(id, display_name, avatar_url), tea:tea_id(id, name, tea_type, brand_name, image_url)')
+            .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
             .order('added_at', { ascending: false })
             .limit(15));
           
           if (addsError) console.log('User teas query error:', addsError.message);
-          (recentAdds || []).forEach(add => {
+          (recentAdds || []).filter(a => !a.profiles?.is_private).forEach(add => {
             if (add.tea) {
               const isRealUser = add.profiles?.display_name;
               realActivities.push({

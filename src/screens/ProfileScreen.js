@@ -11,7 +11,7 @@ import {
   Switch,
   Platform,
 } from 'react-native';
-import { User, LogOut, Trash2, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2, Crown } from 'lucide-react-native';
+import { User, LogOut, Trash2, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2, Crown, EyeOff, Eye } from 'lucide-react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Application from 'expo-application';
 import { typography, spacing } from '../constants';
@@ -33,6 +33,11 @@ export const ProfileScreen = ({ navigation }) => {
   const [avatarStyle, setAvatarStyle] = useState('notionists');
   const [avatarSeed, setAvatarSeed] = useState(null);
   const [editNameVisible, setEditNameVisible] = useState(false);
+  const [isPrivate, setIsPrivate] = useState(profile?.is_private ?? false);
+
+  useEffect(() => {
+    setIsPrivate(profile?.is_private ?? false);
+  }, [profile?.is_private]);
 
   useEffect(() => {
     // Load saved avatar style and seed
@@ -197,6 +202,19 @@ export const ProfileScreen = ({ navigation }) => {
     );
   };
   
+  const togglePrivateProfile = async () => {
+    const newValue = !isPrivate;
+    setIsPrivate(newValue);
+    const { error } = await updateProfile({ is_private: newValue });
+    if (error) {
+      setIsPrivate(!newValue); // revert on failure
+      Alert.alert('Error', 'Failed to update privacy setting. Please try again.');
+    } else {
+      // AsyncStorage fallback
+      AsyncStorage.setItem('@resteeped:is_private', JSON.stringify(newValue));
+    }
+  };
+
   const toggleDarkMode = () => {
     if (themePreference === 'dark') {
       setThemePreference('light');
@@ -527,6 +545,37 @@ export const ProfileScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
       
+      {/* Privacy */}
+      <View style={[styles.menuSection, { 
+        backgroundColor: theme.background.secondary,
+        borderColor: theme.border.medium,
+      }]}>
+        <View 
+          style={[styles.menuItem, styles.menuItemLast]}
+          accessible={true}
+          accessibilityRole="switch"
+          accessibilityLabel="Private Profile"
+          accessibilityState={{ checked: isPrivate }}
+        >
+          {isPrivate ? (
+            <EyeOff size={20} color={theme.accent.primary} />
+          ) : (
+            <Eye size={20} color={theme.accent.primary} />
+          )}
+          <View style={{ flex: 1, marginLeft: 12 }}>
+            <Text style={[styles.menuItemText, { color: theme.text.primary, marginLeft: 0 }]}>Private Profile</Text>
+            <Text style={[styles.menuItemSubtext, { color: theme.text.secondary }]}>Hide your activity from the community feed</Text>
+          </View>
+          <Switch
+            value={isPrivate}
+            onValueChange={togglePrivateProfile}
+            trackColor={{ false: theme.border.medium, true: theme.accent.primary }}
+            thumbColor={theme.text.inverse}
+            accessibilityLabel="Toggle private profile"
+          />
+        </View>
+      </View>
+
       {/* Support */}
       <View style={[styles.menuSection, { 
         backgroundColor: theme.background.secondary,
@@ -816,6 +865,10 @@ const styles = StyleSheet.create({
     ...typography.body,
     flex: 1,
     marginLeft: 12,
+  },
+  menuItemSubtext: {
+    ...typography.caption,
+    marginTop: 2,
   },
   footer: {
     alignItems: 'center',

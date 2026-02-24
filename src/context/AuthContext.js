@@ -33,6 +33,7 @@ const DEV_PROFILE = {
   avatar_url: 'https://api.dicebear.com/7.x/avataaars/png?seed=taylor',
   teas_tried_count: 12,
   reviews_count: 5,
+  is_private: false,
   created_at: new Date().toISOString(),
 };
 // =============================================================================
