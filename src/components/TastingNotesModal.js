@@ -16,7 +16,7 @@ import { VoiceInputHint } from './VoiceInputHint';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { Button } from './Button';
-import { StarRating } from './StarRating';
+import { RatingSlider } from './RatingSlider';
 
 const FLAVOR_SUGGESTIONS = [
   'Malty', 'Floral', 'Grassy', 'Earthy', 'Smoky', 
@@ -97,17 +97,11 @@ export const TastingNotesModal = ({
               {/* Your Rating */}
               <View style={styles.section}>
                 <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Your Rating</Text>
-                <View style={styles.ratingContainer}>
-                  <StarRating 
-                    rating={rating} 
-                    size={32} 
-                    interactive 
-                    onRate={setRating}
-                  />
-                  {rating > 0 && (
-                    <Text style={[styles.ratingText, { color: theme.text.secondary }]}>{rating}/5</Text>
-                  )}
-                </View>
+                <RatingSlider
+                  value={rating}
+                  onValueChange={setRating}
+                  size="medium"
+                />
               </View>
 
               {/* Notes Input */}
