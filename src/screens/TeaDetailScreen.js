@@ -19,6 +19,7 @@ import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useReviews, useCompanies, useTeas, useTastingNotes } from '../hooks';
+import * as Haptics from 'expo-haptics';
 
 const { width, height } = Dimensions.get('window');
 const HERO_HEIGHT = height * 0.32;
@@ -37,15 +38,41 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { companies } = useCompanies();
   const { teas, getTeaDetails } = useTeas();
   
+  // Resolve local/numeric tea IDs to Supabase UUIDs
+  const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  const [resolvedTeaId, setResolvedTeaId] = useState(uuidRegex.test(tea.id) ? tea.id : null);
+
+  useEffect(() => {
+    if (uuidRegex.test(tea.id)) {
+      setResolvedTeaId(tea.id);
+      return;
+    }
+    // Look up UUID by tea name
+    let cancelled = false;
+    require('../lib/supabase').supabase
+      .from('teas')
+      .select('id')
+      .eq('name', tea.name)
+      .limit(1)
+      .single()
+      .then(({ data }) => {
+        if (!cancelled && data?.id) setResolvedTeaId(data.id);
+      });
+    return () => { cancelled = true; };
+  }, [tea.id, tea.name]);
+
+  const teaId = resolvedTeaId || tea.id;
+
   // Fetch full tea details (description, steep params, flavor notes) on-demand
   const [fullTea, setFullTea] = useState(tea);
   useEffect(() => {
+    if (!resolvedTeaId) return;
     let cancelled = false;
-    getTeaDetails(tea.id).then(details => {
+    getTeaDetails(resolvedTeaId).then(details => {
       if (!cancelled && details) setFullTea(details);
     });
     return () => { cancelled = true; };
-  }, [tea.id, getTeaDetails]);
+  }, [resolvedTeaId, getTeaDetails]);
   
   // Find similar teas (same type, excluding current tea)
   const similarTeas = useMemo(() => {
@@ -61,7 +88,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   // Track tea view
   useEffect(() => {
     trackEvent(AnalyticsEvents.TEA_VIEWED, {
-      tea_id: tea.id,
+      tea_id: teaId,
       tea_name: tea.name,
       tea_type: tea.teaType || tea.tea_type,
       brand: tea.brandName || tea.brand_name,
@@ -73,12 +100,12 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     ? companies.find(c => c.id === (tea.companyId || tea.company_id))
     : companies.find(c => c.name === (tea.brandName || tea.brand_name));
   
-  const inCollection = isInCollection(tea.id);
-  const collectionItem = getCollectionItem(tea.id);
+  const inCollection = isInCollection(teaId);
+  const collectionItem = getCollectionItem(teaId);
   
   const addTeaWithStatus = async (status) => {
     try {
-      const result = await addToCollection(tea.id, status, tea);
+      const result = await addToCollection(teaId, status, tea);
       if (result?.error) {
         Alert.alert('Error', `Could not add to collection: ${result.error.message || JSON.stringify(result.error)}`);
         console.error('Add to collection failed:', result.error);
@@ -130,8 +157,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     if (!requireAuth()) return;
     setWishlistLoading(true);
     try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
       if (isOnWishlist) {
-        await removeFromCollection(tea.id);
+        await removeFromCollection(teaId);
       } else {
         if (!inCollection && !checkCollectionLimit()) return;
         await addTeaWithStatus('want_to_try');
@@ -148,12 +176,13 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     if (!requireAuth()) return;
     setMyTeasLoading(true);
     try {
+      Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
       if (isInMyTeas) {
-        await removeFromCollection(tea.id);
+        await removeFromCollection(teaId);
       } else {
         if (!inCollection && !checkCollectionLimit()) return;
         if (inCollection) {
-          await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
+          await updateInCollection(teaId, { status: 'tried', tried_at: new Date().toISOString() });
         } else {
           await addTeaWithStatus('tried');
         }
@@ -186,7 +215,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       Alert.alert('Error', 'Could not submit review. Please try again.');
     } else {
       trackEvent(AnalyticsEvents.REVIEW_SUBMITTED, {
-        tea_id: tea.id,
+        tea_id: teaId,
         tea_name: tea.name,
         rating,
         has_text: !!reviewText,
@@ -214,7 +243,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       }
     } else if (user && isOnWishlist) {
       // Move from wishlist to tried
-      await updateInCollection(tea.id, { status: 'tried', tried_at: new Date().toISOString() });
+      await updateInCollection(teaId, { status: 'tried', tried_at: new Date().toISOString() });
     }
     navigation.navigate('Timer', { 
       screen: 'TimerHome',
@@ -229,7 +258,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       updates.status = 'tried';
       updates.tried_at = new Date().toISOString();
     }
-    await updateInCollection(tea.id, updates);
+    await updateInCollection(teaId, updates);
     setShowTastingNotes(false);
   };
   
