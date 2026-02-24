@@ -110,7 +110,7 @@ export const CollectionScreen = ({ navigation }) => {
         />
         {item.user_rating && (
           <View style={[styles.ratingBadge, { backgroundColor: theme.accent.primary }]}>
-            <Text style={[styles.ratingText, { color: theme.text.inverse }]}>★ {item.user_rating}</Text>
+            <Text style={[styles.ratingText, { color: theme.text.inverse }]}>★ {item.user_rating.toFixed(1)}</Text>
           </View>
         )}
       </View>

@@ -3,6 +3,7 @@ export { SearchBar } from './SearchBar';
 export { FilterPills } from './FilterPills';
 export { FilterModal } from './FilterModal';
 export { StarRating } from './StarRating';
+export { RatingSlider } from './RatingSlider';
 export { TeaTypeBadge } from './TeaTypeBadge';
 export { TeaCard } from './TeaCard';
 export { FactCard } from './FactCard';

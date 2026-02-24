@@ -16,7 +16,7 @@ import { X } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { Button } from './Button';
-import { StarRating } from './StarRating';
+import { RatingSlider } from './RatingSlider';
 
 // Content validation
 const validateReviewContent = (text) => {
@@ -118,14 +118,11 @@ export const WriteReviewModal = ({
               {/* Rating */}
               <View style={styles.ratingSection}>
                 <Text style={[styles.label, { color: theme.text.secondary }]}>Your Rating</Text>
-                <StarRating 
-                  rating={rating} 
-                  size={36} 
-                  onRate={setRating}
+                <RatingSlider
+                  value={rating}
+                  onValueChange={setRating}
+                  size="medium"
                 />
-                {rating === 0 && (
-                  <Text style={[styles.ratingHint, { color: theme.text.secondary }]}>Tap a star to rate</Text>
-                )}
               </View>
 
               {/* Review Text */}

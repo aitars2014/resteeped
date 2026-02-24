@@ -253,8 +253,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     return fullTea.steepTimeMin ? `${fullTea.steepTimeMin} min` : '—';
   };
   
-  const displayRating = reviewCount > 0 ? averageRating : (tea.avgRating || 0);
-  const displayCount = reviewCount > 0 ? reviewCount : (tea.ratingCount || 0);
+  const personalRating = userReview?.rating || collectionItem?.user_rating || 0;
   
   return (
     <View style={[styles.container, { backgroundColor: theme.background.primary }]}>
@@ -325,12 +324,14 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           
           <View style={styles.badgeRow}>
             <TeaTypeBadge teaType={tea.teaType} size="large" />
-            <View style={styles.ratingPill}>
-              <Star size={14} color={theme.rating.star} fill={theme.rating.star} />
-              <Text style={styles.ratingText}>
-                {displayRating.toFixed(1)} ({displayCount})
-              </Text>
-            </View>
+            {personalRating > 0 && (
+              <View style={styles.ratingPill}>
+                <Star size={14} color={theme.rating.star} fill={theme.rating.star} />
+                <Text style={styles.ratingText}>
+                  {personalRating.toFixed(1)} (My Rating)
+                </Text>
+              </View>
+            )}
           </View>
           
           {/* Quick Facts Row */}
@@ -483,12 +484,10 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             </View>
           )}
 
-          {/* Reviews Section */}
+          {/* My Review Section */}
           <View style={styles.section}>
             <View style={styles.reviewsHeader}>
-              <Text style={styles.sectionTitle}>
-                Reviews {reviewCount > 0 && `(${reviewCount})`}
-              </Text>
+              <Text style={styles.sectionTitle}>My Review</Text>
               <TouchableOpacity onPress={handleWriteReview} style={styles.writeReviewButton}>
                 <MessageSquare size={16} color={theme.accent.primary} />
                 <Text style={styles.writeReviewText}>
@@ -497,40 +496,18 @@ export const TeaDetailScreen = ({ route, navigation }) => {
               </TouchableOpacity>
             </View>
             
-            {/* App reviews first */}
-            {reviews.length > 0 ? (
-              reviews.slice(0, 3).map((review) => (
-                <ReviewCard 
-                  key={review.id} 
-                  review={review} 
-                  isOwnReview={user && review.user_id === user.id}
-                />
-              ))
+            {userReview ? (
+              <ReviewCard 
+                key={userReview.id} 
+                review={userReview} 
+                isOwnReview={true}
+              />
             ) : (
               <View style={styles.noReviews}>
                 <Text style={styles.noReviewsText}>
-                  No reviews yet. Be the first to review this tea!
+                  You haven't reviewed this tea yet. Tap "Write Review" to add your rating and notes.
                 </Text>
               </View>
-            )}
-            
-            {reviews.length > 3 && (
-              <TouchableOpacity style={styles.seeAllButton}>
-                <Text style={styles.seeAllText}>See all {reviews.length} reviews</Text>
-              </TouchableOpacity>
-            )}
-            
-            {/* External reviews link */}
-            {tea.ratingCount > 0 && tea.url && (
-              <TouchableOpacity 
-                style={styles.externalReviewsLink}
-                onPress={() => Linking.openURL(tea.url).catch(() => {})}
-              >
-                <ExternalLink size={16} color={theme.text.secondary} />
-                <Text style={styles.externalReviewsText}>
-                  View {tea.ratingCount} reviews on {tea.brandName}
-                </Text>
-              </TouchableOpacity>
             )}
           </View>
           
