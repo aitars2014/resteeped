@@ -877,7 +877,7 @@ export const TimerScreen = ({ route, navigation }) => {
               <Text style={[styles.notesModalSubtitle, { color: theme.text.secondary }]}>
                 Record your impressions of this steep
               </Text>
-              <VoiceInputHint inputRef={infusionNoteRef} size={16} />
+              <VoiceInputHint inputRef={infusionNoteRef} size={16} onTranscript={(text) => setCurrentNote(prev => prev ? `${prev} ${text}` : text)} />
             </View>
             
             <TextInput
