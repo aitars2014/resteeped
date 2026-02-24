@@ -380,12 +380,33 @@ export const TimerScreen = ({ route, navigation }) => {
   const handleSavePreferredTime = async () => {
     if (!tea?.id || !isInCollection(tea.id)) return;
     
-    const { error } = await setPreferredSteepTime(tea.id, totalSeconds);
-    if (!error) {
+    try {
+      const result = await setPreferredSteepTime(tea.id, totalSeconds);
+      if (result?.error) {
+        console.error('Error saving preferred steep time:', result.error);
+        Alert.alert(
+          'Error',
+          'Could not save your preferred steep time. Please try again.',
+          [{ text: 'OK' }]
+        );
+        return;
+      }
       setTimeModified(false);
+      trackEvent(AnalyticsEvents.STEEP_PREFERENCE_SAVED, {
+        tea_id: tea.id,
+        tea_name: tea.name,
+        steep_time_seconds: totalSeconds,
+      });
       Alert.alert(
         'Saved!',
         `${formatTime(totalSeconds)} is now your preferred steep time for ${tea.name}.`,
+        [{ text: 'OK' }]
+      );
+    } catch (err) {
+      console.error('Exception saving preferred steep time:', err);
+      Alert.alert(
+        'Error',
+        'Could not save your preferred steep time. Please try again.',
         [{ text: 'OK' }]
       );
     }

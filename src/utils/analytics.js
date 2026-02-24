@@ -158,7 +158,33 @@ export const AnalyticsEvents = {
   TEAWARE_VIEWED: 'teaware_viewed',
   TEAWARE_ADDED: 'teaware_added',
   
-  // Tea Finder
+  // Tea Finder / AI Sommelier
   TEA_FINDER_SEARCH: 'tea_finder_search',
   TEA_FINDER_RESULT_TAP: 'tea_finder_result_tap',
+  TEA_SOMMELIER_MESSAGE: 'tea_sommelier_message',
+  TEA_SOMMELIER_RECOMMENDATIONS: 'tea_sommelier_recommendations',
+  
+  // Community / Activity Feed
+  ACTIVITY_FEED_VIEWED: 'activity_feed_viewed',
+  
+  // Brew History
+  BREW_HISTORY_VIEWED: 'brew_history_viewed',
+  
+  // Timer Preferences
+  STEEP_PREFERENCE_SAVED: 'steep_preference_saved',
+  
+  // Paywall
+  PAYWALL_VIEWED: 'paywall_viewed',
+  PAYWALL_SUBSCRIBED: 'paywall_subscribed',
+  PAYWALL_DISMISSED: 'paywall_dismissed',
+  
+  // Compare
+  TEA_COMPARE_STARTED: 'tea_compare_started',
+  
+  // Seasonal
+  SEASONAL_COLLECTION_VIEWED: 'seasonal_collection_viewed',
+  
+  // Navigation
+  TAB_VIEWED: 'tab_viewed',
+  SCREEN_VIEWED: 'screen_viewed',
 };

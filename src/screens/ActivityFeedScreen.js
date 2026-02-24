@@ -29,6 +29,7 @@ import { StarRating, TeaTypeBadge, Avatar } from '../components';
 import { useTheme, useAuth } from '../context';
 import { useReviews, useTeas, useBrewHistory } from '../hooks';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const { width } = Dimensions.get('window');
 
@@ -393,6 +394,11 @@ export const ActivityFeedScreen = ({ navigation }) => {
   const [hasMore, setHasMore] = useState(true);
   const cacheLoaded = useRef(false);
   
+  // Track screen view
+  useEffect(() => {
+    trackEvent(AnalyticsEvents.ACTIVITY_FEED_VIEWED);
+  }, []);
+
   // Load cached feed immediately on mount
   useEffect(() => {
     const loadCache = async () => {

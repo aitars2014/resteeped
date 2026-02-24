@@ -18,6 +18,7 @@ import {
   Coffee,
 } from 'lucide-react-native';
 import { useTheme } from '../context/ThemeContext';
+import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { typography, spacing } from '../constants';
 import { Avatar, TeaCard, StarRating } from '../components';
 import { haptics } from '../utils';
@@ -93,6 +94,10 @@ export default function UserProfileScreen({ route, navigation }) {
   const [loading, setLoading] = useState(true);
   const [userData, setUserData] = useState(null);
   const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    trackEvent(AnalyticsEvents.PROFILE_VIEWED, { user_id: userId });
+  }, [userId]);
 
   useEffect(() => {
     // Simulate loading user data

@@ -89,7 +89,7 @@ export const TeaFinderScreen = ({ navigation }) => {
     setMessages(prev => [...prev, userMsg]);
     setLoading(true);
 
-    trackEvent('tea_sommelier_message', { message_length: messageText.length });
+    trackEvent(AnalyticsEvents.TEA_SOMMELIER_MESSAGE, { message_length: messageText.length });
 
     try {
       // Build conversation history for API (exclude greeting, limit to last 10)
@@ -141,7 +141,7 @@ export const TeaFinderScreen = ({ navigation }) => {
       setMessages(prev => [...prev, assistantMsg]);
 
       if (data.recommendations?.length > 0) {
-        trackEvent('tea_sommelier_recommendations', {
+        trackEvent(AnalyticsEvents.TEA_SOMMELIER_RECOMMENDATIONS, {
           count: data.recommendations.length,
           teas: data.recommendations.map(r => r.name),
         });
