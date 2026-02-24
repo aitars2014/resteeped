@@ -115,7 +115,7 @@ export const TastingNotesModal = ({
                 <View style={styles.labelRow}>
                   <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Your Notes</Text>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                    <VoiceInputHint inputRef={notesInputRef} size={16} />
+                    <VoiceInputHint inputRef={notesInputRef} size={16} onTranscript={(text) => setNotes(prev => prev ? `${prev} ${text}` : text)} />
                     <TouchableOpacity 
                       style={styles.suggestionsToggle}
                       onPress={() => setShowSuggestions(!showSuggestions)}

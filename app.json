@@ -50,7 +50,8 @@
           "organization": "resteeped"
         }
       ],
-      "expo-apple-authentication"
+      "expo-apple-authentication",
+      "expo-speech-recognition"
     ],
     "runtimeVersion": {
       "policy": "appVersion"

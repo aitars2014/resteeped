@@ -131,7 +131,7 @@ export const WriteReviewModal = ({
               <View style={styles.textSection}>
                 <View style={styles.labelRow}>
                   <Text style={[styles.label, { color: theme.text.secondary }]}>Your Review (optional)</Text>
-                  <VoiceInputHint inputRef={reviewInputRef} />
+                  <VoiceInputHint inputRef={reviewInputRef} onTranscript={(text) => setReviewText(prev => prev ? `${prev} ${text}` : text)} />
                 </View>
                 <TextInput
                   ref={reviewInputRef}
