@@ -116,7 +116,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const teaColor = tea ? getTeaTypeColor(tea.teaType) : null;
   
   const { user } = useAuth();
-  const { updateInCollection, isInCollection, getCollectionItem, setPreferredSteepTime, getPreferredSteepTime } = useCollection();
+  const { updateInCollection, isInCollection, getCollectionItem, setPreferredSteepTime, getPreferredSteepTime, setPreferredSteepSettings, getPreferredSteepSettings } = useCollection();
   const { logBrewSession, todayBrewCount } = useBrewHistory();
   
   // Get brewing guide
@@ -124,8 +124,9 @@ export const TimerScreen = ({ route, navigation }) => {
   const maxInfusions = guide?.infusions || 1;
   const isMultiSteep = maxInfusions > 1;
   
-  // Check for user's preferred steep time first
-  const preferredTime = teaId ? getPreferredSteepTime(teaId) : null;
+  // Check for user's preferred steep settings first
+  const preferredSettings = teaId ? getPreferredSteepSettings(teaId) : null;
+  const preferredTime = preferredSettings?.steepTimeSeconds || null;
   const teaDefaultTime = tea?.steepTimeMin 
     ? Math.round(tea.steepTimeMin * 60) 
     : 180;
@@ -168,6 +169,23 @@ export const TimerScreen = ({ route, navigation }) => {
   const appStateRef = useRef(AppState.currentState);
   const timerEndTimeRef = useRef(null);
   
+  // Apply preferred brew method and temperature on mount
+  useEffect(() => {
+    if (preferredSettings) {
+      if (preferredSettings.brewMethod) {
+        setBrewMethod(preferredSettings.brewMethod);
+        if (preferredSettings.brewMethod === BREW_METHODS.GONGFU) {
+          setMultiSteepMode(true);
+        } else {
+          setMultiSteepMode(false);
+        }
+      }
+      if (preferredSettings.temperatureF) {
+        setTemperatureF(preferredSettings.temperatureF);
+      }
+    }
+  }, [teaId]); // Only run when tea changes
+
   // Initialize infusion times when tea changes
   useEffect(() => {
     if (tea && multiSteepMode) {
@@ -378,24 +396,32 @@ export const TimerScreen = ({ route, navigation }) => {
     }
   };
 
-  // Save current time as preferred steep time for this tea
-  const handleSavePreferredTime = async () => {
+  // Save current steep settings as preferred for this tea
+  const handleSavePreferredSettings = async () => {
     if (!teaId || !isInCollection(teaId)) return;
     
-    const { error } = await setPreferredSteepTime(teaId, totalSeconds);
-    if (!error) {
-      setTimeModified(false);
-      trackEvent(AnalyticsEvents.STEEP_PREFERENCE_SAVED, {
-        tea_id: teaId,
-        tea_name: tea.name,
-        steep_time_seconds: totalSeconds,
-      });
-      Alert.alert(
-        'Saved!',
-        `${formatTime(totalSeconds)} is now your preferred steep time for ${tea.name}.`,
-        [{ text: 'OK' }]
-      );
+    const { error } = await setPreferredSteepSettings(teaId, {
+      steepTimeSeconds: totalSeconds,
+      brewMethod: brewMethod,
+      temperatureF: temperatureF,
+    });
+    if (error) {
+      Alert.alert('Error', 'Could not save your preferred settings. Please try again.');
+      return;
     }
+    setTimeModified(false);
+    trackEvent(AnalyticsEvents.STEEP_PREFERENCE_SAVED, {
+      tea_id: teaId,
+      tea_name: tea.name,
+      steep_time_seconds: totalSeconds,
+      brew_method: brewMethod,
+      temperature_f: temperatureF,
+    });
+    Alert.alert(
+      'Saved!',
+      `Your preferred steep settings for ${tea.name} have been saved.`,
+      [{ text: 'OK' }]
+    );
   };
   
   const handleStartPause = () => {
@@ -484,6 +510,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const handleBrewMethodChange = (method) => {
     if (isRunning) return;
     setBrewMethod(method);
+    setTimeModified(true);
     setIsComplete(false);
     setHasLogged(false);
     
@@ -747,17 +774,17 @@ export const TimerScreen = ({ route, navigation }) => {
           </View>
         )}
         
-        {/* Save as preferred steep time */}
+        {/* Save as preferred steep settings */}
         {teaId && isInCollection(teaId) && timeModified && !isRunning && !isComplete && (
           <TouchableOpacity
             style={[styles.savePreferredButton, { borderColor: theme.accent.primary }]}
-            onPress={handleSavePreferredTime}
+            onPress={handleSavePreferredSettings}
             accessible={true}
             accessibilityRole="button"
-            accessibilityLabel="Save as my preferred steep time"
+            accessibilityLabel="Set preferred steep settings"
           >
             <Text style={[styles.savePreferredText, { color: theme.accent.primary }]}>
-              Save as my preferred steep time
+              Set preferred steep settings
             </Text>
           </TouchableOpacity>
         )}
@@ -765,7 +792,7 @@ export const TimerScreen = ({ route, navigation }) => {
         {/* Show if using preferred time */}
         {hasCustomTime && !timeModified && !isComplete && (
           <Text style={[styles.customTimeLabel, { color: theme.accent.primary }]}>
-            ★ Using your preferred time
+            ★ Using your preferred settings
           </Text>
         )}
         
@@ -774,7 +801,7 @@ export const TimerScreen = ({ route, navigation }) => {
           <View style={styles.tempContainer}>
             <TemperatureSlider
               value={temperatureF}
-              onValueChange={setTemperatureF}
+              onValueChange={(val) => { setTemperatureF(val); setTimeModified(true); }}
               minTemp={brewMethod === BREW_METHODS.COLD_BREW ? 32 : 100}
               maxTemp={212}
               disabled={isRunning}
