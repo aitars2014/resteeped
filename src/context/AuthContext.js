@@ -95,10 +95,12 @@ export const AuthProvider = ({ children }) => {
 
     // Listen for auth changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
+      (_event, session) => {
         setUser(session?.user ?? null);
         if (session?.user) {
-          await fetchProfile(session.user.id);
+          // Don't await — let React commit the user state change immediately
+          // so dependent contexts (collection, brew history) can refetch
+          fetchProfile(session.user.id);
         } else {
           setProfile(null);
         }
@@ -145,8 +147,10 @@ export const AuthProvider = ({ children }) => {
 
       if (error) throw error;
 
-      // Track sign in
+      // Explicitly set user immediately — don't wait for onAuthStateChange
       if (data?.user) {
+        setUser(data.user);
+        fetchProfile(data.user.id);
         const isNewUser = new Date(data.user.created_at) > new Date(Date.now() - 60000);
         trackEvent(isNewUser ? AnalyticsEvents.SIGN_UP : AnalyticsEvents.SIGN_IN, { method: 'apple' });
         identifyUser(data.user.id, { email: data.user.email });
@@ -215,8 +219,10 @@ export const AuthProvider = ({ children }) => {
             
             if (sessionError) throw sessionError;
             
-            // Track sign in and identify user
+            // Explicitly set user immediately — don't wait for onAuthStateChange
             if (sessionData?.user) {
+              setUser(sessionData.user);
+              fetchProfile(sessionData.user.id);
               const isNewUser = new Date(sessionData.user.created_at) > new Date(Date.now() - 60000);
               trackEvent(isNewUser ? AnalyticsEvents.SIGN_UP : AnalyticsEvents.SIGN_IN, { method: 'google' });
               identifyUser(sessionData.user.id, { email: sessionData.user.email });
