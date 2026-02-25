@@ -79,6 +79,7 @@ export const useReviews = (teaId) => {
 
     try {
       // Upsert review (update if exists, insert if not)
+      // onConflict must match the UNIQUE(user_id, tea_id) constraint
       const { data, error } = await supabase
         .from('reviews')
         .upsert({
@@ -86,7 +87,8 @@ export const useReviews = (teaId) => {
           tea_id: teaId,
           rating,
           review_text: reviewText || null,
-        })
+          updated_at: new Date().toISOString(),
+        }, { onConflict: 'user_id,tea_id' })
         .select(`
           *,
           profile:profiles(username, display_name, avatar_url)
