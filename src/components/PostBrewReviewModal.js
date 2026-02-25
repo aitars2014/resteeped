@@ -1,92 +1,13 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { 
   View, Text, StyleSheet, Modal, TouchableOpacity, TextInput,
-  KeyboardAvoidingView, Platform, PanResponder, Dimensions,
+  KeyboardAvoidingView, Platform,
 } from 'react-native';
-import { X, Star } from 'lucide-react-native';
+import { X } from 'lucide-react-native';
 import { useTheme } from '../context';
 import { typography, spacing } from '../constants';
 import { Button } from '../components';
-
-const SLIDER_WIDTH = Dimensions.get('window').width - 100;
-const THUMB_SIZE = 28;
-
-const RatingSlider = ({ value, onValueChange }) => {
-  const { theme } = useTheme();
-  const currentValue = useRef(value);
-
-  const clamp = (val) => Math.round(Math.min(50, Math.max(1, val))) / 10;
-
-  const positionToValue = (x) => {
-    const ratio = Math.max(0, Math.min(1, x / SLIDER_WIDTH));
-    return clamp(Math.round((0.1 + ratio * 4.9) * 10));
-  };
-
-  const valueToPosition = (val) => ((val - 0.1) / 4.9) * SLIDER_WIDTH;
-
-  const panResponder = useRef(
-    PanResponder.create({
-      onStartShouldSetPanResponder: () => true,
-      onMoveShouldSetPanResponder: () => true,
-      onPanResponderTerminationRequest: () => false,
-      onPanResponderGrant: (evt) => {
-        const newVal = positionToValue(evt.nativeEvent.locationX);
-        currentValue.current = newVal;
-        onValueChange?.(newVal);
-      },
-      onPanResponderMove: (evt, gs) => {
-        const startPos = valueToPosition(currentValue.current);
-        const newVal = positionToValue(startPos + gs.dx);
-        if (newVal !== currentValue.current) {
-          currentValue.current = newVal;
-          onValueChange?.(newVal);
-        }
-      },
-    })
-  ).current;
-
-  const thumbLeft = valueToPosition(value);
-  const ratingColor = value < 2 ? '#D0021B' : value < 3.5 ? '#F5A623' : '#7ED321';
-
-  return (
-    <View style={ratingStyles.container}>
-      <View style={ratingStyles.labelRow}>
-        <Star size={20} color={ratingColor} fill={ratingColor} />
-        <Text style={[ratingStyles.value, { color: ratingColor }]}>{value.toFixed(1)}</Text>
-      </View>
-      <View style={ratingStyles.sliderContainer} {...panResponder.panHandlers}>
-        <View style={[ratingStyles.track, { backgroundColor: theme.border.light }]}>
-          <View style={[ratingStyles.fill, { width: thumbLeft, backgroundColor: ratingColor }]} />
-        </View>
-        <View style={[ratingStyles.thumb, { 
-          left: thumbLeft - THUMB_SIZE / 2, 
-          backgroundColor: ratingColor,
-          borderColor: theme.background.primary,
-        }]} />
-      </View>
-      <View style={ratingStyles.labels}>
-        <Text style={[ratingStyles.labelText, { color: theme.text.tertiary }]}>0.1</Text>
-        <Text style={[ratingStyles.labelText, { color: theme.text.tertiary }]}>5.0</Text>
-      </View>
-    </View>
-  );
-};
-
-const ratingStyles = StyleSheet.create({
-  container: { marginVertical: 8, paddingHorizontal: 10 },
-  labelRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, marginBottom: 12 },
-  value: { fontSize: 28, fontWeight: '700', fontVariant: ['tabular-nums'] },
-  sliderContainer: { height: 40, justifyContent: 'center' },
-  track: { height: 6, borderRadius: 3, width: SLIDER_WIDTH },
-  fill: { height: 6, borderRadius: 3 },
-  thumb: {
-    position: 'absolute', width: THUMB_SIZE, height: THUMB_SIZE, borderRadius: THUMB_SIZE / 2,
-    borderWidth: 3, elevation: 3,
-    shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.2, shadowRadius: 3,
-  },
-  labels: { flexDirection: 'row', justifyContent: 'space-between', marginTop: 4 },
-  labelText: { fontSize: 11 },
-});
+import { RatingSlider } from './RatingSlider';
 
 export const PostBrewReviewModal = ({ 
   visible, 
@@ -163,7 +84,7 @@ export const PostBrewReviewModal = ({
 
           {/* Rating slider */}
           <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Rating</Text>
-          <RatingSlider value={rating} onValueChange={setRating} />
+          <RatingSlider value={rating} onValueChange={setRating} size="small" />
 
           {/* Notes */}
           <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Tasting Notes</Text>

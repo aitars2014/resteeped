@@ -1,0 +1,562 @@
+[
+  {
+    "brand": "Bigelow Tea",
+    "status": "ok",
+    "websiteCount": 116,
+    "dbCount": 125,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Numi Organic Tea",
+    "status": "ok",
+    "websiteCount": 23,
+    "dbCount": 55,
+    "added": 2,
+    "newTeas": [
+      "Rooibos Chai Latte Powder",
+      "Matcha Maca Latte Powder"
+    ]
+  },
+  {
+    "brand": "Traditional Medicinals",
+    "status": "ok",
+    "websiteCount": 105,
+    "dbCount": 107,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Tea Forté",
+    "status": "ok",
+    "websiteCount": 165,
+    "dbCount": 182,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Stash Tea",
+    "status": "ok",
+    "websiteCount": 82,
+    "dbCount": 73,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Twinings",
+    "status": "ok",
+    "websiteCount": 64,
+    "dbCount": 70,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Celestial Seasonings",
+    "status": "ok",
+    "websiteCount": 88,
+    "dbCount": 86,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Teapigs",
+    "status": "ok",
+    "websiteCount": 44,
+    "dbCount": 45,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Steven Smith Teamaker",
+    "status": "ok",
+    "websiteCount": 60,
+    "dbCount": 80,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Art of Tea",
+    "status": "ok",
+    "websiteCount": 112,
+    "dbCount": 140,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Crimson Lotus Tea",
+    "status": "ok",
+    "websiteCount": 174,
+    "dbCount": 181,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Yunnan Sourcing",
+    "status": "ok",
+    "websiteCount": 152,
+    "dbCount": 164,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Spirit Tea",
+    "status": "ok",
+    "websiteCount": 19,
+    "dbCount": 27,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Song Tea & Ceramics",
+    "status": "error",
+    "error": "no company id",
+    "added": 0
+  },
+  {
+    "brand": "The Tea Spot",
+    "status": "ok",
+    "websiteCount": 88,
+    "dbCount": 88,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "The Steeping Room",
+    "status": "ok",
+    "websiteCount": 185,
+    "dbCount": 231,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Tea Drunk",
+    "status": "ok",
+    "websiteCount": 79,
+    "dbCount": 81,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Sullivan Street Tea & Spice Company",
+    "status": "ok",
+    "websiteCount": 38,
+    "dbCount": 38,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "MEM Tea",
+    "status": "ok",
+    "websiteCount": 140,
+    "dbCount": 148,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Premium Steap",
+    "status": "ok",
+    "websiteCount": 18,
+    "dbCount": 18,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Cuples Tea House",
+    "status": "ok",
+    "websiteCount": 40,
+    "dbCount": 45,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Just Add Honey Tea Company",
+    "status": "ok",
+    "websiteCount": 67,
+    "dbCount": 68,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Thistle & Sprig Tea Co.",
+    "status": "scrape_failed",
+    "added": 0
+  },
+  {
+    "brand": "Uptown Tea Shop",
+    "status": "ok",
+    "websiteCount": 181,
+    "dbCount": 182,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "New Orleans Tea Company",
+    "status": "ok",
+    "websiteCount": 97,
+    "dbCount": 96,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Tandem Tea Company",
+    "status": "ok",
+    "websiteCount": 30,
+    "dbCount": 30,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Nashville Tea Co",
+    "status": "ok",
+    "websiteCount": 35,
+    "dbCount": 35,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Milk-n-Honey Tea Company",
+    "status": "ok",
+    "websiteCount": 66,
+    "dbCount": 66,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Chicago Teahouse",
+    "status": "ok",
+    "websiteCount": 122,
+    "dbCount": 127,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "TeaLula",
+    "status": "ok",
+    "websiteCount": 180,
+    "dbCount": 187,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Eli Tea Bar",
+    "status": "ok",
+    "websiteCount": 31,
+    "dbCount": 54,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "CommodiTeas",
+    "status": "ok",
+    "websiteCount": 48,
+    "dbCount": 47,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Sencha Tea Bar",
+    "status": "ok",
+    "websiteCount": 49,
+    "dbCount": 49,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Northeast Tea House",
+    "status": "ok",
+    "websiteCount": 189,
+    "dbCount": 195,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Storehouse Tea",
+    "status": "ok",
+    "websiteCount": 99,
+    "dbCount": 106,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "London Tea Merchant",
+    "status": "ok",
+    "websiteCount": 83,
+    "dbCount": 90,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Big Heart Tea Co.",
+    "status": "ok",
+    "websiteCount": 22,
+    "dbCount": 27,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Chado Tea",
+    "status": "ok",
+    "websiteCount": 176,
+    "dbCount": 178,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Red Blossom Tea",
+    "status": "ok",
+    "websiteCount": 103,
+    "dbCount": 104,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Vital Tea Leaf",
+    "status": "ok",
+    "websiteCount": 14,
+    "dbCount": 14,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Perennial Tea Room",
+    "status": "ok",
+    "websiteCount": 132,
+    "dbCount": 134,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Floating Leaves Tea",
+    "status": "ok",
+    "websiteCount": 24,
+    "dbCount": 27,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Oregon Tea Traders",
+    "status": "ok",
+    "websiteCount": 188,
+    "dbCount": 231,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Point Loma Tea",
+    "status": "ok",
+    "websiteCount": 95,
+    "dbCount": 100,
+    "added": 1,
+    "newTeas": [
+      "Toy -  Doll Freya Fairy"
+    ]
+  },
+  {
+    "brand": "PARU Tea",
+    "status": "ok",
+    "websiteCount": 56,
+    "dbCount": 70,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Tea & Whisk",
+    "status": "ok",
+    "websiteCount": 47,
+    "dbCount": 52,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "True Leaf Tea Co.",
+    "status": "ok",
+    "websiteCount": 65,
+    "dbCount": 65,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "TEAinTEXAS",
+    "status": "ok",
+    "websiteCount": 22,
+    "dbCount": 22,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "The Cultured Cup",
+    "status": "ok",
+    "websiteCount": 157,
+    "dbCount": 165,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Rakkasan Tea Company",
+    "status": "ok",
+    "websiteCount": 100,
+    "dbCount": 103,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Happyness Tea & Spice Company",
+    "status": "ok",
+    "websiteCount": 21,
+    "dbCount": 22,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Zhi Tea",
+    "status": "ok",
+    "websiteCount": 82,
+    "dbCount": 154,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Tea Embassy",
+    "status": "ok",
+    "websiteCount": 166,
+    "dbCount": 166,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Buddha Teas",
+    "status": "ok",
+    "websiteCount": 108,
+    "dbCount": 108,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Full Leaf Tea Company",
+    "status": "ok",
+    "websiteCount": 186,
+    "dbCount": 188,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "The Boulder Tea Company",
+    "status": "ok",
+    "websiteCount": 124,
+    "dbCount": 137,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "One River Tea",
+    "status": "ok",
+    "websiteCount": 157,
+    "dbCount": 179,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Jesse's Teahouse",
+    "status": "ok",
+    "websiteCount": 98,
+    "dbCount": 102,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Kettl",
+    "status": "ok",
+    "websiteCount": 142,
+    "dbCount": 147,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "TeaHaus",
+    "status": "ok",
+    "websiteCount": 34,
+    "dbCount": 74,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "TeaSource",
+    "status": "ok",
+    "websiteCount": 188,
+    "dbCount": 188,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Rishi Tea",
+    "status": "ok",
+    "websiteCount": 102,
+    "dbCount": 157,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "STEAP Tea Bar",
+    "status": "scrape_failed",
+    "added": 0
+  },
+  {
+    "brand": "Loose Leaf Tea Market",
+    "status": "ok",
+    "websiteCount": 18,
+    "dbCount": 18,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Hackberry Tea",
+    "status": "ok",
+    "websiteCount": 94,
+    "dbCount": 94,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Hugo Tea",
+    "status": "ok",
+    "websiteCount": 46,
+    "dbCount": 46,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Kilogram Tea",
+    "status": "ok",
+    "websiteCount": 40,
+    "dbCount": 35,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "Metolius Tea",
+    "status": "ok",
+    "websiteCount": 31,
+    "dbCount": 32,
+    "added": 0,
+    "newTeas": []
+  },
+  {
+    "brand": "DAVIDsTEA",
+    "status": "ok",
+    "websiteCount": 201,
+    "dbCount": 167,
+    "added": 2,
+    "newTeas": [
+      "Organic Cinnamon Rooibos Chai Loose Leaf Tea Bag 250 g",
+      "Organic Ashwagandha Pumpkin Tea Superfood Latte Powder"
+    ]
+  },
+  {
+    "brand": "Hemp & Tea Co",
+    "status": "ok",
+    "websiteCount": 124,
+    "dbCount": 126,
+    "added": 0,
+    "newTeas": []
+  }
+]

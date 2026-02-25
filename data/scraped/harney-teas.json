@@ -1,5 +1,120 @@
 [
   {
+    "name": "2019 Raw (Sheng) Pu-Erh",
+    "brandName": "Harney & Sons",
+    "teaType": "puerh",
+    "description": "Pu-Erh comes from southwestern Yunnan Province in China. People often make them in medium-sized, frisbee-like disks (bings). However, those bings can be inconvenient, so this is a conveniently pre-portioned Pu-Erh. The small size allows the tea to ferment faster. The raw (Sheng) Pu-Erhs slowly ferment over time, which makes for a lighter and more sophisticated cup of tea. Six years after its creation, the tea is now ready.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/1234/1342/files/2025_Cup_Shots_2019_Sheng_Raw_Pu-Erh_38-3753_9601d425-14f8-42c9-b172-6c9432cb83bf.jpg?v=1762282206",
+    "productUrl": "https://www.harney.com/products/2019-raw-sheng-pu-erh",
+    "priceUsd": 22,
+    "tags": [
+      "All Loose Tea",
+      "black-tea",
+      "chinese-black-tea",
+      "Low stock",
+      "Pu-erh",
+      "rc-member-tier-2|price:member-discount|sub:5.56:percent",
+      "rc-member-tier-3|price:member-discount|sub:11.11:percent",
+      "reduced-packaging",
+      "SEL-TO"
+    ],
+    "shopifyId": 7224481972295,
+    "createdAt": "2025-06-02T12:03:59-04:00",
+    "updatedAt": "2026-02-24T20:19:40-05:00"
+  },
+  {
+    "name": "Thai Silk Tea",
+    "brandName": "Harney & Sons",
+    "teaType": "oolong",
+    "description": "The Phataraprsit family of mothers and daughters has been making tea outside of Chiang Mai in Northwestern Thailand for several years. This Thai Silk Tea is their signature tea. It is made by hand. As they say, it is “silky smooth.”",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/1234/1342/products/Cup_Shots_Silk_Tea.jpg?v=1762201300",
+    "productUrl": "https://www.harney.com/products/thai-silk-tea",
+    "priceUsd": 12,
+    "tags": [
+      "All Loose Tea",
+      "Low stock",
+      "oolong-tea",
+      "rc-member-tier-2|price:member-discount|sub:5.56:percent",
+      "rc-member-tier-3|price:member-discount|sub:11.11:percent",
+      "reduced-packaging",
+      "SEL-TO",
+      "teas-from-other-regions"
+    ],
+    "shopifyId": 1483342381127,
+    "createdAt": "2018-10-23T08:33:14-04:00",
+    "updatedAt": "2026-02-24T20:19:40-05:00"
+  },
+  {
+    "name": "Traditional Ti Quan Yin",
+    "brandName": "Harney & Sons",
+    "teaType": "oolong",
+    "description": "Ti Quan Yin, also known as the Iron Goddess of Mercy, is one of China's most famous teas. China is known for its greenish, rolled oolongs. Traditionally, men using their feet and body weight would roll these oolongs into tight balls in something like a pillowcase. Lastly, they dried the tea over smoldering charcoal. \nThese days, machines are used to slowly roll the tea in pillowcases, making balls of oolong tea. This tea has been finished over charcoal, so it has a toasty flavor.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/1234/1342/products/Cup_Shots_Traditional_Ti_Kuan_Yon.jpg?v=1762268900",
+    "productUrl": "https://www.harney.com/products/traditional-ti-quan-yin",
+    "priceUsd": 19,
+    "tags": [
+      "All Loose Tea",
+      "chinese-oolong-tea",
+      "Low stock",
+      "oolong-tea",
+      "rc-member-tier-2|price:member-discount|sub:5.56:percent",
+      "rc-member-tier-3|price:member-discount|sub:11.11:percent",
+      "reduced-packaging",
+      "SEL-TO"
+    ],
+    "shopifyId": 1837980352583,
+    "createdAt": "2019-07-30T14:16:15-04:00",
+    "updatedAt": "2026-02-24T20:19:40-05:00"
+  },
+  {
+    "name": "Fujian Black",
+    "brandName": "Harney & Sons",
+    "teaType": "black",
+    "description": "This tea comes from southern Fujian Province, China. In contrast to Zhang Ping Black (which comes from the same area), the flavor is more intense and slightly different, edging toward vanilla.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/1234/1342/files/2023_Cup_Shots_Fujian_Black.jpg?v=1762278219",
+    "productUrl": "https://www.harney.com/products/fujian-black",
+    "priceUsd": 20,
+    "tags": [
+      "All Loose Tea",
+      "black-tea",
+      "chinese-black-tea",
+      "Low stock",
+      "rc-member-tier-2|price:member-discount|sub:5.56:percent",
+      "rc-member-tier-3|price:member-discount|sub:11.11:percent",
+      "reduced-packaging",
+      "sale",
+      "SEL-TO"
+    ],
+    "shopifyId": 6821006540871,
+    "createdAt": "2023-07-28T18:05:33-04:00",
+    "updatedAt": "2026-02-24T20:19:40-05:00"
+  },
+  {
+    "name": "Mother's Day, Bag of 50 Sachets",
+    "brandName": "Harney & Sons",
+    "teaType": "black",
+    "description": "Mother's Day is a beautiful and refreshing caffeine-free herbal blend created in honor of all mothers. Our tea sachets in the decorative tins make a thoughtful gift for Mom or the perfect choice if you are hosting a Mother's Day tea or luncheon. This tea was previously known as Mother's Bouquet.\nEach bag contains 50 tea sachets.Each sachet brews one 12 oz. cup of tea.Each bag is resealable to keep your tea fresh!\nClick here to see additional purchasing options for Mother's Day.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/1234/1342/products/50ct_Sachet_Mother_s_Day.jpg?v=1762273392",
+    "productUrl": "https://www.harney.com/products/mothers-day-bag-of-50-sachets",
+    "priceUsd": 19.99,
+    "tags": [
+      "B2B",
+      "Bag of 50 Sachets",
+      "black_crow_do_not_replenish",
+      "black_crow_do_not_subscribe",
+      "fyp",
+      "k-md",
+      "LT-O",
+      "Mother's Day Gifts",
+      "rc-member-tier-2|price:member-discount|sub:5.56:percent",
+      "rc-member-tier-3|price:member-discount|sub:11.11:percent",
+      "Tea Lover"
+    ],
+    "shopifyId": 6551917035591,
+    "createdAt": "2021-04-08T10:49:00-04:00",
+    "updatedAt": "2026-02-24T20:19:40-05:00"
+  },
+  {
     "name": "Lunar New Year 2026 Gift",
     "brandName": "Harney & Sons",
     "teaType": "black",
@@ -14,13 +129,14 @@
       "gifts",
       "holiday-gift",
       "k-lny",
+      "Low stock",
       "LT-O",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent"
     ],
     "shopifyId": 6878914052167,
     "createdAt": "2023-12-06T15:12:00-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Luck Always, Bag of 25 Sachets",
@@ -38,7 +154,7 @@
     ],
     "shopifyId": 7443939164231,
     "createdAt": "2026-02-04T23:16:52-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Nutcracker Blend, Tin of 30 Sachets",
@@ -47,7 +163,7 @@
     "description": "Our newest holiday blend, Nutcracker, is a delectable combination of chocolate and nutty flavors atop a smooth, medium-bodied black tea. The inspiration for this tea was classic nutcrackers that remind many of us of home, family, and the holidays. Nutcracker is packaged in a unique and festive holiday tin, sure to brighten any home this holiday season. Enjoy!\nEach tin contains 30 tea sachets.Each sachet brews one 12 oz. cup of tea.Be sure to recycle your tin, or click here to explore ways to reuse your tins!",
     "imageUrl": "https://cdn.shopify.com/s/files/1/1234/1342/files/2023_Tin_30_Count_Sachet_Nutcracker_Face_Front_3_4_C0038.jpg?v=1762278498",
     "productUrl": "https://www.harney.com/products/nutcracker-tin-of-30-sachets",
-    "priceUsd": 11.1,
+    "priceUsd": 18.5,
     "tags": [
       "B2B",
       "black-tea",
@@ -59,13 +175,12 @@
       "LT-O",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
-      "sale",
       "specialty-seasonal-teas",
       "Tin of 30"
     ],
     "shopifyId": 6838664822855,
     "createdAt": "2023-10-03T14:19:34-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Black Amba Gems",
@@ -86,7 +201,7 @@
     ],
     "shopifyId": 4845836730439,
     "createdAt": "2020-09-22T12:01:45-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Green Needle",
@@ -109,7 +224,7 @@
     ],
     "shopifyId": 7058888065095,
     "createdAt": "2024-05-28T22:17:57-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Gingerbread Festival, Tin of 20 Sachets",
@@ -131,7 +246,7 @@
     ],
     "shopifyId": 6651468087367,
     "createdAt": "2022-04-25T06:39:46-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Holiday Tea, Tin of 30 Sachets",
@@ -155,7 +270,7 @@
     ],
     "shopifyId": 8583830598,
     "createdAt": "2016-09-16T13:32:12-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Ruby Black",
@@ -177,7 +292,7 @@
     ],
     "shopifyId": 1896720498759,
     "createdAt": "2019-09-10T18:59:01-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Dark Pearl Oolong",
@@ -197,7 +312,7 @@
     ],
     "shopifyId": 11866976326,
     "createdAt": "2017-09-13T12:01:05-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Hawaiian Black Dragon",
@@ -220,7 +335,7 @@
     ],
     "shopifyId": 6597648482375,
     "createdAt": "2021-10-04T13:18:27-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Assam Golden Tips",
@@ -241,7 +356,7 @@
     ],
     "shopifyId": 8583591174,
     "createdAt": "2016-09-16T12:59:54-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Khongea Broken",
@@ -262,7 +377,7 @@
     ],
     "shopifyId": 1607277772871,
     "createdAt": "2019-01-25T15:06:53-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Artisanal Qi Men Town",
@@ -285,7 +400,7 @@
     ],
     "shopifyId": 7394620506183,
     "createdAt": "2026-01-15T08:04:17-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "2005 Imperial Gold Tip Pu-Erh",
@@ -308,7 +423,7 @@
     ],
     "shopifyId": 7397411192903,
     "createdAt": "2026-01-19T11:11:55-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Love Always, Bag of 25 Sachets",
@@ -328,7 +443,7 @@
     ],
     "shopifyId": 7408868458567,
     "createdAt": "2026-01-23T14:25:57-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Best Sellers – 4 Bags of 50 Sachet Bundle",
@@ -348,7 +463,7 @@
     ],
     "shopifyId": 7119297577031,
     "createdAt": "2024-08-29T18:15:27-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Heirloom Tea Chest Featuring Nine Teas – Teabags",
@@ -365,7 +480,7 @@
     ],
     "shopifyId": 4866589261895,
     "createdAt": "2020-10-06T11:18:59-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Strawberry Vanilla",
@@ -386,7 +501,7 @@
     ],
     "shopifyId": 7405351501895,
     "createdAt": "2026-01-20T09:01:49-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Rou Gui Oolong",
@@ -407,7 +522,7 @@
     ],
     "shopifyId": 8580489862,
     "createdAt": "2016-09-16T01:08:22-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Meijiawu Lung Ching",
@@ -429,7 +544,7 @@
     ],
     "shopifyId": 8584174598,
     "createdAt": "2016-09-16T14:21:27-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Yuzu Sencha",
@@ -449,7 +564,7 @@
     ],
     "shopifyId": 4915237453895,
     "createdAt": "2020-11-17T09:16:33-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Historic Royal Palaces Tea Set",
@@ -471,7 +586,7 @@
     ],
     "shopifyId": 7081402499143,
     "createdAt": "2024-06-17T16:50:23-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Bamboo Heirloom Tea Chest Featuring Eight Teas – Wrapped Sachets",
@@ -492,7 +607,7 @@
     ],
     "shopifyId": 4966070747207,
     "createdAt": "2021-01-29T08:54:57-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Golden Genmaicha",
@@ -514,7 +629,7 @@
     ],
     "shopifyId": 4909715816519,
     "createdAt": "2020-11-13T06:23:11-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Osmanthus Oolong",
@@ -536,7 +651,7 @@
     ],
     "shopifyId": 11874903558,
     "createdAt": "2017-09-13T18:25:34-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Maruichi Select",
@@ -558,7 +673,7 @@
     ],
     "shopifyId": 7389559685191,
     "createdAt": "2026-01-08T20:48:58-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Stump Teapot with Infuser 18 oz (Multiple colors)",
@@ -580,7 +695,7 @@
     ],
     "shopifyId": 8584473862,
     "createdAt": "2016-09-16T14:56:24-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Hot Cinnamon Tea Pods",
@@ -601,7 +716,7 @@
     ],
     "shopifyId": 7376858185799,
     "createdAt": "2025-12-24T11:46:11-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "English Breakfast Tea Pods",
@@ -622,7 +737,7 @@
     ],
     "shopifyId": 7376865067079,
     "createdAt": "2025-12-24T11:53:05-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Earl Grey Tea Pods",
@@ -636,7 +751,6 @@
       "black-tea",
       "Earl Grey Teas",
       "flavored-black-tea",
-      "Low stock",
       "new-arrivals",
       "new-product",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
@@ -644,7 +758,7 @@
     ],
     "shopifyId": 7376865263687,
     "createdAt": "2025-12-24T11:55:22-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Pemberley Grey, Tin of 20 Sachets",
@@ -667,7 +781,7 @@
     ],
     "shopifyId": 7346991988807,
     "createdAt": "2025-11-13T08:08:45-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Lunar New Year 2026 – Year of the Horse",
@@ -692,7 +806,7 @@
     ],
     "shopifyId": 6852786126919,
     "createdAt": "2023-10-27T08:34:28-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Yunnan Golden Tips",
@@ -712,7 +826,7 @@
     ],
     "shopifyId": 8584070342,
     "createdAt": "2016-09-16T14:07:24-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Ti Quan Yin Spring Floral",
@@ -733,7 +847,7 @@
     ],
     "shopifyId": 8583984966,
     "createdAt": "2016-09-16T13:55:16-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Wuyi Da Hong Pao",
@@ -754,7 +868,7 @@
     ],
     "shopifyId": 8586120518,
     "createdAt": "2016-09-16T19:05:00-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Williamsburg Holiday Heritage Tea, Tin of 20 Sachets",
@@ -773,7 +887,7 @@
     ],
     "shopifyId": 7359617171527,
     "createdAt": "2025-11-28T14:15:57-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Cookies & Cream",
@@ -796,7 +910,7 @@
     ],
     "shopifyId": 7354024001607,
     "createdAt": "2025-11-20T20:47:11-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Served Vacuum Insulated Pitcher (Assorted Colors)",
@@ -813,7 +927,7 @@
     ],
     "shopifyId": 7349188460615,
     "createdAt": "2025-11-17T11:34:22-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Supreme Matcha",
@@ -835,7 +949,7 @@
     ],
     "shopifyId": 7347268681799,
     "createdAt": "2025-11-13T20:56:13-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "H&S Calendar Tea Towel 2026",
@@ -854,7 +968,7 @@
     ],
     "shopifyId": 7349147697223,
     "createdAt": "2025-11-17T09:29:58-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Williamsburg Holiday Heritage Tea, Bag of 50 Sachets",
@@ -872,7 +986,7 @@
     ],
     "shopifyId": 7349277360199,
     "createdAt": "2025-11-17T13:03:22-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Cookies & Cream, Tin of 30 Sachets",
@@ -891,7 +1005,25 @@
     ],
     "shopifyId": 7335667105863,
     "createdAt": "2025-11-06T15:58:55-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
+  },
+  {
+    "name": "Harney & Sons Permanent Tea Filter",
+    "brandName": "Harney & Sons",
+    "teaType": "black",
+    "description": "Brew your favorite loose tea with ease and elegance. Crafted from high-quality stainless steel, our Permanent Tea Filter allows for a clean, flavorful infusion every time. Its fine mesh design ensures even steeping while preventing leaves from escaping into your cup. Designed to fit most mugs and teapots, it’s durable, easy to clean, and built for daily use. This reusable filter is both a sustainable and sophisticated choice for every tea lover.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/1234/1342/files/2025_HARNEY_STAINLESS_TEA_FILTER_46-7443-M1_A0039_BOX.jpg?v=1761586320",
+    "productUrl": "https://www.harney.com/products/harney-permanent-tea-filter-medium",
+    "priceUsd": 12.95,
+    "tags": [
+      "Low stock",
+      "rc-member-tier-2|price:member-discount|sub:5.56:percent",
+      "rc-member-tier-3|price:member-discount|sub:11.11:percent",
+      "Tea Filters & Strainers"
+    ],
+    "shopifyId": 7319518085191,
+    "createdAt": "2025-10-22T08:02:11-04:00",
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Harney & Sons Mug with Permanent Tea Filter Bundle",
@@ -913,7 +1045,7 @@
     ],
     "shopifyId": 7325077110855,
     "createdAt": "2025-10-28T16:08:26-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Heartland Masala Chai",
@@ -935,7 +1067,7 @@
     ],
     "shopifyId": 7318537338951,
     "createdAt": "2025-10-20T15:24:10-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Lunar New Year 2026 – Year of the Horse, Tin of 30 Sachets",
@@ -955,7 +1087,7 @@
     ],
     "shopifyId": 7325007118407,
     "createdAt": "2025-10-28T13:58:40-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Gingerbread Festival",
@@ -981,7 +1113,7 @@
     ],
     "shopifyId": 7325002465351,
     "createdAt": "2025-10-28T13:39:19-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Gingerbread 20 MG Hemp, Tin of 20 Sachets",
@@ -1002,7 +1134,7 @@
     ],
     "shopifyId": 6739868024903,
     "createdAt": "2022-12-16T19:24:24-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Decaffeinated Chai, Bag of 50 Sachets",
@@ -1022,7 +1154,7 @@
     ],
     "shopifyId": 7295626444871,
     "createdAt": "2025-09-23T14:53:39-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Spearmint Black, Bag of 50 Sachets",
@@ -1042,7 +1174,7 @@
     ],
     "shopifyId": 7295631261767,
     "createdAt": "2025-09-23T15:35:24-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Horchata, Bag of 50 Sachets",
@@ -1055,12 +1187,13 @@
     "tags": [
       "Bag of 50 Sachets",
       "k-hor",
+      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent"
     ],
     "shopifyId": 7182014480455,
     "createdAt": "2025-02-13T06:52:50-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Butterfly Pea Flower, Bag of 50 Sachets",
@@ -1078,7 +1211,7 @@
     ],
     "shopifyId": 7295627821127,
     "createdAt": "2025-09-23T15:02:20-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Scottish Morn & Afternoon Lover Bundle",
@@ -1099,7 +1232,7 @@
     ],
     "shopifyId": 7112022556743,
     "createdAt": "2024-08-14T14:21:02-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Colombian Cocoa Kisses",
@@ -1122,7 +1255,7 @@
     ],
     "shopifyId": 7261298098247,
     "createdAt": "2025-08-06T22:58:01-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Tea Scoop - Natural Horn",
@@ -1143,7 +1276,7 @@
     ],
     "shopifyId": 8584487686,
     "createdAt": "2016-09-16T14:57:53-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Nepalese Shangrila",
@@ -1163,7 +1296,7 @@
     ],
     "shopifyId": 4296065679431,
     "createdAt": "2019-10-22T08:24:10-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Hunan Wild",
@@ -1184,7 +1317,7 @@
     ],
     "shopifyId": 7233107132487,
     "createdAt": "2025-06-15T21:40:34-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Berry Cobbler, Tin of 20 Sachets",
@@ -1208,7 +1341,7 @@
     ],
     "shopifyId": 6729502851143,
     "createdAt": "2022-11-08T16:16:18-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Hainan Black",
@@ -1228,7 +1361,7 @@
     ],
     "shopifyId": 7224489967687,
     "createdAt": "2025-06-02T12:10:22-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Lay a Little Egg Tea Towel",
@@ -1246,7 +1379,7 @@
     ],
     "shopifyId": 7226331365447,
     "createdAt": "2025-06-04T10:42:27-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Thiele Silver",
@@ -1265,7 +1398,7 @@
     ],
     "shopifyId": 7224451924039,
     "createdAt": "2025-06-02T11:38:33-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Thiele Gold",
@@ -1285,7 +1418,7 @@
     ],
     "shopifyId": 7224445239367,
     "createdAt": "2025-06-02T11:29:40-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "2019 Shu Pu-Erh",
@@ -1306,7 +1439,7 @@
     ],
     "shopifyId": 6612479246407,
     "createdAt": "2021-12-08T08:52:27-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Kathmandu",
@@ -1327,7 +1460,7 @@
     ],
     "shopifyId": 7220868874311,
     "createdAt": "2025-05-27T13:35:52-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Organic Ginger Turmeric, Bag of 50 Sachets",
@@ -1344,7 +1477,7 @@
     ],
     "shopifyId": 7216833331271,
     "createdAt": "2025-05-20T10:27:42-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "ForLife Mist Glass Iced Tea Jug, 68 oz (Assorted Colors)",
@@ -1364,7 +1497,7 @@
     ],
     "shopifyId": 6664720777287,
     "createdAt": "2022-06-06T14:48:53-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Organic English Breakfast, Bag of 50 Sachets",
@@ -1381,7 +1514,7 @@
     ],
     "shopifyId": 7208900788295,
     "createdAt": "2025-05-02T22:30:18-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Organic Assam, Bag of 50 Sachets",
@@ -1398,7 +1531,7 @@
     ],
     "shopifyId": 7208900165703,
     "createdAt": "2025-05-02T22:08:16-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Victorian London Fog Trio – 3 Bags of 50 Sachets",
@@ -1417,7 +1550,7 @@
     ],
     "shopifyId": 7203148628039,
     "createdAt": "2025-04-15T13:24:31-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Peppermint Herbal Trio – 3 Bags of 50 Sachets",
@@ -1436,7 +1569,7 @@
     ],
     "shopifyId": 7203145023559,
     "createdAt": "2025-04-15T13:19:30-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Dragon Pearl Jasmine Trio – 3 Bags of 50 Sachets",
@@ -1455,7 +1588,7 @@
     ],
     "shopifyId": 7203080732743,
     "createdAt": "2025-04-15T11:26:53-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Decaf Hot Cinnamon Trio – 3 Bags of 50 Sachets",
@@ -1474,7 +1607,7 @@
     ],
     "shopifyId": 7203069526087,
     "createdAt": "2025-04-15T10:33:59-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Paris Trio – 3 Bags of 50 Sachets",
@@ -1493,7 +1626,7 @@
     ],
     "shopifyId": 7203141255239,
     "createdAt": "2025-04-15T13:13:53-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "English Breakfast Trio – 3 Bags of 50 Sachets",
@@ -1512,7 +1645,7 @@
     ],
     "shopifyId": 7203136045127,
     "createdAt": "2025-04-15T13:05:55-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Earl Grey Supreme Trio – 3 Bags of 50 Sachets",
@@ -1531,7 +1664,7 @@
     ],
     "shopifyId": 7203133915207,
     "createdAt": "2025-04-15T13:02:36-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Hot Cinnamon Spice Trio – 3 Bags of 50 Sachets",
@@ -1550,7 +1683,7 @@
     ],
     "shopifyId": 7202785198151,
     "createdAt": "2025-04-14T20:14:52-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Hibiscus, Box of 20 Premium Teabags",
@@ -1569,7 +1702,7 @@
     ],
     "shopifyId": 7191590993991,
     "createdAt": "2025-03-11T20:45:26-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Strawberry Vanilla, HT Tin of 20 Sachets",
@@ -1589,7 +1722,7 @@
     ],
     "shopifyId": 7203005104199,
     "createdAt": "2025-04-15T09:12:27-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Mayfair Breakfast, Bag of 50 Sachets",
@@ -1607,7 +1740,7 @@
     ],
     "shopifyId": 7202612576327,
     "createdAt": "2025-04-14T11:55:09-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Botanical Blend Earl Grey, Tin of 20 Sachets",
@@ -1620,7 +1753,6 @@
     "tags": [
       "black-tea",
       "flavored-black-tea",
-      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
       "specialty-seasonal-teas",
@@ -1629,7 +1761,7 @@
     ],
     "shopifyId": 7192709824583,
     "createdAt": "2025-03-14T13:02:31-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Harney & Sons Scented Candle (Assorted Scents)",
@@ -1648,7 +1780,7 @@
     ],
     "shopifyId": 7191595188295,
     "createdAt": "2025-03-11T21:17:19-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Ahimsa Tea, Tin of 20 Sachets",
@@ -1670,7 +1802,7 @@
     ],
     "shopifyId": 8586102854,
     "createdAt": "2016-09-16T19:00:19-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Horchata, HT Tin of 20 Sachets",
@@ -1693,7 +1825,7 @@
     ],
     "shopifyId": 7182014349383,
     "createdAt": "2025-02-13T06:49:54-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Paris, Box of 20 Premium Teabags",
@@ -1712,29 +1844,7 @@
     ],
     "shopifyId": 7186353258567,
     "createdAt": "2025-02-24T21:45:26-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
-  },
-  {
-    "name": "Snow White, Tin of 20 Sachets",
-    "brandName": "Harney & Sons",
-    "teaType": "white",
-    "description": "Disney’s Snow White, a live-action musical reimagining of the classic 1937 film, opens exclusively in theaters March 21, 2025. Starring Rachel Zegler (West Side Story) in the title role and Gal Gadot (Wonder Woman) as her Stepmother, the Evil Queen, the magical music adventure journeys back to the timeless story with beloved characters Bashful, Doc, Dopey, Grumpy, Happy, Sleepy, and Sneezy.  Disney’s Snow White is directed by Marc Webb (The Amazing Spider-Man) and produced by Marc Platt (The Little Mermaid) and Jared LeBoff (The Girl on the Train), with Callum M Dougall (Mary Poppins Returns) serving as executive producer, and features all-new original songs from Benj Pasek and Justin Paul (Dear Evan Hansen).\nWe loved creating Disney’s Snow White Blend, starting with a Mutan White tea base then adding apple pieces (not sourced from a wicked queen), apple flavor, cornflowers, and marigolds that reminded us of Snow White in a cottage with her forest animal friends. It may just be the tastiest tea of the land!\nEach tin contains 20 tea sachets.Each sachet brews one 12 oz. cup of tea.Be sure to recycle your tin, or click here to explore ways to reuse your tins!\n\nClick here to see all our Flavored White Teas.\n\n©2025 Disney",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/1234/1342/files/2025_20_Count_Sachet_Snow_White_3_4.jpg?v=1762281830",
-    "productUrl": "https://www.harney.com/products/snow-white-tin-of-20-sachets",
-    "priceUsd": 15.5,
-    "tags": [
-      "flavored-white-tea",
-      "Fruity",
-      "Low stock",
-      "rc-member-tier-2|price:member-discount|sub:5.56:percent",
-      "rc-member-tier-3|price:member-discount|sub:11.11:percent",
-      "specialty-seasonal-teas",
-      "Tin of 20",
-      "white-tea"
-    ],
-    "shopifyId": 7180190941255,
-    "createdAt": "2025-02-07T08:15:25-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Harney & Sons Logo Tasting Cup Set",
@@ -1753,7 +1863,7 @@
     ],
     "shopifyId": 7172024172615,
     "createdAt": "2025-01-15T09:44:25-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Strawberry Milkshake, Tin of 30 Sachets",
@@ -1774,7 +1884,7 @@
     ],
     "shopifyId": 7160832819271,
     "createdAt": "2024-12-16T10:05:31-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Hibiscus, Bag of 50 Sachets",
@@ -1792,7 +1902,7 @@
     ],
     "shopifyId": 7157273428039,
     "createdAt": "2024-12-03T21:33:43-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Hibiscus",
@@ -1812,7 +1922,7 @@
     ],
     "shopifyId": 7159160832071,
     "createdAt": "2024-12-10T15:52:47-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Himalayan Bouquet",
@@ -1833,7 +1943,7 @@
     ],
     "shopifyId": 6628623712327,
     "createdAt": "2022-02-14T08:53:59-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Ginger's Oolong, Bag of 50 Sachets",
@@ -1850,7 +1960,7 @@
     ],
     "shopifyId": 8583785798,
     "createdAt": "2016-09-16T13:26:00-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Williamsburg Pomegranate Garden, Tin of 20 Sachets",
@@ -1872,7 +1982,7 @@
     ],
     "shopifyId": 7148230082631,
     "createdAt": "2024-11-08T15:40:09-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Williamsburg Earl Grey, Tin of 20 Sachets",
@@ -1895,7 +2005,7 @@
     ],
     "shopifyId": 7148229558343,
     "createdAt": "2024-11-08T15:37:04-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Sweet Azuki Black, Tin of 20 Sachets",
@@ -1916,7 +2026,7 @@
     ],
     "shopifyId": 7132372926535,
     "createdAt": "2024-09-26T20:25:16-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Tropical Green, Tin of 20 Sachets",
@@ -1939,7 +2049,7 @@
     ],
     "shopifyId": 7124896186439,
     "createdAt": "2024-09-11T10:33:33-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Continental Breakfast, Tin of 20 Sachets",
@@ -1961,7 +2071,7 @@
     ],
     "shopifyId": 7124895858759,
     "createdAt": "2024-09-11T10:32:54-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Botanical Blend, Tin of 20 Sachets",
@@ -1974,6 +2084,7 @@
     "tags": [
       "all-herbal-infusions",
       "B2B",
+      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
       "Schitt's Creek",
@@ -1982,7 +2093,7 @@
     ],
     "shopifyId": 7124896448583,
     "createdAt": "2024-09-11T10:34:05-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Yerba Mate, Yaupon & Mint – Focus",
@@ -2001,7 +2112,7 @@
     ],
     "shopifyId": 4551613218887,
     "createdAt": "2020-03-30T18:37:27-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Turmeric Ginger – Calm",
@@ -2023,7 +2134,7 @@
     ],
     "shopifyId": 4369152901191,
     "createdAt": "2019-11-22T17:22:46-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Cinnamon Spice – Center",
@@ -2042,7 +2153,7 @@
     ],
     "shopifyId": 4369147068487,
     "createdAt": "2019-11-22T17:16:51-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Chocolate & Coconut – Boom",
@@ -2060,7 +2171,7 @@
     ],
     "shopifyId": 4741959352391,
     "createdAt": "2020-07-10T10:52:02-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Wellness in the Cup, Tin of 20 Sachets",
@@ -2080,7 +2191,7 @@
     ],
     "shopifyId": 7132373614663,
     "createdAt": "2024-09-26T20:35:14-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Yerba Mate Licorice, Bag of 50 Sachets",
@@ -2097,7 +2208,7 @@
     ],
     "shopifyId": 7100680011847,
     "createdAt": "2024-07-23T20:36:15-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Culinary Matcha",
@@ -2116,7 +2227,7 @@
     ],
     "shopifyId": 7121398923335,
     "createdAt": "2024-09-03T09:49:04-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Harney & Sons: How to Read Tea Leaves",
@@ -2139,7 +2250,7 @@
     ],
     "shopifyId": 7101453860935,
     "createdAt": "2024-07-24T09:06:49-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "True Blue Oolong, Tin of 20 Sachets",
@@ -2159,7 +2270,7 @@
     ],
     "shopifyId": 7121399283783,
     "createdAt": "2024-09-03T09:53:17-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Agatha Christie Trio Gift Set",
@@ -2181,7 +2292,7 @@
     ],
     "shopifyId": 6624454148167,
     "createdAt": "2022-02-01T14:56:01-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Coconut Lime Oolong, Bag of 50 Sachets",
@@ -2199,7 +2310,7 @@
     ],
     "shopifyId": 7058863030343,
     "createdAt": "2024-05-28T20:14:28-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Coconut Lime Oolong",
@@ -2219,7 +2330,7 @@
     ],
     "shopifyId": 7058862833735,
     "createdAt": "2024-05-28T20:08:50-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Taiwan Honey Black",
@@ -2239,7 +2350,7 @@
     ],
     "shopifyId": 7098358726727,
     "createdAt": "2024-07-19T15:57:26-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Safari Breakfast",
@@ -2262,7 +2373,7 @@
     ],
     "shopifyId": 7078927925319,
     "createdAt": "2024-06-14T19:41:25-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Safari Breakfast, Bag of 50 Sachets",
@@ -2280,7 +2391,7 @@
     ],
     "shopifyId": 7100317499463,
     "createdAt": "2024-07-23T15:19:32-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Colonial Williamsburg Craft & Forge Yaupon Tea",
@@ -2302,7 +2413,7 @@
     ],
     "shopifyId": 7096585257031,
     "createdAt": "2024-07-15T10:57:41-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Colonial Williamsburg Craft & Forge Chai Tea",
@@ -2323,7 +2434,7 @@
     ],
     "shopifyId": 7096586305607,
     "createdAt": "2024-07-15T11:06:20-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Yerba Mate Mint, Bag of 50 Sachets",
@@ -2340,7 +2451,7 @@
     ],
     "shopifyId": 7099699658823,
     "createdAt": "2024-07-22T11:05:13-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Harney & Sons Deep Sleep Ritual Gift Set",
@@ -2364,7 +2475,7 @@
     ],
     "shopifyId": 4972156878919,
     "createdAt": "2021-02-12T13:12:07-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Holy Basil & Coconut – Sleep",
@@ -2385,7 +2496,7 @@
     ],
     "shopifyId": 4735928926279,
     "createdAt": "2020-07-06T10:24:50-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Mi Lan Xiang Dan Con",
@@ -2406,7 +2517,7 @@
     ],
     "shopifyId": 4793279643719,
     "createdAt": "2020-08-14T17:13:10-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Chamomile Mint – Chill",
@@ -2427,7 +2538,7 @@
     ],
     "shopifyId": 4369150214215,
     "createdAt": "2019-11-22T17:19:48-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Green Gulou",
@@ -2449,7 +2560,7 @@
     ],
     "shopifyId": 1780030472263,
     "createdAt": "2019-06-17T21:30:35-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Harney & Sons Sand Tea Timer",
@@ -2472,7 +2583,7 @@
     ],
     "shopifyId": 4953705087047,
     "createdAt": "2020-12-28T14:59:02-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Malawi Black Treasure",
@@ -2495,7 +2606,7 @@
     ],
     "shopifyId": 7058879184967,
     "createdAt": "2024-05-28T22:06:17-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Strawberry Vanilla Black, Bag of 50 Sachets",
@@ -2515,7 +2626,7 @@
     ],
     "shopifyId": 7035767947335,
     "createdAt": "2024-05-16T20:31:49-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Earl Grey, HT Tin of 20 Sachets",
@@ -2534,7 +2645,7 @@
     ],
     "shopifyId": 6910032707655,
     "createdAt": "2024-02-15T07:50:12-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Milky Oolong, Bag of 50 Sachets",
@@ -2553,7 +2664,7 @@
     ],
     "shopifyId": 6984255766599,
     "createdAt": "2024-04-16T21:09:13-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Milky Oolong, Tin of 20 Sachets",
@@ -2573,7 +2684,7 @@
     ],
     "shopifyId": 6984256127047,
     "createdAt": "2024-04-16T21:18:06-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Honey Chamomile, Tin of 30 Sachets",
@@ -2596,7 +2707,7 @@
     ],
     "shopifyId": 6939055947847,
     "createdAt": "2024-03-14T07:29:20-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Coconut Mint, Tin of 30 Sachets",
@@ -2618,7 +2729,7 @@
     ],
     "shopifyId": 6939054047303,
     "createdAt": "2024-03-14T07:27:22-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Vanilla Strawberry Hibiscus, Tin of 30 Sachets",
@@ -2641,7 +2752,7 @@
     ],
     "shopifyId": 6939051491399,
     "createdAt": "2024-03-14T07:24:40-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Harney & Sons Hinged Storage Canister",
@@ -2664,7 +2775,7 @@
     ],
     "shopifyId": 6986760060999,
     "createdAt": "2024-04-17T09:34:39-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Harney Heritage – Green Teabag Sampler Black Box",
@@ -2683,7 +2794,7 @@
     ],
     "shopifyId": 6976563871815,
     "createdAt": "2024-04-11T07:59:29-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Hallowe'en Party, Tin of 20 Sachets",
@@ -2705,7 +2816,7 @@
     ],
     "shopifyId": 6825520726087,
     "createdAt": "2023-08-15T20:12:55-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Verveine (Lemon Verbena), Bag of 50 Sachets",
@@ -2719,13 +2830,12 @@
       "B2B",
       "Bag of 50 Sachets",
       "k-ver",
-      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent"
     ],
     "shopifyId": 6964149813319,
     "createdAt": "2024-04-03T22:01:43-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Flight of the Golden Monkeys",
@@ -2746,7 +2856,7 @@
     ],
     "shopifyId": 1595308572743,
     "createdAt": "2018-12-20T13:45:43-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Historic Royal Palaces Teapot",
@@ -2766,7 +2876,7 @@
     ],
     "shopifyId": 8583504774,
     "createdAt": "2016-09-16T12:42:57-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Historic Royal Palaces Teacup & Saucer",
@@ -2786,7 +2896,7 @@
     ],
     "shopifyId": 8583504198,
     "createdAt": "2016-09-16T12:42:48-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Historic Royal Palaces Sugar Bowl",
@@ -2806,7 +2916,7 @@
     ],
     "shopifyId": 8583503878,
     "createdAt": "2016-09-16T12:42:45-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Historic Royal Palaces Creamer",
@@ -2826,7 +2936,7 @@
     ],
     "shopifyId": 8583503814,
     "createdAt": "2016-09-16T12:42:44-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Harney & Sons Bamboo Display Rack – 8 HT, Classic or 8 oz tins",
@@ -2845,7 +2955,7 @@
     ],
     "shopifyId": 6909713875015,
     "createdAt": "2024-02-13T17:34:56-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Salted Caramel",
@@ -2868,7 +2978,7 @@
     ],
     "shopifyId": 6916735696967,
     "createdAt": "2024-02-26T13:33:36-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Chai, Classic Tin of 20 Sachets",
@@ -2888,7 +2998,7 @@
     ],
     "shopifyId": 6890688675911,
     "createdAt": "2024-01-03T09:25:14-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Chocolate Tea, Bag of 50 Sachets",
@@ -2908,7 +3018,7 @@
     ],
     "shopifyId": 6639955279943,
     "createdAt": "2022-03-17T08:24:39-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Matcha Tea Frother",
@@ -2930,7 +3040,7 @@
     ],
     "shopifyId": 6890555539527,
     "createdAt": "2024-01-02T15:17:03-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Pu-erh, Bag of 50 Sachets",
@@ -2950,7 +3060,7 @@
     ],
     "shopifyId": 6869414150215,
     "createdAt": "2023-11-17T22:26:18-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Pumpkin Spice, Tin of 30 Sachets",
@@ -2976,7 +3086,7 @@
     ],
     "shopifyId": 9113004870,
     "createdAt": "2016-12-13T10:28:27-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Scottish Gift",
@@ -2998,7 +3108,7 @@
     ],
     "shopifyId": 8584862278,
     "createdAt": "2016-09-16T15:42:30-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "French Macaron, Tin of 20 Sachets",
@@ -3019,7 +3129,7 @@
     ],
     "shopifyId": 6889005514823,
     "createdAt": "2023-12-28T10:36:33-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "ForLife Mist Glass Iced Tea Jug, 50 oz (Assorted Colors)",
@@ -3040,7 +3150,7 @@
     ],
     "shopifyId": 240788897798,
     "createdAt": "2018-05-09T08:14:17-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Earl Grey Matcha",
@@ -3065,7 +3175,7 @@
     ],
     "shopifyId": 6878071357511,
     "createdAt": "2023-12-05T14:11:19-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Brew-in-Mug Extra-fine Tea Infuser with Lid",
@@ -3088,7 +3198,7 @@
     ],
     "shopifyId": 9397550662,
     "createdAt": "2017-01-27T15:49:13-05:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Forlife NewLeaf Glass Tall Tea Mug (Assorted Colors)",
@@ -3111,7 +3221,7 @@
     ],
     "shopifyId": 1791300010055,
     "createdAt": "2019-06-26T16:28:59-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Master's Mark Sencha",
@@ -3132,7 +3242,7 @@
     ],
     "shopifyId": 8584292038,
     "createdAt": "2016-09-16T14:36:49-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Wild Spiced Ceylon",
@@ -3152,7 +3262,7 @@
     ],
     "shopifyId": 6840066342983,
     "createdAt": "2023-10-06T08:04:54-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Ceylon Vanilla Rods",
@@ -3172,7 +3282,7 @@
     ],
     "shopifyId": 6812743696455,
     "createdAt": "2023-06-27T20:02:59-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Artisanal Ceylon Argent",
@@ -3192,7 +3302,7 @@
     ],
     "shopifyId": 6832866426951,
     "createdAt": "2023-09-10T21:28:50-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Heavenly Gyokuro",
@@ -3212,7 +3322,7 @@
     ],
     "shopifyId": 8586098054,
     "createdAt": "2016-09-16T18:59:30-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Chamraj Nilgiri FOP",
@@ -3233,7 +3343,7 @@
     ],
     "shopifyId": 8593524166,
     "createdAt": "2016-09-18T16:39:43-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:40-05:00"
   },
   {
     "name": "Amba Ceylon",
@@ -3253,7 +3363,7 @@
     ],
     "shopifyId": 8584297222,
     "createdAt": "2016-09-16T14:37:24-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Salted Caramel, HT Tin of 20 Sachets",
@@ -3273,7 +3383,7 @@
     ],
     "shopifyId": 6816032030791,
     "createdAt": "2023-07-09T21:02:09-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Asanoka Sencha",
@@ -3293,7 +3403,7 @@
     ],
     "shopifyId": 6819085549639,
     "createdAt": "2023-07-20T15:54:02-04:00",
-    "updatedAt": "2026-02-22T10:00:44-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Wazuka Guricha",
@@ -3313,7 +3423,7 @@
     ],
     "shopifyId": 6812749299783,
     "createdAt": "2023-06-27T20:52:34-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Teesta Valley 1st Flush",
@@ -3334,7 +3444,7 @@
     ],
     "shopifyId": 6810106363975,
     "createdAt": "2023-06-14T22:05:41-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Greek Mountain Herb",
@@ -3355,7 +3465,7 @@
     ],
     "shopifyId": 6812746121287,
     "createdAt": "2023-06-27T20:27:41-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Indigo Punch, HT Tin of 20 Sachets",
@@ -3375,7 +3485,7 @@
     ],
     "shopifyId": 6808062394439,
     "createdAt": "2023-06-08T16:27:23-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Provence, Tin of 20 Sachets",
@@ -3399,7 +3509,7 @@
     ],
     "shopifyId": 6803369558087,
     "createdAt": "2023-05-15T13:15:21-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Blueberry Green, Bag of 50 Sachets",
@@ -3420,7 +3530,7 @@
     ],
     "shopifyId": 6753916518471,
     "createdAt": "2023-01-31T12:12:58-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Tausug Blend, Tin of 20 Sachets",
@@ -3435,7 +3545,6 @@
       "flavored-green-tea",
       "Fruity",
       "green-tea",
-      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
       "Recharge",
@@ -3444,7 +3553,7 @@
     ],
     "shopifyId": 6758555451463,
     "createdAt": "2023-02-27T09:45:34-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Cristel Glass Teapot (Assorted Styles)",
@@ -3465,7 +3574,7 @@
     ],
     "shopifyId": 6756298096711,
     "createdAt": "2023-02-13T20:00:05-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Hemp Moringa - Deep Sleep Wellness Blend, Bag of 50 Sachets",
@@ -3485,7 +3594,7 @@
     ],
     "shopifyId": 6756167417927,
     "createdAt": "2023-02-11T16:46:53-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney Heritage – Herbal & Decaf Wrapped Sachet Sampler Black Box",
@@ -3503,7 +3612,7 @@
     ],
     "shopifyId": 6740167360583,
     "createdAt": "2022-12-19T12:16:32-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Paris Tea Gift",
@@ -3526,7 +3635,7 @@
     ],
     "shopifyId": 1476179624007,
     "createdAt": "2018-10-12T14:58:52-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Wrapped Sachet & Honey Sampler",
@@ -3549,7 +3658,7 @@
     ],
     "shopifyId": 1604274094151,
     "createdAt": "2019-01-18T10:03:13-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Teabag & Honey Sampler",
@@ -3575,7 +3684,7 @@
     ],
     "shopifyId": 113804771334,
     "createdAt": "2018-01-22T13:58:34-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "White Christmas Tea, Tin of 20 Sachets",
@@ -3598,7 +3707,7 @@
     ],
     "shopifyId": 8586095942,
     "createdAt": "2016-09-16T18:59:09-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Dong Ding Light",
@@ -3619,7 +3728,7 @@
     ],
     "shopifyId": 8583710278,
     "createdAt": "2016-09-16T13:17:00-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Celebration Tea, Tin of 20 Sachets",
@@ -3643,7 +3752,7 @@
     ],
     "shopifyId": 8585026694,
     "createdAt": "2016-09-16T16:05:10-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Williamsburg Ginger Cake, Tin of 20 Sachets",
@@ -3668,7 +3777,7 @@
     ],
     "shopifyId": 6718276698183,
     "createdAt": "2022-10-10T12:08:12-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Pumpkin Spice, HT Tin of 20 Sachets",
@@ -3691,7 +3800,7 @@
     ],
     "shopifyId": 8584596102,
     "createdAt": "2016-09-16T15:10:36-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Pure Wild Honeybush",
@@ -3713,7 +3822,7 @@
     ],
     "shopifyId": 1483366989895,
     "createdAt": "2018-10-23T09:24:08-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "African Antlers",
@@ -3735,7 +3844,7 @@
     ],
     "shopifyId": 8593555526,
     "createdAt": "2016-09-18T16:50:02-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Japanese Whisky, Bag of 50 Sachets",
@@ -3757,7 +3866,7 @@
     ],
     "shopifyId": 6657252622407,
     "createdAt": "2022-05-19T07:06:09-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Wedding Tea, Personalized Tin of 30 Sachets",
@@ -3778,7 +3887,7 @@
     ],
     "shopifyId": 6654189305927,
     "createdAt": "2022-05-06T06:26:05-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Wedding Tea, Tin of 30 Sachets",
@@ -3798,7 +3907,7 @@
     ],
     "shopifyId": 6654188748871,
     "createdAt": "2022-05-06T06:11:44-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney Heritage – Herbal & Decaf Teabag Sampler Black Box",
@@ -3820,7 +3929,7 @@
     ],
     "shopifyId": 6649333153863,
     "createdAt": "2022-04-14T10:12:49-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Garden Party",
@@ -3846,7 +3955,7 @@
     ],
     "shopifyId": 6648653971527,
     "createdAt": "2022-04-13T08:04:10-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Williamsburg Summer Afternoon Tea, Tin of 20 Sachets",
@@ -3871,7 +3980,7 @@
     ],
     "shopifyId": 6648107827271,
     "createdAt": "2022-04-12T09:40:36-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Amba Thieves Tea",
@@ -3893,7 +4002,7 @@
     ],
     "shopifyId": 8584984006,
     "createdAt": "2016-09-16T15:58:18-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Matcha Okurimono Gift",
@@ -3916,7 +4025,7 @@
     ],
     "shopifyId": 8584980294,
     "createdAt": "2016-09-16T15:57:42-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney Heritage – Organic Teabag Sampler Black Box",
@@ -3937,7 +4046,7 @@
     ],
     "shopifyId": 10571142854,
     "createdAt": "2017-05-10T14:36:16-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Unjonotomo Ceremonial Matcha (Extra Thick Grade)",
@@ -3958,7 +4067,7 @@
     ],
     "shopifyId": 8584763398,
     "createdAt": "2016-09-16T15:31:09-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Gunpowder, Bag of 50 Sachets",
@@ -3979,7 +4088,7 @@
     ],
     "shopifyId": 4522250272839,
     "createdAt": "2020-03-10T12:55:15-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Forlife Curve Mug with Infuser 15 oz (Multiple colors)",
@@ -4002,7 +4111,7 @@
     ],
     "shopifyId": 9396125318,
     "createdAt": "2017-01-27T12:00:03-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Valentine's Day",
@@ -4023,7 +4132,7 @@
     ],
     "shopifyId": 6627790258247,
     "createdAt": "2022-02-11T08:48:51-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Murder on the Orient Express Blend, Tin of 20 Sachets",
@@ -4048,7 +4157,7 @@
     ],
     "shopifyId": 128117211142,
     "createdAt": "2018-02-02T14:35:19-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney & Sons Tea Chest – Loose Teas Signature Gift",
@@ -4072,7 +4181,7 @@
     ],
     "shopifyId": 8583539142,
     "createdAt": "2016-09-16T12:52:14-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Royal Pomegranate Green Tea, Tin of 20 Sachets",
@@ -4095,7 +4204,7 @@
     ],
     "shopifyId": 6597097291847,
     "createdAt": "2021-09-30T11:39:07-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Williamsburg Holiday Heritage Tea",
@@ -4122,7 +4231,7 @@
     ],
     "shopifyId": 6597679317063,
     "createdAt": "2021-10-04T17:29:04-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Black Cask Bourbon, HT Tin of 20 Sachets",
@@ -4143,7 +4252,7 @@
     ],
     "shopifyId": 6597869207623,
     "createdAt": "2021-10-05T13:51:31-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Ginger Turmeric, HT Tin of 20 Sachets",
@@ -4163,7 +4272,7 @@
     ],
     "shopifyId": 6597868388423,
     "createdAt": "2021-10-05T13:44:41-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Jane's Garden Tea, Tin of 20 Sachets",
@@ -4183,7 +4292,7 @@
     ],
     "shopifyId": 1471020367943,
     "createdAt": "2018-09-27T22:57:00-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Tea Chest Featuring Eight Teas (Assorted)",
@@ -4207,7 +4316,7 @@
     ],
     "shopifyId": 8583548742,
     "createdAt": "2016-09-16T12:53:43-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Ginger Lemon, HT Tin of 20 Sachets",
@@ -4227,7 +4336,7 @@
     ],
     "shopifyId": 8584995014,
     "createdAt": "2016-09-16T16:00:00-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Hemp Leaves",
@@ -4255,7 +4364,7 @@
     ],
     "shopifyId": 6568710471751,
     "createdAt": "2021-05-24T12:13:13-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Wonderful Things: Mystery, Tin of 20 Sachets",
@@ -4281,7 +4390,7 @@
     ],
     "shopifyId": 6567337230407,
     "createdAt": "2021-05-18T15:36:53-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Wonderful Things: Girl, Tin of 20 Sachets",
@@ -4299,7 +4408,6 @@
       "Emily Winfield Martin",
       "flavored-black-tea",
       "k-wt",
-      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
       "specialty-seasonal-teas",
@@ -4307,7 +4415,7 @@
     ],
     "shopifyId": 6567337099335,
     "createdAt": "2021-05-18T15:36:09-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Wonderful Things: Boy, Tin of 20 Sachets",
@@ -4332,7 +4440,7 @@
     ],
     "shopifyId": 6567336968263,
     "createdAt": "2021-05-18T15:35:22-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Kagoshima Yutaka Midori",
@@ -4352,7 +4460,7 @@
     ],
     "shopifyId": 1332767227975,
     "createdAt": "2018-08-27T22:57:16-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "King of Bai Mudan",
@@ -4372,7 +4480,7 @@
     ],
     "shopifyId": 4115733872711,
     "createdAt": "2019-09-20T20:38:28-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Hibiscus Ginger",
@@ -4400,7 +4508,7 @@
     ],
     "shopifyId": 6548174405703,
     "createdAt": "2021-03-29T13:59:03-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Ceramic Tea Canister",
@@ -4420,7 +4528,7 @@
     ],
     "shopifyId": 6572761284679,
     "createdAt": "2021-06-09T13:30:03-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Iced Matcha Gift",
@@ -4446,7 +4554,7 @@
     ],
     "shopifyId": 8584976838,
     "createdAt": "2016-09-16T15:57:18-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney Heritage – Wrapped Sachet Sampler Black Box",
@@ -4470,7 +4578,7 @@
     ],
     "shopifyId": 6561838792775,
     "createdAt": "2021-05-03T14:30:44-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Mother's Day",
@@ -4494,7 +4602,7 @@
     ],
     "shopifyId": 6552490934343,
     "createdAt": "2021-04-09T16:15:06-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Teasy Insulated Flask (Multiple Colors)",
@@ -4515,7 +4623,7 @@
     ],
     "shopifyId": 6553283264583,
     "createdAt": "2021-04-12T13:11:34-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Paris, Classic Tin of 20 Sachets",
@@ -4535,7 +4643,7 @@
     ],
     "shopifyId": 1469829316679,
     "createdAt": "2018-09-24T23:29:29-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Matcha Whisk Stand (Assorted Colors)",
@@ -4558,7 +4666,7 @@
     ],
     "shopifyId": 6548176666695,
     "createdAt": "2021-03-29T14:21:14-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Irish Breakfast, Box of 50 Wrapped Teabags",
@@ -4578,7 +4686,7 @@
     ],
     "shopifyId": 8583868614,
     "createdAt": "2016-09-16T13:38:06-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Rose Scented, Bag of 50 Sachets",
@@ -4599,7 +4707,7 @@
     ],
     "shopifyId": 6545912758343,
     "createdAt": "2021-03-22T16:29:38-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Nepalese Hand Rolled Tips",
@@ -4620,7 +4728,7 @@
     ],
     "shopifyId": 4974915092551,
     "createdAt": "2021-02-19T13:39:54-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Indigo Punch, Bag of 50 Sachets",
@@ -4641,7 +4749,7 @@
     ],
     "shopifyId": 6540123013191,
     "createdAt": "2021-03-08T11:51:18-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Irish Breakfast, Bag of 50 Sachets",
@@ -4663,7 +4771,7 @@
     ],
     "shopifyId": 4976353837127,
     "createdAt": "2021-02-23T16:56:21-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Rooibos Chai, Box of 20 Individually Wrapped Sachets",
@@ -4683,7 +4791,7 @@
     ],
     "shopifyId": 4966217384007,
     "createdAt": "2021-01-29T18:08:39-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney Heritage – Teabag Sampler Black Box",
@@ -4708,7 +4816,7 @@
     ],
     "shopifyId": 4961027326023,
     "createdAt": "2021-01-18T08:49:58-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Chun Mee",
@@ -4730,7 +4838,7 @@
     ],
     "shopifyId": 4958472110151,
     "createdAt": "2021-01-12T08:20:29-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Wellness Trio Gift",
@@ -4757,7 +4865,7 @@
     ],
     "shopifyId": 4958529126471,
     "createdAt": "2021-01-12T13:56:29-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Yixing Tea Set (Assorted Styles)",
@@ -4777,7 +4885,7 @@
     ],
     "shopifyId": 4931526852679,
     "createdAt": "2020-12-03T12:04:35-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Banting & Best Blend, Tin of 20 Sachets",
@@ -4797,7 +4905,7 @@
     ],
     "shopifyId": 4955064205383,
     "createdAt": "2020-12-31T13:57:56-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Ralph's American Breakfast, Tin of 20 Sachets",
@@ -4817,7 +4925,7 @@
     ],
     "shopifyId": 4944580182087,
     "createdAt": "2020-12-16T16:09:11-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney Heritage – Wrapped Sachet Tea Chest",
@@ -4840,7 +4948,7 @@
     ],
     "shopifyId": 4912144351303,
     "createdAt": "2020-11-15T17:41:58-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Bee's Knees",
@@ -4866,7 +4974,7 @@
     ],
     "shopifyId": 4926113677383,
     "createdAt": "2020-11-30T11:01:20-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Black Jasmine",
@@ -4887,7 +4995,7 @@
     ],
     "shopifyId": 8593549830,
     "createdAt": "2016-09-18T16:48:30-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney & Sons Sampler – Fruit Loose Teas",
@@ -4911,7 +5019,7 @@
     ],
     "shopifyId": 4919295606855,
     "createdAt": "2020-11-20T08:42:14-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Death on the Nile, Tin of 20 Sachets",
@@ -4932,7 +5040,7 @@
     ],
     "shopifyId": 4871784497223,
     "createdAt": "2020-10-09T14:55:45-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Celebration, Tin of 30 Sachets",
@@ -4956,7 +5064,7 @@
     ],
     "shopifyId": 4871641727047,
     "createdAt": "2020-10-09T12:52:37-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Royal Chrysanthemum",
@@ -4979,7 +5087,7 @@
     ],
     "shopifyId": 4712675835975,
     "createdAt": "2020-06-23T12:14:00-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Wild Chrysanthemum",
@@ -5001,7 +5109,7 @@
     ],
     "shopifyId": 1699521691719,
     "createdAt": "2019-04-09T12:58:27-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Shakespeare's Globe - A Midsummer Night's Tea, Tin of 20 Sachets",
@@ -5022,7 +5130,7 @@
     ],
     "shopifyId": 4836974166087,
     "createdAt": "2020-09-15T15:16:28-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Imperial Windsor Blend",
@@ -5043,7 +5151,7 @@
     ],
     "shopifyId": 4836975771719,
     "createdAt": "2020-09-15T15:19:04-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Rooibos Chai, Bag of 50 Sachets",
@@ -5064,7 +5172,7 @@
     ],
     "shopifyId": 4643788423239,
     "createdAt": "2020-05-18T12:33:31-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Supreme Green, HT Tin of 20 Sachets",
@@ -5085,7 +5193,7 @@
     ],
     "shopifyId": 8586042630,
     "createdAt": "2016-09-16T18:51:18-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Taiping Houkui",
@@ -5106,7 +5214,7 @@
     ],
     "shopifyId": 8584327302,
     "createdAt": "2016-09-16T14:40:42-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Ginger Turmeric, Box of 20 Premium Teabags",
@@ -5125,7 +5233,7 @@
     ],
     "shopifyId": 4753974526023,
     "createdAt": "2020-07-17T11:23:46-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Fresh Brew Iced Tea Sampler",
@@ -5145,7 +5253,7 @@
     ],
     "shopifyId": 4711371505735,
     "createdAt": "2020-06-22T12:23:48-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Heirloom Bartlett Pear, Bag of 50 Sachets",
@@ -5166,7 +5274,7 @@
     ],
     "shopifyId": 233213427718,
     "createdAt": "2018-04-04T14:24:40-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Chaga Chai – Nourish Wellness Blend",
@@ -5194,7 +5302,7 @@
     ],
     "shopifyId": 4580651270215,
     "createdAt": "2020-04-17T16:08:19-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Golden Milk – Glimmer Wellness Blend",
@@ -5221,7 +5329,7 @@
     ],
     "shopifyId": 4580649009223,
     "createdAt": "2020-04-17T16:06:35-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Hemp Moringa – Deep Sleep Wellness Blend",
@@ -5246,7 +5354,7 @@
     ],
     "shopifyId": 4580645568583,
     "createdAt": "2020-04-17T16:03:59-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Moringa Leaf",
@@ -5267,7 +5375,7 @@
     ],
     "shopifyId": 4554194419783,
     "createdAt": "2020-04-01T10:57:36-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Gunpowder",
@@ -5291,7 +5399,7 @@
     ],
     "shopifyId": 4522276749383,
     "createdAt": "2020-03-10T13:21:47-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "The Met Gift",
@@ -5313,7 +5421,7 @@
     ],
     "shopifyId": 4534223568967,
     "createdAt": "2020-03-19T11:37:37-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Rooibos Chai",
@@ -5342,7 +5450,7 @@
     ],
     "shopifyId": 4492988317767,
     "createdAt": "2020-02-21T13:02:23-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Mother's Day, Tin of 30 Sachets",
@@ -5366,7 +5474,7 @@
     ],
     "shopifyId": 4432538239047,
     "createdAt": "2020-01-08T17:38:03-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Birthday Party, Tin of 30 Sachets",
@@ -5388,7 +5496,7 @@
     ],
     "shopifyId": 4432537845831,
     "createdAt": "2020-01-08T17:36:49-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Earl Grey Supreme, Box of 50 Wrapped Teabags",
@@ -5411,7 +5519,7 @@
     ],
     "shopifyId": 4489441345607,
     "createdAt": "2020-02-18T11:53:53-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Avocado Leaf",
@@ -5435,7 +5543,7 @@
     ],
     "shopifyId": 4526539898951,
     "createdAt": "2020-03-13T15:44:24-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Hemp Avocado",
@@ -5461,7 +5569,7 @@
     ],
     "shopifyId": 4526537801799,
     "createdAt": "2020-03-13T15:42:15-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Chaga Mushroom",
@@ -5486,7 +5594,7 @@
     ],
     "shopifyId": 4526540587079,
     "createdAt": "2020-03-13T15:45:32-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Chaga Ashwagandha",
@@ -5512,7 +5620,7 @@
     ],
     "shopifyId": 4526538424391,
     "createdAt": "2020-03-13T15:43:10-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Chaga Mushroom, Bag of 50 Sachets",
@@ -5532,7 +5640,7 @@
     ],
     "shopifyId": 4526512570439,
     "createdAt": "2020-03-13T15:15:21-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Chaga Ashwagandha, Bag of 50 Sachets",
@@ -5552,7 +5660,7 @@
     ],
     "shopifyId": 4526505721927,
     "createdAt": "2020-03-13T15:09:23-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Hemp Avocado, Bag of 50 Sachets",
@@ -5572,7 +5680,7 @@
     ],
     "shopifyId": 4526471249991,
     "createdAt": "2020-03-13T14:32:05-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Avocado Leaf, Bag of 50 Sachet Bags",
@@ -5592,7 +5700,7 @@
     ],
     "shopifyId": 4526510735431,
     "createdAt": "2020-03-13T15:12:31-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Hot Apple Spice Black Tea, Tin of 20 sachets",
@@ -5613,7 +5721,7 @@
     ],
     "shopifyId": 4445581082695,
     "createdAt": "2020-01-20T14:25:09-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Taste of British History Blend, Tin of 20 Sachets",
@@ -5636,7 +5744,7 @@
     ],
     "shopifyId": 4445580427335,
     "createdAt": "2020-01-20T14:24:20-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Garden Therapy Herbal Tea, Tin of 20 sachets",
@@ -5658,7 +5766,7 @@
     ],
     "shopifyId": 4445578592327,
     "createdAt": "2020-01-20T14:21:35-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Ginger Turmeric, Box of 20 Individually Wrapped Sachets",
@@ -5678,7 +5786,7 @@
     ],
     "shopifyId": 4445585244231,
     "createdAt": "2020-01-20T14:31:21-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "New England Breakfast, Bag of 50 Sachets",
@@ -5699,7 +5807,7 @@
     ],
     "shopifyId": 4458984144967,
     "createdAt": "2020-01-28T10:44:55-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Black Cask Bourbon, Bag of 50 Sachets",
@@ -5721,7 +5829,7 @@
     ],
     "shopifyId": 4458974969927,
     "createdAt": "2020-01-28T10:37:26-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Beetroot, Bag of 50 Sachets",
@@ -5745,7 +5853,7 @@
     ],
     "shopifyId": 92931063814,
     "createdAt": "2018-01-04T16:27:53-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Everyday Matcha",
@@ -5770,7 +5878,7 @@
     ],
     "shopifyId": 4413905829959,
     "createdAt": "2019-12-19T11:09:26-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Turmeric",
@@ -5797,7 +5905,7 @@
     ],
     "shopifyId": 4413904224327,
     "createdAt": "2019-12-19T11:05:47-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Ginger Powder",
@@ -5824,7 +5932,7 @@
     ],
     "shopifyId": 4413903667271,
     "createdAt": "2019-12-19T11:04:24-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Hibiscus Ginger, Bag of 50 Sachets",
@@ -5846,7 +5954,7 @@
     ],
     "shopifyId": 1323691245639,
     "createdAt": "2018-08-03T12:48:43-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Finest Tea Starter Kit",
@@ -5870,7 +5978,7 @@
     ],
     "shopifyId": 4362004791367,
     "createdAt": "2019-11-19T06:46:09-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Little Women Orchard House Blend, Tin of 20 Sachets",
@@ -5893,7 +6001,7 @@
     ],
     "shopifyId": 4353891926087,
     "createdAt": "2019-11-13T19:36:56-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney & Sons Display Rack - Decorative Wire, for 4 Premium Teabag Boxes",
@@ -5915,7 +6023,7 @@
     ],
     "shopifyId": 1469801005127,
     "createdAt": "2018-09-24T21:05:47-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney & Sons Reusable Bubble Tea Straws",
@@ -5935,7 +6043,7 @@
     ],
     "shopifyId": 1837786955847,
     "createdAt": "2019-07-30T11:44:21-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Raspberry Mojito",
@@ -5959,7 +6067,7 @@
     ],
     "shopifyId": 4115753369671,
     "createdAt": "2019-09-20T21:00:29-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney & Sons Bubble Tea Set",
@@ -5980,7 +6088,7 @@
     ],
     "shopifyId": 1844708278343,
     "createdAt": "2019-08-05T09:18:31-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Island Dreams",
@@ -6008,7 +6116,7 @@
     ],
     "shopifyId": 4115757334599,
     "createdAt": "2019-09-20T21:04:18-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Emerald Isles",
@@ -6032,7 +6140,7 @@
     ],
     "shopifyId": 1896711946311,
     "createdAt": "2019-09-10T18:40:39-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "New England Breakfast",
@@ -6059,7 +6167,7 @@
     ],
     "shopifyId": 4115748683847,
     "createdAt": "2019-09-20T20:55:29-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Black Cask Bourbon",
@@ -6088,7 +6196,7 @@
     ],
     "shopifyId": 4115743244359,
     "createdAt": "2019-09-20T20:48:02-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Mayfair Breakfast",
@@ -6111,7 +6219,7 @@
     ],
     "shopifyId": 1867425251399,
     "createdAt": "2019-08-20T14:32:17-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Dar-Jee-Lingside",
@@ -6134,7 +6242,7 @@
     ],
     "shopifyId": 1808080470087,
     "createdAt": "2019-07-09T13:54:53-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Japanese Whisky",
@@ -6161,7 +6269,7 @@
     ],
     "shopifyId": 1763831775303,
     "createdAt": "2019-06-04T12:11:08-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Raspberry Herbal, Box of 20 Individually Wrapped Sachets",
@@ -6181,7 +6289,7 @@
     ],
     "shopifyId": 1757174628423,
     "createdAt": "2019-05-29T07:56:26-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Indigo Punch",
@@ -6211,7 +6319,7 @@
     ],
     "shopifyId": 1651994492999,
     "createdAt": "2019-03-01T20:39:51-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Earl Grey Supreme, Box of 20 Premium Teabags",
@@ -6236,7 +6344,7 @@
     ],
     "shopifyId": 1688850169927,
     "createdAt": "2019-04-01T11:39:50-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Seven Fairy",
@@ -6256,7 +6364,7 @@
     ],
     "shopifyId": 1652001046599,
     "createdAt": "2019-03-01T20:53:39-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Decaf Hot Cinnamon Spice, HT Tin of 20 Sachets",
@@ -6276,7 +6384,7 @@
     ],
     "shopifyId": 8583695750,
     "createdAt": "2016-09-16T13:14:54-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Blueberry Green, Tin of 30 Sachets",
@@ -6289,6 +6397,7 @@
     "tags": [
       "B2B",
       "k-bg",
+      "Low stock",
       "new-product",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
@@ -6297,7 +6406,7 @@
     ],
     "shopifyId": 1300977844295,
     "createdAt": "2018-05-29T13:04:07-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Harney & Sons Best Sellers – 20 Count Sachets",
@@ -6325,7 +6434,7 @@
     ],
     "shopifyId": 8584495558,
     "createdAt": "2016-09-16T14:58:48-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Gaiwan (Assorted Styles)",
@@ -6346,7 +6455,7 @@
     ],
     "shopifyId": 182336258054,
     "createdAt": "2018-02-26T17:30:02-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Butterfly Pea Flower",
@@ -6374,7 +6483,7 @@
     ],
     "shopifyId": 1651996459079,
     "createdAt": "2019-03-01T20:45:22-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Gaba Oolong",
@@ -6395,7 +6504,7 @@
     ],
     "shopifyId": 1651991609415,
     "createdAt": "2019-03-01T20:31:53-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Cherry Blossom, Bag of 50 Sachets",
@@ -6416,7 +6525,7 @@
     ],
     "shopifyId": 1649843011655,
     "createdAt": "2019-02-28T11:32:05-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Matcha Bowls (Assorted Colors)",
@@ -6439,7 +6548,7 @@
     ],
     "shopifyId": 233853026310,
     "createdAt": "2018-04-11T11:26:08-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Matcha",
@@ -6461,7 +6570,7 @@
     ],
     "shopifyId": 1596895035463,
     "createdAt": "2018-12-28T16:39:55-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Kangra Kahwa",
@@ -6482,7 +6591,7 @@
     ],
     "shopifyId": 1589215756359,
     "createdAt": "2018-12-04T12:45:50-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Lao Ban Zhang Pu-Erh",
@@ -6504,7 +6613,7 @@
     ],
     "shopifyId": 1566304927815,
     "createdAt": "2018-11-13T23:02:15-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Chocolate Chai Supreme, Bag of 50 Sachets",
@@ -6526,7 +6635,7 @@
     ],
     "shopifyId": 1566896554055,
     "createdAt": "2018-11-15T15:31:28-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Hot Apple Spice, Bag of 50 Sachets",
@@ -6548,7 +6657,7 @@
     ],
     "shopifyId": 1566896193607,
     "createdAt": "2018-11-15T15:31:00-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Royal Palace",
@@ -6571,7 +6680,7 @@
     ],
     "shopifyId": 1328612704327,
     "createdAt": "2018-08-13T15:20:54-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Chocolate Chai Supreme",
@@ -6597,7 +6706,7 @@
     ],
     "shopifyId": 1488562126919,
     "createdAt": "2018-10-31T19:52:38-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Chamomile, Box of 18 Individually Wrapped Sachets",
@@ -6617,7 +6726,7 @@
     ],
     "shopifyId": 1477332860999,
     "createdAt": "2018-10-15T08:36:50-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Hot Apple Spice",
@@ -6646,7 +6755,7 @@
     ],
     "shopifyId": 1333089435719,
     "createdAt": "2018-08-28T12:14:37-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Hot Cinnamon Spice, Classic Tin of 20 Sachets",
@@ -6666,7 +6775,7 @@
     ],
     "shopifyId": 8583839110,
     "createdAt": "2016-09-16T13:33:33-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Earl Grey Supreme,  Classic Tin of 20 Sachets",
@@ -6686,7 +6795,7 @@
     ],
     "shopifyId": 1469833379911,
     "createdAt": "2018-09-24T23:40:05-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Decaf Hot Cinnamon",
@@ -6716,7 +6825,7 @@
     ],
     "shopifyId": 8593576710,
     "createdAt": "2016-09-18T16:56:09-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Mist of Kawane",
@@ -6737,7 +6846,7 @@
     ],
     "shopifyId": 1335242391623,
     "createdAt": "2018-08-30T22:46:03-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Duck Rice Genmaicha",
@@ -6758,7 +6867,7 @@
     ],
     "shopifyId": 1332765360199,
     "createdAt": "2018-08-27T22:53:15-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Ground Hojicha",
@@ -6781,7 +6890,7 @@
     ],
     "shopifyId": 1334011985991,
     "createdAt": "2018-08-29T09:52:45-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Jasmine",
@@ -6802,7 +6911,7 @@
     ],
     "shopifyId": 1308403138631,
     "createdAt": "2018-07-11T11:50:25-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Ginger Lemon",
@@ -6829,7 +6938,7 @@
     ],
     "shopifyId": 1328583278663,
     "createdAt": "2018-08-13T13:17:39-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Lemon Balm Chamomile, Bag of 50 Sachets",
@@ -6856,7 +6965,7 @@
     ],
     "shopifyId": 1323688230983,
     "createdAt": "2018-08-03T12:35:06-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Milk Thistle Mint, Bag of 50 Sachets",
@@ -6883,7 +6992,7 @@
     ],
     "shopifyId": 1323686756423,
     "createdAt": "2018-08-03T12:31:07-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Golden Monkey",
@@ -6906,7 +7015,7 @@
     ],
     "shopifyId": 8583799302,
     "createdAt": "2016-09-16T13:27:30-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Angiogenesis Foundation Green Tea, Bag of 50 Sachets",
@@ -6925,7 +7034,7 @@
     ],
     "shopifyId": 8583575302,
     "createdAt": "2016-09-16T12:57:42-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Dark Tibet Tea",
@@ -6945,7 +7054,7 @@
     ],
     "shopifyId": 1304721326151,
     "createdAt": "2018-06-21T19:19:09-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Venetian Tiramisu, Bag of 50 Sachets",
@@ -6966,7 +7075,7 @@
     ],
     "shopifyId": 233213394950,
     "createdAt": "2018-04-04T14:20:29-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "AOH Hibernian Blend, Bag of 50 Sachets",
@@ -6988,7 +7097,7 @@
     ],
     "shopifyId": 1301567864903,
     "createdAt": "2018-06-01T12:06:37-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "SGS Special English Breakfast, Bag of 50 Sachets",
@@ -7008,7 +7117,7 @@
     ],
     "shopifyId": 1301567438919,
     "createdAt": "2018-06-01T12:03:05-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "2015 Nuo Mi Pu-Erh",
@@ -7030,7 +7139,7 @@
     ],
     "shopifyId": 1300416004167,
     "createdAt": "2018-05-27T20:43:56-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Ginger Lemon, Bag of 50 Sachets",
@@ -7050,7 +7159,7 @@
     ],
     "shopifyId": 240270213126,
     "createdAt": "2018-05-04T09:29:00-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Havakai Frost Tea",
@@ -7072,7 +7181,7 @@
     ],
     "shopifyId": 226527182854,
     "createdAt": "2018-03-20T18:38:54-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Berry Young",
@@ -7098,7 +7207,7 @@
     ],
     "shopifyId": 127618482182,
     "createdAt": "2018-02-01T18:02:51-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Venetian Tiramisu",
@@ -7124,7 +7233,7 @@
     ],
     "shopifyId": 127617925126,
     "createdAt": "2018-02-01T17:58:13-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Heirloom Bartlett Pear",
@@ -7151,7 +7260,7 @@
     ],
     "shopifyId": 127619727366,
     "createdAt": "2018-02-01T18:07:05-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Mulled Plum Cider",
@@ -7179,7 +7288,7 @@
     ],
     "shopifyId": 126837915654,
     "createdAt": "2018-01-31T12:21:19-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "New York Blend, Tin of 20 Sachets",
@@ -7202,7 +7311,7 @@
     ],
     "shopifyId": 128272269318,
     "createdAt": "2018-02-02T16:17:41-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Ginger Turmeric",
@@ -7232,7 +7341,7 @@
     ],
     "shopifyId": 92945678342,
     "createdAt": "2018-01-04T16:55:43-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "American Buzz, Bag of 50 Sachets",
@@ -7253,7 +7362,7 @@
     ],
     "shopifyId": 72687616006,
     "createdAt": "2017-12-12T20:05:15-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Victorian London Fog, Bag of 50 Sachets",
@@ -7274,7 +7383,7 @@
     ],
     "shopifyId": 72686469126,
     "createdAt": "2017-12-12T20:01:39-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Decaf Hot Cinnamon Spice, Bag of 50 Sachets",
@@ -7295,7 +7404,7 @@
     ],
     "shopifyId": 8583697862,
     "createdAt": "2016-09-16T13:15:12-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:42-05:00"
   },
   {
     "name": "Organic Black, Box of 20 Premium Teabags",
@@ -7317,7 +7426,7 @@
     ],
     "shopifyId": 48777068550,
     "createdAt": "2017-11-22T10:36:50-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Green Premium Teabags",
@@ -7339,7 +7448,7 @@
     ],
     "shopifyId": 48776085510,
     "createdAt": "2017-11-22T10:35:33-05:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "AOH Hibernian Blend",
@@ -7363,7 +7472,7 @@
     ],
     "shopifyId": 11875060870,
     "createdAt": "2017-09-13T18:42:14-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Victorian London Fog",
@@ -7393,7 +7502,7 @@
     ],
     "shopifyId": 17612505094,
     "createdAt": "2017-10-31T11:58:20-04:00",
-    "updatedAt": "2026-02-22T10:00:45-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Rwandan Rukeri",
@@ -7416,7 +7525,7 @@
     ],
     "shopifyId": 12170421382,
     "createdAt": "2017-10-25T16:11:09-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Angiogenesis Foundation Green Tea",
@@ -7440,7 +7549,7 @@
     ],
     "shopifyId": 12027506950,
     "createdAt": "2017-09-20T11:01:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Anniversary Blend",
@@ -7461,7 +7570,7 @@
     ],
     "shopifyId": 8593542342,
     "createdAt": "2016-09-18T16:46:07-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Ginger Liquorice, Bag of 50 Sachets",
@@ -7482,7 +7591,7 @@
     ],
     "shopifyId": 11695271174,
     "createdAt": "2017-08-30T08:36:56-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tilleul, Box of 20 Individually Wrapped Sachets",
@@ -7501,7 +7610,7 @@
     ],
     "shopifyId": 8583985734,
     "createdAt": "2016-09-16T13:55:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tilleul (Linden Leaves)",
@@ -7521,7 +7630,7 @@
     ],
     "shopifyId": 8583990086,
     "createdAt": "2016-09-16T13:55:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Jobetsugi Ceremonial Matcha (Thin Grade)",
@@ -7543,7 +7652,7 @@
     ],
     "shopifyId": 8584165254,
     "createdAt": "2016-09-16T14:20:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "American Buzz",
@@ -7564,7 +7673,7 @@
     ],
     "shopifyId": 10699538374,
     "createdAt": "2017-06-12T15:45:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Matcha Iri Genmaicha, Bag of 50 Sachets",
@@ -7585,7 +7694,7 @@
     ],
     "shopifyId": 10566443782,
     "createdAt": "2017-05-08T15:39:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tilleul Mint, Box of 20 Individually Wrapped Sachets",
@@ -7604,7 +7713,7 @@
     ],
     "shopifyId": 8584306118,
     "createdAt": "2016-09-16T14:38:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Spearmint",
@@ -7627,7 +7736,7 @@
     ],
     "shopifyId": 10491461382,
     "createdAt": "2017-04-21T15:40:57-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Russian Country, Bag of 50 Sachets",
@@ -7642,14 +7751,13 @@
       "Bag of 50 Sachets",
       "fyp",
       "k-rc",
-      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
       "Tea Lover"
     ],
     "shopifyId": 8583924166,
     "createdAt": "2016-09-16T13:46:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "White Peach Matcha, Bag of 50 Sachets",
@@ -7671,7 +7779,7 @@
     ],
     "shopifyId": 9951085190,
     "createdAt": "2017-03-13T09:45:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Very Berry Matcha, Bag of 50 Sachets",
@@ -7692,7 +7800,7 @@
     ],
     "shopifyId": 9951079558,
     "createdAt": "2017-03-13T09:44:33-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Roasted Buckwheat Matcha, Bag of 50 Sachets",
@@ -7713,7 +7821,7 @@
     ],
     "shopifyId": 9951090566,
     "createdAt": "2017-03-13T09:46:44-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Roasted Buckwheat (Soba) Matcha",
@@ -7740,7 +7848,7 @@
     ],
     "shopifyId": 9676461830,
     "createdAt": "2017-03-01T09:24:02-05:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Very Berry Matcha",
@@ -7766,7 +7874,7 @@
     ],
     "shopifyId": 9676359942,
     "createdAt": "2017-03-01T09:07:34-05:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "White Peach Matcha",
@@ -7794,7 +7902,7 @@
     ],
     "shopifyId": 9676343238,
     "createdAt": "2017-03-01T09:04:56-05:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Bamboo",
@@ -7818,7 +7926,7 @@
     ],
     "shopifyId": 8586098630,
     "createdAt": "2016-09-16T18:59:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "T-Whisk Bamboo / 80 Prong",
@@ -7842,7 +7950,7 @@
     ],
     "shopifyId": 9497157254,
     "createdAt": "2017-02-07T09:06:20-05:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Forlife Curve Teapot with Infuser, 24 oz (Multiple Colors)",
@@ -7862,7 +7970,7 @@
     ],
     "shopifyId": 9453571526,
     "createdAt": "2017-02-03T11:44:56-05:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Matcha Sets (Assorted Styles)",
@@ -7885,7 +7993,7 @@
     ],
     "shopifyId": 9454154822,
     "createdAt": "2017-02-03T14:32:19-05:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Forlife Curve Teapot with Infuser, 45 oz (Multiple Colors)",
@@ -7906,7 +8014,7 @@
     ],
     "shopifyId": 9439251014,
     "createdAt": "2017-02-01T16:17:47-05:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Senjunomukashi Ceremonial Matcha (Thick Grade)",
@@ -7927,7 +8035,7 @@
     ],
     "shopifyId": 8584166214,
     "createdAt": "2016-09-16T14:20:10-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Cuisinart PerfecTemp® Stainless Steel Cordless Programmable Electric Kettle",
@@ -7948,7 +8056,7 @@
     ],
     "shopifyId": 8583492038,
     "createdAt": "2016-09-16T12:39:48-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Harney & Sons Best Sellers – 4 oz. Loose Tea",
@@ -7976,7 +8084,7 @@
     ],
     "shopifyId": 9040268998,
     "createdAt": "2016-12-02T15:08:01-05:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Hot Cinnamon Sunset, HT Tin of 20 Sachets",
@@ -7996,7 +8104,7 @@
     ],
     "shopifyId": 8583838086,
     "createdAt": "2016-09-16T13:33:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Milky Oolong",
@@ -8021,7 +8129,7 @@
     ],
     "shopifyId": 8870698118,
     "createdAt": "2016-11-04T10:45:03-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Indian Spice",
@@ -8045,7 +8153,7 @@
     ],
     "shopifyId": 8583866630,
     "createdAt": "2016-09-16T13:37:46-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Hot Cinnamon Spice, Bag of 50 Sachets",
@@ -8064,7 +8172,7 @@
     ],
     "shopifyId": 8812213254,
     "createdAt": "2016-10-25T10:04:10-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Mint Verbena, Box of 20 Individually Wrapped Sachets",
@@ -8084,7 +8192,7 @@
     ],
     "shopifyId": 8583869830,
     "createdAt": "2016-09-16T13:38:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Herbal Hot Cinnamon Spice, Bag of 50 Sachets",
@@ -8105,7 +8213,7 @@
     ],
     "shopifyId": 8583824326,
     "createdAt": "2016-09-16T13:31:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Earl Grey, Box of 50 Wrapped Teabags",
@@ -8124,7 +8232,7 @@
     ],
     "shopifyId": 8583691078,
     "createdAt": "2016-09-16T13:14:20-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Assam, Box of 20 Individually Wrapped Sachets",
@@ -8145,7 +8253,7 @@
     ],
     "shopifyId": 8584180678,
     "createdAt": "2016-09-16T14:22:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Orange Pekoe, Box of 20 Premium Teabags",
@@ -8164,7 +8272,7 @@
     ],
     "shopifyId": 8584082310,
     "createdAt": "2016-09-16T14:09:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Ceylon, Box of 20 Individually Wrapped Sachets",
@@ -8184,7 +8292,7 @@
     ],
     "shopifyId": 8583683718,
     "createdAt": "2016-09-16T13:13:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Ceylon, Box of 20 Premium Teabags",
@@ -8203,7 +8311,7 @@
     ],
     "shopifyId": 8583683270,
     "createdAt": "2016-09-16T13:13:12-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Midsummer's Peach (Decaf), Bag of 50 Sachets",
@@ -8224,7 +8332,7 @@
     ],
     "shopifyId": 8584175110,
     "createdAt": "2016-09-16T14:21:31-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Mint Verbena, Bag of 50 Sachets",
@@ -8245,7 +8353,7 @@
     ],
     "shopifyId": 8583871110,
     "createdAt": "2016-09-16T13:38:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Ceylon, Box of 50 Wrapped Teabags",
@@ -8259,12 +8367,13 @@
       "B2B",
       "Box of 50 Foil Wrapped Teabags",
       "k-dc",
+      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent"
     ],
     "shopifyId": 8583682630,
     "createdAt": "2016-09-16T13:13:08-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Green Tea with Coconut, HT Tin of 20 Tea Sachets",
@@ -8284,7 +8393,7 @@
     ],
     "shopifyId": 8583814918,
     "createdAt": "2016-09-16T13:29:53-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Lemon Herbal, Box of 50 Wrapped Teabags",
@@ -8303,7 +8412,7 @@
     ],
     "shopifyId": 8584136966,
     "createdAt": "2016-09-16T14:16:08-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Cherry Blossom",
@@ -8328,7 +8437,7 @@
     ],
     "shopifyId": 8584303942,
     "createdAt": "2016-09-16T14:38:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Genmaicha, Bag of 50 Sachets",
@@ -8349,7 +8458,7 @@
     ],
     "shopifyId": 8583777926,
     "createdAt": "2016-09-16T13:25:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Earl Grey, Bag of 50 Sachets",
@@ -8369,7 +8478,7 @@
     ],
     "shopifyId": 8583694342,
     "createdAt": "2016-09-16T13:14:43-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Chinese Flower, Bag of 50 Sachets",
@@ -8390,7 +8499,7 @@
     ],
     "shopifyId": 8583629062,
     "createdAt": "2016-09-16T13:05:32-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Black Currant, Bag of 50 Sachets",
@@ -8411,7 +8520,7 @@
     ],
     "shopifyId": 8583610118,
     "createdAt": "2016-09-16T13:02:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Peaches & Ginger, Bag of 50 Sachets",
@@ -8432,7 +8541,7 @@
     ],
     "shopifyId": 8583918278,
     "createdAt": "2016-09-16T13:45:12-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Mango Black, Bag of 50 Sachets",
@@ -8453,7 +8562,7 @@
     ],
     "shopifyId": 8584160902,
     "createdAt": "2016-09-16T14:19:21-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Vanilla Comoro, Bag of 50 Sachets",
@@ -8474,7 +8583,7 @@
     ],
     "shopifyId": 8584020806,
     "createdAt": "2016-09-16T14:00:29-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Vanilla Comoro, HT Tin of 20 Sachets",
@@ -8494,7 +8603,7 @@
     ],
     "shopifyId": 8584019462,
     "createdAt": "2016-09-16T14:00:17-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Supreme Breakfast, Bag of 50 Sachets",
@@ -8515,7 +8624,7 @@
     ],
     "shopifyId": 8583971846,
     "createdAt": "2016-09-16T13:53:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Palm Court, Bag of 50 Sachets",
@@ -8537,7 +8646,7 @@
     ],
     "shopifyId": 8584206982,
     "createdAt": "2016-09-16T14:26:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Ceylon & India, Bag of 50 Sachets",
@@ -8557,7 +8666,7 @@
     ],
     "shopifyId": 8584085318,
     "createdAt": "2016-09-16T14:09:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Big Red Sun, Bag of 50 Sachets",
@@ -8578,7 +8687,7 @@
     ],
     "shopifyId": 8583605958,
     "createdAt": "2016-09-16T13:02:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Breakfast, Bag of 50 Sachets",
@@ -8600,7 +8709,7 @@
     ],
     "shopifyId": 8584188230,
     "createdAt": "2016-09-16T14:23:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic English Breakfast, Box of 20 Individually Wrapped Sachets",
@@ -8622,7 +8731,7 @@
     ],
     "shopifyId": 8583742342,
     "createdAt": "2016-09-16T13:21:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Paris, Bag of 50 Sachets",
@@ -8642,7 +8751,7 @@
     ],
     "shopifyId": 8583906374,
     "createdAt": "2016-09-16T13:43:27-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Paris, Box of 50 Wrapped Teabags",
@@ -8661,7 +8770,7 @@
     ],
     "shopifyId": 8583901254,
     "createdAt": "2016-09-16T13:42:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Paris, Box of 20 Individually Wrapped Sachets",
@@ -8681,7 +8790,7 @@
     ],
     "shopifyId": 8583901894,
     "createdAt": "2016-09-16T13:42:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Elaine's Blend",
@@ -8703,7 +8812,7 @@
     ],
     "shopifyId": 8593578182,
     "createdAt": "2016-09-18T16:56:52-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Supreme Breakfast",
@@ -8727,7 +8836,7 @@
     ],
     "shopifyId": 8593576070,
     "createdAt": "2016-09-18T16:55:58-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Big Red Sun",
@@ -8750,7 +8859,7 @@
     ],
     "shopifyId": 8593575558,
     "createdAt": "2016-09-18T16:55:49-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Brigitte's Blend",
@@ -8773,7 +8882,7 @@
     ],
     "shopifyId": 8593572358,
     "createdAt": "2016-09-18T16:54:39-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Apricot",
@@ -8796,7 +8905,7 @@
     ],
     "shopifyId": 8593571846,
     "createdAt": "2016-09-18T16:54:25-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Eight at the Fort",
@@ -8819,7 +8928,7 @@
     ],
     "shopifyId": 8593568454,
     "createdAt": "2016-09-18T16:53:23-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Malachi McCormick",
@@ -8843,7 +8952,7 @@
     ],
     "shopifyId": 8593566790,
     "createdAt": "2016-09-18T16:52:53-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "East Frisian",
@@ -8866,7 +8975,7 @@
     ],
     "shopifyId": 8593565574,
     "createdAt": "2016-09-18T16:52:35-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "All India Blend",
@@ -8889,7 +8998,7 @@
     ],
     "shopifyId": 8593564678,
     "createdAt": "2016-09-18T16:52:22-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Mango",
@@ -8913,7 +9022,7 @@
     ],
     "shopifyId": 8593561030,
     "createdAt": "2016-09-18T16:51:33-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Breakfast Tea",
@@ -8938,7 +9047,7 @@
     ],
     "shopifyId": 8593557510,
     "createdAt": "2016-09-18T16:50:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Golden Blend",
@@ -8958,7 +9067,7 @@
     ],
     "shopifyId": 8593554118,
     "createdAt": "2016-09-18T16:49:35-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Vanilla Comoro",
@@ -8986,7 +9095,7 @@
     ],
     "shopifyId": 8593551750,
     "createdAt": "2016-09-18T16:49:02-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Peaches & Ginger",
@@ -9008,7 +9117,7 @@
     ],
     "shopifyId": 8593549894,
     "createdAt": "2016-09-18T16:48:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Palm Court",
@@ -9031,7 +9140,7 @@
     ],
     "shopifyId": 224809385990,
     "createdAt": "2018-03-19T16:31:52-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Colombian Black",
@@ -9055,7 +9164,7 @@
     ],
     "shopifyId": 8593545606,
     "createdAt": "2016-09-18T16:47:04-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Scottish Afternoon",
@@ -9080,7 +9189,7 @@
     ],
     "shopifyId": 8593544390,
     "createdAt": "2016-09-18T16:46:49-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Yin Hao Jasmine",
@@ -9101,7 +9210,7 @@
     ],
     "shopifyId": 8593539910,
     "createdAt": "2016-09-18T16:45:22-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "SGS Special English Breakfast",
@@ -9124,7 +9233,7 @@
     ],
     "shopifyId": 8593539206,
     "createdAt": "2016-09-18T16:45:10-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Orange Pekoe (Ceylon & India)",
@@ -9149,7 +9258,7 @@
     ],
     "shopifyId": 224809582598,
     "createdAt": "2018-03-19T16:31:56-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Irish Breakfast",
@@ -9175,7 +9284,7 @@
     ],
     "shopifyId": 8593538118,
     "createdAt": "2016-09-18T16:44:50-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Kenya Milima",
@@ -9200,7 +9309,7 @@
     ],
     "shopifyId": 8593537094,
     "createdAt": "2016-09-18T16:44:27-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Stanley's Blend",
@@ -9223,7 +9332,7 @@
     ],
     "shopifyId": 8593536454,
     "createdAt": "2016-09-18T16:44:16-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Jasmine Tea",
@@ -9247,7 +9356,7 @@
     ],
     "shopifyId": 8593534790,
     "createdAt": "2016-09-18T16:43:47-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Sencha",
@@ -9269,7 +9378,7 @@
     ],
     "shopifyId": 8593534022,
     "createdAt": "2016-09-18T16:43:33-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Queen Catherine",
@@ -9292,7 +9401,7 @@
     ],
     "shopifyId": 8593531654,
     "createdAt": "2016-09-18T16:42:48-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Midsummer's Peach (Decaf)",
@@ -9317,7 +9426,7 @@
     ],
     "shopifyId": 8593530246,
     "createdAt": "2016-09-18T16:42:21-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Ceylon (Decaf Orange Pekoe)",
@@ -9341,7 +9450,7 @@
     ],
     "shopifyId": 8593525894,
     "createdAt": "2016-09-18T16:40:56-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Paris Herbal",
@@ -9367,7 +9476,7 @@
     ],
     "shopifyId": 8593525574,
     "createdAt": "2016-09-18T16:40:49-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Royal English Breakfast",
@@ -9391,7 +9500,7 @@
     ],
     "shopifyId": 8593525190,
     "createdAt": "2016-09-18T16:40:35-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Darjeeling",
@@ -9413,7 +9522,7 @@
     ],
     "shopifyId": 8593525062,
     "createdAt": "2016-09-18T16:40:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "HarSha",
@@ -9435,7 +9544,7 @@
     ],
     "shopifyId": 8593524870,
     "createdAt": "2016-09-18T16:40:14-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Pumpkin Spice",
@@ -9462,7 +9571,7 @@
     ],
     "shopifyId": 8593524678,
     "createdAt": "2016-09-18T16:40:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Korakundah",
@@ -9485,7 +9594,7 @@
     ],
     "shopifyId": 8593523846,
     "createdAt": "2016-09-18T16:39:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Russian Country",
@@ -9509,7 +9618,7 @@
     ],
     "shopifyId": 8593523654,
     "createdAt": "2016-09-18T16:39:11-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Scottish Morn",
@@ -9534,7 +9643,7 @@
     ],
     "shopifyId": 8593523206,
     "createdAt": "2016-09-18T16:39:01-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Dragon Pearl Jasmine",
@@ -9558,7 +9667,7 @@
     ],
     "shopifyId": 224810139654,
     "createdAt": "2018-03-19T16:32:04-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Paris",
@@ -9587,7 +9696,7 @@
     ],
     "shopifyId": 8593522758,
     "createdAt": "2016-09-18T16:38:49-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Birthday Party",
@@ -9611,7 +9720,7 @@
     ],
     "shopifyId": 8593521734,
     "createdAt": "2016-09-18T16:38:22-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Assam",
@@ -9635,7 +9744,7 @@
     ],
     "shopifyId": 8593520838,
     "createdAt": "2016-09-18T16:37:59-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Earl Grey",
@@ -9663,7 +9772,7 @@
     ],
     "shopifyId": 8593520134,
     "createdAt": "2016-09-18T16:37:47-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Harney & Sons Logo Timer",
@@ -9686,7 +9795,7 @@
     ],
     "shopifyId": 8586132102,
     "createdAt": "2016-09-16T19:07:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Harney & Sons Tote Bag",
@@ -9709,7 +9818,7 @@
     ],
     "shopifyId": 8586131782,
     "createdAt": "2016-09-16T19:07:31-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Yaupon Black",
@@ -9731,7 +9840,7 @@
     ],
     "shopifyId": 8586108358,
     "createdAt": "2016-09-16T19:01:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Winter White Earl Grey, HT Tin of 20 Sachets",
@@ -9751,7 +9860,7 @@
     ],
     "shopifyId": 8586096710,
     "createdAt": "2016-09-16T18:59:16-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Chinese Flower",
@@ -9775,7 +9884,7 @@
     ],
     "shopifyId": 8586094278,
     "createdAt": "2016-09-16T18:58:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Colombian Green",
@@ -9799,7 +9908,7 @@
     ],
     "shopifyId": 8586063430,
     "createdAt": "2016-09-16T18:54:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Yerba Mate Mint",
@@ -9823,7 +9932,7 @@
     ],
     "shopifyId": 8586043846,
     "createdAt": "2016-09-16T18:51:25-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Goji Berry Fruit Tea",
@@ -9849,7 +9958,7 @@
     ],
     "shopifyId": 8586035846,
     "createdAt": "2016-09-16T18:50:25-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Decaf Chocolate Tea",
@@ -9874,7 +9983,7 @@
     ],
     "shopifyId": 8586020422,
     "createdAt": "2016-09-16T18:48:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Allnighter Yerba Mate Licorice",
@@ -9899,7 +10008,7 @@
     ],
     "shopifyId": 8586018374,
     "createdAt": "2016-09-16T18:47:48-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Peaches & Ginger, HT Tin of 20 Sachets",
@@ -9919,7 +10028,7 @@
     ],
     "shopifyId": 8585971334,
     "createdAt": "2016-09-16T18:40:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Celebration Tea",
@@ -9944,7 +10053,7 @@
     ],
     "shopifyId": 8585026310,
     "createdAt": "2016-09-16T16:05:04-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Amba Lemongrass",
@@ -9967,7 +10076,7 @@
     ],
     "shopifyId": 8584980870,
     "createdAt": "2016-09-16T15:57:47-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Blueberry Green",
@@ -9991,7 +10100,7 @@
     ],
     "shopifyId": 8584968902,
     "createdAt": "2016-09-16T15:56:21-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Capri",
@@ -10016,7 +10125,7 @@
     ],
     "shopifyId": 8584956678,
     "createdAt": "2016-09-16T15:54:39-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Chai, Bag of 50 Sachets",
@@ -10030,13 +10139,14 @@
       "B2B",
       "Bag of 50 Sachets",
       "fyp",
+      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
       "Tea Lover"
     ],
     "shopifyId": 8584954822,
     "createdAt": "2016-09-16T15:54:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Chai, Box of 20 Premium Teabags",
@@ -10055,7 +10165,7 @@
     ],
     "shopifyId": 8584953478,
     "createdAt": "2016-09-16T15:54:15-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Chai",
@@ -10082,7 +10192,7 @@
     ],
     "shopifyId": 8584945798,
     "createdAt": "2016-09-16T15:53:04-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Cranberry Autumn",
@@ -10109,7 +10219,7 @@
     ],
     "shopifyId": 8584932934,
     "createdAt": "2016-09-16T15:51:25-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Scottish Afternoon, Bag of 50 Sachets",
@@ -10130,7 +10240,7 @@
     ],
     "shopifyId": 8584895878,
     "createdAt": "2016-09-16T15:46:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Scottish Morn, Bag of 50 Sachets",
@@ -10151,7 +10261,7 @@
     ],
     "shopifyId": 8584895174,
     "createdAt": "2016-09-16T15:46:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "La Rochère Napoleon Bee Mug",
@@ -10171,7 +10281,7 @@
     ],
     "shopifyId": 8584835270,
     "createdAt": "2016-09-16T15:39:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Pumpkin Spice, Bag of 50 Sachets",
@@ -10195,7 +10305,7 @@
     ],
     "shopifyId": 8584816966,
     "createdAt": "2016-09-16T15:37:39-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Green with Coconut Fresh Brew Iced Tea",
@@ -10217,7 +10327,7 @@
     ],
     "shopifyId": 8584771462,
     "createdAt": "2016-09-16T15:32:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "A Perfect Cup Tea Scoop – Stainless Steel",
@@ -10240,7 +10350,7 @@
     ],
     "shopifyId": 8584608006,
     "createdAt": "2016-09-16T15:11:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Harney & Sons Black Empty Tea Tin - 8 oz",
@@ -10255,13 +10365,14 @@
       "black_crow_do_not_replenish",
       "black_crow_do_not_subscribe",
       "Harney & Sons Logoware",
+      "Low stock",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
       "tea-accessories"
     ],
     "shopifyId": 8584585990,
     "createdAt": "2016-09-16T15:09:33-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Harney & Sons Black Empty Tea Tin - 4 oz",
@@ -10282,7 +10393,7 @@
     ],
     "shopifyId": 8584585094,
     "createdAt": "2016-09-16T15:09:27-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Harney & Sons Black Empty Tea Tin – 3 lb",
@@ -10303,7 +10414,7 @@
     ],
     "shopifyId": 8584584006,
     "createdAt": "2016-09-16T15:09:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tea Strainer – Silver Plated, Short Handle",
@@ -10318,7 +10429,6 @@
       "black_crow_do_not_cross_sell",
       "black_crow_do_not_replenish",
       "black_crow_do_not_subscribe",
-      "Low stock",
       "Office Party Gift",
       "rc-member-tier-2|price:member-discount|sub:5.56:percent",
       "rc-member-tier-3|price:member-discount|sub:11.11:percent",
@@ -10326,7 +10436,7 @@
     ],
     "shopifyId": 8584580486,
     "createdAt": "2016-09-16T15:08:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Blood Orange Fruit Tea",
@@ -10353,7 +10463,7 @@
     ],
     "shopifyId": 8584526342,
     "createdAt": "2016-09-16T15:02:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Diamond Jubilee",
@@ -10377,7 +10487,7 @@
     ],
     "shopifyId": 8584521222,
     "createdAt": "2016-09-16T15:01:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tea Strainer – Silver Plated, Long Handle",
@@ -10399,7 +10509,7 @@
     ],
     "shopifyId": 8584492934,
     "createdAt": "2016-09-16T14:58:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Oval with Punchwork Design Tea Scoop – Stainless Steel",
@@ -10420,7 +10530,7 @@
     ],
     "shopifyId": 8584488838,
     "createdAt": "2016-09-16T14:58:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Jasmine Fairy Maidens",
@@ -10441,7 +10551,7 @@
     ],
     "shopifyId": 1483508285511,
     "createdAt": "2018-10-23T15:05:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "RMS Titanic Blend",
@@ -10462,7 +10572,7 @@
     ],
     "shopifyId": 8584438918,
     "createdAt": "2016-09-16T14:52:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Seven Sons Congratulating",
@@ -10483,7 +10593,7 @@
     ],
     "shopifyId": 8584432326,
     "createdAt": "2016-09-16T14:51:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Lover's Leap",
@@ -10504,7 +10614,7 @@
     ],
     "shopifyId": 8584431558,
     "createdAt": "2016-09-16T14:51:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Green Tea with Organic Peppermint, Box of 20 Individually Wrapped Sachets",
@@ -10526,7 +10636,7 @@
     ],
     "shopifyId": 8584346374,
     "createdAt": "2016-09-16T14:42:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Holiday Herbal",
@@ -10551,7 +10661,7 @@
     ],
     "shopifyId": 8584332102,
     "createdAt": "2016-09-16T14:41:11-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Jin Shan",
@@ -10573,7 +10683,7 @@
     ],
     "shopifyId": 8584325446,
     "createdAt": "2016-09-16T14:40:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "RMS Titanic Blend, Tin of 20 Sachets",
@@ -10593,7 +10703,7 @@
     ],
     "shopifyId": 8584311878,
     "createdAt": "2016-09-16T14:38:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Cherry Blossom, HT Tin of 20 Sachets",
@@ -10613,7 +10723,7 @@
     ],
     "shopifyId": 8584303046,
     "createdAt": "2016-09-16T14:37:55-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Love Life, Tin of 20 Sachets",
@@ -10638,7 +10748,7 @@
     ],
     "shopifyId": 8584294534,
     "createdAt": "2016-09-16T14:37:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Moroccan Mint",
@@ -10663,7 +10773,7 @@
     ],
     "shopifyId": 8584277638,
     "createdAt": "2016-09-16T14:35:17-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Rose Scented",
@@ -10689,7 +10799,7 @@
     ],
     "shopifyId": 8584262790,
     "createdAt": "2016-09-16T14:33:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Rooibos",
@@ -10715,7 +10825,7 @@
     ],
     "shopifyId": 8584252806,
     "createdAt": "2016-09-16T14:32:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Rooibos, Bag of 50 Sachets",
@@ -10736,7 +10846,7 @@
     ],
     "shopifyId": 8584251334,
     "createdAt": "2016-09-16T14:32:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Rooibos, Box of 20 Premium Teabags",
@@ -10755,7 +10865,7 @@
     ],
     "shopifyId": 8584248198,
     "createdAt": "2016-09-16T14:31:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Raspberry Herbal",
@@ -10779,7 +10889,7 @@
     ],
     "shopifyId": 8584247302,
     "createdAt": "2016-09-16T14:31:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Raspberry Herbal, Bag of 50 Sachets",
@@ -10800,7 +10910,7 @@
     ],
     "shopifyId": 8584246150,
     "createdAt": "2016-09-16T14:31:25-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Red Raspberry, Box of 20 Premium Teabags",
@@ -10819,7 +10929,7 @@
     ],
     "shopifyId": 8584243142,
     "createdAt": "2016-09-16T14:31:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Raspberry Herbal, Box of 50 Wrapped Teabags",
@@ -10838,7 +10948,7 @@
     ],
     "shopifyId": 8584242438,
     "createdAt": "2016-09-16T14:30:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Queen Catherine, Bag of 50 Sachets",
@@ -10859,7 +10969,7 @@
     ],
     "shopifyId": 8584241030,
     "createdAt": "2016-09-16T14:30:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Pu-Erh",
@@ -10883,7 +10993,7 @@
     ],
     "shopifyId": 8584236230,
     "createdAt": "2016-09-16T14:30:04-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Pomegranate Oolong",
@@ -10908,7 +11018,7 @@
     ],
     "shopifyId": 8584233670,
     "createdAt": "2016-09-16T14:29:40-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Pomegranate Oolong, Bag of 50 Sachets",
@@ -10929,7 +11039,7 @@
     ],
     "shopifyId": 8584232326,
     "createdAt": "2016-09-16T14:29:28-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Pomegranate Oolong, Box of 20 Individually Wrapped Sachets",
@@ -10949,7 +11059,7 @@
     ],
     "shopifyId": 8584230918,
     "createdAt": "2016-09-16T14:29:16-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Peppermint Herbal",
@@ -10974,7 +11084,7 @@
     ],
     "shopifyId": 227894951942,
     "createdAt": "2018-03-21T15:59:53-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Peppermint Herbal, Bag of 50 Sachets",
@@ -10994,7 +11104,7 @@
     ],
     "shopifyId": 8584225734,
     "createdAt": "2016-09-16T14:28:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Peppermint Herbal, Classic Tin of 20 Sachets",
@@ -11014,7 +11124,7 @@
     ],
     "shopifyId": 8584222150,
     "createdAt": "2016-09-16T14:28:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Peppermint Herbal, HT Tin of 20 Sachets",
@@ -11034,7 +11144,7 @@
     ],
     "shopifyId": 8584221638,
     "createdAt": "2016-09-16T14:28:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Panyang Congou",
@@ -11057,7 +11167,7 @@
     ],
     "shopifyId": 8584216646,
     "createdAt": "2016-09-16T14:27:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Sencha",
@@ -11081,7 +11191,7 @@
     ],
     "shopifyId": 8584202438,
     "createdAt": "2016-09-16T14:25:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Peppermint",
@@ -11107,7 +11217,7 @@
     ],
     "shopifyId": 8584197254,
     "createdAt": "2016-09-16T14:24:45-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Peppermint Herbal Premium Teabags",
@@ -11126,7 +11236,7 @@
     ],
     "shopifyId": 8584196166,
     "createdAt": "2016-09-16T14:24:34-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Peppermint Herbal, Box of 50 Wrapped Teabags",
@@ -11145,7 +11255,7 @@
     ],
     "shopifyId": 8584195398,
     "createdAt": "2016-09-16T14:24:28-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Passion Plum",
@@ -11170,7 +11280,7 @@
     ],
     "shopifyId": 8584192518,
     "createdAt": "2016-09-16T14:24:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Passion Plum, Bag of 50 Sachets",
@@ -11191,7 +11301,7 @@
     ],
     "shopifyId": 8584189446,
     "createdAt": "2016-09-16T14:23:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Bancha",
@@ -11213,7 +11323,7 @@
     ],
     "shopifyId": 8584185734,
     "createdAt": "2016-09-16T14:23:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Organic Assam",
@@ -11237,7 +11347,7 @@
     ],
     "shopifyId": 8584183878,
     "createdAt": "2016-09-16T14:22:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Matcha iri Genmaicha",
@@ -11262,7 +11372,7 @@
     ],
     "shopifyId": 8584171910,
     "createdAt": "2016-09-16T14:20:59-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Matsuda’s Sencha",
@@ -11284,7 +11394,7 @@
     ],
     "shopifyId": 8584171270,
     "createdAt": "2016-09-16T14:20:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Mango Fruit Tea",
@@ -11309,7 +11419,7 @@
     ],
     "shopifyId": 8584164934,
     "createdAt": "2016-09-16T14:19:58-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Mango Black",
@@ -11334,7 +11444,7 @@
     ],
     "shopifyId": 8584161862,
     "createdAt": "2016-09-16T14:19:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Lychee",
@@ -11356,7 +11466,7 @@
     ],
     "shopifyId": 8584153670,
     "createdAt": "2016-09-16T14:18:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Lung Ching",
@@ -11378,7 +11488,7 @@
     ],
     "shopifyId": 8584150982,
     "createdAt": "2016-09-16T14:18:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Lung Ching, Bag of 50 Sachets",
@@ -11399,7 +11509,7 @@
     ],
     "shopifyId": 8584149574,
     "createdAt": "2016-09-16T14:17:48-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Li Shan",
@@ -11420,7 +11530,7 @@
     ],
     "shopifyId": 8584144582,
     "createdAt": "2016-09-16T14:17:13-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Lemony Gunpowder",
@@ -11444,7 +11554,7 @@
     ],
     "shopifyId": 8584141382,
     "createdAt": "2016-09-16T14:16:48-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Lemon Herbal",
@@ -11470,7 +11580,7 @@
     ],
     "shopifyId": 8584138310,
     "createdAt": "2016-09-16T14:16:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Lapsang Souchong",
@@ -11493,7 +11603,7 @@
     ],
     "shopifyId": 8584135046,
     "createdAt": "2016-09-16T14:15:53-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Lapsang Souchong, Bag of 50 Sachets",
@@ -11514,7 +11624,7 @@
     ],
     "shopifyId": 8584133574,
     "createdAt": "2016-09-16T14:15:41-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Kukicha",
@@ -11537,7 +11647,7 @@
     ],
     "shopifyId": 8584127430,
     "createdAt": "2016-09-16T14:14:48-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Kenilworth Ceylon",
@@ -11560,7 +11670,7 @@
     ],
     "shopifyId": 8584120070,
     "createdAt": "2016-09-16T14:13:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Jasmine, Bag of 50 Sachets",
@@ -11581,7 +11691,7 @@
     ],
     "shopifyId": 8584099718,
     "createdAt": "2016-09-16T14:11:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Jasmine, Box of 50 Wrapped Teabags",
@@ -11601,7 +11711,7 @@
     ],
     "shopifyId": 8584095942,
     "createdAt": "2016-09-16T14:10:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Jane's Garden Tea",
@@ -11626,7 +11736,7 @@
     ],
     "shopifyId": 8584095558,
     "createdAt": "2016-09-16T14:10:51-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Chai Hara (Green Chai)",
@@ -11650,7 +11760,7 @@
     ],
     "shopifyId": 8584091398,
     "createdAt": "2016-09-16T14:10:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Ceylon Vintage Silver Tips",
@@ -11670,7 +11780,7 @@
     ],
     "shopifyId": 8584088326,
     "createdAt": "2016-09-16T14:09:54-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Orange Pekoe, Box of 50 Wrapped Teabags",
@@ -11689,7 +11799,7 @@
     ],
     "shopifyId": 8584081350,
     "createdAt": "2016-09-16T14:09:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Caribe",
@@ -11715,7 +11825,7 @@
     ],
     "shopifyId": 8584076678,
     "createdAt": "2016-09-16T14:08:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Yerba Mate",
@@ -11739,7 +11849,7 @@
     ],
     "shopifyId": 8584063878,
     "createdAt": "2016-09-16T14:06:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Yellow & Blue",
@@ -11765,7 +11875,7 @@
     ],
     "shopifyId": 8584062086,
     "createdAt": "2016-09-16T14:06:09-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Yellow & Blue, HT Tin of 20 Sachets",
@@ -11785,7 +11895,7 @@
     ],
     "shopifyId": 8584060038,
     "createdAt": "2016-09-16T14:05:53-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Yellow & Blue, Bag of 50 Sachets",
@@ -11806,7 +11916,7 @@
     ],
     "shopifyId": 8584059718,
     "createdAt": "2016-09-16T14:05:51-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Winter White Earl Grey",
@@ -11832,7 +11942,7 @@
     ],
     "shopifyId": 8584050502,
     "createdAt": "2016-09-16T14:04:39-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "White Vanilla Grapefruit",
@@ -11856,7 +11966,7 @@
     ],
     "shopifyId": 8584046278,
     "createdAt": "2016-09-16T14:04:07-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Winter White Earl Grey, Bag of 50 Sachets",
@@ -11877,7 +11987,7 @@
     ],
     "shopifyId": 8584045190,
     "createdAt": "2016-09-16T14:04:00-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "White Vanilla Grapefruit, Box of 20 Individually Wrapped Sachets",
@@ -11896,7 +12006,7 @@
     ],
     "shopifyId": 8584041414,
     "createdAt": "2016-09-16T14:03:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "White Peach",
@@ -11920,7 +12030,7 @@
     ],
     "shopifyId": 8584040710,
     "createdAt": "2016-09-16T14:03:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "White Peach, Bag of 50 Sachets",
@@ -11941,7 +12051,7 @@
     ],
     "shopifyId": 8584039430,
     "createdAt": "2016-09-16T14:03:12-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "White Christmas",
@@ -11966,7 +12076,7 @@
     ],
     "shopifyId": 8584038790,
     "createdAt": "2016-09-16T14:03:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Wenshan Baozhong",
@@ -11987,7 +12097,7 @@
     ],
     "shopifyId": 8584035526,
     "createdAt": "2016-09-16T14:02:37-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Wedding Tea",
@@ -12010,7 +12120,7 @@
     ],
     "shopifyId": 8584033094,
     "createdAt": "2016-09-16T14:02:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Wedding Tea, Bag of 50 Sachets",
@@ -12029,7 +12139,7 @@
     ],
     "shopifyId": 8584032198,
     "createdAt": "2016-09-16T14:02:09-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Viennese Earl Grey",
@@ -12054,7 +12164,7 @@
     ],
     "shopifyId": 8584029318,
     "createdAt": "2016-09-16T14:01:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Verveine (Lemon Verbena)",
@@ -12078,7 +12188,7 @@
     ],
     "shopifyId": 8584025734,
     "createdAt": "2016-09-16T14:01:12-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Vanilla Black",
@@ -12101,7 +12211,7 @@
     ],
     "shopifyId": 8584018950,
     "createdAt": "2016-09-16T14:00:12-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Uva Highlands",
@@ -12123,7 +12233,7 @@
     ],
     "shopifyId": 8584011142,
     "createdAt": "2016-09-16T13:59:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tropical Green",
@@ -12148,7 +12258,7 @@
     ],
     "shopifyId": 8584008902,
     "createdAt": "2016-09-16T13:58:48-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tropical Green, Bag of 50 Sachets",
@@ -12169,7 +12279,7 @@
     ],
     "shopifyId": 8584007750,
     "createdAt": "2016-09-16T13:58:36-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tower of London",
@@ -12197,7 +12307,7 @@
     ],
     "shopifyId": 8584005830,
     "createdAt": "2016-09-16T13:58:21-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tropical Green, Box of 20 Premium Teabags",
@@ -12216,7 +12326,7 @@
     ],
     "shopifyId": 8584003846,
     "createdAt": "2016-09-16T13:58:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tokyo",
@@ -12240,7 +12350,7 @@
     ],
     "shopifyId": 8583995334,
     "createdAt": "2016-09-16T13:56:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tippy Yunnan",
@@ -12261,7 +12371,7 @@
     ],
     "shopifyId": 8583993414,
     "createdAt": "2016-09-16T13:56:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Thai Rooibos",
@@ -12290,7 +12400,7 @@
     ],
     "shopifyId": 8583980358,
     "createdAt": "2016-09-16T13:54:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Tencha",
@@ -12310,7 +12420,7 @@
     ],
     "shopifyId": 8583977222,
     "createdAt": "2016-09-16T13:54:06-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Temi Sikkim",
@@ -12332,7 +12442,7 @@
     ],
     "shopifyId": 8583975174,
     "createdAt": "2016-09-16T13:53:48-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Strawberry Kiwi Fruit Tea",
@@ -12357,7 +12467,7 @@
     ],
     "shopifyId": 8583966598,
     "createdAt": "2016-09-16T13:52:30-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Strawberry Kiwi Fruit Tea, Bag of 50 Sachets",
@@ -12378,7 +12488,7 @@
     ],
     "shopifyId": 8583965190,
     "createdAt": "2016-09-16T13:52:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Spiced Plum Herbal",
@@ -12405,7 +12515,7 @@
     ],
     "shopifyId": 8583960966,
     "createdAt": "2016-09-16T13:51:42-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "SoHo Blend",
@@ -12428,7 +12538,7 @@
     ],
     "shopifyId": 8583957446,
     "createdAt": "2016-09-16T13:51:10-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "SoHo Blend, Tin of 20 Sachets",
@@ -12448,7 +12558,7 @@
     ],
     "shopifyId": 8583954182,
     "createdAt": "2016-09-16T13:50:41-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Soba Roasted Buckwheat",
@@ -12475,7 +12585,7 @@
     ],
     "shopifyId": 8583953478,
     "createdAt": "2016-09-16T13:50:34-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Japanese Sencha",
@@ -12501,7 +12611,7 @@
     ],
     "shopifyId": 224799817734,
     "createdAt": "2018-03-19T16:28:40-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Sencha Scent of Mountains",
@@ -12523,7 +12633,7 @@
     ],
     "shopifyId": 8583946118,
     "createdAt": "2016-09-16T13:49:24-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Japanese Sencha, Box of 50 Wrapped Teabags",
@@ -12542,7 +12652,7 @@
     ],
     "shopifyId": 8583942150,
     "createdAt": "2016-09-16T13:48:51-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:43-05:00"
   },
   {
     "name": "Japanese Sencha, Bag of 50 Sachets",
@@ -12561,7 +12671,7 @@
     ],
     "shopifyId": 8583942022,
     "createdAt": "2016-09-16T13:48:51-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Japanese Sencha, Box of 20 Individually Wrapped Sachets",
@@ -12581,7 +12691,7 @@
     ],
     "shopifyId": 8583939270,
     "createdAt": "2016-09-16T13:48:25-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Japanese Sencha, Box of 20 Premium Teabags",
@@ -12600,7 +12710,7 @@
     ],
     "shopifyId": 8583938758,
     "createdAt": "2016-09-16T13:48:18-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Sally's Secret",
@@ -12627,7 +12737,7 @@
     ],
     "shopifyId": 8583930182,
     "createdAt": "2016-09-16T13:46:58-04:00",
-    "updatedAt": "2026-02-22T10:00:46-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Royal Wedding Tea",
@@ -12655,7 +12765,7 @@
     ],
     "shopifyId": 8583922694,
     "createdAt": "2016-09-16T13:45:54-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Peaches & Ginger",
@@ -12680,7 +12790,7 @@
     ],
     "shopifyId": 8583919814,
     "createdAt": "2016-09-16T13:45:28-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Peach Fruit Tea",
@@ -12706,7 +12816,7 @@
     ],
     "shopifyId": 8583913222,
     "createdAt": "2016-09-16T13:44:29-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Paris",
@@ -12736,7 +12846,7 @@
     ],
     "shopifyId": 224840646662,
     "createdAt": "2018-03-19T16:43:31-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Passion Fruit",
@@ -12760,7 +12870,7 @@
     ],
     "shopifyId": 8583909062,
     "createdAt": "2016-09-16T13:43:54-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Green with Citrus & Ginkgo, Box of 20 Premium Teabags",
@@ -12780,7 +12890,7 @@
     ],
     "shopifyId": 8583901190,
     "createdAt": "2016-09-16T13:42:36-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Green with Citrus & Ginkgo",
@@ -12808,7 +12918,7 @@
     ],
     "shopifyId": 8583900358,
     "createdAt": "2016-09-16T13:42:30-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Green with Citrus & Ginkgo, Box of 50 Wrapped Teabags",
@@ -12828,7 +12938,7 @@
     ],
     "shopifyId": 8583896774,
     "createdAt": "2016-09-16T13:42:00-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Green with Citrus & Ginkgo, Bag of 50 Sachets",
@@ -12849,7 +12959,7 @@
     ],
     "shopifyId": 8583896006,
     "createdAt": "2016-09-16T13:41:55-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Green with Citrus & Ginkgo, Box of 20 Individually Wrapped Sachets",
@@ -12870,7 +12980,7 @@
     ],
     "shopifyId": 8583895110,
     "createdAt": "2016-09-16T13:41:46-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Earl Grey",
@@ -12897,7 +13007,7 @@
     ],
     "shopifyId": 8583894342,
     "createdAt": "2016-09-16T13:41:40-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Darjeeling",
@@ -12921,7 +13031,7 @@
     ],
     "shopifyId": 8583891206,
     "createdAt": "2016-09-16T13:41:10-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Orange Passion Fruit Tea",
@@ -12947,7 +13057,7 @@
     ],
     "shopifyId": 8583889286,
     "createdAt": "2016-09-16T13:40:53-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "New Vithanakande",
@@ -12968,7 +13078,7 @@
     ],
     "shopifyId": 8583880326,
     "createdAt": "2016-09-16T13:39:48-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Mutan White",
@@ -12990,7 +13100,7 @@
     ],
     "shopifyId": 8583874886,
     "createdAt": "2016-09-16T13:39:06-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Mint Verbena",
@@ -13015,7 +13125,7 @@
     ],
     "shopifyId": 8583873734,
     "createdAt": "2016-09-16T13:38:57-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Indian Nimbu",
@@ -13040,7 +13150,7 @@
     ],
     "shopifyId": 8583861446,
     "createdAt": "2016-09-16T13:36:57-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Ichiban Sencha",
@@ -13062,7 +13172,7 @@
     ],
     "shopifyId": 8583858246,
     "createdAt": "2016-09-16T13:36:28-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Hot Cinnamon Spice",
@@ -13093,7 +13203,7 @@
     ],
     "shopifyId": 224796180486,
     "createdAt": "2018-03-19T16:26:17-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Hot Cinnamon Spice, Box of 20 Individually Wrapped Sachets",
@@ -13115,7 +13225,7 @@
     ],
     "shopifyId": 8583840454,
     "createdAt": "2016-09-16T13:33:42-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Hot Cinnamon Spice Premium Teabags",
@@ -13135,7 +13245,7 @@
     ],
     "shopifyId": 8583837958,
     "createdAt": "2016-09-16T13:33:22-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Hot Cinnamon Spice, Box of 50 Wrapped Teabags",
@@ -13154,7 +13264,7 @@
     ],
     "shopifyId": 8583837318,
     "createdAt": "2016-09-16T13:33:16-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Holiday Tea",
@@ -13179,7 +13289,7 @@
     ],
     "shopifyId": 8583836742,
     "createdAt": "2016-09-16T13:33:10-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Holiday Tea, Bag of 50 Sachets",
@@ -13201,7 +13311,7 @@
     ],
     "shopifyId": 8583836358,
     "createdAt": "2016-09-16T13:33:06-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Hojicha",
@@ -13222,7 +13332,7 @@
     ],
     "shopifyId": 8583829766,
     "createdAt": "2016-09-16T13:32:06-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Herbal Hot Cinnamon Spice",
@@ -13253,7 +13363,7 @@
     ],
     "shopifyId": 8583826886,
     "createdAt": "2016-09-16T13:31:42-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Hao Ya 'B'",
@@ -13277,7 +13387,7 @@
     ],
     "shopifyId": 8583821894,
     "createdAt": "2016-09-16T13:30:54-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Hao Ya 'A'",
@@ -13301,7 +13411,7 @@
     ],
     "shopifyId": 8583818886,
     "createdAt": "2016-09-16T13:30:28-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Gyokuro",
@@ -13324,7 +13434,7 @@
     ],
     "shopifyId": 8583815558,
     "createdAt": "2016-09-16T13:29:58-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Guayusa",
@@ -13347,7 +13457,7 @@
     ],
     "shopifyId": 8583809158,
     "createdAt": "2016-09-16T13:29:00-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Green Hot Cinnamon Spice",
@@ -13376,7 +13486,7 @@
     ],
     "shopifyId": 8583805062,
     "createdAt": "2016-09-16T13:28:24-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Green Hot Cinnamon Spice, Bag of 50 Sachets",
@@ -13397,7 +13507,7 @@
     ],
     "shopifyId": 8583802438,
     "createdAt": "2016-09-16T13:28:00-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Ginger's Oolong",
@@ -13419,7 +13529,7 @@
     ],
     "shopifyId": 8583790534,
     "createdAt": "2016-09-16T13:26:30-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Ginger Liquorice",
@@ -13445,7 +13555,7 @@
     ],
     "shopifyId": 8583784582,
     "createdAt": "2016-09-16T13:25:55-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Genmaicha",
@@ -13468,7 +13578,7 @@
     ],
     "shopifyId": 8583779782,
     "createdAt": "2016-09-16T13:25:30-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Fruits d'Alsace",
@@ -13492,7 +13602,7 @@
     ],
     "shopifyId": 8583774534,
     "createdAt": "2016-09-16T13:24:54-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "French Super Blue Lavender",
@@ -13517,7 +13627,7 @@
     ],
     "shopifyId": 8583770438,
     "createdAt": "2016-09-16T13:24:30-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Formosa Oolong",
@@ -13541,7 +13651,7 @@
     ],
     "shopifyId": 8583766470,
     "createdAt": "2016-09-16T13:24:06-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Formosa Oolong, Bag of 50 Sachets",
@@ -13562,7 +13672,7 @@
     ],
     "shopifyId": 8583764806,
     "createdAt": "2016-09-16T13:23:58-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Fanciest Formosa Oolong",
@@ -13582,7 +13692,7 @@
     ],
     "shopifyId": 8583755462,
     "createdAt": "2016-09-16T13:23:01-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "English Breakfast",
@@ -13609,7 +13719,7 @@
     ],
     "shopifyId": 224802275334,
     "createdAt": "2018-03-19T16:29:25-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "English Breakfast, Bag of 50 Sachets",
@@ -13630,7 +13740,7 @@
     ],
     "shopifyId": 8583750342,
     "createdAt": "2016-09-16T13:22:24-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "English Breakfast, Classic Tin of 20 Sachets",
@@ -13651,7 +13761,7 @@
     ],
     "shopifyId": 8583745990,
     "createdAt": "2016-09-16T13:22:00-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "English Breakfast, HT Tin of 20 Sachets",
@@ -13672,7 +13782,7 @@
     ],
     "shopifyId": 8583745414,
     "createdAt": "2016-09-16T13:21:56-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "English Breakfast, Box of 20 Premium Teabags",
@@ -13692,7 +13802,7 @@
     ],
     "shopifyId": 8583744390,
     "createdAt": "2016-09-16T13:21:48-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "English Breakfast, Box of 50 Wrapped Teabags",
@@ -13712,7 +13822,7 @@
     ],
     "shopifyId": 8583743366,
     "createdAt": "2016-09-16T13:21:42-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Elyse's Blend",
@@ -13733,7 +13843,7 @@
     ],
     "shopifyId": 8583741190,
     "createdAt": "2016-09-16T13:21:30-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Earl Grey Supreme",
@@ -13760,7 +13870,7 @@
     ],
     "shopifyId": 224803946502,
     "createdAt": "2018-03-19T16:29:58-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Earl Grey Supreme, Box of 20 Individually Wrapped Sachets",
@@ -13780,7 +13890,7 @@
     ],
     "shopifyId": 8583728070,
     "createdAt": "2016-09-16T13:19:36-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Earl Grey Imperial",
@@ -13804,7 +13914,7 @@
     ],
     "shopifyId": 8583726342,
     "createdAt": "2016-09-16T13:19:22-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Earl Grey",
@@ -13829,7 +13939,7 @@
     ],
     "shopifyId": 8583724038,
     "createdAt": "2016-09-16T13:19:04-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Earl Grey, Bag of 50 Sachets",
@@ -13847,7 +13957,7 @@
     ],
     "shopifyId": 8583719558,
     "createdAt": "2016-09-16T13:18:27-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Dragon Pearl Jasmine, Classic Tin of 20 Sachets",
@@ -13867,7 +13977,7 @@
     ],
     "shopifyId": 8583718342,
     "createdAt": "2016-09-16T13:18:16-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Dragon Pearl Jasmine, Bag of 50 Sachets",
@@ -13886,7 +13996,7 @@
     ],
     "shopifyId": 8583717446,
     "createdAt": "2016-09-16T13:18:06-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Dragon Pearl Jasmine, Box of 20 Individually Wrapped Sachets",
@@ -13907,7 +14017,7 @@
     ],
     "shopifyId": 8583716102,
     "createdAt": "2016-09-16T13:17:52-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Decaf Ceylon, Bag of 50 Sachets",
@@ -13927,7 +14037,7 @@
     ],
     "shopifyId": 8583686854,
     "createdAt": "2016-09-16T13:13:47-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Darjeeling",
@@ -13950,7 +14060,7 @@
     ],
     "shopifyId": 224794673158,
     "createdAt": "2018-03-19T16:25:12-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Darjeeling, Bag of 50 Sachets",
@@ -13970,7 +14080,7 @@
     ],
     "shopifyId": 8583677894,
     "createdAt": "2016-09-16T13:12:24-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Darjeeling, Box of 20 Individually Wrapped Sachets",
@@ -13990,7 +14100,7 @@
     ],
     "shopifyId": 8583675078,
     "createdAt": "2016-09-16T13:12:05-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Darjeeling, Classic Tin of 20 Sachets",
@@ -14010,7 +14120,7 @@
     ],
     "shopifyId": 8583674246,
     "createdAt": "2016-09-16T13:11:58-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "CTC Assam",
@@ -14034,7 +14144,7 @@
     ],
     "shopifyId": 8583669446,
     "createdAt": "2016-09-16T13:11:18-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Citrus Blend",
@@ -14056,7 +14166,7 @@
     ],
     "shopifyId": 8583660102,
     "createdAt": "2016-09-16T13:10:03-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Citron Green",
@@ -14080,7 +14190,7 @@
     ],
     "shopifyId": 224795328518,
     "createdAt": "2018-03-19T16:25:39-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Citron Green, Classic Tin of 20 Sachets",
@@ -14100,7 +14210,7 @@
     ],
     "shopifyId": 8583656070,
     "createdAt": "2016-09-16T13:09:24-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Citron Green, Bag of 50 Sachets",
@@ -14119,7 +14229,7 @@
     ],
     "shopifyId": 8583654982,
     "createdAt": "2016-09-16T13:09:16-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Citron Green, Box of 50 Wrapped Teabags",
@@ -14139,7 +14249,7 @@
     ],
     "shopifyId": 8583651398,
     "createdAt": "2016-09-16T13:08:48-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Chocolate Tea",
@@ -14163,7 +14273,7 @@
     ],
     "shopifyId": 8583645254,
     "createdAt": "2016-09-16T13:07:54-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Chocolate Mint",
@@ -14187,7 +14297,7 @@
     ],
     "shopifyId": 8583642118,
     "createdAt": "2016-09-16T13:07:24-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Chocolate Mint, HT Tin of 20 Sachets",
@@ -14207,7 +14317,7 @@
     ],
     "shopifyId": 8583640710,
     "createdAt": "2016-09-16T13:07:12-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Chocolate Mint, Bag of 50 Sachets",
@@ -14228,7 +14338,7 @@
     ],
     "shopifyId": 8583639814,
     "createdAt": "2016-09-16T13:07:06-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Florence",
@@ -14253,7 +14363,7 @@
     ],
     "shopifyId": 8583637894,
     "createdAt": "2016-09-16T13:06:46-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Chinese Silver Needle",
@@ -14273,7 +14383,7 @@
     ],
     "shopifyId": 8583634758,
     "createdAt": "2016-09-16T13:06:17-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Chamomile",
@@ -14299,7 +14409,7 @@
     ],
     "shopifyId": 224816365574,
     "createdAt": "2018-03-19T16:34:02-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Chamomile, Bag of 50 Sachets",
@@ -14319,7 +14429,7 @@
     ],
     "shopifyId": 8583624518,
     "createdAt": "2016-09-16T13:04:49-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Chamomile Herbal, Classic Tin of 20 Sachets",
@@ -14339,7 +14449,7 @@
     ],
     "shopifyId": 8583621254,
     "createdAt": "2016-09-16T13:04:20-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Egyptian Chamomile, Box of 20 Premium Teabags",
@@ -14358,7 +14468,7 @@
     ],
     "shopifyId": 8583620678,
     "createdAt": "2016-09-16T13:04:12-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Egyptian Chamomile, Box of 50 Wrapped Teabags",
@@ -14377,7 +14487,7 @@
     ],
     "shopifyId": 8583619846,
     "createdAt": "2016-09-16T13:04:06-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Boston",
@@ -14402,7 +14512,7 @@
     ],
     "shopifyId": 8583616454,
     "createdAt": "2016-09-16T13:03:37-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Black Currant Tea",
@@ -14426,7 +14536,7 @@
     ],
     "shopifyId": 8583613830,
     "createdAt": "2016-09-16T13:03:13-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Bi Lo Chun",
@@ -14447,7 +14557,7 @@
     ],
     "shopifyId": 8583604486,
     "createdAt": "2016-09-16T13:01:54-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Bangkok (Green Tea with Coconut, Ginger and Vanilla)",
@@ -14473,7 +14583,7 @@
     ],
     "shopifyId": 8583602054,
     "createdAt": "2016-09-16T13:01:33-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Bangkok, Bag of 50 Sachets",
@@ -14494,7 +14604,7 @@
     ],
     "shopifyId": 8583601030,
     "createdAt": "2016-09-16T13:01:24-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Organic Bangkok, Box of 20 Individually Wrapped Sachets",
@@ -14514,7 +14624,7 @@
     ],
     "shopifyId": 8583598022,
     "createdAt": "2016-09-16T13:00:54-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Bancha",
@@ -14535,7 +14645,7 @@
     ],
     "shopifyId": 8583597190,
     "createdAt": "2016-09-16T13:00:48-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Apricot",
@@ -14559,7 +14669,7 @@
     ],
     "shopifyId": 8583588166,
     "createdAt": "2016-09-16T12:59:30-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Apricot, Bag of 50 Sachets",
@@ -14578,7 +14688,7 @@
     ],
     "shopifyId": 8583586758,
     "createdAt": "2016-09-16T12:59:18-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Apple Cinnamon",
@@ -14603,7 +14713,7 @@
     ],
     "shopifyId": 8583582918,
     "createdAt": "2016-09-16T12:58:48-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Ali San Oolong",
@@ -14624,7 +14734,7 @@
     ],
     "shopifyId": 8583572422,
     "createdAt": "2016-09-16T12:57:16-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "African Autumn",
@@ -14652,7 +14762,7 @@
     ],
     "shopifyId": 8583569478,
     "createdAt": "2016-09-16T12:56:49-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "African Autumn, Bag of 50 Sachets",
@@ -14673,7 +14783,7 @@
     ],
     "shopifyId": 8583567942,
     "createdAt": "2016-09-16T12:56:33-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "African Autumn, HT Tin of 20 Sachets",
@@ -14694,7 +14804,7 @@
     ],
     "shopifyId": 8583564422,
     "createdAt": "2016-09-16T12:56:00-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "The Harney & Sons Guide to Tea - Michael Harney Signed Copy",
@@ -14716,7 +14826,7 @@
     ],
     "shopifyId": 8583521030,
     "createdAt": "2016-09-16T12:47:06-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Harney & Sons Travette Tea Maker",
@@ -14739,7 +14849,7 @@
     ],
     "shopifyId": 8583501702,
     "createdAt": "2016-09-16T12:42:06-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Harney & Sons Travel Tumbler",
@@ -14760,7 +14870,7 @@
     ],
     "shopifyId": 8583501126,
     "createdAt": "2016-09-16T12:42:00-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Harney & Sons Teacup",
@@ -14783,7 +14893,7 @@
     ],
     "shopifyId": 8583500294,
     "createdAt": "2016-09-16T12:41:48-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Finum Paper Filters – Extra Large",
@@ -14804,7 +14914,7 @@
     ],
     "shopifyId": 8583494150,
     "createdAt": "2016-09-16T12:40:18-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Finum Paper Filters – Large",
@@ -14825,7 +14935,7 @@
     ],
     "shopifyId": 8583493830,
     "createdAt": "2016-09-16T12:40:12-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Matcha Scoop – Bamboo",
@@ -14848,7 +14958,7 @@
     ],
     "shopifyId": 8583489286,
     "createdAt": "2016-09-16T12:38:58-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Earl Grey Supreme, Bag of 50 Sachets",
@@ -14868,7 +14978,7 @@
     ],
     "shopifyId": 8580466630,
     "createdAt": "2016-09-16T01:02:49-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   },
   {
     "name": "Harney & Sons Mug",
@@ -14890,6 +15000,6 @@
     ],
     "shopifyId": 8580453574,
     "createdAt": "2016-09-16T01:00:01-04:00",
-    "updatedAt": "2026-02-22T10:00:47-05:00"
+    "updatedAt": "2026-02-24T20:19:44-05:00"
   }
 ]

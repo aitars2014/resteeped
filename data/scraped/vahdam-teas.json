@@ -1,62 +1,6 @@
 [
   {
-    "name": "Cosmos Tea Cup (250ml)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Make your tea time a celestial experience with our elegant Cosmos tea cups. Double-walled with zero condensation, these cups are royalty! \n \nEvery time you purchase a VAHDAM® India product, 1% of the revenue goes towards the education of our farmers’ children under the social initiative, ‘TEAch Me.’",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/products/WhiteBG7432.jpg?v=1652361841",
-    "productUrl": "https://www.vahdamteas.com/products/cosmos-teacup-250-ml",
-    "priceUsd": 10.99,
-    "tags": [
-      "cup",
-      "Drinkware",
-      "glass",
-      "glassware",
-      "growaov-collection",
-      "no-cup-holder",
-      "otp"
-    ],
-    "productType": "Accessories | Glass",
-    "shopifyId": 6584595021867,
-    "createdAt": "2021-06-14T09:30:23-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee (1 Pack)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and potent adaptogens to support stress relief and help you feel more balanced—naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_11_70938d44-2556-4096-bec8-68199ebd3bc7.jpg?v=1755674113",
-    "productUrl": "https://www.vahdamteas.com/products/pack-of-1-ashwagandha-coffee",
-    "priceUsd": 39,
-    "tags": [
-      "wizzy-collection-ignore",
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7533284491307,
-    "createdAt": "2025-09-11T08:01:26-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee (3+3 Free Pack + 7 FREE Gifts worth $48 Additional)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and adaptogens to support stress relief and help you feel more balanced—naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/pack_of_6_copy_3.jpg?v=1760538091",
-    "productUrl": "https://www.vahdamteas.com/products/pack-of-6-ashwagandha-coffee-with-7-free-gifts-worth-48-included",
-    "priceUsd": 117,
-    "tags": [
-      "All teas",
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7533001703467,
-    "createdAt": "2025-09-11T07:28:28-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee 1 Pack (FLAT 30% OFF + 6 FREE Gifts worth $48)",
+    "name": "Ashwagandha Coffee 1 Pack (FLAT 30% OFF + 6 FREE Gifts worth $50)",
     "brandName": "Vahdam Teas",
     "teaType": "black",
     "description": "",
@@ -70,2310 +14,7 @@
     "productType": "Coffee",
     "shopifyId": 7517516070955,
     "createdAt": "2025-09-01T10:25:10-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Castleton Classic Darjeeling Second Flush Black Tea DJ 354",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A wonderfully mellow golden summer black tea made from pure China bushes at the world-famous Castleton Tea Estate, replete with characteristic fruity notes and soft floral hues.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Copy_of_castleton-half_11zon_d5872785-939e-486e-9018-feca5a2c94ca.jpg?v=1753778672",
-    "productUrl": "https://www.vahdamteas.com/products/castleton-classic-darjeeling-second-flush-black-tea-dj-354",
-    "priceUsd": 19.99,
-    "tags": [
-      "2024",
-      "black-teas",
-      "darjeeling",
-      "discount_quantity2023",
-      "first flush",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "medium-caffeine",
-      "other_estates",
-      "otp",
-      "second flush 2024",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7427851780139,
-    "createdAt": "2025-07-29T04:41:25-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Castleton Moonlight Darjeeling Second Flush Black Tea DJ 373",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "One of the most sought-after teas, this Moonlight tea from the iconic Castleton Tea Estate is as elegant as it is exquisite, produced only in extremely limited quantities, making every cup a true rarity.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Castleton_lic_leaf.jpg?v=1753781670",
-    "productUrl": "https://www.vahdamteas.com/products/2025-castleton-moonlight-darjeeling-second-flush-black-tea-dj-342",
-    "priceUsd": 27.99,
-    "tags": [
-      "black-teas",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7427860529195,
-    "createdAt": "2025-07-29T04:47:46-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Margaret's Hope Premium Darjeeling Second Flush Black Tea  DJ 331",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A wonderfully mellow and smooth summer tea made from pure China bushes at the iconic Margaret’s Hope Tea Estate, offering typical fruity notes in a mid-bodied, vibrant cup.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Margaret_s_Hope_Classic_half_11zon.jpg?v=1751615873",
-    "productUrl": "https://www.vahdamteas.com/products/2025-margarets-hope-premium-darjeeling-second-flush-black-tea-dj-331",
-    "priceUsd": 19.99,
-    "tags": [
-      "2024",
-      "black-teas",
-      "darjeeling",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "otp",
-      "second-flush",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7408434544683,
-    "createdAt": "2025-07-04T03:19:10-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Okayti Premium Darjeeling First Flush Black Tea OKT 07",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "An excellently made light-bodied tea with delicate floral notes and a soft vegetal sweetness from an all time top ranked Tea Estate of Darjeeling.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Okayti_dd13a591-2b35-4902-9665-66289e4895a2.jpg?v=1744376610",
-    "productUrl": "https://www.vahdamteas.com/products/2025-okayti-premium-darjeeling-first-flush-black-tea-okt-07",
-    "priceUsd": 24.99,
-    "tags": [
-      "2024",
-      "black-teas",
-      "darjeeling",
-      "first-flush",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "okyati",
-      "other_estates",
-      "otp",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 6832000237611,
-    "createdAt": "2022-04-22T03:43:06-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Castleton Premium Darjeeling First Flush Black Tea DJ 42",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "An early spring tea harvested from the high-altitude sections, it is mellow and light, floral and fragrant, and it comes from a world-record-holding tea estate in Darjeeling.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Castleton_premium-2.jpg?v=1747300931",
-    "productUrl": "https://www.vahdamteas.com/products/2025-castleton-premium-darjeeling-first-flush-black-tea-dj-42",
-    "priceUsd": 27.99,
-    "tags": [
-      "black tea",
-      "black-teas",
-      "darjeeling",
-      "first flush",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "otp",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7377207361579,
-    "createdAt": "2025-05-13T04:22:44-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Jungpana Muscatel Darjeeling Second Flush Black Tea DJ 120",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A rare muscatel tea with amazing fruity notes, harvested during the peak of summer from the legendary, vintage Jungpana Tea Estate in Darjeeling.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Jungpana_2nd_flush-1.jpg?v=1752048803",
-    "productUrl": "https://www.vahdamteas.com/products/2025-jungpana-muscatel-darjeeling-second-flush-black-tea-dj-120",
-    "priceUsd": 19.99,
-    "tags": [
-      "2024",
-      "black-teas",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "otp",
-      "second-flush",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7510434775083,
-    "createdAt": "2025-08-25T04:46:50-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Giddapahar Classic Darjeeling Second Flush Black Tea DJ 74",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A bright and rounded tea with Muscatel depth, harvested at the height of summer from the heritage Giddapahar Tea Estate in Darjeeling.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/giddapahar-half_11zon_76e7ebb7-51cb-4e58-bd6b-521cefb6a198.jpg?v=1751616311",
-    "productUrl": "https://www.vahdamteas.com/products/2025-giddapahar-classic-darjeeling-second-flush-black-tea-dj-74",
-    "priceUsd": 29.99,
-    "tags": [
-      "2024",
-      "black-teas",
-      "darjeeling",
-      "first flush",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "other_estates",
-      "otp",
-      "second flush 2024",
-      "second-flush",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7404092817451,
-    "createdAt": "2025-06-26T08:33:58-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Halmari Clonal Assam Second Flush Black Tea 533",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "An outstanding Assam Summer tea with chunky golden tips and a rich, malty brisk cup—crafted from select clonal bushes at the award-winning Halmari Tea Estate.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/halmari_half.jpg?v=1751885531",
-    "productUrl": "https://www.vahdamteas.com/products/2025-halmari-clonal-assam-second-flush-black-tea-or-533",
-    "priceUsd": 27.99,
-    "tags": [
-      "2024",
-      "black tea",
-      "black-teas",
-      "darjeeling",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "otp",
-      "second flush 2024",
-      "second-flush",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7409708466219,
-    "createdAt": "2025-07-07T03:30:29-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Okayti Classic Darjeeling Second Flush Black Tea DJ 73",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Mellow and smooth summer flush tea with pleasant astringency and sweetness, plus delightful fruity and woody notes from an estate once favoured by royalty.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Okayti_Premium_Darjeeling_Second_Flush_Black_Tea_leaf-liquor_206b643f-a6ea-4d24-ba59-86d727bf84e3.jpg?v=1752748573",
-    "productUrl": "https://www.vahdamteas.com/products/okayti-classic-darjeeling-second-flush-black-tea-dj-73",
-    "priceUsd": 17.99,
-    "tags": [
-      "2024",
-      "black-teas",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "otp",
-      "second-flush",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7426802352171,
-    "createdAt": "2025-07-28T05:11:24-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Himalayan Green Tea, 12 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "A pure, fresh Green tea from the Himalayan region blessed with the right amount of anti-oxidants.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Himalayan_green_tea_f953d287-3e7a-4973-9957-5e6e8bd22130.jpg?v=1724678892",
-    "productUrl": "https://www.vahdamteas.com/products/himalayan-green-tea-loose-leaf-12oz",
-    "priceUsd": 24.99,
-    "tags": [
-      "DOD-2023",
-      "green-teas",
-      "GreenTea23",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "loose-leaf-green-tea",
-      "medium-caffeine",
-      "mothers-day-sale-2023",
-      "otp",
-      "vegetal",
-      "weight-management"
-    ],
-    "productType": "Green Teas | Loose Leaf",
-    "shopifyId": 4478396530731,
-    "createdAt": "2020-06-18T04:57:28-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "India's Original Masala Chai Tea, 12 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A best selling traditional Indian blend of black tea with a myriad of fresh and aromatic spices, offering a rich and flavorful experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Original_chai_ba5f65d4-7560-4423-b25a-c09cd33e7172.jpg?v=1724678893",
-    "productUrl": "https://www.vahdamteas.com/products/indias-original-masala-chai-tea-loose-leaf-12oz",
-    "priceUsd": 23.99,
-    "tags": [
-      "All teas",
-      "best-sellers",
-      "bestsellers-chai",
-      "bfcm_teas",
-      "bfcm_teas-chai-teas",
-      "chai-teas",
-      "cinnamon",
-      "DOD-2023",
-      "GADS Shopping Brand",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "hide_our_commitment",
-      "high-caffeine",
-      "immunity",
-      "loose-leaf",
-      "loose-leaf-chai-tea",
-      "otp",
-      "sacral-chakra",
-      "Valentines 2023",
-      "whats_inside"
-    ],
-    "productType": "Chai Teas | Loose Leaf",
-    "shopifyId": 4473857179691,
-    "createdAt": "2020-06-10T06:51:17-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "20 Teas Loose Leaf Sampler - 3 Packs (BUY 2 GET 1 FREE + FREE Imperial Loose Leaf Tea Maker Included)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A sampler set featuring 20 best selling loose leaf teas, each offering unique &amp; exquisite flavors, perfect for tea enthusiasts and gifting.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/pack_of_3_new.jpg?v=1752854134",
-    "productUrl": "https://www.vahdamteas.com/products/world-of-tea-gift-sampler-20-teas-pack-of-3",
-    "priceUsd": 149.99,
-    "tags": [
-      "bfcm_teas",
-      "gifts_bestsellers",
-      "grocery",
-      "growaov-collection",
-      "otp",
-      "under_50usd",
-      "valentines_2024",
-      "wizzy-ignore"
-    ],
-    "productType": "Loose Leaf | Samplers",
-    "shopifyId": 7419952365611,
-    "createdAt": "2025-07-18T10:31:20-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "20 Teas Loose Leaf Sampler - 2 Packs (FLAT 20% OFF + Free Classic Tea Infuser Included)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A sampler set featuring 20 best selling loose leaf teas, each offering unique &amp; exquisite flavors, perfect for tea enthusiasts and gifting.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/pack_of_2_new_212c20b5-2914-474f-889c-9590af7d76ad.jpg?v=1752849056",
-    "productUrl": "https://www.vahdamteas.com/products/world-of-tea-gift-sampler-20-teas-pack-of-2",
-    "priceUsd": 99.99,
-    "tags": [
-      "bfcm_teas",
-      "gifts_bestsellers",
-      "grocery",
-      "growaov-collection",
-      "otp",
-      "under_50usd",
-      "valentines_2024",
-      "wizzy-ignore"
-    ],
-    "productType": "Loose Leaf | Samplers",
-    "shopifyId": 7419948662827,
-    "createdAt": "2025-07-18T10:28:37-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "20 Teas Loose Leaf Sampler - 1 Pack",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A sampler set featuring 20 best selling loose leaf teas, each offering unique &amp; exquisite flavors, perfect for tea enthusiasts and gifting.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Tea_box_pack_of_1.jpg?v=1753092110",
-    "productUrl": "https://www.vahdamteas.com/products/world-of-tea-gift-sampler-20-teas-1-pack",
-    "priceUsd": 49.99,
-    "tags": [
-      "bfcm_teas",
-      "gifts_bestsellers",
-      "grocery",
-      "growaov-collection",
-      "otp",
-      "under_50usd",
-      "wizzy-ignore"
-    ],
-    "productType": "Loose Leaf | Samplers",
-    "shopifyId": 7419947057195,
-    "createdAt": "2025-07-18T10:27:06-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "20 Teas Loose Leaf Sampler | Buy 1 Get 1 Free",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A sampler set featuring 20 best selling loose leaf teas, each offering unique &amp; exquisite flavors, perfect for tea enthusiasts and gifting.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/B1G1.jpg?v=1752152577",
-    "productUrl": "https://www.vahdamteas.com/products/world-of-tea-gift-sampler-20-teas-buy-1-get-1-free",
-    "priceUsd": 99.99,
-    "tags": [
-      "bfcm_teas",
-      "gifts_bestsellers",
-      "grocery",
-      "growaov-collection",
-      "otp",
-      "under_50usd",
-      "valentines_2024",
-      "wizzy-ignore"
-    ],
-    "productType": "Loose Leaf | Samplers",
-    "shopifyId": 7411258589227,
-    "createdAt": "2025-07-08T07:14:03-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee (240 Servings)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and adaptogens to support stress relief and help you feel more balanced naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Image_20250702_171925_451_4fd88a93-cb48-41a3-8511-735c88d334c8.jpg?v=1751642704",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-240-servings-1",
-    "priceUsd": 117,
-    "tags": [
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7408642261035,
-    "createdAt": "2025-07-04T11:25:32-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee (120 Servings)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and adaptogens to support stress relief and help you feel more balanced naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/USA_Pack_of_3_with_kit_6848714a-9891-4563-86c8-a078658d714f.jpg?v=1752218694",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-120-servings",
-    "priceUsd": 78,
-    "tags": [
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7408634527787,
-    "createdAt": "2025-07-04T11:12:24-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee (40 Servings)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and adaptogens to support stress relief and help you feel more balanced naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/02_3_1_c2ce7597-c7cd-4825-ac44-f1894bfdb08c.png?v=1753964253",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-40-servings-pack",
-    "priceUsd": 39,
-    "tags": [
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7408627023915,
-    "createdAt": "2025-07-04T10:53:23-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee 6 Packs (3+3 Free Packs + 7 FREE Gifts worth $48 Additional)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Image_20250702_171925_451_2a8292fc-554d-4004-9f53-1a5a756dabd1.jpg?v=1751540585",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-240-servings",
-    "priceUsd": 117,
-    "tags": [
-      "All teas",
-      "wizzy-ignore"
-    ],
-    "productType": "Coffee",
-    "shopifyId": 7407826763819,
-    "createdAt": "2025-07-03T07:01:53-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee (3+3 Packs with 7 Free Gifts worth $48 Included)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and adaptogens to support stress relief and help you feel more balanced—naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Image_20250702_171925_451.jpg?v=1751457153",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-kit-240-servings",
-    "priceUsd": 237,
-    "tags": [
-      "All teas",
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7406738505771,
-    "createdAt": "2025-07-01T06:44:42-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee (2 Packs + 7 Free Gifts worth $48 Included)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/USA_Pack_of_2_with_kit.jpg?v=1752219005",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-2-packs-7-free-gifts-worth-48-included",
-    "priceUsd": 79.99,
-    "tags": [
-      "All teas",
-      "wizzy-ignore"
-    ],
-    "productType": "Coffee",
-    "shopifyId": 7399041007659,
-    "createdAt": "2025-06-18T11:28:23-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee (Pack of 2)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and adaptogens to support stress relief and help you feel more balanced—naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/03_5.png?v=1750340350",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-80-servings",
-    "priceUsd": 79.99,
-    "tags": [
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7336343535659,
-    "createdAt": "2025-03-05T05:00:11-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Foldable Advent Calendar Tea Gift, 24 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A foldable advent calendar with 24 unique tea blends. The perfect gift to countdown to the holidays with a cozy brew each day!",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Vahdam_White_Background_30th_September6109_copy.jpg?v=1749625103",
-    "productUrl": "https://www.vahdamteas.com/products/foldable-advent-calendar-tea-gift-24-teas",
-    "priceUsd": 41.99,
-    "tags": [
-      "gifts",
-      "tea-bags"
-    ],
-    "productType": "Gifts | Christmas",
-    "shopifyId": 7395064610859,
-    "createdAt": "2025-06-11T02:51:28-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Masala Chai Kit Gift Set",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Untitled-2-30.jpg?v=1749188113",
-    "productUrl": "https://www.vahdamteas.com/products/masala-chai-kit-gift-set",
-    "priceUsd": 41.99,
-    "tags": [],
-    "productType": "Gifts | Classic",
-    "shopifyId": 7392298237995,
-    "createdAt": "2025-06-05T06:34:38-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Green Tea Private Reserve Gift Set, 6 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/products/0001_WorldTeaPrivateReserve-1.jpg?v=1675440632",
-    "productUrl": "https://www.vahdamteas.com/products/green-tea-private-reserve-6-teas",
-    "priceUsd": 83.99,
-    "tags": [
-      "bfcm_Gifts",
-      "bfcm_teas-Green-Teas",
-      "DOD-2023",
-      "gifts",
-      "grocery",
-      "growaov-collection",
-      "Her_Teas",
-      "him-filter",
-      "loose-leaf",
-      "otp",
-      "private-reserve-gifts",
-      "under_50usd",
-      "Valentines 2023"
-    ],
-    "productType": "Gifts | Private Reserve",
-    "shopifyId": 1836828196907,
-    "createdAt": "2019-07-19T08:15:05-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Barnesbeg Premium Darjeeling First Flush Black Tea DJ 10",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Experience the early invoice made from the freshly sprouted shoots that are tender, delicate, vibrant, and vivacious, with an amazing floral flavour and vegetal sweetness.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Barnesbeg_-2_2823ed3f-eab4-4bcb-942d-f2eacc8f1dab.jpg?v=1747128779",
-    "productUrl": "https://www.vahdamteas.com/products/2025-barnesbeg-premium-darjeeling-first-flush-black-tea-dj-10",
-    "priceUsd": 20.99,
-    "tags": [
-      "2024",
-      "black tea",
-      "black-teas",
-      "darjeeling",
-      "first-flush",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "otp",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7377209393195,
-    "createdAt": "2025-05-13T04:42:06-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee 3 Packs",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and adaptogens to support stress relief and help you feel more balanced—naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_2_1_ec45ba07-c8e4-422a-9e8c-346ad27fcef1.png?v=1752755963",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-pack-of-3",
-    "priceUsd": 119.99,
-    "tags": [
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7390527717419,
-    "createdAt": "2025-06-02T08:44:38-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee 3 Packs (2+1 Free Pack + 7 FREE Gifts worth $48 Additional)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/USA_Pack_of_3_with_kit.jpg?v=1753255892",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-for-calm-energy-120-servings",
-    "priceUsd": 78,
-    "tags": [
-      "All teas",
-      "wizzy-ignore"
-    ],
-    "productType": "Coffee",
-    "shopifyId": 7390509793323,
-    "createdAt": "2025-06-02T08:08:19-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Margaret's Hope Premium Darjeeling First Flush Black Tea DJ 42",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "An early First Flush tea made from the young shoots and buds, herbaceous sweet and delightfully floral, harvested at the onset of Spring from one of the most romantic tea estates in Darjeeling",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/margaret_s_hope_premium-2.jpg?v=1747981976",
-    "productUrl": "https://www.vahdamteas.com/products/2025-margarets-hope-premium-darjeeling-first-flush-black-tea-dj-42",
-    "priceUsd": 26.99,
-    "tags": [
-      "2024",
-      "black tea",
-      "black-teas",
-      "darjeeling",
-      "first-flush",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "otp",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7376906584107,
-    "createdAt": "2025-05-12T07:51:09-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Giddapahar Premium Darjeeling First Flush Black Tea DJ 11",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A mild and mellow tea with floral hums, harvested in early Spring from a heritage Tea Estate in Darjeeling, Giddapahar.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Giddapahar.jpg?v=1747302596",
-    "productUrl": "https://www.vahdamteas.com/products/2025-giddapahar-premium-darjeeling-first-flush-black-tea-dj-11",
-    "priceUsd": 24.99,
-    "tags": [
-      "2023-single-estate",
-      "2024",
-      "black-teas",
-      "discount_quantity2023",
-      "first-flush",
-      "first_flush_offer",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "otp",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7383079911467,
-    "createdAt": "2025-05-19T04:49:34-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Arya Diamond Darjeeling First Flush Black Tea Ex 31",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "The dazzling 'gem' of first flush Darjeeling teas with delicate long leaves and elongated silvery buds that is only made in a handful of quantities.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Arya_Diamond-2.jpg?v=1747643528",
-    "productUrl": "https://www.vahdamteas.com/products/2025-arya-diamond-darjeeling-first-flush-black-tea-ex-31",
-    "priceUsd": 36.99,
-    "tags": [
-      "2024",
-      "arya",
-      "black-teas",
-      "darjeeling",
-      "discount_quantity2023",
-      "first-flush",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "other_estates",
-      "otp",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7383066214443,
-    "createdAt": "2025-05-19T04:06:10-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "2025 Jungpana Premium Darjeeling First Flush Black Tea DJ 11",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A light-bodied and sweetly crisp tea with delicate floral hints from one of the most sought-after Tea Estates of Darjeeling.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/jungpana_1_aa86ac1f-e8c9-450f-93ca-0fc51e48e0a6.jpg?v=1744379520",
-    "productUrl": "https://www.vahdamteas.com/products/2025-jungpana-premium-darjeeling-first-flush-black-tea-dj-11",
-    "priceUsd": 24.99,
-    "tags": [
-      "2024",
-      "black-teas",
-      "darjeeling",
-      "first-flush",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "hide_timeline",
-      "jungpana",
-      "loose-leaf",
-      "medium-caffeine",
-      "single-estate"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 7094306013227,
-    "createdAt": "2023-04-14T03:19:13-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Black Tea Bundle, Set of 4",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Enjoy the rich character of our single  estate black teas, featuring delicate floral notes, bold muscatel flavors, and robust Assam blends. Each tea is carefully picked for a full-bodied, aromatic experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Black_Tea_1e1167a4-c91b-4880-a546-a32a7d294833.jpg?v=1741702193",
-    "productUrl": "https://www.vahdamteas.com/products/black-tea-bundle-set-of-4-unique-black-tea-blends",
-    "priceUsd": 59.19,
-    "tags": [],
-    "productType": "Virtual Bundles",
-    "shopifyId": 7325894475819,
-    "createdAt": "2025-02-12T07:29:05-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee - Pack of 2",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and adaptogens to support stress relief and help you feel more balanced—naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/03_5.png?v=1750340350",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-pack-of-2",
-    "priceUsd": 79.99,
-    "tags": [
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7335541407787,
-    "createdAt": "2025-03-04T03:23:55-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Green Tea Bundle, Set of 4",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "Enjoy a refreshing selection of green teas, perfectly balanced with vibrant flavors like mint, citrus, and ginger. Each blend offers a light, uplifting experience, delivering crisp, invigorating notes in every sip.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Green_tea_1.jpg?v=1741700876",
-    "productUrl": "https://www.vahdamteas.com/products/green-tea-bundle-set-of-4-unique-green-tea-blends",
-    "priceUsd": 74.19,
-    "tags": [
-      "green-teas"
-    ],
-    "productType": "Virtual Bundles",
-    "shopifyId": 7325893165099,
-    "createdAt": "2025-02-12T07:20:13-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Chai Tea Bundle, Set of 4",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Savor our spiced chai collection, where bold black tea meets warm, aromatic spices. From cardamom to cinnamon, each blend offers a rich, comforting taste of tradition in every cup.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/3_2f808035-aaec-4019-8374-1b2bb76eb091.jpg?v=1739361203",
-    "productUrl": "https://www.vahdamteas.com/products/chai-tea-bundle-set-of-4-unique-chai-teas",
-    "priceUsd": 56.99,
-    "tags": [],
-    "productType": "Virtual Bundles",
-    "shopifyId": 7325883891755,
-    "createdAt": "2025-02-12T06:54:56-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Turmeric Tea Bundle, Set of 3",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "Immerse yourself in our collection of turmeric-infused herbal teas, where the rich, earthy essence of turmeric takes center stage. Expertly blended with complementary botanicals, these teas offer a perfect harmony of flavor and aroma.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Turemric_Chamo.jpg?v=1741701242",
-    "productUrl": "https://www.vahdamteas.com/products/herbal-tea-bundle-set-of-4-unique-turmeric-blends",
-    "priceUsd": 58.59,
-    "tags": [
-      "herbal-teas"
-    ],
-    "productType": "Virtual Bundles",
-    "shopifyId": 7325878255659,
-    "createdAt": "2025-02-12T06:38:12-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Sprightly Spearmint Herbal Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "Experience a burst of cooling freshness with every sip of this herbal tea, infused with the invigorating essence of spearmint. Naturally caffeine free, it’s a soothing yet uplifting brew, perfect for relaxation and rejuvenation.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Spearmint_b6107af1-e511-4964-bc83-71aec484459d.jpg?v=1741335662",
-    "productUrl": "https://www.vahdamteas.com/products/sprightly-spearmint-herbal-tea-100-count",
-    "priceUsd": 21.99,
-    "tags": [
-      "herbal-teas"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 7320817270827,
-    "createdAt": "2025-01-31T04:37:43-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Herbal Tea Variety Pack, 36 Infusion Bags",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "Experience a curated selection of nature’s finest herbal infusions with this Variety Pack.  Each blend is caffeine-free and crafted for wellness, offering a unique balance of warmth, freshness, and soothing flavors—perfect for any time of day.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_1_f76251fe-ab19-48c7-a839-3411789fadbf.jpg?v=1741333534",
-    "productUrl": "https://www.vahdamteas.com/products/herbal-tea-variety-pack-36-teas",
-    "priceUsd": 17.99,
-    "tags": [
-      "gifts",
-      "herbal-teas"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 7320318410795,
-    "createdAt": "2025-01-30T09:05:39-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Hearty Hibiscus Herbal Tea 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "Enjoy the floral richness of hibiscus, complemented by the warmth of cinnamon and a refreshing hint of spearmint. This caffeine-free herbal infusion offers a smooth and uplifting experience, perfect for any time of day.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard1_01563e20-a406-4e1a-9a50-d947e3711951.jpg?v=1738315966",
-    "productUrl": "https://www.vahdamteas.com/products/hearty-hibiscus-herbal-tea-100-count",
-    "priceUsd": 21.99,
-    "tags": [
-      "herbal-teas"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 7320318050347,
-    "createdAt": "2025-01-30T09:00:18-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Zingy Ginger Herbal Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "Energize your senses with the bold, spicy warmth of ginger, perfectly blended with aromatic fennel and spearmint. This caffeine-free herbal infusion is a soothing yet invigorating cup, perfect for wellness and relaxation.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Zingy_Ginger.jpg?v=1741335707",
-    "productUrl": "https://www.vahdamteas.com/products/zingy-ginger-herbal-tea-100-count",
-    "priceUsd": 21.99,
-    "tags": [
-      "herbal-teas"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 7320316248107,
-    "createdAt": "2025-01-30T08:57:03-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Moringa Leaf Herbal Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "Enjoy the goodness of moringa, perfectly complemented by the refreshing notes of lemongrass and spearmint. This caffeine-free herbal tea is a smooth, nourishing infusion ideal for daily wellness and relaxation.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Moringa_Leaf.jpg?v=1741335745",
-    "productUrl": "https://www.vahdamteas.com/products/moringa-leaf-herbal-tea-100-count",
-    "priceUsd": 21.99,
-    "tags": [
-      "herbal-teas"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 7320313233451,
-    "createdAt": "2025-01-30T08:49:26-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Turmeric Tea Tales Gift Set, 6 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "An exclusive assortment of 6 Turmeric Infusions, specially curated with Oprah Winfrey, offering a unique and delightful tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/61bllaNatnL._SL1000.jpg?v=1737614372",
-    "productUrl": "https://www.vahdamteas.com/products/turmeric-tea-tales-6-teas",
-    "priceUsd": 35.99,
-    "tags": [
-      "bfcm_bestsellers",
-      "bfcm_Gifts",
-      "bfcm_teas-herbal-teas",
-      "caffeine-free",
-      "carnival-gifts",
-      "gifts",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "Her_Teas",
-      "otp"
-    ],
-    "productType": "Gifts | Carnival",
-    "shopifyId": 1871730606123,
-    "createdAt": "2019-09-10T08:14:57-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ashwagandha Coffee (1 Pack)",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Pure Arabica coffee blended with KSM-66® Ashwagandha and potent adaptogens to support stress relief and help you feel more balanced—naturally.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_11_70938d44-2556-4096-bec8-68199ebd3bc7.jpg?v=1755674113",
-    "productUrl": "https://www.vahdamteas.com/products/lp-ashwagandha-coffee-40-servings-subscription",
-    "priceUsd": 39,
-    "tags": [
-      "wizzy-collection-ignore",
-      "wizzy-ignore"
-    ],
-    "productType": "Tea & Infusions",
-    "shopifyId": 7311620931627,
-    "createdAt": "2025-01-16T08:09:08-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Turmeric Ashwagandha Herbal Tea Tisane, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A calming blend of turmeric and ashwagandha, offering a warm, flavourful tea experience in convenient, caffeine-free tea bags.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-32_1.jpg?v=1749649669",
-    "productUrl": "https://www.vahdamteas.com/products/turmeric-ashwagandha-herbal-tea-100-tea-bags",
-    "priceUsd": 19.99,
-    "tags": [
-      "bfcm_teas",
-      "caffeine-free",
-      "DOD-2023",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "herbal-teas",
-      "otp",
-      "root-chakra",
-      "stress-relief",
-      "tea-bags",
-      "turmeric",
-      "turmeric-tea-bags",
-      "vegetal"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 6583653793835,
-    "createdAt": "2021-06-11T03:55:15-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Turmeric Ashwagandha Instant Mix, 3.53 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A blend of turmeric and ashwagandha in a convenient powder form - smooth, aromatic, and easy to enjoy any time of day.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Ashwagandha_Front.jpg?v=1749474159",
-    "productUrl": "https://www.vahdamteas.com/products/turmeric-ashwagandha-instant-mix",
-    "priceUsd": 11.99,
-    "tags": [
-      "best-sellers",
-      "bfcm_Lattes",
-      "caffeine-free",
-      "GADS Shopping Brand",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "instant",
-      "mothers-day-sale-2023",
-      "root-chakra",
-      "turmeric-lattes",
-      "turmeric-tea-bags",
-      "Valentines 2023"
-    ],
-    "productType": "Instant | Lattes",
-    "shopifyId": 1819001094187,
-    "createdAt": "2019-06-25T04:50:39-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Diwali Gift Box 2024 - 9 Unique Festive Tea Flavors",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Celebrate Diwali with 9 unique tea flavors in an elegant gift box. A perfect festive delight for tea enthusiasts!",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/619e8e5ZTHL._SL1000.jpg?v=1729256136",
-    "productUrl": "https://www.vahdamteas.com/products/diwali-gift-2024-9-unique-flavors",
-    "priceUsd": 14.99,
-    "tags": [],
-    "productType": "Gifts | Occasion",
-    "shopifyId": 7281416241195,
-    "createdAt": "2024-10-18T08:57:44-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Darjeeling Teas Sampler, 10 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A sampler of 10 premium Darjeeling teas, each offering unique &amp; exquisite flavors, perfect for exploring the diverse world of Darjeeling tea",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_5_00252a56-c3f9-4c4c-862b-28f490ae5efc.jpg?v=1721974363",
-    "productUrl": "https://www.vahdamteas.com/products/darjeeling-tea-sampler",
-    "priceUsd": 24.99,
-    "tags": [
-      "darjeeling",
-      "gifts",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "otp",
-      "samplers",
-      "valentines_2024"
-    ],
-    "productType": "Loose Leaf | Samplers",
-    "shopifyId": 1424901341227,
-    "createdAt": "2018-08-08T03:42:19-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Hanukkah Tea Assortment, 9 Teas, 0.63 Oz, 18g",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A Hanukkah-themed tea assortment featuring 9 unique blends. The perfect gift set to brighten your celebrations and share the warmth of the season with family and friends.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_6_b56e4e33-d182-4813-b373-af18476cca62.jpg?v=1727355493",
-    "productUrl": "https://www.vahdamteas.com/products/hanukkah-tea-assortment-9-teas-0-63-oz-18g-1",
-    "priceUsd": 13.49,
-    "tags": [
-      "gifts"
-    ],
-    "productType": "Gifts | Occasion",
-    "shopifyId": 7271595147307,
-    "createdAt": "2024-09-13T02:52:33-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Foldable Advent Calendar Tea Gift, 24 Loose Leaf Teas, 1.69 Oz, 48g",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A foldable advent calendar with 24 unique tea blends. The perfect gift to countdown to the holidays with a cozy brew each day!",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/advent_6921481a-4082-4fa2-957d-fa61459430fd.jpg?v=1726827011",
-    "productUrl": "https://www.vahdamteas.com/products/foldable-advent-calendar-tea-gift-24-teas-1-69-oz-48g-1",
-    "priceUsd": 17.49,
-    "tags": [
-      "advent",
-      "assortment-gift",
-      "bfcm_Advent Calendars",
-      "gifts",
-      "gifts_bestsellers",
-      "loose-leaf"
-    ],
-    "productType": "Gifts | Occasion",
-    "shopifyId": 7271460569131,
-    "createdAt": "2024-09-12T05:16:59-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Foldable Advent Calendar Tea Gift, 24 Teas, 1.69 Oz, 48g",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A foldable advent calendar with 24 unique tea blends. The perfect gift to countdown to the holidays with a cozy brew each day!",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/71CYPzDZN_L._SL1000_1.jpg?v=1764363676",
-    "productUrl": "https://www.vahdamteas.com/products/foldable-advent-calendar-tea-gift-24-teas-1-69-oz-48g",
-    "priceUsd": 17.49,
-    "tags": [
-      "gifts",
-      "tea-bags"
-    ],
-    "productType": "Gifts | Christmas",
-    "shopifyId": 7269352210475,
-    "createdAt": "2024-09-06T03:22:06-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Halloween Tea Assortment, 9 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A Halloween-themed tea assortment with 9 unique blends. The perfect gift set to brew up some Halloween magic with your loved ones.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Copy_of_Artboard_6.jpg?v=1725975504",
-    "productUrl": "https://www.vahdamteas.com/products/halloween-tea-assortment-9-teas",
-    "priceUsd": 13.49,
-    "tags": [
-      "gifts"
-    ],
-    "productType": "Tea Bags | Samplers",
-    "shopifyId": 7268059217963,
-    "createdAt": "2024-08-29T01:46:23-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Vanilla Spiced Masala Chai Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A delicious medley of our original chai enhanced with the vibrant, creamy flavor of vanilla, offering a rich and aromatic tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-51_c4330914-ab66-4360-9b98-5a52162ba4d9.jpg?v=1729775597",
-    "productUrl": "https://www.vahdamteas.com/products/vanilla-spiced-masala-chai-tea-100-tea-bags",
-    "priceUsd": 19.99,
-    "tags": [
-      "best-sellers",
-      "bestsellers-chai",
-      "bfcm_teas",
-      "chai-teas",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "high-caffeine",
-      "immunity",
-      "otp",
-      "sweet",
-      "tea-bags",
-      "Valentines 2023",
-      "vanilla"
-    ],
-    "productType": "Chai Teas | Tea Bags",
-    "shopifyId": 6707166380075,
-    "createdAt": "2021-12-13T03:39:24-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Sweet Cinnamon Masala Chai Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Sweetly spiced traditional indian chai enhanced with extra cinnamon for a lingering flavor, offering a warm and delightful experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-50_fd01b91e-e700-42e3-b9e6-87f1c129d897.jpg?v=1729775559",
-    "productUrl": "https://www.vahdamteas.com/products/sweet-cinnamon-masala-chai-100-tea-bags",
-    "priceUsd": 19.99,
-    "tags": [
-      "bfcm_teas",
-      "chai-teas",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "high-caffeine",
-      "immunity",
-      "otp",
-      "spicy",
-      "tea-bags"
-    ],
-    "productType": "Chai Teas | Tea Bags",
-    "shopifyId": 6707144163371,
-    "createdAt": "2021-12-13T01:24:12-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Christmas Tea Gift Set, 9 Individually Wrapped Tea Bags",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Enjoy a festive selection with our Christmas Tea Gift Set! Includes 9 individually wrapped tea bags in delightful seasonal flavors.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Vahdam_Oct2476_copy.jpg?v=1721991960",
-    "productUrl": "https://www.vahdamteas.com/products/christmas-tea-gift-set-9-individually-wrapped-tea-bags",
-    "priceUsd": 13.49,
-    "tags": [
-      "christmas-gifts",
-      "gifts",
-      "tea-bags"
-    ],
-    "productType": "Gifts | Christmas",
-    "shopifyId": 7260408905771,
-    "createdAt": "2024-07-24T06:50:54-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Turmeric Ashwagandha Herbal Tea, 18 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A caffeine-free blend of Indian turmeric, ashwagandha, and spices for a warm, flavorful sip anytime.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/71HLsO3kemL._SL1500_ec7c577f-c9d1-4e50-b7ff-c22db6affe6a.jpg?v=1721739707",
-    "productUrl": "https://www.vahdamteas.com/products/turmeric-ashwagandha-herbal-tea-bags-18-count",
-    "priceUsd": 7.19,
-    "tags": [
-      "herbal-teas",
-      "tea-bags",
-      "turmeric-tea-bags"
-    ],
-    "productType": "Herbs & Spices",
-    "shopifyId": 7260157509675,
-    "createdAt": "2024-07-23T09:00:59-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Turmeric Tea Variety Pack, 20 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A variety of finest Indian turmeric teas blended with premium ingredients including ginger, peppermint and chamomile. A perfect herbal tea starter pack.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/61EVgHBqkHL._SL1000.jpg?v=1721199820",
-    "productUrl": "https://www.vahdamteas.com/products/turmeric-tea-variety-pack",
-    "priceUsd": 7.19,
-    "tags": [
-      "herbal-teas",
-      "tea-bags",
-      "turmeric-tea-bags"
-    ],
-    "productType": "Herbs & Spices",
-    "shopifyId": 7257988628523,
-    "createdAt": "2024-07-17T03:04:30-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Turmeric Citrus Ginger Herbal Tea 18 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A perfect blend of the finest Indian turmeric with spicy ginger and refreshing bergamot flavor. A herbal blend to enjoy any time of the day.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/61xvhEZn6OL._SL1000.jpg?v=1721199436",
-    "productUrl": "https://www.vahdamteas.com/products/turmeric-citrus-ginger-herbal-tea",
-    "priceUsd": 7.19,
-    "tags": [
-      "herbal-teas",
-      "tea-bags",
-      "turmeric-tea-bags"
-    ],
-    "productType": "Herbs & Spices",
-    "shopifyId": 7257986334763,
-    "createdAt": "2024-07-17T02:58:43-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Turmeric Ginger Herbal Tea 18 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "Experience a soothing blend of turmeric and ginger in this herbal tea, perfect for warming your soul and invigorating your senses.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/1_9f5a6254-50bb-4813-bf64-76469a514414.jpg?v=1721198986",
-    "productUrl": "https://www.vahdamteas.com/products/turmeric-ginger-herbal-tea",
-    "priceUsd": 6.39,
-    "tags": [
-      "herbal-teas",
-      "tea-bags",
-      "turmeric-tea-bags"
-    ],
-    "productType": "Herbs & Spices",
-    "shopifyId": 7257983057963,
-    "createdAt": "2024-07-17T02:50:30-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Lemon Basil Instant Premix Iced Tea, 7.05 Oz, 200g",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Enjoy a refreshing blend of citrusy lemon and refreshing basil. This low-cal mix is the perfect pick-me-up at any time of day.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Lemon_Basil_Front.jpg?v=1721375262",
-    "productUrl": "https://www.vahdamteas.com/products/lemon-basil-iced-tea",
-    "priceUsd": 22.49,
-    "tags": [
-      "best-sellers",
-      "grocery",
-      "growaov-collection",
-      "iced-teas",
-      "ICEDTEA23",
-      "instant",
-      "low-caffeine",
-      "otp"
-    ],
-    "productType": "Instant | Iced Teas",
-    "shopifyId": 6819396419627,
-    "createdAt": "2022-04-08T02:32:19-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Lavender Flowers Herbal Infusion (170g/6oz)",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "Premium and pure lavender flowers offering a smooth and aromatic herbal infusion, perfect for a delicious tea experience any time of the day.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Infusion.jpg?v=1724735884",
-    "productUrl": "https://www.vahdamteas.com/products/lavender-flowers-tea",
-    "priceUsd": 17.99,
-    "tags": [
-      "herbal-teas",
-      "ice tea",
-      "loose-leaf",
-      "loose-leaf-herbal-tea"
-    ],
-    "productType": "Herbal Teas | Loose leaf",
-    "shopifyId": 7153667113003,
-    "createdAt": "2023-09-30T11:30:50-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Classic Advent Calendar, Gift Set, 24 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A grand advent calendar featuring 24 exquisite loose leaf teas in tin caddies, perfect for welcoming Christmas with a new flavor each day.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/holiday-advent-calendar---1_fdf63fea-72c7-4578-999a-561ac23665ab.jpg?v=1721992034",
-    "productUrl": "https://www.vahdamteas.com/products/holiday-advent-calendar-24-teas",
-    "priceUsd": 54.99,
-    "tags": [
-      "advent",
-      "assortment-gift",
-      "bfcm_Advent Calendars",
-      "bfcm_bestsellers",
-      "christmas-gifts",
-      "gifts",
-      "gifts_bestsellers",
-      "growaov-collection",
-      "her-filter",
-      "Her_Teas",
-      "him-filter",
-      "loose-leaf",
-      "no-cup-holder",
-      "otp",
-      "upsell_"
-    ],
-    "productType": "Gifts | Christmas",
-    "shopifyId": 7153443307563,
-    "createdAt": "2023-09-29T09:01:37-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Lychee Rose Iced Tea | 26 Pitcher Tea Bags",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A refreshing blend of lychee and rose in convenient pitcher tea bags, offering a delightful iced tea perfect for enjoying in the summer.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Lychee-Rose-US-2.png?v=1721375298",
-    "productUrl": "https://www.vahdamteas.com/products/lychee-rose-iced-tea-bags",
-    "priceUsd": 17.49,
-    "tags": [
-      "2023",
-      "2023-Iced Tea",
-      "best-sellers",
-      "caffeine-free",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "iced-teas",
-      "iced-teas-2024",
-      "ICEDTEA23",
-      "otp",
-      "tea-bags",
-      "tea-bags-iced-tea"
-    ],
-    "productType": "Iced Teas | Tea Bags",
-    "shopifyId": 7104594804779,
-    "createdAt": "2023-05-09T02:51:41-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Peach Ginger Instant Premix Iced Tea, 7.05 Oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A refreshing instant premix blend of juicy peach and zesty ginger, offering a quick and delightful iced tea experience, perfect for any occasion.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/29_peach_ginger_53c2849c-8d11-4081-a0a7-60b8efd19f7e_1.jpg?v=1750072161",
-    "productUrl": "https://www.vahdamteas.com/products/peach-ginger-instant-iced-tea",
-    "priceUsd": 22.49,
-    "tags": [
-      "2023-Iced Tea",
-      "best-sellers",
-      "caffeine-free",
-      "ginger",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "iced-teas",
-      "ICEDTEA23",
-      "otp"
-    ],
-    "productType": "Iced Teas | Premix",
-    "shopifyId": 7104598343723,
-    "createdAt": "2023-05-09T03:30:20-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Butterfly Pea Flower Tea Herbal Tea Tisane, 1.76 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A vibrant &amp; naturally blue herbal tea made from butterfly pea flowers, with a delicate, floral flavor &amp; mesmerizing color-changing properties.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Butterfly_Blue-Pea-Tea.jpg?v=1728391344",
-    "productUrl": "https://www.vahdamteas.com/products/butterfly-pea-flower-tea-loose-leaf",
-    "priceUsd": 10.79,
-    "tags": [
-      "herbal-teas",
-      "loose-leaf"
-    ],
-    "productType": "Herbal Teas | Loose leaf",
-    "shopifyId": 7098502348843,
-    "createdAt": "2023-04-25T05:47:45-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Butterfly Pea Flower Herbal Tea, 40 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A vibrant &amp; naturally blue herbal tea made from butterfly pea flowers, with a delicate, floral flavor &amp; mesmerizing color-changing properties.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Butterfly-Pea-Flower_40TB-Recovered_1.jpg?v=1724655895",
-    "productUrl": "https://www.vahdamteas.com/products/blue-pea-flower-herbal-tea-40-tea-bags",
-    "priceUsd": 13.49,
-    "tags": [
-      "herbal-teas",
-      "tea-bags"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 7098486816811,
-    "createdAt": "2023-04-25T03:45:27-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Original Indian Chai Tea: Single Serve Tea Pods",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Convenient single serve tea pods of traditional Indian chai, offering a rich &amp; spiced flavor, perfect for a quick &amp; authentic chai experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/India_Original_k-cup.jpg?v=1722006783",
-    "productUrl": "https://www.vahdamteas.com/products/original-indian-chai-tea",
-    "priceUsd": 17.99,
-    "tags": [
-      "All teas",
-      "K-cups"
-    ],
-    "productType": "Instant | K Cups",
-    "shopifyId": 7092495417387,
-    "createdAt": "2023-04-10T07:57:51-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Earl Grey Black Tea: Single Serve Tea Pods",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Convenient single serve tea pods of premium Earl Grey, offering a rich, aromatic flavor with citrusy bergamot notes, perfect for quick brews.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Earl_Grey_Black_Tea_3cdcac75-f322-4135-9919-be579177ee8d.jpg?v=1722006825",
-    "productUrl": "https://www.vahdamteas.com/products/early-grey-black-tea-single-serve-tea-pods",
-    "priceUsd": 17.99,
-    "tags": [
-      "All teas",
-      "K-cups"
-    ],
-    "productType": "Instant | K Cups",
-    "shopifyId": 7093449752619,
-    "createdAt": "2023-04-12T04:28:01-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "English Breakfast Black Tea: Single Serve Tea Pods",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Convenient single serve pods of robust English Breakfast black tea, offering a full-bodied flavor perfect for a quick, classic morning brew.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Front_kcups_box_english_breakfast.jpg?v=1722006720",
-    "productUrl": "https://www.vahdamteas.com/products/english-breakfast-black-tea-single-serve-tea-pods",
-    "priceUsd": 17.99,
-    "tags": [
-      "All teas",
-      "K-cups"
-    ],
-    "productType": "Instant | K Cups",
-    "shopifyId": 7093512896555,
-    "createdAt": "2023-04-12T07:16:51-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Organic Himalayan Green Tea: Single Serve Tea Pods",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "Convenient single serve tea pods of organic Himalayan green tea from Assam, offering a smooth &amp; refreshing flavor, perfect for a quick brew.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Organic_Himaalyan_k-cup.jpg?v=1722006751",
-    "productUrl": "https://www.vahdamteas.com/products/organic-himalayan-green-tea-single-serve-tea-pods",
-    "priceUsd": 17.99,
-    "tags": [
-      "All teas",
-      "K-cups"
-    ],
-    "productType": "Instant | K Cups",
-    "shopifyId": 7093522923563,
-    "createdAt": "2023-04-12T07:54:29-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Advent Calendar Tea Gift Set, 24 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A festive advent calendar featuring 24 delightful teas, each offering unique flavors and aromas, perfect for celebrating the holiday season.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_1_353beb25-8599-4738-9d83-01d48c664b96.jpg?v=1738066332",
-    "productUrl": "https://www.vahdamteas.com/products/advent-calendar-24-tea-bags",
-    "priceUsd": 18.19,
-    "tags": [
-      "advent",
-      "assortment-gift",
-      "bfcm_Advent Calendars",
-      "bfcm_bestsellers",
-      "christmas-gifts",
-      "gifts",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "hide_voucher",
-      "him-filter",
-      "otp",
-      "tea-bags",
-      "under_30usd"
-    ],
-    "productType": "Gifts | Christmas",
-    "shopifyId": 6619985870891,
-    "createdAt": "2021-09-28T02:24:17-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Assam Exotic Black Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Premium black whole leaf tea with golden tips from the famed second flush harvest of Assam, offering a rich and robust flavor experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-40_6f44ad6f-2506-43d4-bb79-ea48b81129ce.jpg?v=1729775144",
-    "productUrl": "https://www.vahdamteas.com/products/assam-exotic-black-tea-100-tea-bags",
-    "priceUsd": 19.79,
-    "tags": [
-      "assam",
-      "bfcm_teas-black-teas",
-      "black-teas",
-      "grocery",
-      "growaov-collection",
-      "high-caffeine",
-      "otp",
-      "sugar-control",
-      "tea-bags"
-    ],
-    "productType": "Black Teas | Tea Bags",
-    "shopifyId": 4479521947691,
-    "createdAt": "2020-06-19T03:32:59-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Applause CTC Assam Summer Black Tea, 340gm /12oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "The epitome of strength and briskness, pure second flush CTC teas from the best estates in Upper Assam, made during the peak of summer.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Applause_ctc_03.jpg?v=1724217425",
-    "productUrl": "https://www.vahdamteas.com/products/applause-ctc-assam-black-tea-12oz",
-    "priceUsd": 17.99,
-    "tags": [
-      "assam",
-      "bfcm_teas",
-      "bfcm_teas-black-teas",
-      "black-teas",
-      "energy",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "high-caffeine",
-      "loose-leaf",
-      "otp"
-    ],
-    "productType": "Black Teas | Loose Leaf",
-    "shopifyId": 4478633607211,
-    "createdAt": "2020-06-18T12:24:19-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Assam Exotic Second Flush Black Tea, 3.53 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Premium Black Whole Leaf tea with golden tips from the famed second flush harvest of Assam, offering a rich and robust flavor experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Assam-Exotic-Balck-Tea.jpg?v=1721992323",
-    "productUrl": "https://www.vahdamteas.com/products/assam-exotic-second-flush-black-tea",
-    "priceUsd": 11.99,
-    "tags": [
-      "assam",
-      "bfcm_teas-black-teas",
-      "black-teas",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "high-caffeine",
-      "loose-leaf",
-      "nutty",
-      "otp"
-    ],
-    "productType": "Black Teas | Loose leaf",
-    "shopifyId": 1463516299307,
-    "createdAt": "2018-08-31T03:02:06-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Drift Mug for Teacher, Insulated, 10.1 Oz, 300ml",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A dual vacuum-insulated, splash-proof mug, making it the perfect gift for your teacher, ensuring their drink stays hot or cold longer.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Teacher_mug_362c8247-4cc4-429a-8595-05413ecc02d2.jpg?v=1730103235",
-    "productUrl": "https://www.vahdamteas.com/products/drift-mug-insulated-teacher",
-    "priceUsd": 17.99,
-    "tags": [
-      "accessories",
-      "black-color",
-      "Drinkware",
-      "growaov-collection",
-      "insulated",
-      "mint blue-color",
-      "no-cup-holder",
-      "otp",
-      "under_30usd"
-    ],
-    "productType": "Accessories | Insulated",
-    "shopifyId": 7015300726827,
-    "createdAt": "2022-11-09T06:43:03-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Imperial Loose Leaf Tea Maker with Infuser",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "An innovative tea maker with a built-in infuser, BPA-free, &amp; featuring patented technology for a perfect brew, making preparation effortless.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/White_BG7475.jpg?v=1721371918",
-    "productUrl": "https://www.vahdamteas.com/products/imperial-tea-maker",
-    "priceUsd": 23.99,
-    "tags": [
-      "accessories",
-      "best-sellers",
-      "bfcm_Drinkware",
-      "glass",
-      "glassware",
-      "growaov-collection",
-      "no-cup-holder",
-      "otp",
-      "teawares",
-      "under_30usd"
-    ],
-    "productType": "Accessories | Glass",
-    "shopifyId": 6840668454955,
-    "createdAt": "2022-05-04T06:01:28-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Jasmine Green Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "Among the most favorite green tea combinations with real jasmine flowers, offering a soft, crisp, &amp; aromatic cup for a delightful experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-47_73e96785-b657-4fbe-92e7-8f6c6e4303a4.jpg?v=1729775398",
-    "productUrl": "https://www.vahdamteas.com/products/jasmine-green-tea",
-    "priceUsd": 26.99,
-    "tags": [
-      "DOD-2023",
-      "floral",
-      "green-teas",
-      "grocery",
-      "growaov-collection",
-      "medium-caffeine",
-      "otp",
-      "stress-relief",
-      "tea-bags"
-    ],
-    "productType": "Green Teas | Tea Bags",
-    "shopifyId": 6835293618219,
-    "createdAt": "2022-04-26T09:11:18-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Himalayan Green Tea, 3.53 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "From the misty slopes of the Himalayas, these pure green teas are smooth, sweet, &amp; succulent, offering a delightful &amp; refreshing experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Himalayan_7d2918f3-c616-4f17-bc1b-b3b4a2e10a7a.jpg?v=1721906120",
-    "productUrl": "https://www.vahdamteas.com/products/himalayan-green-tea-3-53oz",
-    "priceUsd": 14.99,
-    "tags": [
-      "bfcm_teas",
-      "green-teas",
-      "GreenTea23",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "medium-caffeine",
-      "otp",
-      "vegetal",
-      "virgo",
-      "weight-management"
-    ],
-    "productType": "Green Teas | Loose Leaf",
-    "shopifyId": 6837558640683,
-    "createdAt": "2022-04-29T03:31:16-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "World of Tea Gift Sampler, 20 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A sampler set featuring 20 best selling loose leaf teas, each offering unique &amp; exquisite flavors, perfect for tea enthusiasts and gifting.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_8.jpg?v=1752152577",
-    "productUrl": "https://www.vahdamteas.com/products/world-of-tea-sampler-20-teas",
-    "priceUsd": 29.99,
-    "tags": [
-      "bfcm_teas",
-      "gifts",
-      "gifts_bestsellers",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "otp",
-      "samplers",
-      "under_50usd",
-      "valentines_2024"
-    ],
-    "productType": "Loose Leaf | Samplers",
-    "shopifyId": 6837467349035,
-    "createdAt": "2022-04-29T01:50:33-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Assorted Tea Bags Sampler, (40 Pyramid Tea Bags) 20 Flavors",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A sampler featuring 2 bags each of 20 classic tea variants offering unique &amp; exquisite flavors, perfect for tea lovers &amp; special occasions.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Assorted-Samler-20-Varinats_front.png?v=1764363413",
-    "productUrl": "https://www.vahdamteas.com/products/assorted-tea-bags-sampler-2-x-20-variants",
-    "priceUsd": 19.99,
-    "tags": [
-      "best-sellers",
-      "bfcm_bestsellers",
-      "bfcm_Gifts",
-      "gifts",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "Her_Teas",
-      "otp",
-      "samplers",
-      "tea-bags",
-      "tea-bags-gifts",
-      "Valentines 2023",
-      "valentines_2024"
-    ],
-    "productType": "Tea Bags | Samplers",
-    "shopifyId": 6835316523051,
-    "createdAt": "2022-04-26T10:04:24-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Darjeeling Premium First Flush Black Tea, 3.53 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "The first leaves of Spring, fresh and vibrant with a dazzling sheen have a delicate and decadent flavor, and a gently sweet mouthfeel.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Darjeeling_Premium_01_66d4db6c-6ed6-4544-a5f1-675522f99b04.jpg?v=1721992476",
-    "productUrl": "https://www.vahdamteas.com/products/darjeeling-premium-first-flush-black-tea",
-    "priceUsd": 13.49,
-    "tags": [
-      "bfcm_teas-black-teas",
-      "black-teas",
-      "darjeeling",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "loose-leaf",
-      "medium-caffeine",
-      "otp"
-    ],
-    "productType": "Black Teas | Loose leaf",
-    "shopifyId": 1463518101547,
-    "createdAt": "2018-08-31T03:09:26-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Sweet Cinnamon Masala Chai Tea, 30 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Sweetly spiced traditional indian chai enhanced with extra cinnamon for a lingering flavor, offering a warm and delightful experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/30_Tb_Mock_up_Non_Organic-11.jpg?v=1729838323",
-    "productUrl": "https://www.vahdamteas.com/products/sweet-cinnamon-masala-chai-30-tea-bags",
-    "priceUsd": 13.49,
-    "tags": [
-      "chai-teas",
-      "cinnamon",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "medium-caffeine",
-      "otp",
-      "sacral-chakra",
-      "tea-bags",
-      "weight-management"
-    ],
-    "productType": "Chai Teas | Tea Bags",
-    "shopifyId": 1577085796395,
-    "createdAt": "2018-11-10T06:05:30-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Decaf Himalayan Green Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "Specially developed for caffeine-sensitive drinkers, enjoy this excellent decaffeinated himalayan green tea, perfect for any time of day.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-44_4da2a754-9042-435d-910c-12fbe3702a51.jpg?v=1729775330",
-    "productUrl": "https://www.vahdamteas.com/products/decaf-himalayan-green-tea",
-    "priceUsd": 17.49,
-    "tags": [
-      "caffeine-free",
-      "green-teas",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "otp",
-      "tea-bags",
-      "weight-management"
-    ],
-    "productType": "Green Teas | Tea Bags",
-    "shopifyId": 6596708139051,
-    "createdAt": "2021-07-23T10:15:49-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Mint Melody Green Tea, 30 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "Spirited and sprightly medley of excellent green tea with carefully selected spearmint and peppermint leaves, offering a refreshing cup.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/30_Tb_Mock_up_Non_Organic-10.jpg?v=1729838238",
-    "productUrl": "https://www.vahdamteas.com/products/mint-melody-green-tea-30-tea-bags",
-    "priceUsd": 13.49,
-    "tags": [
-      "detox",
-      "green-teas",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "low-caffeine",
-      "mint",
-      "minty",
-      "otp",
-      "tea-bags"
-    ],
-    "productType": "Green Teas | Tea Bags",
-    "shopifyId": 1577083535403,
-    "createdAt": "2018-11-10T05:58:09-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Lopchu Golden Orange Pekoe Darjeeling Second Flush Black Tea, 3.53 Oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A rare second flush Darjeeling tea from the renowned Lopchu Estate, featuring rich muscatel notes, hints of honey, caramel, and a subtle smokiness. Brews into a smooth, amber liquor with a refined, lingering finish.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Lopchu_1.jpg?v=1721999151",
-    "productUrl": "https://www.vahdamteas.com/products/lopchu-golden-orange-pekoe-darjeeling-second-flush-black-tea",
-    "priceUsd": 16.19,
-    "tags": [
-      "2021",
-      "black-teas",
-      "darjeeling",
-      "fruity",
-      "grocery",
-      "growaov-collection",
-      "loose-leaf",
-      "lopchu",
-      "medium-caffeine",
-      "otp"
-    ],
-    "productType": "Single Estate",
-    "shopifyId": 6597389484075,
-    "createdAt": "2021-07-26T02:41:46-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Perfect Serve Spoon",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Stainless steel tea spoon designed for perfect measurement with each brew, ensuring a consistent and delightful tea experience every time.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/products/WhiteBG7497.jpg?v=1658814785",
-    "productUrl": "https://www.vahdamteas.com/products/perfect-serve-tea-spoon",
-    "priceUsd": 8.99,
-    "tags": [
-      "accessories",
-      "growaov-collection",
-      "no-cup-holder",
-      "otp",
-      "stainless-steel",
-      "teawares"
-    ],
-    "productType": "Accessories | Stainless Steel",
-    "shopifyId": 1425187405867,
-    "createdAt": "2018-08-08T09:09:17-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Signature Private Reserve Gift Set, 24 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A curated gift set of 24 premium loose leaf teas, each offering a unique and delightful flavor, perfect for tea lovers and special occasions.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Vahdam_White_Background_30th_September6099_copy_04df7428-b4d5-4218-82a7-75bd6982a68f.jpg?v=1750072071",
-    "productUrl": "https://www.vahdamteas.com/products/tea-assortment-private-reserve-24-teas",
-    "priceUsd": 54.99,
-    "tags": [
-      "advent",
-      "best-sellers",
-      "bfcm_Advent Calendars",
-      "christmas-gifts",
-      "gifts",
-      "gifts_bestsellers",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "him-filter",
-      "loose-leaf",
-      "otp",
-      "private-reserve-gifts",
-      "under_50usd",
-      "Valentines 2023"
-    ],
-    "productType": "Gifts | Private Reserve",
-    "shopifyId": 6630237437995,
-    "createdAt": "2021-10-20T02:21:04-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Classic Tea Sampler, Gift Set, 24 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Sampler featuring 24 classic tea variants, each offering unique &amp; exquisite flavors, perfect for your loved ones!",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Assorted_Tea_sampler_0273fc8a-abe4-4fd7-9f2f-c6575401f7c9.jpg?v=1764363324",
-    "productUrl": "https://www.vahdamteas.com/products/assorted-tea-bags-sampler-24-variants",
-    "priceUsd": 14.99,
-    "tags": [
-      "best-sellers",
-      "bfcm_bestsellers",
-      "bfcm_Gifts",
-      "gifts",
-      "gifts_bestsellers",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "Her_Teas",
-      "otp",
-      "samplers",
-      "tea-bags",
-      "tea-bags-gifts",
-      "under_30usd",
-      "Valentines 2023",
-      "valentines_2024"
-    ],
-    "productType": "Gifts | Tea Bags",
-    "shopifyId": 6614800662571,
-    "createdAt": "2021-09-14T07:59:10-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Herbal Tea Assortment, Gift Set, 36 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A delightful gift set featuring 6 unique herbal tea flavors, each in 6 pyramid tea bags, offering a refreshing and varied tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/USA_herbal_tea_6x6_first_image.jpg?v=1731073084",
-    "productUrl": "https://www.vahdamteas.com/products/assorted-herbal-tea-sampler-6-x-6",
-    "priceUsd": 19.99,
-    "tags": [
-      "bfcm_Gifts",
-      "bfcm_teas-herbal-teas",
-      "gifts",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "Her_Teas",
-      "Her_Trending",
-      "herbal-teas",
-      "him-filter",
-      "mothers-day-sale-2023",
-      "otp",
-      "samplers",
-      "tea-bags",
-      "tea-bags-gifts",
-      "under-30",
-      "Valentines 2023",
-      "valentines_2024"
-    ],
-    "productType": "Gifts | Tea Bags",
-    "shopifyId": 6614806102059,
-    "createdAt": "2021-09-14T08:28:29-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Green Tea Assortment, Gift Set, 36 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "A delightful gift set featuring 6 unique green tea flavors, each in 6 pyramid tea bags, offering a refreshing and varied tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/B0B524WNZN.MAIN.jpg?v=1721805614",
-    "productUrl": "https://www.vahdamteas.com/products/assorted-green-tea-sampler-6-x-6-variants",
-    "priceUsd": 22.49,
-    "tags": [
-      "best-sellers",
-      "bfcm_Gifts",
-      "bfcm_teas-Green-Teas",
-      "gifts",
-      "green-teas",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "Her_Teas",
-      "him-filter",
-      "mothers-day-sale-2023",
-      "otp",
-      "samplers",
-      "tea-bags",
-      "tea-bags-gifts",
-      "under-30",
-      "Valentines 2023",
-      "valentines_2024"
-    ],
-    "productType": "Gifts | Tea Bags",
-    "shopifyId": 6614804004907,
-    "createdAt": "2021-09-14T08:17:02-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Chai Tea Assortment, Gift Set, 36 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A delightful gift set featuring 6 unique chai tea blends, each offering rich &amp; aromatic flavors, perfect for a warm &amp; spiced tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Chai_tea_Assortment_c55edc93-c7ad-49ec-aa6b-b635c2478b2d.jpg?v=1732606425",
-    "productUrl": "https://www.vahdamteas.com/products/assorted-chai-teas-6-x-6-variants",
-    "priceUsd": 17.99,
-    "tags": [
-      "best-sellers",
-      "bfcm_Gifts",
-      "bfcm_teas-chai-teas",
-      "chai-teas",
-      "gifts",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "Her_Bestsellers",
-      "Her_Teas",
-      "him-filter",
-      "otp",
-      "samplers",
-      "tea-bags",
-      "tea-bags-gifts",
-      "under-30",
-      "under_30usd",
-      "Valentines 2023",
-      "valentines_2024"
-    ],
-    "productType": "Gifts | Tea Bags",
-    "shopifyId": 6614808592427,
-    "createdAt": "2021-09-14T08:44:22-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Tea Infuser & Spoon Trio Set",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Stainless steel trio includes a teaspoon and two loose-leaf infusers, providing convenience and style for a perfect tea brewing experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/products/WhiteBG7502_1.jpg?v=1652360737",
-    "productUrl": "https://www.vahdamteas.com/products/tea-infuser-and-spoon-triotea-infuser-spoon-trio",
-    "priceUsd": 24.99,
-    "tags": [
-      "accessories",
-      "bfcm_Drinkware",
-      "growaov-collection",
-      "infuser",
-      "no-cup-holder",
-      "otp",
-      "stainless-steel",
-      "teawares",
-      "Valentines 2023"
-    ],
-    "productType": "Accessories | Stainless Steel",
-    "shopifyId": 4853613035563,
-    "createdAt": "2020-11-29T05:42:43-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Weekend in Taj Mahal, Gift Set, 8 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A curated gift set inspired by the Taj Mahal, featuring 9 unique teas, each offering refined flavors, perfect for a delightful tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Weekend_in_Taj_Mahal_884ff366-727e-4efa-a30f-cce4d520537b.jpg?v=1726463263",
-    "productUrl": "https://www.vahdamteas.com/products/weekend-at-taj-mahal-8-tin-caddy",
-    "priceUsd": 24.99,
-    "tags": [
-      "assortment-gift",
-      "bfcm_Gifts",
-      "gifts",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "loose-leaf",
-      "otp",
-      "travel-gifts",
-      "under_30usd",
-      "valentines_2024"
-    ],
-    "productType": "Gifts | Travel",
-    "shopifyId": 4831745310763,
-    "createdAt": "2020-10-18T17:47:20-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Weekend in Paris, Gift Set, 9 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Come fall in love with 9 of our most exotique Herbal, Black, and Chai Teas that will transport you straight under the Eiffel Tower and set the mood for a memorable date.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Weekend_in_paris.jpg?v=1726463225",
-    "productUrl": "https://www.vahdamteas.com/products/weekend-in-paris-9-tin-caddy",
-    "priceUsd": 24.49,
-    "tags": [
-      "All teas",
-      "assortment-gift",
-      "best-sellers",
-      "bfcm_Gifts",
-      "gifts",
-      "gifts_bestsellers",
-      "grocery",
-      "growaov-collection",
-      "her-filter",
-      "Her_Bestsellers",
-      "Her_Teas",
-      "loose-leaf",
-      "otp",
-      "travel-gifts",
-      "under-30",
-      "under_30usd",
-      "Valentines 2023",
-      "valentines_2024"
-    ],
-    "productType": "Gifts | Travel",
-    "shopifyId": 4831734202411,
-    "createdAt": "2020-10-18T16:29:40-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Vedic Kadha Herbal Tea Tisane, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A time-honored Indian herbal blend with impeccable and unique flavors, offering a traditional 'kadha' in a delightful tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-37_03b23dfc-07f3-4534-bdb7-0b39b1165871.jpg?v=1729837321",
-    "productUrl": "https://www.vahdamteas.com/products/vedic-kadha-herbal-tea-100-teabags",
-    "priceUsd": 19.79,
-    "tags": [
-      "caffeine-free",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "herbal-teas",
-      "immunity",
-      "otp",
-      "tea-bags"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 6561764507691,
-    "createdAt": "2021-04-22T00:55:31-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Turmeric Chamomile Herbal Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A tisane of turmeric and chamomile, infused with herbs and spices, delivers a warm and aromatic tea experience, suitable for any time of the day.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Turmeric_Chamomile.jpg?v=1724662783",
-    "productUrl": "https://www.vahdamteas.com/products/turmeric-chamomile-herbal-tea-100-tea-bags",
-    "priceUsd": 19.99,
-    "tags": [
-      "best-sellers",
-      "better-sleep",
-      "caffeine-free",
-      "chamomile",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "herbal-teas",
-      "otp",
-      "tea-bags",
-      "tea-bags-herbal-tea",
-      "turmeric",
-      "turmeric-tea-bags"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 6539541938219,
-    "createdAt": "2021-03-02T03:43:53-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Pure Mint Herbal Tea Tisane, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A widely loved mint tisane of the finest spearmint and peppermint leaves, offering refreshing coolness and a wholesome tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Pure-Mint_979b4d75-1c51-48ec-bc59-db7cdf1767ca.jpg?v=1731601205",
-    "productUrl": "https://www.vahdamteas.com/products/pure-mint-herbal-tea-100-tea-bags",
-    "priceUsd": 19.99,
-    "tags": [
-      "bfcm_teas",
-      "caffeine-free",
-      "detox",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "herbal-teas",
-      "mint",
-      "minty",
-      "otp",
-      "pisces",
-      "tea-bags",
-      "throat-chakra"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 6539580964907,
-    "createdAt": "2021-03-02T04:55:55-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Lemon Ginger Green Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "An all-time favorite combination of zesty lemon &amp; zingy ginger with the goodness of green tea, offering a refreshing &amp; vibrant experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-48_4e09ef55-d2e6-4df9-82ab-b44064875633.jpg?v=1729775468",
-    "productUrl": "https://www.vahdamteas.com/products/lemon-ginger-green-tea-100-tea-bags",
-    "priceUsd": 22.49,
-    "tags": [
-      "best-sellers",
-      "crown-chakra",
-      "digestion",
-      "fruity",
-      "gemini",
-      "ginger",
-      "green-teas",
-      "GreenTea23",
-      "grocery",
-      "growaov-collection",
-      "medium-caffeine",
-      "otp",
-      "tea-bags"
-    ],
-    "productType": "Green Teas | Tea Bags",
-    "shopifyId": 6539537023019,
-    "createdAt": "2021-03-02T03:14:18-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Hibiscus Rose Herbal Tea Tisane, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A luscious floral tisane of hibiscus and rose, perfectly harmonized with aromatic spices, offering a delightful and fragrant tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/hibuscus-Rose_115cea17-eff6-41ff-8ed5-84a851d570ad.jpg?v=1729774083",
-    "productUrl": "https://www.vahdamteas.com/products/hibiscus-rose-herbal-tea-100-tea-bags",
-    "priceUsd": 19.99,
-    "tags": [
-      "aries",
-      "best-sellers",
-      "bfcm_bestsellers",
-      "bfcm_teas",
-      "bfcm_teas-herbal-teas",
-      "caffeine-free",
-      "chamomile",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "heart-chakra",
-      "herbal-teas",
-      "immunity",
-      "otp",
-      "Restrict_US",
-      "sweet",
-      "tea-bags",
-      "tea-bags-herbal-tea"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 6539589943339,
-    "createdAt": "2021-03-02T05:07:54-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Ginger Mint Green Tea, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "An uplifting blend of green tea from the best tea estates in India, with zesty ginger and mint. Enjoy a crisp but refreshing cup of tea.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/ginger-Mint_220bd51c-dbe7-46b9-9301-c94ec8c1baf7.jpg?v=1729772345",
-    "productUrl": "https://www.vahdamteas.com/products/ginger-mint-green-tea-100-tea-bags",
-    "priceUsd": 22.49,
-    "tags": [
-      "capricorn",
-      "detox",
-      "ginger",
-      "green-teas",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "medium-caffeine",
-      "mint",
-      "minty",
-      "otp",
-      "solar-plexus-chakra",
-      "tea-bags",
-      "throat-chakra"
-    ],
-    "productType": "Green Teas | Tea Bags",
-    "shopifyId": 6539530666027,
-    "createdAt": "2021-03-02T02:43:34-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Classic Chamomile Herbal Tea Tisane, 100 Count",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "Made with one of the oldest herbs known, chamomile flowers, this tisane offers a pleasant and aromatic experience with a velvety mouthfeel.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Classic-Chamomile_87f64695-95df-4ef2-8509-662085bf0579.jpg?v=1724648397",
-    "productUrl": "https://www.vahdamteas.com/products/classic-chamomile-herbal-tea-100-tea-bags",
-    "priceUsd": 19.99,
-    "tags": [
-      "better-sleep",
-      "bfcm_teas",
-      "caffeine-free",
-      "chamomile",
-      "floral",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "herbal-teas",
-      "otp",
-      "taurus",
-      "tea-bags"
-    ],
-    "productType": "Herbal Teas | Tea Bags",
-    "shopifyId": 6539563663403,
-    "createdAt": "2021-03-02T04:26:24-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Ginger Herbal Tea Tisane, 100 Count",
@@ -2408,7 +49,1433 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 4479547244587,
     "createdAt": "2020-06-19T04:40:48-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Turmeric Ashwagandha Herbal Tea Tisane, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A calming blend of turmeric and ashwagandha, offering a warm, flavourful tea experience in convenient, caffeine-free tea bags.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-32_1.jpg?v=1749649669",
+    "productUrl": "https://www.vahdamteas.com/products/turmeric-ashwagandha-herbal-tea-100-tea-bags",
+    "priceUsd": 19.99,
+    "tags": [
+      "bfcm_teas",
+      "caffeine-free",
+      "DOD-2023",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "herbal-teas",
+      "otp",
+      "root-chakra",
+      "stress-relief",
+      "tea-bags",
+      "turmeric",
+      "turmeric-tea-bags",
+      "vegetal"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 6583653793835,
+    "createdAt": "2021-06-11T03:55:15-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Turmeric Ashwagandha Herbal Tea, 18 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A caffeine-free blend of Indian turmeric, ashwagandha, and spices for a warm, flavorful sip anytime.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/71HLsO3kemL._SL1500_ec7c577f-c9d1-4e50-b7ff-c22db6affe6a.jpg?v=1721739707",
+    "productUrl": "https://www.vahdamteas.com/products/turmeric-ashwagandha",
+    "priceUsd": 7.19,
+    "tags": [
+      "herbal-teas",
+      "tea-bags",
+      "turmeric-tea-bags"
+    ],
+    "productType": "Herbs & Spices",
+    "shopifyId": 7260157509675,
+    "createdAt": "2024-07-23T09:00:59-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Turmeric Ashwagandha Instant Mix, 3.53 oz",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A blend of turmeric and ashwagandha in a convenient powder form - smooth, aromatic, and easy to enjoy any time of day.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Ashwagandha_Front.jpg?v=1749474159",
+    "productUrl": "https://www.vahdamteas.com/products/turmeric-ashwagandha-instant-mix",
+    "priceUsd": 11.99,
+    "tags": [
+      "best-sellers",
+      "bfcm_Lattes",
+      "caffeine-free",
+      "GADS Shopping Brand",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "instant",
+      "mothers-day-sale-2023",
+      "root-chakra",
+      "turmeric-lattes",
+      "turmeric-tea-bags",
+      "Valentines 2023"
+    ],
+    "productType": "Instant | Lattes",
+    "shopifyId": 1819001094187,
+    "createdAt": "2019-06-25T04:50:39-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Cosmos Tea Cup (250ml)",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Make your tea time a celestial experience with our elegant Cosmos tea cups. Double-walled with zero condensation, these cups are royalty! \n \nEvery time you purchase a VAHDAM® India product, 1% of the revenue goes towards the education of our farmers’ children under the social initiative, ‘TEAch Me.’",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/products/WhiteBG7432.jpg?v=1652361841",
+    "productUrl": "https://www.vahdamteas.com/products/cosmos-teacup-250-ml",
+    "priceUsd": 14.99,
+    "tags": [
+      "cup",
+      "Drinkware",
+      "glass",
+      "glassware",
+      "growaov-collection",
+      "no-cup-holder",
+      "otp"
+    ],
+    "productType": "Accessories | Glass",
+    "shopifyId": 6584595021867,
+    "createdAt": "2021-06-14T09:30:23-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "2025 Castleton Classic Darjeeling Second Flush Black Tea DJ 354",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A wonderfully mellow golden summer black tea made from pure China bushes at the world-famous Castleton Tea Estate, replete with characteristic fruity notes and soft floral hues.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Copy_of_castleton-half_11zon_d5872785-939e-486e-9018-feca5a2c94ca.jpg?v=1753778672",
+    "productUrl": "https://www.vahdamteas.com/products/castleton-classic-darjeeling-second-flush-black-tea-dj-354",
+    "priceUsd": 19.99,
+    "tags": [
+      "2024",
+      "black-teas",
+      "darjeeling",
+      "discount_quantity2023",
+      "first flush",
+      "floral",
+      "grocery",
+      "growaov-collection",
+      "medium-caffeine",
+      "other_estates",
+      "otp",
+      "second flush 2024",
+      "single-estate"
+    ],
+    "productType": "Single Estate",
+    "shopifyId": 7427851780139,
+    "createdAt": "2025-07-29T04:41:25-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "2025 Castleton Moonlight Darjeeling Second Flush Black Tea DJ 373",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "One of the most sought-after teas, this Moonlight tea from the iconic Castleton Tea Estate is as elegant as it is exquisite, produced only in extremely limited quantities, making every cup a true rarity.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Castleton_lic_leaf.jpg?v=1753781670",
+    "productUrl": "https://www.vahdamteas.com/products/2025-castleton-moonlight-darjeeling-second-flush-black-tea-dj-342",
+    "priceUsd": 27.99,
+    "tags": [
+      "black-teas",
+      "single-estate"
+    ],
+    "productType": "Single Estate",
+    "shopifyId": 7427860529195,
+    "createdAt": "2025-07-29T04:47:46-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "2025 Margaret's Hope Premium Darjeeling Second Flush Black Tea  DJ 331",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A wonderfully mellow and smooth summer tea made from pure China bushes at the iconic Margaret’s Hope Tea Estate, offering typical fruity notes in a mid-bodied, vibrant cup.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Margaret_s_Hope_Classic_half_11zon.jpg?v=1751615873",
+    "productUrl": "https://www.vahdamteas.com/products/2025-margarets-hope-premium-darjeeling-second-flush-black-tea-dj-331",
+    "priceUsd": 19.99,
+    "tags": [
+      "2024",
+      "black-teas",
+      "darjeeling",
+      "floral",
+      "grocery",
+      "growaov-collection",
+      "loose-leaf",
+      "medium-caffeine",
+      "otp",
+      "second-flush",
+      "single-estate"
+    ],
+    "productType": "Single Estate",
+    "shopifyId": 7408434544683,
+    "createdAt": "2025-07-04T03:19:10-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "2025 Jungpana Muscatel Darjeeling Second Flush Black Tea DJ 120",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A rare muscatel tea with amazing fruity notes, harvested during the peak of summer from the legendary, vintage Jungpana Tea Estate in Darjeeling.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Jungpana_2nd_flush-1.jpg?v=1752048803",
+    "productUrl": "https://www.vahdamteas.com/products/2025-jungpana-muscatel-darjeeling-second-flush-black-tea-dj-120",
+    "priceUsd": 19.99,
+    "tags": [
+      "2024",
+      "black-teas",
+      "floral",
+      "grocery",
+      "growaov-collection",
+      "loose-leaf",
+      "medium-caffeine",
+      "otp",
+      "second-flush",
+      "single-estate"
+    ],
+    "productType": "Single Estate",
+    "shopifyId": 7510434775083,
+    "createdAt": "2025-08-25T04:46:50-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "2025 Giddapahar Classic Darjeeling Second Flush Black Tea DJ 74",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A bright and rounded tea with Muscatel depth, harvested at the height of summer from the heritage Giddapahar Tea Estate in Darjeeling.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/giddapahar-half_11zon_76e7ebb7-51cb-4e58-bd6b-521cefb6a198.jpg?v=1751616311",
+    "productUrl": "https://www.vahdamteas.com/products/2025-giddapahar-classic-darjeeling-second-flush-black-tea-dj-74",
+    "priceUsd": 29.99,
+    "tags": [
+      "2024",
+      "black-teas",
+      "darjeeling",
+      "first flush",
+      "floral",
+      "grocery",
+      "growaov-collection",
+      "loose-leaf",
+      "medium-caffeine",
+      "other_estates",
+      "otp",
+      "second flush 2024",
+      "second-flush",
+      "single-estate"
+    ],
+    "productType": "Single Estate",
+    "shopifyId": 7404092817451,
+    "createdAt": "2025-06-26T08:33:58-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "2025 Okayti Classic Darjeeling Second Flush Black Tea DJ 73",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Mellow and smooth summer flush tea with pleasant astringency and sweetness, plus delightful fruity and woody notes from an estate once favoured by royalty.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Okayti_Premium_Darjeeling_Second_Flush_Black_Tea_leaf-liquor_206b643f-a6ea-4d24-ba59-86d727bf84e3.jpg?v=1752748573",
+    "productUrl": "https://www.vahdamteas.com/products/okayti-classic-darjeeling-second-flush-black-tea-dj-73",
+    "priceUsd": 17.99,
+    "tags": [
+      "2024",
+      "black-teas",
+      "floral",
+      "grocery",
+      "growaov-collection",
+      "loose-leaf",
+      "medium-caffeine",
+      "otp",
+      "second-flush",
+      "single-estate"
+    ],
+    "productType": "Single Estate",
+    "shopifyId": 7426802352171,
+    "createdAt": "2025-07-28T05:11:24-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Himalayan Green Tea, 12 oz",
+    "brandName": "Vahdam Teas",
+    "teaType": "green",
+    "description": "A pure, fresh Green tea from the Himalayan region blessed with the right amount of anti-oxidants.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Himalayan_green_tea_f953d287-3e7a-4973-9957-5e6e8bd22130.jpg?v=1724678892",
+    "productUrl": "https://www.vahdamteas.com/products/himalayan-green-tea-loose-leaf-12oz",
+    "priceUsd": 24.99,
+    "tags": [
+      "DOD-2023",
+      "green-teas",
+      "GreenTea23",
+      "grocery",
+      "growaov-collection",
+      "loose-leaf",
+      "loose-leaf-green-tea",
+      "medium-caffeine",
+      "mothers-day-sale-2023",
+      "otp",
+      "vegetal",
+      "weight-management"
+    ],
+    "productType": "Green Teas | Loose Leaf",
+    "shopifyId": 4478396530731,
+    "createdAt": "2020-06-18T04:57:28-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "India's Original Masala Chai Tea, 12 oz",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A best selling traditional Indian blend of black tea with a myriad of fresh and aromatic spices, offering a rich and flavorful experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Original_chai_ba5f65d4-7560-4423-b25a-c09cd33e7172.jpg?v=1724678893",
+    "productUrl": "https://www.vahdamteas.com/products/indias-original-masala-chai-tea-loose-leaf-12oz",
+    "priceUsd": 20.49,
+    "tags": [
+      "All teas",
+      "best-sellers",
+      "bestsellers-chai",
+      "bfcm_teas",
+      "bfcm_teas-chai-teas",
+      "chai-teas",
+      "cinnamon",
+      "DOD-2023",
+      "GADS Shopping Brand",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "hide_our_commitment",
+      "high-caffeine",
+      "immunity",
+      "loose-leaf",
+      "loose-leaf-chai-tea",
+      "otp",
+      "sacral-chakra",
+      "Valentines 2023",
+      "whats_inside"
+    ],
+    "productType": "Chai Teas | Loose Leaf",
+    "shopifyId": 4473857179691,
+    "createdAt": "2020-06-10T06:51:17-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "20 Teas Loose Leaf Sampler - 1 Pack",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A sampler set featuring 20 best selling loose leaf teas, each offering unique &amp; exquisite flavors, perfect for tea enthusiasts and gifting.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Tea_box_pack_of_1.jpg?v=1753092110",
+    "productUrl": "https://www.vahdamteas.com/products/world-of-tea-gift-sampler-20-teas-1-pack",
+    "priceUsd": 49.99,
+    "tags": [
+      "bfcm_teas",
+      "gifts_bestsellers",
+      "grocery",
+      "growaov-collection",
+      "otp",
+      "under_50usd",
+      "wizzy-ignore"
+    ],
+    "productType": "Loose Leaf | Samplers",
+    "shopifyId": 7419947057195,
+    "createdAt": "2025-07-18T10:27:06-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Black Tea Bundle, Set of 4",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Enjoy the rich character of our single  estate black teas, featuring delicate floral notes, bold muscatel flavors, and robust Assam blends. Each tea is carefully picked for a full-bodied, aromatic experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Black_Tea_1e1167a4-c91b-4880-a546-a32a7d294833.jpg?v=1741702193",
+    "productUrl": "https://www.vahdamteas.com/products/black-tea-bundle-set-of-4-unique-black-tea-blends",
+    "priceUsd": 59.19,
+    "tags": [],
+    "productType": "Virtual Bundles",
+    "shopifyId": 7325894475819,
+    "createdAt": "2025-02-12T07:29:05-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Green Tea Bundle, Set of 4",
+    "brandName": "Vahdam Teas",
+    "teaType": "green",
+    "description": "Enjoy a refreshing selection of green teas, perfectly balanced with vibrant flavors like mint, citrus, and ginger. Each blend offers a light, uplifting experience, delivering crisp, invigorating notes in every sip.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Green_tea_1.jpg?v=1741700876",
+    "productUrl": "https://www.vahdamteas.com/products/green-tea-bundle-set-of-4-unique-green-tea-blends",
+    "priceUsd": 74.19,
+    "tags": [
+      "green-teas"
+    ],
+    "productType": "Virtual Bundles",
+    "shopifyId": 7325893165099,
+    "createdAt": "2025-02-12T07:20:13-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Sprightly Spearmint Herbal Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "Experience a burst of cooling freshness with every sip of this herbal tea, infused with the invigorating essence of spearmint. Naturally caffeine free, it’s a soothing yet uplifting brew, perfect for relaxation and rejuvenation.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Spearmint_b6107af1-e511-4964-bc83-71aec484459d.jpg?v=1741335662",
+    "productUrl": "https://www.vahdamteas.com/products/sprightly-spearmint-herbal-tea-100-count",
+    "priceUsd": 21.99,
+    "tags": [
+      "herbal-teas"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 7320817270827,
+    "createdAt": "2025-01-31T04:37:43-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Herbal Tea Variety Pack, 36 Infusion Bags",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "Experience a curated selection of nature’s finest herbal infusions with this Variety Pack.  Each blend is caffeine-free and crafted for wellness, offering a unique balance of warmth, freshness, and soothing flavors—perfect for any time of day.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_1_f76251fe-ab19-48c7-a839-3411789fadbf.jpg?v=1741333534",
+    "productUrl": "https://www.vahdamteas.com/products/herbal-tea-variety-pack-36-teas",
+    "priceUsd": 17.99,
+    "tags": [
+      "gifts",
+      "herbal-teas"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 7320318410795,
+    "createdAt": "2025-01-30T09:05:39-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Hearty Hibiscus Herbal Tea 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "Enjoy the floral richness of hibiscus, complemented by the warmth of cinnamon and a refreshing hint of spearmint. This caffeine-free herbal infusion offers a smooth and uplifting experience, perfect for any time of day.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard1_01563e20-a406-4e1a-9a50-d947e3711951.jpg?v=1738315966",
+    "productUrl": "https://www.vahdamteas.com/products/hearty-hibiscus-herbal-tea-100-count",
+    "priceUsd": 21.99,
+    "tags": [
+      "herbal-teas"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 7320318050347,
+    "createdAt": "2025-01-30T09:00:18-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Zingy Ginger Herbal Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "Energize your senses with the bold, spicy warmth of ginger, perfectly blended with aromatic fennel and spearmint. This caffeine-free herbal infusion is a soothing yet invigorating cup, perfect for wellness and relaxation.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Zingy_Ginger.jpg?v=1741335707",
+    "productUrl": "https://www.vahdamteas.com/products/zingy-ginger-herbal-tea-100-count",
+    "priceUsd": 21.99,
+    "tags": [
+      "herbal-teas"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 7320316248107,
+    "createdAt": "2025-01-30T08:57:03-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Moringa Leaf Herbal Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "Enjoy the goodness of moringa, perfectly complemented by the refreshing notes of lemongrass and spearmint. This caffeine-free herbal tea is a smooth, nourishing infusion ideal for daily wellness and relaxation.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Moringa_Leaf.jpg?v=1741335745",
+    "productUrl": "https://www.vahdamteas.com/products/moringa-leaf-herbal-tea-100-count",
+    "priceUsd": 21.99,
+    "tags": [
+      "herbal-teas"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 7320313233451,
+    "createdAt": "2025-01-30T08:49:26-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Darjeeling Teas Sampler, 10 Teas",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A sampler of 10 premium Darjeeling teas, each offering unique &amp; exquisite flavors, perfect for exploring the diverse world of Darjeeling tea",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_5_00252a56-c3f9-4c4c-862b-28f490ae5efc.jpg?v=1721974363",
+    "productUrl": "https://www.vahdamteas.com/products/darjeeling-tea-sampler",
+    "priceUsd": 24.99,
+    "tags": [
+      "darjeeling",
+      "gifts",
+      "grocery",
+      "growaov-collection",
+      "loose-leaf",
+      "otp",
+      "samplers",
+      "valentines_2024"
+    ],
+    "productType": "Loose Leaf | Samplers",
+    "shopifyId": 1424901341227,
+    "createdAt": "2018-08-08T03:42:19-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Foldable Advent Calendar Tea Gift, 24 Loose Leaf Teas, 1.69 Oz, 48g",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A foldable advent calendar with 24 unique tea blends. The perfect gift to countdown to the holidays with a cozy brew each day!",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/advent_6921481a-4082-4fa2-957d-fa61459430fd.jpg?v=1726827011",
+    "productUrl": "https://www.vahdamteas.com/products/foldable-advent-calendar-tea-gift-24-teas-1-69-oz-48g-1",
+    "priceUsd": 18.49,
+    "tags": [
+      "advent",
+      "assortment-gift",
+      "bfcm_Advent Calendars",
+      "gifts",
+      "gifts_bestsellers",
+      "loose-leaf"
+    ],
+    "productType": "Gifts | Occasion",
+    "shopifyId": 7271460569131,
+    "createdAt": "2024-09-12T05:16:59-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Foldable Advent Calendar Tea Gift, 24 Teas, 1.69 Oz, 48g",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A foldable advent calendar with 24 unique tea blends. The perfect gift to countdown to the holidays with a cozy brew each day!",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/71CYPzDZN_L._SL1000_1.jpg?v=1764363676",
+    "productUrl": "https://www.vahdamteas.com/products/foldable-advent-calendar-tea-gift-24-teas-1-69-oz-48g",
+    "priceUsd": 9.99,
+    "tags": [
+      "gifts",
+      "tea-bags"
+    ],
+    "productType": "Gifts | Christmas",
+    "shopifyId": 7269352210475,
+    "createdAt": "2024-09-06T03:22:06-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Vanilla Spiced Masala Chai Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A delicious medley of our original chai enhanced with the vibrant, creamy flavor of vanilla, offering a rich and aromatic tea experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-51_c4330914-ab66-4360-9b98-5a52162ba4d9.jpg?v=1729775597",
+    "productUrl": "https://www.vahdamteas.com/products/vanilla-spiced-masala-chai-tea-100-tea-bags",
+    "priceUsd": 19.99,
+    "tags": [
+      "best-sellers",
+      "bestsellers-chai",
+      "bfcm_teas",
+      "chai-teas",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "high-caffeine",
+      "immunity",
+      "otp",
+      "sweet",
+      "tea-bags",
+      "Valentines 2023",
+      "vanilla"
+    ],
+    "productType": "Chai Teas | Tea Bags",
+    "shopifyId": 6707166380075,
+    "createdAt": "2021-12-13T03:39:24-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Christmas Tea Gift Set, 9 Individually Wrapped Tea Bags",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Enjoy a festive selection with our Christmas Tea Gift Set! Includes 9 individually wrapped tea bags in delightful seasonal flavors.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Vahdam_Oct2476_copy.jpg?v=1721991960",
+    "productUrl": "https://www.vahdamteas.com/products/christmas-tea-gift-set-9-individually-wrapped-tea-bags",
+    "priceUsd": 6.99,
+    "tags": [
+      "christmas-gifts",
+      "gifts",
+      "tea-bags"
+    ],
+    "productType": "Gifts | Christmas",
+    "shopifyId": 7260408905771,
+    "createdAt": "2024-07-24T06:50:54-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Turmeric Tea Variety Pack, 20 Teas",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A variety of finest Indian turmeric teas blended with premium ingredients including ginger, peppermint and chamomile. A perfect herbal tea starter pack.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/61EVgHBqkHL._SL1000.jpg?v=1721199820",
+    "productUrl": "https://www.vahdamteas.com/products/turmeric-tea-variety-pack",
+    "priceUsd": 7.99,
+    "tags": [
+      "herbal-teas",
+      "tea-bags",
+      "turmeric-tea-bags"
+    ],
+    "productType": "Herbs & Spices",
+    "shopifyId": 7257988628523,
+    "createdAt": "2024-07-17T03:04:30-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Turmeric Citrus Ginger Herbal Tea 18 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A perfect blend of the finest Indian turmeric with spicy ginger and refreshing bergamot flavor. A herbal blend to enjoy any time of the day.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/61xvhEZn6OL._SL1000.jpg?v=1721199436",
+    "productUrl": "https://www.vahdamteas.com/products/turmeric-citrus-ginger",
+    "priceUsd": 7.19,
+    "tags": [
+      "herbal-teas",
+      "tea-bags",
+      "turmeric-tea-bags"
+    ],
+    "productType": "Herbs & Spices",
+    "shopifyId": 7257986334763,
+    "createdAt": "2024-07-17T02:58:43-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Turmeric Ginger Herbal Tea 18 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "Experience a soothing blend of turmeric and ginger in this herbal tea, perfect for warming your soul and invigorating your senses.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/1_9f5a6254-50bb-4813-bf64-76469a514414.jpg?v=1721198986",
+    "productUrl": "https://www.vahdamteas.com/products/turmeric-ginger-herbal-tea",
+    "priceUsd": 6.39,
+    "tags": [
+      "herbal-teas",
+      "tea-bags",
+      "turmeric-tea-bags"
+    ],
+    "productType": "Herbs & Spices",
+    "shopifyId": 7257983057963,
+    "createdAt": "2024-07-17T02:50:30-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Classic Advent Calendar, Gift Set, 24 Teas",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A grand advent calendar featuring 24 exquisite loose leaf teas in tin caddies, perfect for welcoming Christmas with a new flavor each day.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/holiday-advent-calendar---1_fdf63fea-72c7-4578-999a-561ac23665ab.jpg?v=1721992034",
+    "productUrl": "https://www.vahdamteas.com/products/holiday-advent-calendar-24-teas",
+    "priceUsd": 42.99,
+    "tags": [
+      "advent",
+      "assortment-gift",
+      "bfcm_Advent Calendars",
+      "bfcm_bestsellers",
+      "christmas-gifts",
+      "gifts",
+      "gifts_bestsellers",
+      "growaov-collection",
+      "her-filter",
+      "Her_Teas",
+      "him-filter",
+      "loose-leaf",
+      "no-cup-holder",
+      "otp",
+      "upsell_"
+    ],
+    "productType": "Gifts | Christmas",
+    "shopifyId": 7153443307563,
+    "createdAt": "2023-09-29T09:01:37-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Lychee Rose Iced Tea | 26 Pitcher Tea Bags",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A refreshing blend of lychee and rose in convenient pitcher tea bags, offering a delightful iced tea perfect for enjoying in the summer.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Lychee-Rose-US-2.png?v=1721375298",
+    "productUrl": "https://www.vahdamteas.com/products/lychee-rose-iced-tea-bags",
+    "priceUsd": 17.49,
+    "tags": [
+      "2023",
+      "2023-Iced Tea",
+      "best-sellers",
+      "caffeine-free",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "iced-teas",
+      "iced-teas-2024",
+      "ICEDTEA23",
+      "otp",
+      "tea-bags",
+      "tea-bags-iced-tea"
+    ],
+    "productType": "Iced Teas | Tea Bags",
+    "shopifyId": 7104594804779,
+    "createdAt": "2023-05-09T02:51:41-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Butterfly Pea Flower Tea Herbal Tea Tisane, 1.76 oz",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A vibrant &amp; naturally blue herbal tea made from butterfly pea flowers, with a delicate, floral flavor &amp; mesmerizing color-changing properties.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Butterfly_Blue-Pea-Tea.jpg?v=1728391344",
+    "productUrl": "https://www.vahdamteas.com/products/butterfly-pea-flower-tea-loose-leaf",
+    "priceUsd": 6.99,
+    "tags": [
+      "herbal-teas",
+      "loose-leaf"
+    ],
+    "productType": "Herbal Teas | Loose leaf",
+    "shopifyId": 7098502348843,
+    "createdAt": "2023-04-25T05:47:45-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Butterfly Pea Flower Herbal Tea, 40 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A vibrant &amp; naturally blue herbal tea made from butterfly pea flowers, with a delicate, floral flavor &amp; mesmerizing color-changing properties.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Butterfly-Pea-Flower_40TB-Recovered_1.jpg?v=1724655895",
+    "productUrl": "https://www.vahdamteas.com/products/blue-pea-flower-herbal-tea-40-tea-bags",
+    "priceUsd": 7.99,
+    "tags": [
+      "herbal-teas",
+      "tea-bags"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 7098486816811,
+    "createdAt": "2023-04-25T03:45:27-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Assam Exotic Black Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Premium black whole leaf tea with golden tips from the famed second flush harvest of Assam, offering a rich and robust flavor experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-40_6f44ad6f-2506-43d4-bb79-ea48b81129ce.jpg?v=1729775144",
+    "productUrl": "https://www.vahdamteas.com/products/assam-exotic-black-tea-100-tea-bags",
+    "priceUsd": 19.99,
+    "tags": [
+      "assam",
+      "bfcm_teas-black-teas",
+      "black-teas",
+      "grocery",
+      "growaov-collection",
+      "high-caffeine",
+      "otp",
+      "sugar-control",
+      "tea-bags"
+    ],
+    "productType": "Black Teas | Tea Bags",
+    "shopifyId": 4479521947691,
+    "createdAt": "2020-06-19T03:32:59-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Applause CTC Assam Summer Black Tea, 340gm /12oz",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "The epitome of strength and briskness, pure second flush CTC teas from the best estates in Upper Assam, made during the peak of summer.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Applause_ctc_03.jpg?v=1724217425",
+    "productUrl": "https://www.vahdamteas.com/products/applause-ctc-assam-black-tea-12oz",
+    "priceUsd": 17.99,
+    "tags": [
+      "assam",
+      "bfcm_teas",
+      "bfcm_teas-black-teas",
+      "black-teas",
+      "energy",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "high-caffeine",
+      "loose-leaf",
+      "otp"
+    ],
+    "productType": "Black Teas | Loose Leaf",
+    "shopifyId": 4478633607211,
+    "createdAt": "2020-06-18T12:24:19-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Assam Exotic Second Flush Black Tea, 3.53 oz",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Premium Black Whole Leaf tea with golden tips from the famed second flush harvest of Assam, offering a rich and robust flavor experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Assam-Exotic-Balck-Tea.jpg?v=1721992323",
+    "productUrl": "https://www.vahdamteas.com/products/assam-exotic-second-flush-black-tea",
+    "priceUsd": 11.99,
+    "tags": [
+      "assam",
+      "bfcm_teas-black-teas",
+      "black-teas",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "high-caffeine",
+      "loose-leaf",
+      "nutty",
+      "otp"
+    ],
+    "productType": "Black Teas | Loose leaf",
+    "shopifyId": 1463516299307,
+    "createdAt": "2018-08-31T03:02:06-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Drift Mug for Teacher, Insulated, 10.1 Oz, 300ml",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A dual vacuum-insulated, splash-proof mug, making it the perfect gift for your teacher, ensuring their drink stays hot or cold longer.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Teacher_mug_362c8247-4cc4-429a-8595-05413ecc02d2.jpg?v=1730103235",
+    "productUrl": "https://www.vahdamteas.com/products/drift-mug-insulated-teacher",
+    "priceUsd": 17.99,
+    "tags": [
+      "accessories",
+      "black-color",
+      "Drinkware",
+      "growaov-collection",
+      "insulated",
+      "mint blue-color",
+      "no-cup-holder",
+      "otp",
+      "under_30usd"
+    ],
+    "productType": "Accessories | Insulated",
+    "shopifyId": 7015300726827,
+    "createdAt": "2022-11-09T06:43:03-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Imperial Loose Leaf Tea Maker with Infuser",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "An innovative tea maker with a built-in infuser, BPA-free, &amp; featuring patented technology for a perfect brew, making preparation effortless.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/White_BG7475.jpg?v=1721371918",
+    "productUrl": "https://www.vahdamteas.com/products/imperial-tea-maker",
+    "priceUsd": 24.99,
+    "tags": [
+      "accessories",
+      "best-sellers",
+      "bfcm_Drinkware",
+      "glass",
+      "glassware",
+      "growaov-collection",
+      "no-cup-holder",
+      "otp",
+      "teawares",
+      "under_30usd"
+    ],
+    "productType": "Accessories | Glass",
+    "shopifyId": 6840668454955,
+    "createdAt": "2022-05-04T06:01:28-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Jasmine Green Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "green",
+    "description": "Among the most favorite green tea combinations with real jasmine flowers, offering a soft, crisp, &amp; aromatic cup for a delightful experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-47_73e96785-b657-4fbe-92e7-8f6c6e4303a4.jpg?v=1729775398",
+    "productUrl": "https://www.vahdamteas.com/products/jasmine-green-tea",
+    "priceUsd": 26.99,
+    "tags": [
+      "DOD-2023",
+      "floral",
+      "green-teas",
+      "grocery",
+      "growaov-collection",
+      "medium-caffeine",
+      "otp",
+      "stress-relief",
+      "tea-bags"
+    ],
+    "productType": "Green Teas | Tea Bags",
+    "shopifyId": 6835293618219,
+    "createdAt": "2022-04-26T09:11:18-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Himalayan Green Tea, 3.53 oz",
+    "brandName": "Vahdam Teas",
+    "teaType": "green",
+    "description": "From the misty slopes of the Himalayas, these pure green teas are smooth, sweet, &amp; succulent, offering a delightful &amp; refreshing experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Himalayan_7d2918f3-c616-4f17-bc1b-b3b4a2e10a7a.jpg?v=1721906120",
+    "productUrl": "https://www.vahdamteas.com/products/himalayan-green-tea-3-53oz",
+    "priceUsd": 14.99,
+    "tags": [
+      "bfcm_teas",
+      "green-teas",
+      "GreenTea23",
+      "grocery",
+      "growaov-collection",
+      "loose-leaf",
+      "medium-caffeine",
+      "otp",
+      "vegetal",
+      "virgo",
+      "weight-management"
+    ],
+    "productType": "Green Teas | Loose Leaf",
+    "shopifyId": 6837558640683,
+    "createdAt": "2022-04-29T03:31:16-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "World of Tea Gift Sampler, 20 Teas",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A sampler set featuring 20 best selling loose leaf teas, each offering unique &amp; exquisite flavors, perfect for tea enthusiasts and gifting.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_8.jpg?v=1752152577",
+    "productUrl": "https://www.vahdamteas.com/products/world-of-tea-sampler-20-teas",
+    "priceUsd": 29.99,
+    "tags": [
+      "bfcm_teas",
+      "gifts",
+      "gifts_bestsellers",
+      "grocery",
+      "growaov-collection",
+      "loose-leaf",
+      "otp",
+      "samplers",
+      "under_50usd",
+      "valentines_2024"
+    ],
+    "productType": "Loose Leaf | Samplers",
+    "shopifyId": 6837467349035,
+    "createdAt": "2022-04-29T01:50:33-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Assorted Tea Bags Sampler, (40 Pyramid Tea Bags) 20 Flavors",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A sampler featuring 2 bags each of 20 classic tea variants offering unique &amp; exquisite flavors, perfect for tea lovers &amp; special occasions.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Assorted-Samler-20-Varinats_front.png?v=1764363413",
+    "productUrl": "https://www.vahdamteas.com/products/assorted-tea-bags-sampler-2-x-20-variants",
+    "priceUsd": 19.99,
+    "tags": [
+      "best-sellers",
+      "bfcm_bestsellers",
+      "bfcm_Gifts",
+      "gifts",
+      "grocery",
+      "growaov-collection",
+      "her-filter",
+      "Her_Teas",
+      "otp",
+      "samplers",
+      "tea-bags",
+      "tea-bags-gifts",
+      "Valentines 2023",
+      "valentines_2024"
+    ],
+    "productType": "Tea Bags | Samplers",
+    "shopifyId": 6835316523051,
+    "createdAt": "2022-04-26T10:04:24-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Darjeeling Premium First Flush Black Tea, 3.53 oz",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "The first leaves of Spring, fresh and vibrant with a dazzling sheen have a delicate and decadent flavor, and a gently sweet mouthfeel.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Darjeeling_Premium_01_66d4db6c-6ed6-4544-a5f1-675522f99b04.jpg?v=1721992476",
+    "productUrl": "https://www.vahdamteas.com/products/darjeeling-premium-first-flush-black-tea",
+    "priceUsd": 13.49,
+    "tags": [
+      "bfcm_teas-black-teas",
+      "black-teas",
+      "darjeeling",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "loose-leaf",
+      "medium-caffeine",
+      "otp"
+    ],
+    "productType": "Black Teas | Loose leaf",
+    "shopifyId": 1463518101547,
+    "createdAt": "2018-08-31T03:09:26-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Sweet Cinnamon Masala Chai Tea, 30 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Sweetly spiced traditional indian chai enhanced with extra cinnamon for a lingering flavor, offering a warm and delightful experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/30_Tb_Mock_up_Non_Organic-11.jpg?v=1729838323",
+    "productUrl": "https://www.vahdamteas.com/products/sweet-cinnamon-masala-chai-30-tea-bags",
+    "priceUsd": 13.49,
+    "tags": [
+      "chai-teas",
+      "cinnamon",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "medium-caffeine",
+      "otp",
+      "sacral-chakra",
+      "tea-bags",
+      "weight-management"
+    ],
+    "productType": "Chai Teas | Tea Bags",
+    "shopifyId": 1577085796395,
+    "createdAt": "2018-11-10T06:05:30-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Decaf Himalayan Green Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "green",
+    "description": "Specially developed for caffeine-sensitive drinkers, enjoy this excellent decaffeinated himalayan green tea, perfect for any time of day.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-44_4da2a754-9042-435d-910c-12fbe3702a51.jpg?v=1729775330",
+    "productUrl": "https://www.vahdamteas.com/products/decaf-himalayan-green-tea",
+    "priceUsd": 19.99,
+    "tags": [
+      "caffeine-free",
+      "green-teas",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "otp",
+      "tea-bags",
+      "weight-management"
+    ],
+    "productType": "Green Teas | Tea Bags",
+    "shopifyId": 6596708139051,
+    "createdAt": "2021-07-23T10:15:49-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Mint Melody Green Tea, 30 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "green",
+    "description": "Spirited and sprightly medley of excellent green tea with carefully selected spearmint and peppermint leaves, offering a refreshing cup.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/30_Tb_Mock_up_Non_Organic-10.jpg?v=1729838238",
+    "productUrl": "https://www.vahdamteas.com/products/mint-melody-green-tea-30-tea-bags",
+    "priceUsd": 13.49,
+    "tags": [
+      "detox",
+      "green-teas",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "low-caffeine",
+      "mint",
+      "minty",
+      "otp",
+      "tea-bags"
+    ],
+    "productType": "Green Teas | Tea Bags",
+    "shopifyId": 1577083535403,
+    "createdAt": "2018-11-10T05:58:09-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Lopchu Golden Orange Pekoe Darjeeling Second Flush Black Tea, 3.53 Oz",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A rare second flush Darjeeling tea from the renowned Lopchu Estate, featuring rich muscatel notes, hints of honey, caramel, and a subtle smokiness. Brews into a smooth, amber liquor with a refined, lingering finish.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Lopchu_1.jpg?v=1721999151",
+    "productUrl": "https://www.vahdamteas.com/products/lopchu-golden-orange-pekoe-darjeeling-second-flush-black-tea",
+    "priceUsd": 16.19,
+    "tags": [
+      "2021",
+      "black-teas",
+      "darjeeling",
+      "fruity",
+      "grocery",
+      "growaov-collection",
+      "loose-leaf",
+      "lopchu",
+      "medium-caffeine",
+      "otp"
+    ],
+    "productType": "Single Estate",
+    "shopifyId": 6597389484075,
+    "createdAt": "2021-07-26T02:41:46-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Perfect Serve Spoon",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Stainless steel tea spoon designed for perfect measurement with each brew, ensuring a consistent and delightful tea experience every time.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/products/WhiteBG7497.jpg?v=1658814785",
+    "productUrl": "https://www.vahdamteas.com/products/perfect-serve-tea-spoon",
+    "priceUsd": 9.99,
+    "tags": [
+      "accessories",
+      "growaov-collection",
+      "no-cup-holder",
+      "otp",
+      "stainless-steel",
+      "teawares"
+    ],
+    "productType": "Accessories | Stainless Steel",
+    "shopifyId": 1425187405867,
+    "createdAt": "2018-08-08T09:09:17-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Signature Private Reserve Gift Set, 24 Teas",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A curated gift set of 24 premium loose leaf teas, each offering a unique and delightful flavor, perfect for tea lovers and special occasions.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Vahdam_White_Background_30th_September6099_copy_04df7428-b4d5-4218-82a7-75bd6982a68f.jpg?v=1750072071",
+    "productUrl": "https://www.vahdamteas.com/products/tea-assortment-private-reserve-24-teas",
+    "priceUsd": 47.99,
+    "tags": [
+      "advent",
+      "best-sellers",
+      "bfcm_Advent Calendars",
+      "christmas-gifts",
+      "gifts",
+      "gifts_bestsellers",
+      "grocery",
+      "growaov-collection",
+      "her-filter",
+      "him-filter",
+      "loose-leaf",
+      "otp",
+      "private-reserve-gifts",
+      "under_50usd",
+      "Valentines 2023"
+    ],
+    "productType": "Gifts | Private Reserve",
+    "shopifyId": 6630237437995,
+    "createdAt": "2021-10-20T02:21:04-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Classic Tea Sampler, Gift Set, 24 Teas",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Sampler featuring 24 classic tea variants, each offering unique &amp; exquisite flavors, perfect for your loved ones!",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Assorted_Tea_sampler_0273fc8a-abe4-4fd7-9f2f-c6575401f7c9.jpg?v=1764363324",
+    "productUrl": "https://www.vahdamteas.com/products/assorted-tea-bags-sampler-24-variants",
+    "priceUsd": 10.47,
+    "tags": [
+      "best-sellers",
+      "bfcm_bestsellers",
+      "bfcm_Gifts",
+      "gifts",
+      "gifts_bestsellers",
+      "grocery",
+      "growaov-collection",
+      "her-filter",
+      "Her_Teas",
+      "otp",
+      "samplers",
+      "tea-bags",
+      "tea-bags-gifts",
+      "under_30usd",
+      "Valentines 2023",
+      "valentines_2024"
+    ],
+    "productType": "Gifts | Tea Bags",
+    "shopifyId": 6614800662571,
+    "createdAt": "2021-09-14T07:59:10-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Herbal Tea Assortment, Gift Set, 36 Teas",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A delightful gift set featuring 6 unique herbal tea flavors, each in 6 pyramid tea bags, offering a refreshing and varied tea experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/USA_herbal_tea_6x6_first_image.jpg?v=1731073084",
+    "productUrl": "https://www.vahdamteas.com/products/assorted-herbal-tea-sampler-6-x-6",
+    "priceUsd": 15.99,
+    "tags": [
+      "bfcm_Gifts",
+      "bfcm_teas-herbal-teas",
+      "gifts",
+      "grocery",
+      "growaov-collection",
+      "her-filter",
+      "Her_Teas",
+      "Her_Trending",
+      "herbal-teas",
+      "him-filter",
+      "mothers-day-sale-2023",
+      "otp",
+      "samplers",
+      "tea-bags",
+      "tea-bags-gifts",
+      "under-30",
+      "Valentines 2023",
+      "valentines_2024"
+    ],
+    "productType": "Gifts | Tea Bags",
+    "shopifyId": 6614806102059,
+    "createdAt": "2021-09-14T08:28:29-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Green Tea Assortment, Gift Set, 36 Teas",
+    "brandName": "Vahdam Teas",
+    "teaType": "green",
+    "description": "A delightful gift set featuring 6 unique green tea flavors, each in 6 pyramid tea bags, offering a refreshing and varied tea experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/B0B524WNZN.MAIN.jpg?v=1721805614",
+    "productUrl": "https://www.vahdamteas.com/products/assorted-green-tea-sampler-6-x-6-variants",
+    "priceUsd": 12.99,
+    "tags": [
+      "best-sellers",
+      "bfcm_Gifts",
+      "bfcm_teas-Green-Teas",
+      "gifts",
+      "green-teas",
+      "grocery",
+      "growaov-collection",
+      "her-filter",
+      "Her_Teas",
+      "him-filter",
+      "mothers-day-sale-2023",
+      "otp",
+      "samplers",
+      "tea-bags",
+      "tea-bags-gifts",
+      "under-30",
+      "Valentines 2023",
+      "valentines_2024"
+    ],
+    "productType": "Gifts | Tea Bags",
+    "shopifyId": 6614804004907,
+    "createdAt": "2021-09-14T08:17:02-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Chai Tea Assortment, Gift Set, 36 Teas",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "A delightful gift set featuring 6 unique chai tea blends, each offering rich &amp; aromatic flavors, perfect for a warm &amp; spiced tea experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Chai_tea_Assortment_c55edc93-c7ad-49ec-aa6b-b635c2478b2d.jpg?v=1732606425",
+    "productUrl": "https://www.vahdamteas.com/products/assorted-chai-teas-6-x-6-variants",
+    "priceUsd": 17.99,
+    "tags": [
+      "best-sellers",
+      "bfcm_Gifts",
+      "bfcm_teas-chai-teas",
+      "chai-teas",
+      "gifts",
+      "grocery",
+      "growaov-collection",
+      "her-filter",
+      "Her_Bestsellers",
+      "Her_Teas",
+      "him-filter",
+      "otp",
+      "samplers",
+      "tea-bags",
+      "tea-bags-gifts",
+      "under-30",
+      "under_30usd",
+      "Valentines 2023",
+      "valentines_2024"
+    ],
+    "productType": "Gifts | Tea Bags",
+    "shopifyId": 6614808592427,
+    "createdAt": "2021-09-14T08:44:22-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Vedic Kadha Herbal Tea Tisane, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A time-honored Indian herbal blend with impeccable and unique flavors, offering a traditional 'kadha' in a delightful tea experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-37_03b23dfc-07f3-4534-bdb7-0b39b1165871.jpg?v=1729837321",
+    "productUrl": "https://www.vahdamteas.com/products/vedic-kadha-herbal-tea-100-teabags",
+    "priceUsd": 19.99,
+    "tags": [
+      "caffeine-free",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "herbal-teas",
+      "immunity",
+      "otp",
+      "tea-bags"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 6561764507691,
+    "createdAt": "2021-04-22T00:55:31-04:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Turmeric Chamomile Herbal Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A tisane of turmeric and chamomile, infused with herbs and spices, delivers a warm and aromatic tea experience, suitable for any time of the day.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Turmeric_Chamomile.jpg?v=1724662783",
+    "productUrl": "https://www.vahdamteas.com/products/turmeric-chamomile-herbal-tea-100-tea-bags",
+    "priceUsd": 22.99,
+    "tags": [
+      "best-sellers",
+      "better-sleep",
+      "caffeine-free",
+      "chamomile",
+      "floral",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "herbal-teas",
+      "otp",
+      "tea-bags",
+      "tea-bags-herbal-tea",
+      "turmeric",
+      "turmeric-tea-bags"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 6539541938219,
+    "createdAt": "2021-03-02T03:43:53-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Pure Mint Herbal Tea Tisane, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A widely loved mint tisane of the finest spearmint and peppermint leaves, offering refreshing coolness and a wholesome tea experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Pure-Mint_979b4d75-1c51-48ec-bc59-db7cdf1767ca.jpg?v=1731601205",
+    "productUrl": "https://www.vahdamteas.com/products/pure-mint-herbal-tea-100-tea-bags",
+    "priceUsd": 19.99,
+    "tags": [
+      "bfcm_teas",
+      "caffeine-free",
+      "detox",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "herbal-teas",
+      "mint",
+      "minty",
+      "otp",
+      "pisces",
+      "tea-bags",
+      "throat-chakra"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 6539580964907,
+    "createdAt": "2021-03-02T04:55:55-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Lemon Ginger Green Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "green",
+    "description": "An all-time favorite combination of zesty lemon &amp; zingy ginger with the goodness of green tea, offering a refreshing &amp; vibrant experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-48_4e09ef55-d2e6-4df9-82ab-b44064875633.jpg?v=1729775468",
+    "productUrl": "https://www.vahdamteas.com/products/lemon-ginger-green-tea-100-tea-bags",
+    "priceUsd": 24.99,
+    "tags": [
+      "best-sellers",
+      "crown-chakra",
+      "digestion",
+      "fruity",
+      "gemini",
+      "ginger",
+      "green-teas",
+      "GreenTea23",
+      "grocery",
+      "growaov-collection",
+      "medium-caffeine",
+      "otp",
+      "tea-bags"
+    ],
+    "productType": "Green Teas | Tea Bags",
+    "shopifyId": 6539537023019,
+    "createdAt": "2021-03-02T03:14:18-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Hibiscus Rose Herbal Tea Tisane, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "A luscious floral tisane of hibiscus and rose, perfectly harmonized with aromatic spices, offering a delightful and fragrant tea experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/hibuscus-Rose_115cea17-eff6-41ff-8ed5-84a851d570ad.jpg?v=1729774083",
+    "productUrl": "https://www.vahdamteas.com/products/hibiscus-rose-herbal-tea-100-tea-bags",
+    "priceUsd": 24.99,
+    "tags": [
+      "aries",
+      "best-sellers",
+      "bfcm_bestsellers",
+      "bfcm_teas",
+      "bfcm_teas-herbal-teas",
+      "caffeine-free",
+      "chamomile",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "heart-chakra",
+      "herbal-teas",
+      "immunity",
+      "otp",
+      "Restrict_US",
+      "sweet",
+      "tea-bags",
+      "tea-bags-herbal-tea"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 6539589943339,
+    "createdAt": "2021-03-02T05:07:54-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Ginger Mint Green Tea, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "green",
+    "description": "An uplifting blend of green tea from the best tea estates in India, with zesty ginger and mint. Enjoy a crisp but refreshing cup of tea.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/ginger-Mint_220bd51c-dbe7-46b9-9301-c94ec8c1baf7.jpg?v=1729772345",
+    "productUrl": "https://www.vahdamteas.com/products/ginger-mint-green-tea-100-tea-bags",
+    "priceUsd": 22.99,
+    "tags": [
+      "capricorn",
+      "detox",
+      "ginger",
+      "green-teas",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "medium-caffeine",
+      "mint",
+      "minty",
+      "otp",
+      "solar-plexus-chakra",
+      "tea-bags",
+      "throat-chakra"
+    ],
+    "productType": "Green Teas | Tea Bags",
+    "shopifyId": 6539530666027,
+    "createdAt": "2021-03-02T02:43:34-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
+  },
+  {
+    "name": "Classic Chamomile Herbal Tea Tisane, 100 Count",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "Made with one of the oldest herbs known, chamomile flowers, this tisane offers a pleasant and aromatic experience with a velvety mouthfeel.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Classic-Chamomile_87f64695-95df-4ef2-8509-662085bf0579.jpg?v=1724648397",
+    "productUrl": "https://www.vahdamteas.com/products/classic-chamomile-herbal-tea-100-tea-bags",
+    "priceUsd": 24.99,
+    "tags": [
+      "better-sleep",
+      "bfcm_teas",
+      "caffeine-free",
+      "chamomile",
+      "floral",
+      "grocery",
+      "growaov-collection",
+      "growaov-subscription",
+      "herbal-teas",
+      "otp",
+      "taurus",
+      "tea-bags"
+    ],
+    "productType": "Herbal Teas | Tea Bags",
+    "shopifyId": 6539563663403,
+    "createdAt": "2021-03-02T04:26:24-05:00",
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Weekend in London, Gift Set, 9 Teas",
@@ -2417,7 +1484,7 @@
     "description": "A curated gift set inspired by London, featuring 9 unique teas, each offering refined flavors, perfect for a delightful tea experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Weekend_in_London_effd85b4-6967-4f4a-abb2-1f3c00e0bc4d.jpg?v=1750072132",
     "productUrl": "https://www.vahdamteas.com/products/weekend-in-london-9-tin-caddy",
-    "priceUsd": 24.49,
+    "priceUsd": 24.99,
     "tags": [
       "bfcm_Gifts",
       "gifts",
@@ -2436,33 +1503,7 @@
     "productType": "Gifts | Travel",
     "shopifyId": 4831738855467,
     "createdAt": "2020-10-18T16:59:40-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Weekend in New York, Gift Set, 9 Teas",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "A gift set inspired by New York City, featuring 9 unique teas, each offering distinctive flavors, perfect for a delightful tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Weekend_in_New_york_city.jpg?v=1726463181",
-    "productUrl": "https://www.vahdamteas.com/products/weekend-in-new-york-city-9-tin-caddy",
-    "priceUsd": 27.99,
-    "tags": [
-      "assortment-gift",
-      "gifts",
-      "grocery",
-      "growaov-collection",
-      "him-filter",
-      "loose-leaf",
-      "otp",
-      "travel-gifts",
-      "under_30usd",
-      "Valentines 2023",
-      "valentines_2024"
-    ],
-    "productType": "Gifts | Travel",
-    "shopifyId": 4831725584427,
-    "createdAt": "2020-10-18T15:39:01-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Christmas Holiday Breakfast Gift Set, 9 Teas",
@@ -2490,7 +1531,7 @@
     "productType": "Gifts | Christmas",
     "shopifyId": 4831748030507,
     "createdAt": "2020-10-18T18:05:09-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Chai Tea Assortment Gift Set, 12 Teas",
@@ -2499,7 +1540,7 @@
     "description": "A curated gift set featuring 12 unique chai tea blends, each offering rich, spicy and aromatic flavors, perfect for gifting and sampling.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/products/chai-tea-assortment---1.jpg?v=1668002984",
     "productUrl": "https://www.vahdamteas.com/products/chai-tea-assortment-gift-set-12-tin-caddy",
-    "priceUsd": 44.99,
+    "priceUsd": 32.99,
     "tags": [
       "best-sellers",
       "bfcm_Gifts",
@@ -2520,7 +1561,7 @@
     "productType": "Gifts | Carnival",
     "shopifyId": 4831749111851,
     "createdAt": "2020-10-18T18:13:25-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Assam Gold Second Flush Black Tea, 3.53 oz",
@@ -2546,7 +1587,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 1397814100011,
     "createdAt": "2018-07-25T02:47:33-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Ginger Herbal Tea Tisane, 30 Count",
@@ -2579,7 +1620,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 1838890680363,
     "createdAt": "2019-07-24T05:02:13-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "High Mountain Oolong Tea, 100 Count",
@@ -2588,7 +1629,7 @@
     "description": "Light and floral-fruity oolong tea from top plantations in the Himalayas renowned for subtle flavor. A well-rounded and medium-bodied cup.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-46_930d7834-d8dd-4170-a49e-5ae0ccdac27d.jpg?v=1729775367",
     "productUrl": "https://www.vahdamteas.com/products/high-mountain-oolong-tea-100-tea-bags",
-    "priceUsd": 22.49,
+    "priceUsd": 22.99,
     "tags": [
       "grocery",
       "growaov-collection",
@@ -2603,7 +1644,7 @@
     "productType": "Oolong Teas | Tea Bags",
     "shopifyId": 4479550783531,
     "createdAt": "2020-06-19T04:56:47-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Moringa Herbal Tea Tisane, 100 Count",
@@ -2630,7 +1671,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 4479548850219,
     "createdAt": "2020-06-19T04:49:00-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Spiced Herbal Tea Tisane, 100 Count",
@@ -2661,7 +1702,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 4479544590379,
     "createdAt": "2020-06-19T04:33:55-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Cardamom Masala Chai Tea, 100 Count",
@@ -2686,7 +1727,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 4479529484331,
     "createdAt": "2020-06-19T03:59:46-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "India's Original Masala Chai Tea, 100 Count",
@@ -2713,7 +1754,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 4479528632363,
     "createdAt": "2020-06-19T03:56:20-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Mint Melody Green Tea, 100 Count",
@@ -2722,7 +1763,7 @@
     "description": "Spirited and sprightly medley of excellent green tea with carefully selected spearmint and peppermint leaves, offering a refreshing cup.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Mint-Melody_5a446b6e-947d-4e22-915a-be2249af19c6.jpg?v=1729774453",
     "productUrl": "https://www.vahdamteas.com/products/mint-melody-green-tea-100-tea-bags",
-    "priceUsd": 25.19,
+    "priceUsd": 22.99,
     "tags": [
       "detox",
       "green-teas",
@@ -2739,7 +1780,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 4479524732971,
     "createdAt": "2020-06-19T03:45:08-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Chamomile Mint Citrus Green Tea, 100 Count",
@@ -2767,7 +1808,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 4479523848235,
     "createdAt": "2020-06-19T03:41:28-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Organic Himalayan Green Tea, 100 Count",
@@ -2776,7 +1817,7 @@
     "description": "From the misty slopes of the Himalayas, these pure green teas are smooth, sweet, &amp; succulent, offering a delightful &amp; refreshing experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-54_68119a09-e877-453b-8ba8-6a176ee8364c.jpg?v=1729775067",
     "productUrl": "https://www.vahdamteas.com/products/himalayan-green-tea-100-tea-bags",
-    "priceUsd": 17.49,
+    "priceUsd": 19.99,
     "tags": [
       "best-sellers",
       "bfcm_teas",
@@ -2798,7 +1839,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 4479522603051,
     "createdAt": "2020-06-19T03:35:39-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Darjeeling Spring Black Tea, 100 Count",
@@ -2807,7 +1848,7 @@
     "description": "The first leaves of spring, fresh, young, and vibrant, offering a delicate and decadent flavor, perfect for a refreshing tea experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-42_da0148da-fe49-4f07-9b57-bf598b492775.jpg?v=1729775248",
     "productUrl": "https://www.vahdamteas.com/products/darjeeling-first-flush-black-tea-100-tea-bags",
-    "priceUsd": 26.99,
+    "priceUsd": 29.99,
     "tags": [
       "black-teas",
       "floral",
@@ -2822,7 +1863,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 4479520931883,
     "createdAt": "2020-06-19T03:29:10-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Ginger Latte Mix, 3.53 oz",
@@ -2854,7 +1895,7 @@
     "productType": "Instant | Lattes",
     "shopifyId": 1819001487403,
     "createdAt": "2019-06-25T04:52:43-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Earl Grey Black Tea, 100 Count",
@@ -2863,7 +1904,7 @@
     "description": "A smooth black tea with accentuated citrusy notes &amp; a fragrant aroma, offering a refreshing &amp; aromatic tea experience perfect for any time.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/100_TB-45_3e940970-3616-4cc7-8811-c5ba556631a6.jpg?v=1729774985",
     "productUrl": "https://www.vahdamteas.com/products/earl-grey-black-tea-bags-100-pyramid-tea-bags",
-    "priceUsd": 17.49,
+    "priceUsd": 19.99,
     "tags": [
       "best-sellers",
       "bfcm_teas-black-teas",
@@ -2882,7 +1923,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 4479510675499,
     "createdAt": "2020-06-19T02:38:48-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Darjeeling Summer Black Tea, 100 Count",
@@ -2909,7 +1950,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 4479510151211,
     "createdAt": "2020-06-19T02:35:53-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "English Breakfast Black Tea, 100 Count",
@@ -2918,7 +1959,7 @@
     "description": "A premium blend of robust, full-bodied black teas sourced fresh from the region of Assam in India. Best served with a dash of milk &amp; sugar.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/non_organic_100tb_1.jpg?v=1746514669",
     "productUrl": "https://www.vahdamteas.com/products/maharaja-classic-english-breakfast-black-tea-100-tea-bags",
-    "priceUsd": 18.99,
+    "priceUsd": 19.99,
     "tags": [
       "bfcm_teas",
       "black-teas",
@@ -2935,7 +1976,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 4479507169323,
     "createdAt": "2020-06-19T02:18:35-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Pure Matcha Green Tea Powder, Culinary Grade, 3.53 oz",
@@ -2944,7 +1985,7 @@
     "description": "100% pure culinary grade ground Matcha Green Tea sourced directly from Shizuoka, Japan. A vibrant, earthy cup with a rich mouthfeel.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_1_9.jpg?v=1756905360",
     "productUrl": "https://www.vahdamteas.com/products/authentic-japanese-matcha-green-tea-powder-3-53",
-    "priceUsd": 15.99,
+    "priceUsd": 12.99,
     "tags": [
       "grocery",
       "growaov-collection",
@@ -2958,7 +1999,7 @@
     "productType": "Instant | Matcha",
     "shopifyId": 4478730895403,
     "createdAt": "2020-06-18T13:22:33-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Daily Assam Black Tea, 12 oz",
@@ -2967,7 +2008,7 @@
     "description": "A best selling master blend of premium whole leaf black teas harvested in the summer season in Assam, with a rich and malty flavor.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Daily-Assam.jpg?v=1724678892",
     "productUrl": "https://www.vahdamteas.com/products/daily-assam-black-tea-12oz",
-    "priceUsd": 19.99,
+    "priceUsd": 17.79,
     "tags": [
       "assam",
       "best-sellers",
@@ -2989,7 +2030,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478468292651,
     "createdAt": "2020-06-18T09:55:21-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Daily Darjeeling Second Flush Black Tea, 12 oz",
@@ -3012,7 +2053,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478460231723,
     "createdAt": "2020-06-18T09:15:41-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Darjeeling Premium First Flush Black Tea, 12 oz",
@@ -3021,7 +2062,7 @@
     "description": "The first leaves of Spring, fresh and vibrant with a dazzling sheen have a delicate and decadent flavor, and a gently sweet mouthfeel.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Darjeeling_Premium_01.jpg?v=1721110455",
     "productUrl": "https://www.vahdamteas.com/products/darjeeling-premium-first-flush-black-loose-leaf-tea-12oz",
-    "priceUsd": 29.99,
+    "priceUsd": 30.99,
     "tags": [
       "black-teas",
       "grocery",
@@ -3034,7 +2075,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478458527787,
     "createdAt": "2020-06-18T09:08:27-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Unitea - Blend of Darjeeling & Assam Black Tea, 12 oz",
@@ -3043,7 +2084,7 @@
     "description": "A delicate balance of flavor and briskness curated by our master blender with select Darjeeling and Assam teas, offering a perfect blend.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Unitea_Darjeeling_Assam_01_d6015a67-56b5-411f-b662-aeb326209ff2.jpg?v=1724217620",
     "productUrl": "https://www.vahdamteas.com/products/unitea-blend-of-darjeeling-assam-black-tea-12oz",
-    "priceUsd": 17.99,
+    "priceUsd": 22.99,
     "tags": [
       "black-teas",
       "grocery",
@@ -3055,30 +2096,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478448762923,
     "createdAt": "2020-06-18T08:35:41-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Nilgiri Breakfast Black Tea, 12 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Exotic &amp; outstanding Black tea from the high Nilgiri mountains, mellow &amp; full-bodied, perfect accompaniment to your breakfast each morning.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Nilgiri_Breakfast_01.jpg?v=1724217287",
-    "productUrl": "https://www.vahdamteas.com/products/nilgiri-breakfast-black-tea-12oz",
-    "priceUsd": 21.99,
-    "tags": [
-      "black-teas",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "loose-leaf",
-      "medium-caffeine",
-      "nilgiri",
-      "otp"
-    ],
-    "productType": "Black Teas | Loose Leaf",
-    "shopifyId": 4478445027371,
-    "createdAt": "2020-06-18T08:26:39-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Earl Grey Black Tea, 12 oz",
@@ -3087,7 +2105,7 @@
     "description": "A smooth black tea with accentuated citrusy notes &amp; a fragrant aroma, offering a refreshing &amp; aromatic tea experience perfect for any time.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Earl_Grey_Black_Tea_92078c83-7ecb-4537-8e2c-dc363a6c3540.jpg?v=1724678892",
     "productUrl": "https://www.vahdamteas.com/products/earl-grey-citrus-black-tea-12-oz",
-    "priceUsd": 22.99,
+    "priceUsd": 20.49,
     "tags": [
       "best-sellers",
       "bfcm_teas",
@@ -3109,7 +2127,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478439817259,
     "createdAt": "2020-06-18T08:16:17-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "English Breakfast Black Tea, 12 oz",
@@ -3141,7 +2159,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478438932523,
     "createdAt": "2020-06-18T08:12:41-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "High Mountain Oolong Tea, 12 oz",
@@ -3150,7 +2168,7 @@
     "description": "Light and floral-fruity Oolong tea from top plantations in the Himalayas renowned for subtle flavor. A well-rounded and medium-bodied cup.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/High-Mountain-1_339915dc-53ed-4932-9d5d-45810324e21c.jpg?v=1726487161",
     "productUrl": "https://www.vahdamteas.com/products/high-mountain-darjeeling-second-flush-oolong-tea-12oz",
-    "priceUsd": 22.39,
+    "priceUsd": 24.99,
     "tags": [
       "grocery",
       "growaov-collection",
@@ -3165,7 +2183,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 4478427660331,
     "createdAt": "2020-06-18T07:31:41-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Chocolate Vanilla Herbal Tea Tisane, 3.53 oz",
@@ -3174,7 +2192,7 @@
     "description": "An ingenious in-house tisane of South African Rooibos with indulgent chocolate &amp; vanilla flavors, offering a rich and delightful experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Chocolate-Vanilla_7ba8a363-8920-415e-a96a-64f2a54084a4.jpg?v=1726479756",
     "productUrl": "https://www.vahdamteas.com/products/chocolate-vanilla-herbal-tea-tisane",
-    "priceUsd": 17.99,
+    "priceUsd": 12.99,
     "tags": [
       "caffeine-free",
       "DOD-2023",
@@ -3191,7 +2209,7 @@
     "productType": "Herbal Teas | Loose leaf",
     "shopifyId": 4465397628971,
     "createdAt": "2020-05-29T10:01:59-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Bloom, Tea Gift Set, 12 Teas",
@@ -3200,7 +2218,7 @@
     "description": "Indulge in a play of flavors with this exquisite gift set of 12 of our most alluring in-house blends.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Bloom_1_a09ba949-53e3-4bf2-a945-18feb46f96b4.jpg?v=1731063841",
     "productUrl": "https://www.vahdamteas.com/products/bloom-tea-gift-set-12-tin-caddy",
-    "priceUsd": 44.99,
+    "priceUsd": 37.99,
     "tags": [
       "assortment-gift",
       "bfcm_Gifts",
@@ -3224,7 +2242,7 @@
     "productType": "Gifts | Classic",
     "shopifyId": 1836828524587,
     "createdAt": "2019-07-19T08:16:44-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Matcha Green Tea Powder, 1.76 oz",
@@ -3233,7 +2251,7 @@
     "description": "A unique blend of turmeric and premium matcha green tea powder, offering a vibrant and flavorful experience, perfect for any time of day.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Turmeric_Matcha.jpg?v=1721975316",
     "productUrl": "https://www.vahdamteas.com/products/turmeric-matcha-green-tea",
-    "priceUsd": 10.79,
+    "priceUsd": 6.99,
     "tags": [
       "caffeine-free",
       "grocery",
@@ -3248,16 +2266,16 @@
     "productType": "Instant | Matcha",
     "shopifyId": 1712090447915,
     "createdAt": "2019-02-26T08:32:37-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
-    "name": "Vanilla Matcha Green Tea Powder, 1.76 oz",
+    "name": "Vanilla Matcha Green Tea Powder, 3.53 oz",
     "brandName": "Vahdam Teas",
     "teaType": "green",
     "description": "Pure culinary grade Japanese Matcha green tea powder enhanced with the flavor of vanilla, offering a rich and creamy matcha experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_1_copy_2.jpg?v=1756905284",
     "productUrl": "https://www.vahdamteas.com/products/vanilla-matcha-green-tea",
-    "priceUsd": 11.99,
+    "priceUsd": 7.99,
     "tags": [
       "grocery",
       "growaov-collection",
@@ -3273,31 +2291,7 @@
     "productType": "Instant | Matcha",
     "shopifyId": 1712087236651,
     "createdAt": "2019-02-26T08:26:41-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Sparkle, Perfect Tea Maker, 16.9 Oz, 500ml",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Borosilicate glass mug with an inbuilt steel infuser for convenient and quick brews, offering a seamless and stylish tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/White_BG7480.jpg?v=1721371970",
-    "productUrl": "https://www.vahdamteas.com/products/sparkle-glass-teacup",
-    "priceUsd": 24.99,
-    "tags": [
-      "accessories",
-      "bfcm_Drinkware",
-      "Drinkware",
-      "glass",
-      "glassware",
-      "growaov-collection",
-      "no-cup-holder",
-      "otp",
-      "teawares"
-    ],
-    "productType": "Accessories | Glass",
-    "shopifyId": 1715399295019,
-    "createdAt": "2019-03-01T00:45:39-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Founder's Select Gift Set, 36 Teas",
@@ -3306,7 +2300,7 @@
     "description": "A curated gift set featuring 6 premium tea variants, each in 6 pyramid tea bags, selected by the founder, offering a unique and exquisite tea experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/61WhMV4SR6L._SL1000_8e5d6578-bf56-4e68-8261-b42fb485bf6a.jpg?v=1750071762",
     "productUrl": "https://www.vahdamteas.com/products/founders-select-6-x-6-tb",
-    "priceUsd": 14.99,
+    "priceUsd": 9.99,
     "tags": [
       "assortment-gift",
       "best-sellers",
@@ -3328,7 +2322,7 @@
     "productType": "Gifts | Tea Bags",
     "shopifyId": 1657616171051,
     "createdAt": "2019-01-02T02:15:57-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Chai Tea Private Reserve Gift Set, 3 Teas",
@@ -3359,7 +2353,7 @@
     "productType": "Gifts | Private Reserve",
     "shopifyId": 1617213882411,
     "createdAt": "2018-11-29T06:37:34-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Assorted Selection Tea Sampler, 15 Variants",
@@ -3385,7 +2379,7 @@
     "productType": "Tea Bags | Samplers",
     "shopifyId": 1583283437611,
     "createdAt": "2018-11-14T03:31:07-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Assorted Chai Teas Sampler, 5 Variants",
@@ -3394,7 +2388,7 @@
     "description": "A sampler set featuring 5 unique chai tea blends, each offering rich and aromatic flavors, perfect for exploring the diverse world of chai.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Assorted-Chai-Tea-EU.png?v=1729236764",
     "productUrl": "https://www.vahdamteas.com/products/chai-tea-assortment-tea-bags",
-    "priceUsd": 13.49,
+    "priceUsd": 9.69,
     "tags": [
       "assorted-tea-bags",
       "best-sellers",
@@ -3413,7 +2407,7 @@
     "productType": "Tea Bags | Samplers",
     "shopifyId": 1583275376683,
     "createdAt": "2018-11-14T03:12:28-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Assorted Green Teas Sampler, 5 Variants",
@@ -3438,7 +2432,7 @@
     "productType": "Tea Bags | Samplers",
     "shopifyId": 1583241035819,
     "createdAt": "2018-11-14T02:42:19-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Assorted Black Teas Sampler, 5 Variants",
@@ -3463,7 +2457,7 @@
     "productType": "Tea Bags | Samplers",
     "shopifyId": 1583238840363,
     "createdAt": "2018-11-14T02:40:47-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Chamomile Mint Citrus Green Tea, 30 Count",
@@ -3491,7 +2485,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 1577085141035,
     "createdAt": "2018-11-10T06:02:10-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Earl Grey Black Tea, 30 Count",
@@ -3516,7 +2510,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 1577084157995,
     "createdAt": "2018-11-10T06:00:00-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Vanilla Spiced Masala Chai Tea, 30 Count",
@@ -3540,7 +2534,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 1577083797547,
     "createdAt": "2018-11-10T05:59:01-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Cardamom Masala Chai Tea, 30 Count",
@@ -3564,7 +2558,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 1577083338795,
     "createdAt": "2018-11-10T05:57:03-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Imperial Himalayan White Tea Bags, 15 Count",
@@ -3588,7 +2582,7 @@
     "productType": "White Teas | Tea Bags",
     "shopifyId": 1577082650667,
     "createdAt": "2018-11-10T05:53:51-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "High Mountain Oolong Tea, 30 Count",
@@ -3613,7 +2607,7 @@
     "productType": "Oolong Teas | Tea Bags",
     "shopifyId": 1577082290219,
     "createdAt": "2018-11-10T05:51:27-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "English Breakfast Black Tea, 30 Count",
@@ -3638,7 +2632,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 1577082060843,
     "createdAt": "2018-11-10T05:50:06-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "India's Original Masala Chai Tea, 30 Count",
@@ -3664,7 +2658,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 1577081962539,
     "createdAt": "2018-11-10T05:48:58-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Organic Himalayan Green Tea, 30 Count",
@@ -3691,7 +2685,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 1577081667627,
     "createdAt": "2018-11-10T05:47:29-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Spiced Herbal Tea Tisane, 30 Count",
@@ -3721,7 +2715,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 1577080815659,
     "createdAt": "2018-11-10T05:44:05-05:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Vanilla Spiced Masala Chai Tea, 3.53 oz",
@@ -3748,7 +2742,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1466269171755,
     "createdAt": "2018-09-01T05:14:20-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Blush, Tea Gift Set, 3 Teas",
@@ -3757,7 +2751,7 @@
     "description": "An elegant gift set featuring 3 premium loose leaf teas, each offering unique and refined flavors, perfect for special occasions and tea lovers.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Vahdam_White_Background_30th_September6093_copy.jpg?v=1729227549",
     "productUrl": "https://www.vahdamteas.com/products/blush-assorted-teas-gift-box-3-teas",
-    "priceUsd": 16.99,
+    "priceUsd": 10.99,
     "tags": [
       "assortment-gift",
       "best-sellers",
@@ -3781,7 +2775,7 @@
     "productType": "Gifts | Classic",
     "shopifyId": 1426383372331,
     "createdAt": "2018-08-09T03:25:49-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Glow, Tea Gift Set, 6 Teas",
@@ -3815,29 +2809,7 @@
     "productType": "Gifts | Classic",
     "shopifyId": 1426382258219,
     "createdAt": "2018-08-09T03:23:47-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Stainless Steel Classic Tea Infuser, 3.9 Inches",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Durable stainless steel tea infuser designed for perfect brewing, providing ample space for tea leaves to unfurl &amp; release their full flavor.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/products/154A9825.jpg?v=1653653580",
-    "productUrl": "https://www.vahdamteas.com/products/classic-tea-infuser",
-    "priceUsd": 14.99,
-    "tags": [
-      "accessories",
-      "growaov-collection",
-      "infuser",
-      "no-cup-holder",
-      "otp",
-      "stainless-steel",
-      "teawares"
-    ],
-    "productType": "Accessories | Stainless Steel",
-    "shopifyId": 1425198055467,
-    "createdAt": "2018-08-08T09:17:09-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Chai Tea Loose Leaf Gift Sampler, 10 Teas",
@@ -3862,14 +2834,14 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424843931691,
     "createdAt": "2018-08-08T03:19:55-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
-    "name": "White Teas Gift Sampler, 5 Teas",
+    "name": "White Teas Gift Sampler, 4 Teas",
     "brandName": "Vahdam Teas",
     "teaType": "white",
-    "description": "A curated gift set of 5 premium white teas, each offering delicate &amp; exquisite flavors, perfect for a refined &amp; delightful tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_2_1.jpg?v=1738066265",
+    "description": "A curated gift set of 4 premium white teas, each offering delicate &amp; exquisite flavors, perfect for a refined &amp; delightful tea experience.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/71qdFHwzwOL._SL1500.jpg?v=1770359606",
     "productUrl": "https://www.vahdamteas.com/products/white-tea-sampler",
     "priceUsd": 19.99,
     "tags": [
@@ -3885,7 +2857,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424818470955,
     "createdAt": "2018-08-08T03:13:06-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Oolong Tea Loose Leaf Sampler, 5 Teas",
@@ -3908,7 +2880,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424758702123,
     "createdAt": "2018-08-08T02:58:20-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Green Tea Loose Leaf Sampler, 10 Teas",
@@ -3933,7 +2905,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424682549291,
     "createdAt": "2018-08-08T02:39:20-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Black Tea Loose Leaf Sampler, 10 Teas",
@@ -3959,7 +2931,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424640933931,
     "createdAt": "2018-08-08T02:24:40-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Assorted Tea Loose Leaf Sampler, 10 Teas",
@@ -3968,7 +2940,7 @@
     "description": "A sampler featuring 10 loose leaf teas, each offering distinct &amp; delightful flavors, perfect for exploring &amp; enjoying a variety of teas.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Artboard_6_5b2e4b3e-57ab-4973-b87a-87b4a9d8c5e1.jpg?v=1721974416",
     "productUrl": "https://www.vahdamteas.com/products/assorted-loose-leaf-sampler-10-teas",
-    "priceUsd": 22.49,
+    "priceUsd": 17.99,
     "tags": [
       "bfcm_Gifts",
       "gifts",
@@ -3983,7 +2955,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1421564510251,
     "createdAt": "2018-08-06T08:27:50-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Ginger Masala Chai Tea, 3.53 oz",
@@ -3992,7 +2964,7 @@
     "description": "A rich, traditional blend of black tea with indulgent spices &amp; an added layer of ginger for an extra zing, offering a vibrant tea experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Ginger-Chai_1.jpg?v=1724320845",
     "productUrl": "https://www.vahdamteas.com/products/ginger-masala-chai-tea",
-    "priceUsd": 16.19,
+    "priceUsd": 12.99,
     "tags": [
       "bestsellers-chai",
       "chai-teas",
@@ -4009,7 +2981,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1421394870315,
     "createdAt": "2018-08-06T04:41:54-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Earl Grey Masala Chai Tea, 3.53 oz",
@@ -4018,7 +2990,7 @@
     "description": "A unique combination of black tea with the citrusy flavor of bergamot fruit and a zingy piquancy of spices. A balanced and mellow cup.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Earlgrey_3e011b17-59a0-4464-8144-43eab1a6ac15.jpg?v=1721370492",
     "productUrl": "https://www.vahdamteas.com/products/earl-grey-masala-chai-tea",
-    "priceUsd": 16.19,
+    "priceUsd": 12.99,
     "tags": [
       "bfcm_teas",
       "chai-teas",
@@ -4036,7 +3008,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1421388742699,
     "createdAt": "2018-08-06T04:32:02-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Maharani Chai Spiced Oolong Tea, 3.53 oz",
@@ -4045,7 +3017,7 @@
     "description": "An indulgent combination of medium-bodied and mellow Oolong tea, livened with cheerful spices, offering a rich and flavorful experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Maharani-Chai.jpg?v=1721370697",
     "productUrl": "https://www.vahdamteas.com/products/maharani-chai-spiced-oolong-tea",
-    "priceUsd": 16.19,
+    "priceUsd": 11.49,
     "tags": [
       "chai-teas",
       "grocery",
@@ -4061,7 +3033,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1421382844459,
     "createdAt": "2018-08-06T04:19:33-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Double Spice Masala Chai Tea, 3.53 oz",
@@ -4070,7 +3042,7 @@
     "description": "Strong, bold black tea with an added punch of spices for an energetic and spicy cup of Chai, offering a vibrant and flavourful experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Double-Spiced.jpg?v=1726478767",
     "productUrl": "https://www.vahdamteas.com/products/double-spice-masala-chai-tea",
-    "priceUsd": 18.99,
+    "priceUsd": 12.99,
     "tags": [
       "All teas",
       "best-sellers",
@@ -4093,7 +3065,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1421378420779,
     "createdAt": "2018-08-06T04:13:19-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Imperial Earl Grey White Tea, 1.76 oz",
@@ -4118,7 +3090,7 @@
     "productType": "White Teas | Loose leaf",
     "shopifyId": 1421365149739,
     "createdAt": "2018-08-06T03:33:46-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Silver Needle Sparkle White Tea, 1.76 oz",
@@ -4141,7 +3113,7 @@
     "productType": "White Teas | Loose leaf",
     "shopifyId": 1421363183659,
     "createdAt": "2018-08-06T03:28:51-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Blue Mountain Nilgiri White Tea, 1.76 oz",
@@ -4167,7 +3139,7 @@
     "productType": "White Teas | Loose leaf",
     "shopifyId": 1421342375979,
     "createdAt": "2018-08-06T03:08:04-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Imperial Himalayan White Tea, 1.76 oz",
@@ -4194,7 +3166,7 @@
     "productType": "White Teas | Loose leaf",
     "shopifyId": 1421329891371,
     "createdAt": "2018-08-06T02:52:15-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Maharaja Earl Grey Oolong Tea, 3.53 oz",
@@ -4203,7 +3175,7 @@
     "description": "An in-house curation of smooth Oolong teas enhanced with perfectly balanced bergamot notes. A perfectly citrusy cup with a smooth mouthfeel.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Maharaja.jpg?v=1721371248",
     "productUrl": "https://www.vahdamteas.com/products/maharaja-earl-grey-oolong-tea",
-    "priceUsd": 13.59,
+    "priceUsd": 14.99,
     "tags": [
       "energy",
       "fruity",
@@ -4218,7 +3190,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 1421326516267,
     "createdAt": "2018-08-06T02:46:39-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "White Mountain Darjeeling Oolong Tea, 1.76 oz",
@@ -4242,7 +3214,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 1421320224811,
     "createdAt": "2018-08-06T02:36:01-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Blue Mountain Nilgiri Oolong Tea, 1.76 oz",
@@ -4267,7 +3239,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 1421314261035,
     "createdAt": "2018-08-06T02:22:13-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "High Mountain Oolong Tea, 3.53 oz",
@@ -4294,32 +3266,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 1409835794475,
     "createdAt": "2018-07-30T04:19:22-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Citrus Ginger Herbal Tea Tisane, 3.53 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "herbal",
-    "description": "A mollifying tisane of pure ginger goodness enhanced with the citrusy lightness of orange and mint, offering a refreshing experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Citrus-Ginger_589a282c-f67a-4ffb-aab0-7779cca1ebb3.jpg?v=1726479352",
-    "productUrl": "https://www.vahdamteas.com/products/citrus-ginger-herbal-tea-tisane",
-    "priceUsd": 15.19,
-    "tags": [
-      "caffeine-free",
-      "digestion",
-      "fruity",
-      "ginger",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "herbal-teas",
-      "loose-leaf",
-      "otp"
-    ],
-    "productType": "Herbal Teas | Loose leaf",
-    "shopifyId": 1409758691371,
-    "createdAt": "2018-07-30T02:41:37-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Saffron Herbal Tea Tisane, 3.53 oz",
@@ -4346,7 +3293,7 @@
     "productType": "Herbal Teas | Loose leaf",
     "shopifyId": 1409755283499,
     "createdAt": "2018-07-30T02:36:57-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Spiced Herbal Tea Tisane, 3.53 oz",
@@ -4375,7 +3322,7 @@
     "productType": "Herbal Teas | Loose leaf",
     "shopifyId": 1409746010155,
     "createdAt": "2018-07-30T02:20:45-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Turmeric Ginger Herbal Tea Tisane, 3.53 oz",
@@ -4384,7 +3331,7 @@
     "description": "A timeless Indian combination of pure golden turmeric chunks and zesty ginger, offering a warm and invigorating herbal tea experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/B0757VW95S.MAIN_4fff80cf-7292-4c2f-9646-4373f47a911a.jpg?v=1751882900",
     "productUrl": "https://www.vahdamteas.com/products/turmeric-ginger-herbal-tea-tisane",
-    "priceUsd": 15.99,
+    "priceUsd": 11.49,
     "tags": [
       "best-sellers",
       "bfcm_bestsellers",
@@ -4410,36 +3357,7 @@
     "productType": "Herbal Teas | Loose leaf",
     "shopifyId": 1409743749163,
     "createdAt": "2018-07-30T02:15:21-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
-  },
-  {
-    "name": "Chamomile Mint Citrus Green Tea, 3.53 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "green",
-    "description": "A delightful Green tea herbal infusion combining chamomile, mint, and citrus, offering a serene yet refreshingly citrusy tea experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Chamomile-Mint-Citrus.jpg?v=1721368632",
-    "productUrl": "https://www.vahdamteas.com/products/chamomile-mint-citrus-green-tea",
-    "priceUsd": 16.99,
-    "tags": [
-      "better-sleep",
-      "chamomile",
-      "green-teas",
-      "GreenTea23",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "loose-leaf",
-      "low-caffeine",
-      "mint",
-      "minty",
-      "otp",
-      "solar-plexus-chakra",
-      "throat-chakra"
-    ],
-    "productType": "Green Teas | Loose Leaf",
-    "shopifyId": 1402498220075,
-    "createdAt": "2018-07-26T09:35:17-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Mint Melody Green Tea, 3.53 oz",
@@ -4448,7 +3366,7 @@
     "description": "Spirited and sprightly medley of excellent green tea with carefully selected spearmint and peppermint leaves, offering a refreshing cup.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Mint-Melody_19eb413a-b41d-494c-b078-2c836b28afc2.jpg?v=1721368969",
     "productUrl": "https://www.vahdamteas.com/products/mint-melody-green-tea",
-    "priceUsd": 19.79,
+    "priceUsd": 11.49,
     "tags": [
       "detox",
       "green-teas",
@@ -4464,7 +3382,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 1402358726699,
     "createdAt": "2018-07-26T09:07:28-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Ginger Mint Green Tea, 3.53 oz",
@@ -4473,7 +3391,7 @@
     "description": "An uplifting blend of green tea from the best tea estates in India, with zesty ginger and mint. Enjoy a crisp but refreshing cup of tea.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Ginger-Mint.jpg?v=1721368766",
     "productUrl": "https://www.vahdamteas.com/products/sparkling-ginger-mint-green-tea",
-    "priceUsd": 15.99,
+    "priceUsd": 12.99,
     "tags": [
       "capricorn",
       "detox",
@@ -4490,7 +3408,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 1402284015659,
     "createdAt": "2018-07-26T08:50:01-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Earl Grey Citrus Green Tea, 3.53 oz",
@@ -4499,7 +3417,7 @@
     "description": "The perfect balance of choicest Green tea with just the right amount of bergamot notes that delivers a citrusy, mellow and light-bodied cup.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Earl-grey.jpg?v=1721368730",
     "productUrl": "https://www.vahdamteas.com/products/earl-grey-darjeeling-green-tea",
-    "priceUsd": 17.99,
+    "priceUsd": 12.99,
     "tags": [
       "fruity",
       "green-teas",
@@ -4514,7 +3432,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 1402263502891,
     "createdAt": "2018-07-26T08:33:14-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Himalayan Pearls Green Tea, 3.53 oz",
@@ -4523,7 +3441,7 @@
     "description": "Tightly rolled green leaves that unfurl to leisurely release their flavors and goodness, offering a smooth and refined tea experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Himalayan-pearls.jpg?v=1721368873",
     "productUrl": "https://www.vahdamteas.com/products/himalayan-pearls-green-tea",
-    "priceUsd": 15.29,
+    "priceUsd": 12.99,
     "tags": [
       "green-teas",
       "grocery",
@@ -4537,7 +3455,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 1401369624619,
     "createdAt": "2018-07-26T06:05:18-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Blooming Rose Black Tea, 3.53 oz",
@@ -4546,7 +3464,7 @@
     "description": "A speciality blend of premium Black tea with heavenly nuts, saffron, spices and rose petals. A light-bodied cup with a smooth mouthfeel.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Blooming_Rose_02.jpg?v=1721110079",
     "productUrl": "https://www.vahdamteas.com/products/blooming-rose-black-tea",
-    "priceUsd": 17.09,
+    "priceUsd": 13.99,
     "tags": [
       "bfcm_teas",
       "black-teas",
@@ -4561,7 +3479,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 1397902671915,
     "createdAt": "2018-07-25T05:07:12-04:00",
-    "updatedAt": "2026-02-03T16:23:31-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Himalayan Gold Black Tea, 3.53 oz",
@@ -4586,7 +3504,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 1397893988395,
     "createdAt": "2018-07-25T04:53:50-04:00",
-    "updatedAt": "2026-02-03T16:23:32-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Darjeeling Muscatel Imperial Black Tea, 3.53 oz",
@@ -4611,32 +3529,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 1397873705003,
     "createdAt": "2018-07-25T04:13:52-04:00",
-    "updatedAt": "2026-02-03T16:23:32-05:00"
-  },
-  {
-    "name": "Saffron Premium Masala Chai Tea, 3.53 oz",
-    "brandName": "Vahdam Teas",
-    "teaType": "black",
-    "description": "Golden sunrise in your cup with the heavenly aroma of premium saffron &amp; a subtle fragrance of spices, offering a rich and exotic experience.",
-    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Saffron-Chai.jpg?v=1721370791",
-    "productUrl": "https://www.vahdamteas.com/products/saffron-premium-masala-chai-tea",
-    "priceUsd": 16.19,
-    "tags": [
-      "chai-teas",
-      "energy",
-      "grocery",
-      "growaov-collection",
-      "growaov-subscription",
-      "high-caffeine",
-      "loose-leaf",
-      "loose-leaf-chai-tea",
-      "otp",
-      "spicy"
-    ],
-    "productType": "Chai Teas | Loose Leaf",
-    "shopifyId": 1396443447339,
-    "createdAt": "2018-07-24T05:16:58-04:00",
-    "updatedAt": "2026-02-03T16:23:32-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Kashmiri Kahwa Masala Chai Green Tea, 3.53 oz",
@@ -4662,7 +3555,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1396435288107,
     "createdAt": "2018-07-24T05:10:49-04:00",
-    "updatedAt": "2026-02-03T16:23:32-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Sweet Cinnamon Masala Chai Tea, 3.53 oz",
@@ -4691,7 +3584,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1396421623851,
     "createdAt": "2018-07-24T04:58:18-04:00",
-    "updatedAt": "2026-02-03T16:23:32-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "Cardamom Masala Chai Tea, 3.53 oz",
@@ -4700,7 +3593,7 @@
     "description": "Exquisitely crafted classic Indian Chai with extra cardamom for an enriched flavor experience, offering a widely loved warm &amp; aromatic cup.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Cardamom-Chai.jpg?v=1721370065",
     "productUrl": "https://www.vahdamteas.com/products/cardamon-masala-chai-tea",
-    "priceUsd": 14.39,
+    "priceUsd": 11.49,
     "tags": [
       "bfcm_teas",
       "bfcm_teas-chai-teas",
@@ -4718,7 +3611,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1396390395947,
     "createdAt": "2018-07-24T04:10:37-04:00",
-    "updatedAt": "2026-02-03T16:23:32-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   },
   {
     "name": "India's Original Masala Chai Tea, 3.53 oz",
@@ -4727,7 +3620,7 @@
     "description": "A best selling traditional Indian blend of black tea with a myriad of fresh and aromatic spices, offering a rich and flavorful experience.",
     "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Original-Chai-1.jpg?v=1721370743",
     "productUrl": "https://www.vahdamteas.com/products/indias-original-masala-chai-tea",
-    "priceUsd": 13.49,
+    "priceUsd": 9.99,
     "tags": [
       "chai-teas",
       "cinnamon",
@@ -4745,6 +3638,6 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1396348026923,
     "createdAt": "2018-07-24T03:46:47-04:00",
-    "updatedAt": "2026-02-03T16:23:32-05:00"
+    "updatedAt": "2026-02-24T20:19:53-05:00"
   }
 ]
