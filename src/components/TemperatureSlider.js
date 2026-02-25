@@ -21,9 +21,9 @@ export const TemperatureSlider = ({
   disabled = false,
 }) => {
   const { theme } = useTheme();
-  const sliderRef = useRef(null);
+  const trackRef = useRef(null);
+  const trackLeftX = useRef(0);
   const currentValue = useRef(value);
-  const grantPosition = useRef(0); // track position at touch start
 
   const clamp = (val) => Math.round(Math.min(maxTemp, Math.max(minTemp, val)));
 
@@ -42,14 +42,16 @@ export const TemperatureSlider = ({
       onMoveShouldSetPanResponder: () => !disabled,
       onPanResponderTerminationRequest: () => false, // prevent ScrollView from stealing
       onPanResponderGrant: (evt) => {
-        const x = evt.nativeEvent.locationX;
-        const newVal = positionToValue(x);
-        grantPosition.current = valueToPosition(newVal); // snapshot position at grant
-        currentValue.current = newVal;
-        onValueChange?.(newVal);
+        trackRef.current?.measure((_x, _y, _w, _h, pageX) => {
+          trackLeftX.current = pageX;
+          const x = evt.nativeEvent.pageX - pageX;
+          const newVal = positionToValue(x);
+          currentValue.current = newVal;
+          onValueChange?.(newVal);
+        });
       },
-      onPanResponderMove: (evt, gestureState) => {
-        const x = grantPosition.current + gestureState.dx;
+      onPanResponderMove: (evt) => {
+        const x = evt.nativeEvent.pageX - trackLeftX.current;
         const newVal = positionToValue(x);
         if (newVal !== currentValue.current) {
           currentValue.current = newVal;
@@ -72,11 +74,10 @@ export const TemperatureSlider = ({
       </View>
       <View 
         style={styles.sliderContainer}
-        ref={sliderRef}
         {...panResponder.panHandlers}
       >
         {/* Track */}
-        <View style={[styles.track, { backgroundColor: theme.border.light }]}>
+        <View ref={trackRef} style={[styles.track, { backgroundColor: theme.border.light }]}>
           <View 
             style={[styles.trackFill, { 
               width: thumbLeft, 
