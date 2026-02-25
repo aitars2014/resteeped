@@ -236,7 +236,23 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       updates.status = 'tried';
       updates.tried_at = new Date().toISOString();
     }
-    await updateInCollection(teaId, updates);
+    
+    // If tea isn't in collection yet, add it first
+    if (!inCollection) {
+      const addResult = await addToCollection(teaId, 'tried', tea);
+      if (addResult.error) {
+        console.error('Error adding to collection before saving notes:', addResult.error);
+        Alert.alert('Error', 'Could not save tasting notes. Please try again.');
+        return;
+      }
+    }
+    
+    const result = await updateInCollection(teaId, updates);
+    if (result.error) {
+      console.error('Error saving tasting notes:', result.error);
+      Alert.alert('Error', 'Could not save your rating. Please try again.');
+      return;
+    }
     setShowTastingNotes(false);
   };
   

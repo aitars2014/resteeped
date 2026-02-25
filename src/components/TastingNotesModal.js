@@ -46,9 +46,8 @@ export const TastingNotesModal = ({
     }
   }, [visible, initialNotes, initialRating]);
 
-  const handleSave = () => {
-    onSave({ notes: notes.trim(), rating });
-    onClose();
+  const handleSave = async () => {
+    await onSave({ notes: notes.trim(), rating });
   };
 
   const addFlavorTag = (flavor) => {
