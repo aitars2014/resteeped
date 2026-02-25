@@ -12,7 +12,8 @@ const STEP = 0.1;
 export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
   const { theme } = useTheme();
   const lastValue = useRef(value);
-  const grantX = useRef(0);
+  const trackRef = useRef(null);
+  const trackLeftX = useRef(0);
   const onValueChangeRef = useRef(onValueChange);
   onValueChangeRef.current = onValueChange;
 
@@ -44,12 +45,16 @@ export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
       onMoveShouldSetPanResponder: () => true,
       onPanResponderTerminationRequest: () => false,
       onPanResponderGrant: (evt) => {
-        const x = evt.nativeEvent.locationX;
-        grantX.current = x;
-        updateValue(positionToValue(x));
+        // Measure track position and use pageX for accurate positioning
+        // This avoids locationX issues when touch starts on the thumb or edges
+        trackRef.current?.measure((_x, _y, _w, _h, pageX) => {
+          trackLeftX.current = pageX;
+          const x = evt.nativeEvent.pageX - pageX;
+          updateValue(positionToValue(x));
+        });
       },
-      onPanResponderMove: (_, gestureState) => {
-        const x = grantX.current + gestureState.dx;
+      onPanResponderMove: (evt) => {
+        const x = evt.nativeEvent.pageX - trackLeftX.current;
         updateValue(positionToValue(x));
       },
     }),
@@ -86,10 +91,11 @@ export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
       {/* Stars */}
       <View style={styles.starsRow}>{renderStars()}</View>
 
-      {/* Slider track */}
+      {/* Slider track — wrapped in larger hit area */}
+      <View style={styles.trackHitArea} {...panResponder.panHandlers}>
       <View
+        ref={trackRef}
         style={[styles.track, { backgroundColor: theme.background.secondary }]}
-        {...panResponder.panHandlers}
       >
         <View
           style={[
@@ -109,6 +115,7 @@ export const RatingSlider = ({ value = 0, onValueChange, size = 'medium' }) => {
             ]}
           />
         )}
+      </View>
       </View>
 
       {/* Min/Max labels */}
@@ -133,6 +140,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     gap: 4,
     marginBottom: 20,
+  },
+  trackHitArea: {
+    width: SLIDER_WIDTH,
+    paddingVertical: 16,
+    justifyContent: 'center',
   },
   track: {
     width: SLIDER_WIDTH,
