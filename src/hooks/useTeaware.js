@@ -110,7 +110,6 @@ export const useTeaware = () => {
   const [userTeaware, setUserTeaware] = useState([]);
   const [loading, setLoading] = useState(false); // Start false since we have demo data
   const [error, setError] = useState(null);
-  const [isRemoteData, setIsRemoteData] = useState(false);
 
   // Fetch all teaware
   const fetchTeaware = useCallback(async () => {
@@ -142,14 +141,12 @@ export const useTeaware = () => {
           return 0;
         });
         setTeaware(normalized);
-        setIsRemoteData(true);
       }
       // If empty response, keep demo data
     } catch (err) {
       console.error('Error fetching teaware:', err);
       setError(err.message);
       // Keep demo data on error (already loaded)
-      setIsRemoteData(false);
     } finally {
       setLoading(false);
     }

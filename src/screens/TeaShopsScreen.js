@@ -101,7 +101,6 @@ export const TeaShopsScreen = ({ navigation, route }) => {
   const [viewMode, setViewMode] = useState('list'); // 'list' or 'map'
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('distance');
-  const [showFilters, setShowFilters] = useState(false);
   const [filterBrand, setFilterBrand] = useState(null); // Filter by brand that has specific tea
   const [filterTeaType, setFilterTeaType] = useState(null);
   

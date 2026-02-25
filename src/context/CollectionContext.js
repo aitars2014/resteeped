@@ -15,7 +15,6 @@ export const CollectionProvider = ({ children }) => {
   const { user, isDevMode, initialized: authInitialized } = useAuth();
   const [collection, setCollection] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [cacheLoaded, setCacheLoaded] = useState(false);
 
   // Check if we should use local-only mode (no Supabase calls for user data)
   const isLocalMode = !isSupabaseConfigured() || isDevMode;
@@ -34,7 +33,7 @@ export const CollectionProvider = ({ children }) => {
       } catch (error) {
         console.warn('Failed to load collection cache:', error);
       } finally {
-        setCacheLoaded(true);
+        // cacheLoaded state removed (was never read)
       }
     };
     loadCache();

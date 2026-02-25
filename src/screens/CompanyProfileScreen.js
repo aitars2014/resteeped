@@ -51,7 +51,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   const [allTeas, setAllTeas] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(!passedCompany);
-  const [showReviewModal, setShowReviewModal] = useState(false);
+  const [showReviewModal, setShowReviewModal] = useState(false); // TODO: WriteCompanyReviewModal imported but never rendered — reviews silently fail
   const [selectedTeaType, setSelectedTeaType] = useState('all');
   const [sortBy, setSortBy] = useState('popularity');
 

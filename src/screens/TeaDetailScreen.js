@@ -59,7 +59,6 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       .slice(0, 6);
   }, [teas, tea.id, tea.teaType]);
   
-  const [showReviewModal, setShowReviewModal] = useState(false);
   const [showTastingNotes, setShowTastingNotes] = useState(false);
   
   // Track tea view
@@ -198,8 +197,6 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         rating,
         has_text: !!reviewText,
       });
-      setShowReviewModal(false);
-      
       // Show moderation message if review was flagged
       if (moderation) {
         setTimeout(() => {
