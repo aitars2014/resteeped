@@ -89,12 +89,13 @@ export const CollectionProvider = ({ children }) => {
     }
   }, [user, authInitialized, saveCache]);
 
-  // Fetch from server once auth is ready
+  // Fetch from server once auth is ready, or when user identity changes (sign-in/sign-out)
+  const userId = user?.id;
   useEffect(() => {
     if (authInitialized) {
       fetchCollection();
     }
-  }, [authInitialized, fetchCollection]);
+  }, [authInitialized, userId, fetchCollection]);
 
   // Re-fetch collection when app returns from background (silent refresh)
   const appState = useRef(AppState.currentState);

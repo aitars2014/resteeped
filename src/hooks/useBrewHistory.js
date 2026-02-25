@@ -54,9 +54,10 @@ export const useBrewHistory = () => {
     }
   }, [user]);
 
+  const userId = user?.id;
   useEffect(() => {
     fetchBrewHistory();
-  }, [fetchBrewHistory]);
+  }, [userId, fetchBrewHistory]);
 
   const logBrewSession = async ({ teaId, steepTimeSeconds, temperatureF, teaData = null, infusionNumber = null, note = null, rating = null, tastingNotes = null, brewMethod = null }) => {
     if (isLocalMode) {
