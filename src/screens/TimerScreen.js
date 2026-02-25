@@ -136,7 +136,7 @@ export const TimerScreen = ({ route, navigation }) => {
   // Multi-steep state
   const [multiSteepMode, setMultiSteepMode] = useState(isMultiSteep);
   const [currentInfusion, setCurrentInfusion] = useState(1);
-  const [totalInfusions, setTotalInfusions] = useState(Math.min(maxInfusions, 7));
+  const totalInfusions = Math.min(maxInfusions, 7);
   const [infusionTimes, setInfusionTimes] = useState([]);
   const [infusionNotes, setInfusionNotes] = useState({});
   const [showNotesModal, setShowNotesModal] = useState(false);

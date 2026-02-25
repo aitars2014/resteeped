@@ -51,7 +51,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   const [allTeas, setAllTeas] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(!passedCompany);
-  const [showReviewModal, setShowReviewModal] = useState(false); // TODO: WriteCompanyReviewModal imported but never rendered — reviews silently fail
+  const [showReviewModal, setShowReviewModal] = useState(false);
   const [selectedTeaType, setSelectedTeaType] = useState('all');
   const [sortBy, setSortBy] = useState('popularity');
 
@@ -460,6 +460,15 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
         <View style={{ height: 40 }} />
       </ScrollView>
+
+      <WriteCompanyReviewModal
+        visible={showReviewModal}
+        onClose={() => setShowReviewModal(false)}
+        onSubmit={handleSubmitReview}
+        companyName={company?.name}
+        initialRating={userReview?.overall_rating || 0}
+        initialText={userReview?.review_text || ''}
+      />
     </View>
   );
 };
