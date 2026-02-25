@@ -66,7 +66,7 @@ export const TeaCard = ({
             {brandName}
           </Text>
           <View style={styles.horizontalMeta}>
-            <StarRating rating={rating} size={12} showNumber={false} />
+            {rating > 0 && <StarRating rating={rating} size={12} showNumber={false} />}
             <TeaTypeBadge teaType={tea.teaType || tea.tea_type} size="tiny" />
           </View>
         </View>
@@ -111,14 +111,16 @@ export const TeaCard = ({
             <Text style={styles.featuredName} numberOfLines={2}>
               {teaName}
             </Text>
-            <View style={styles.featuredRating}>
-              <StarRating rating={rating} size={14} showNumber />
-              {ratingCount > 0 && (
-                <Text style={styles.featuredRatingCount}>
-                  ({ratingCount})
-                </Text>
-              )}
-            </View>
+            {rating > 0 && (
+              <View style={styles.featuredRating}>
+                <StarRating rating={rating} size={14} showNumber />
+                {ratingCount > 0 && (
+                  <Text style={styles.featuredRatingCount}>
+                    ({ratingCount})
+                  </Text>
+                )}
+              </View>
+            )}
           </View>
         </View>
       </TouchableOpacity>
@@ -175,15 +177,17 @@ export const TeaCard = ({
           {teaName}
         </Text>
         
-        {/* Rating row */}
-        <View style={styles.ratingRow}>
-          <StarRating rating={rating} size={14} />
-          {ratingCount > 0 && (
-            <Text style={[styles.ratingCount, { color: theme.text.tertiary }]}>
-              ({ratingCount})
-            </Text>
-          )}
-        </View>
+        {/* Rating row - only show when there's a rating */}
+        {rating > 0 && (
+          <View style={styles.ratingRow}>
+            <StarRating rating={rating} size={14} />
+            {ratingCount > 0 && (
+              <Text style={[styles.ratingCount, { color: theme.text.tertiary }]}>
+                ({ratingCount})
+              </Text>
+            )}
+          </View>
+        )}
       </View>
     </TouchableOpacity>
   );
