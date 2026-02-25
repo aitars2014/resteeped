@@ -1,9 +1,8 @@
 /**
  * Tazo Tea Scraper
- * Uses Puppeteer to scrape the JS-rendered product pages
+ * Uses Gatsby page-data.json API to extract product data (no Puppeteer needed)
  */
 
-const puppeteer = require('puppeteer');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
@@ -24,13 +23,27 @@ const BRAND = {
   specialty: ['Chai', 'Herbal blends', 'Exotic flavors'],
 };
 
+const BASE_URL = 'https://www.tazo.com';
+
+// Tazo uses Gatsby with Contentful CMS. Product data is available via page-data.json.
+const CATEGORY_PAGES = [
+  '/page-data/us/en/products/page-data.json',       // All products
+  '/page-data/us/en/products/tea-bags/page-data.json',
+  '/page-data/us/en/products/k-cup-pods/page-data.json',
+];
+
 function getTeaType(text) {
   const str = text.toLowerCase();
-  if (str.includes('green')) return 'green';
-  if (str.includes('black') || str.includes('chai') || str.includes('earl grey')) return 'black';
+  if (str.includes('green') || str.includes('matcha') || str.includes('zen')) return 'green';
+  if (str.includes('black') || str.includes('chai') || str.includes('earl grey') || str.includes('english breakfast') || str.includes('awake')) return 'black';
   if (str.includes('white')) return 'white';
   if (str.includes('oolong')) return 'oolong';
   return 'herbal';
+}
+
+function isTeaProduct(slug) {
+  // Filter to actual tea products (tea bags and k-cups), skip lattes/concentrates
+  return slug.includes('tea-bags/') || slug.includes('k-cup');
 }
 
 async function ensureCompany() {
@@ -39,12 +52,12 @@ async function ensureCompany() {
     .select('id')
     .eq('slug', BRAND.slug)
     .single();
-  
+
   if (existing) {
     console.log(`Company exists: ${BRAND.name} (${existing.id})`);
     return existing.id;
   }
-  
+
   const { data, error } = await supabase
     .from('companies')
     .insert({
@@ -60,141 +73,86 @@ async function ensureCompany() {
     })
     .select('id')
     .single();
-  
+
   if (error) {
     console.error('Failed to create company:', error.message);
     return null;
   }
-  
+
   console.log(`Created company: ${BRAND.name} (${data.id})`);
   return data.id;
 }
 
 async function scrapeProducts() {
-  console.log('Launching browser...');
-  const browser = await puppeteer.launch({
-    headless: 'new',
-    args: [
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
-      '--disable-blink-features=AutomationControlled',
-    ],
-  });
-  
-  const page = await browser.newPage();
-  
-  // Spoof user agent to look like a real browser
-  await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36');
-  await page.setViewport({ width: 1280, height: 800 });
-  
-  // Remove webdriver detection
-  await page.evaluateOnNewDocument(() => {
-    Object.defineProperty(navigator, 'webdriver', { get: () => undefined });
-  });
-  
-  const products = [];
-  const categories = [
-    'https://www.tazo.com/us/en/products/tea-bags.html',
-    'https://www.tazo.com/us/en/products/k-cup-pods.html',
-  ];
-  
-  for (const url of categories) {
-    console.log(`Scraping ${url}...`);
-    try {
-      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-      // Give JS time to render
-      await new Promise(r => setTimeout(r, 5000));
-    } catch (e) {
-      console.log(`  Warning: ${e.message}`);
-    }
-    
-    // Wait for products to load
-    await page.waitForSelector('.product-card, .product-tile, [class*="product"]', { timeout: 10000 }).catch(() => {});
-    
-    // Scroll to load all products
-    await autoScroll(page);
-    
-    // Extract product data
-    const pageProducts = await page.evaluate(() => {
-      const items = [];
-      
-      // Try various selectors that Tazo might use
-      const cards = document.querySelectorAll('a[href*="/products/"]');
-      
-      cards.forEach(card => {
-        const href = card.getAttribute('href');
-        if (!href || href.includes('products.html') || items.some(p => p.url === href)) return;
-        
-        // Get product name from various possible locations
-        const nameEl = card.querySelector('h2, h3, h4, .product-name, [class*="title"], [class*="name"]');
-        const name = nameEl?.textContent?.trim() || '';
-        
-        // Get image
-        const imgEl = card.querySelector('img');
-        const image = imgEl?.src || imgEl?.getAttribute('data-src') || '';
-        
-        if (name && href) {
-          items.push({
-            name,
-            url: href.startsWith('http') ? href : `https://www.tazo.com${href}`,
-            image,
-          });
-        }
-      });
-      
-      return items;
-    });
-    
-    products.push(...pageProducts);
-    console.log(`  Found ${pageProducts.length} products`);
-  }
-  
-  await browser.close();
-  
-  // Dedupe by URL
-  const unique = [...new Map(products.map(p => [p.url, p])).values()];
-  console.log(`Total unique products: ${unique.length}`);
-  
-  return unique;
-}
+  const allProducts = new Map();
 
-async function autoScroll(page) {
-  await page.evaluate(async () => {
-    await new Promise((resolve) => {
-      let totalHeight = 0;
-      const distance = 300;
-      const timer = setInterval(() => {
-        const scrollHeight = document.body.scrollHeight;
-        window.scrollBy(0, distance);
-        totalHeight += distance;
-        if (totalHeight >= scrollHeight) {
-          clearInterval(timer);
-          resolve();
+  for (const pagePath of CATEGORY_PAGES) {
+    const url = `${BASE_URL}${pagePath}`;
+    console.log(`Fetching ${url}...`);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        console.log(`  Skipped (HTTP ${response.status})`);
+        continue;
+      }
+
+      const pageData = await response.json();
+      const products = pageData?.result?.data?.contentfulPageProductsCategory?.productGrid?.products || [];
+
+      for (const p of products) {
+        if (!p.slug || !p.thumbnailTitle) continue;
+
+        // Only include tea products (skip lattes, concentrates)
+        if (!isTeaProduct(p.slug)) continue;
+
+        const productUrl = `${BASE_URL}/us/en/${p.slug}`;
+        if (allProducts.has(productUrl)) continue;
+
+        // Extract image from thumbnail
+        let imageUrl = null;
+        const imgSources = p.thumbnailImage?.gatsbyImageData?.images?.sources;
+        if (imgSources && imgSources.length > 0) {
+          // Get the largest image from srcSet
+          const srcSet = imgSources[0].srcSet || '';
+          const urls = srcSet.split(',').map(s => s.trim().split(' ')[0]);
+          imageUrl = urls[urls.length - 1] || null;
         }
-      }, 100);
-    });
-  });
-  // Wait for any lazy-loaded content
-  await new Promise(r => setTimeout(r, 1000));
+
+        allProducts.set(productUrl, {
+          name: p.thumbnailTitle.trim(),
+          url: productUrl,
+          image: imageUrl,
+          sku: p.sku || null,
+        });
+      }
+
+      console.log(`  Found ${products.length} products (${allProducts.size} unique tea products so far)`);
+    } catch (err) {
+      console.error(`  Error: ${err.message}`);
+    }
+  }
+
+  console.log(`\nTotal unique tea products: ${allProducts.size}`);
+  return [...allProducts.values()];
 }
 
 async function main() {
   const companyId = await ensureCompany();
   if (!companyId) return;
-  
+
   const products = await scrapeProducts();
-  
+
   let imported = 0;
   let skipped = 0;
-  
+
   for (const product of products) {
-    // Skip non-tea items
     const name = product.name.toLowerCase();
     if (name.includes('gift') || name.includes('sampler') || name.includes('variety')) {
       skipped++;
       continue;
     }
-    
+
     // Check for duplicate
     const { data: existing } = await supabase
       .from('teas')
@@ -202,12 +160,12 @@ async function main() {
       .eq('company_id', companyId)
       .eq('name', product.name)
       .single();
-    
+
     if (existing) {
       skipped++;
       continue;
     }
-    
+
     const teaData = {
       name: product.name,
       company_id: companyId,
@@ -216,16 +174,16 @@ async function main() {
       image_url: product.image || null,
       product_url: product.url,
     };
-    
+
     const { error } = await supabase.from('teas').insert(teaData);
-    
+
     if (error) {
       console.error(`  Failed: ${product.name} - ${error.message}`);
     } else {
       imported++;
     }
   }
-  
+
   console.log(`\nImported: ${imported}, Skipped: ${skipped}`);
 }
 

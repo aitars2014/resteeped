@@ -256,17 +256,8 @@ const BRANDS = {
     founded: null,
     specialty: ['Original blends', 'Black tea', 'Green tea', 'Herbal', 'Southern-inspired'],
   },
-  thistleandsprig: {
-    name: 'Thistle & Sprig Tea Co.',
-    slug: 'thistle-and-sprig-tea-co',
-    url: 'https://thistleandsprig.com',
-    description: 'Atlanta-based artisan tea company offering ethically-sourced, sustainably packaged teas with a focus on matcha and Japanese teaware.',
-    city: 'Atlanta',
-    state: 'GA',
-    country: 'United States',
-    founded: null,
-    specialty: ['Artisan blends', 'Black tea', 'Green tea', 'Herbal', 'Matcha'],
-  },
+  // Thistle & Sprig Tea Co. - Store is password-protected/closed (Feb 2025). Redirects to /password page.
+  // thistleandsprig: { ... },
   uptownteashop: {
     name: 'Uptown Tea Shop',
     slug: 'uptown-tea-shop',
@@ -700,17 +691,8 @@ const BRANDS = {
     founded: 1997,
     specialty: ['Organic tea', 'Direct trade', 'Botanical blends', 'Sparkling tea'],
   },
-  steap: {
-    name: 'STEAP Tea Bar',
-    slug: 'steap-tea-bar',
-    url: 'https://steaptea.com',
-    description: 'San Francisco tea bar offering premium loose leaf teas and creative tea-based drinks.',
-    city: 'San Francisco',
-    state: 'CA',
-    country: 'United States',
-    founded: null,
-    specialty: ['Loose leaf tea', 'Tea bar', 'Creative drinks'],
-  },
+  // STEAP Tea Bar - CLOSED (confirmed Feb 2025 via Yelp). Website steaptea.com redirects to dead page.
+  // steap: { ... },
   looseleafteamarket: {
     name: 'Loose Leaf Tea Market',
     slug: 'loose-leaf-tea-market',
