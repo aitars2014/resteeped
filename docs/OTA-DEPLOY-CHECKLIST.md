@@ -1,72 +1,67 @@
 # OTA Deploy Checklist
 
-## Rules
+## Before You Start
 
-1. **One issue per OTA.** Never batch unrelated changes into a single update.
-2. **Validate before publishing.** Always run `./scripts/ota-validate.sh` first.
-3. **Wait for confirmation.** Don't mark an issue Done until the user confirms the fix works on their device.
+- [ ] **One issue per OTA.** Never batch unrelated changes into one update.
+- [ ] Commit references a Linear issue (e.g., `TARS-XX: description`)
 
-## Deploy Process
+## Pre-Publish Validation
 
-### 1. Validate
 ```bash
 ./scripts/ota-validate.sh
 ```
-If it fails, fix the issues before proceeding.
 
-### 2. Commit
-```bash
-git add -A
-git commit -m "TARS-XX: Clear description of the change"
-```
-Always reference the Linear issue ID in the commit message.
+This checks for:
+- `require()` inside useEffect hooks (crash pattern)
+- Dead state variables / unreferenced modals
+- ESLint errors
+- TypeScript errors
+- Successful bundle export
 
-### 3. Publish OTA
+**Do not deploy if validation fails.**
+
+## Deploy
+
 ```bash
+# Commit your changes
+git add -A && git commit -m "TARS-XX: description"
+
+# Publish OTA
 CI=1 eas update --branch production --message "TARS-XX: description"
 ```
 
-### 4. Notify
-Tell the user to **force-close and reopen** the app to pull the update.
+## Post-Deploy
 
-### 5. Confirm
-Wait for the user to confirm the fix works. Only then mark the Linear issue as Done.
+1. Tell Taylor to **force-close and reopen** the app to pull the update
+2. **Wait for Taylor to confirm** it works
+3. Only mark the Linear issue as Done after confirmation
 
----
+## If OTA Causes Crashes
 
-## If the OTA Causes Crashes
-
-**Stop pushing OTAs immediately.**
-
-Expo's crash protection will blacklist the OTA on-device after repeated crashes. Once blacklisted, no further OTA updates will load on that device. The only recovery is a **new native build**.
+> ⚠️ **Expo crash protection will blacklist the OTA on-device after repeated crashes.**
+> The only fix is a new native build. Do NOT keep pushing OTAs hoping they'll load.
 
 ### Recovery: Native Build
 
-1. **Bump the version** in `app.json` (e.g., 1.1.0 → 1.1.1). The current version will be rejected by the App Store.
+1. **Bump version in `app.json`** (the current production version will be rejected)
+   - e.g., `1.1.0` → `1.1.1`
 
-2. **Cloud build (preferred):**
+2. **Cloud build (preferred — auto-submits to App Store):**
    ```bash
    eas build --platform ios --auto-submit --non-interactive
    ```
 
-3. **Local build (if needed):**
+3. **Local build (must manually submit after):**
    ```bash
    SENTRY_ALLOW_FAILURE=true eas build --platform ios --local --non-interactive
-   # IMPORTANT: Local builds require a separate submit step!
-   eas submit --platform ios --path <path-to-ipa> --non-interactive
+   # Then submit separately:
+   eas submit --platform ios --path <ipa-file> --non-interactive
    ```
-   ⚠️ `--auto-submit` only works with cloud builds. Do NOT forget the separate submit for local builds.
 
-4. Wait for App Store review and approval before telling the user to update.
+   ⚠️ `--auto-submit` only works with cloud builds. Local builds require a separate `eas submit` step.
 
----
+## Lessons Learned
 
-## Common Mistakes
-
-| Mistake | Why It's Bad |
-|---------|-------------|
-| Batching multiple fixes in one OTA | If one fix crashes, you can't tell which one. Rollback is all-or-nothing. |
-| Pushing more OTAs after a crash | Expo blacklists the OTA channel on-device. Only a native build recovers. |
-| Forgetting to bump version for native builds | App Store rejects duplicate versions. |
-| `--auto-submit` with local builds | It silently does nothing. Your build never reaches the App Store. |
-| Not waiting for user confirmation | The fix might not work. Moving to the next issue compounds problems. |
+- **The Great Rollback (Feb 24, 2026):** Batched unrelated fixes caused cascading crashes. Expo blacklisted the OTA on-device. Required version bump + native rebuild to recover.
+- **Silent failures are the worst bugs.** Dead code and silently-bailing guards waste hours of debugging.
+- **Local tea data uses numeric IDs; Supabase uses UUIDs.** Always use `useResolvedTeaId(tea)` for DB operations.
