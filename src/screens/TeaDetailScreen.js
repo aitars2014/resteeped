@@ -214,19 +214,24 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   };
   
   const handleBrewTea = async () => {
-    // Auto-add to collection as tried if not already there
-    if (user && !inCollection) {
-      if (canAddToCollection(collection.length)) {
-        await addTeaWithStatus('tried');
-      }
-    } else if (user && isOnWishlist) {
-      // Move from wishlist to tried
-      await updateInCollection(teaId, { status: 'tried', tried_at: new Date().toISOString() });
-    }
+    // Navigate to timer first — brewing should always work regardless of collection state
     navigation.navigate('Timer', { 
       screen: 'TimerHome',
       params: { tea } 
     });
+
+    // Then try to auto-add to collection in the background
+    try {
+      if (user && !inCollection) {
+        if (canAddToCollection(collection.length)) {
+          await addTeaWithStatus('tried');
+        }
+      } else if (user && isOnWishlist) {
+        await updateInCollection(teaId, { status: 'tried', tried_at: new Date().toISOString() });
+      }
+    } catch (err) {
+      console.warn('Auto-add to collection on brew failed:', err);
+    }
   };
   
   const handleSaveTastingNotes = async ({ notes, rating }) => {
