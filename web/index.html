@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Resteeped — Good tea is worth remembering</title>
-  <meta name="description" content="Your personal tea journal. Discover 8,000+ teas, track what you love, and never forget a perfect cup. Free on iOS.">
+  <meta name="description" content="Your personal tea journal. Discover 8,000+ teas from 70+ independent shops, track what you love, and never forget a perfect cup. Free on iOS.">
   <meta name="theme-color" content="#0D0D0D">
   <meta property="og:title" content="Resteeped — Your Personal Tea Journal">
-  <meta property="og:description" content="Discover 8,000+ teas, track what you love, and never forget a perfect cup. Free on iOS.">
+  <meta property="og:description" content="Discover 8,000+ teas from 70+ independent shops, track what you love, and never forget a perfect cup. Free on iOS.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://resteeped.com">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,13 +25,27 @@
     "operatingSystem": "iOS",
     "applicationCategory": "FoodAndDrinkApplication",
     "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "description": "Your personal tea journal. Discover 8,000+ teas, track what you love, and never forget a perfect cup.",
+    "description": "Your personal tea journal. Discover 8,000+ teas from 70+ independent shops, track what you love, and never forget a perfect cup.",
     "url": "https://resteeped.com",
     "downloadUrl": "https://apps.apple.com/us/app/resteeped/id6758778808"
   }
   </script>
 </head>
 <body>
+  <nav class="site-nav">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo">
+        <img src="assets/logo.png" alt="Resteeped" height="28">
+      </a>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="/shops.html">Shops</a>
+        <a href="#blog">Blog</a>
+        <a href="https://apps.apple.com/us/app/resteeped/id6758778808" class="nav-cta">Get the App</a>
+      </div>
+    </div>
+  </nav>
+
   <main>
     <section class="hero">
       <div class="container">
@@ -46,7 +60,7 @@
         <div class="stats-bar">
           <div class="stat"><span class="stat-number">8,000+</span><span class="stat-label">Teas</span></div>
           <div class="stat-divider"></div>
-          <div class="stat"><span class="stat-number">70+</span><span class="stat-label">Shops</span></div>
+          <div class="stat"><span class="stat-number">70+</span><span class="stat-label">Independent Shops</span></div>
           <div class="stat-divider"></div>
           <div class="stat"><span class="stat-number">Free</span><span class="stat-label">Forever</span></div>
           <div class="stat-divider"></div>
@@ -55,7 +69,6 @@
       </div>
     </section>
 
-    <!-- App Screenshots -->
     <section class="screenshots">
       <div class="container">
         <div class="screenshot-row">
@@ -66,7 +79,17 @@
       </div>
     </section>
 
-    <section class="features">
+    <section class="story">
+      <div class="container">
+        <div class="story-content">
+          <h2 class="section-title">Built by a tea lover, not a corporation.</h2>
+          <p>Resteeped started because I kept forgetting which teas I liked. I tried notebooks, spreadsheets, the Notes app — nothing stuck. So I built the app I wished existed.</p>
+          <p>There's no VC funding, no corporate roadmap, no data harvesting. Just one person building a tool for the tea community. Every feature exists because a tea drinker asked for it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
       <div class="container">
         <h2 class="section-title">Why Resteeped?</h2>
         <div class="features-grid">
@@ -74,29 +97,29 @@
             <div class="feature-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
             </div>
-            <h3>Discover</h3>
-            <p>Browse 8,000+ teas from 70+ independent shops. Filter by type, origin, caffeine level, or flavor. Find teas you never knew existed.</p>
+            <h3>Discover Small Brands</h3>
+            <p>Browse 8,000+ teas from 70+ independent shops — the kind of places you won't find on Amazon. Filter by type, origin, caffeine level, or flavor.</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             </div>
-            <h3>Journal</h3>
-            <p>Rate every cup. Write tasting notes. Track brew parameters. Build a personal collection that remembers what you loved — and what you didn't.</p>
+            <h3>Journal Every Cup</h3>
+            <p>Rate teas, write tasting notes, track brew parameters. Build a personal collection that remembers what you loved and what you didn't.</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </div>
-            <h3>Brew</h3>
-            <p>Built-in timers with suggested steep times for every tea type. Get notified when it's ready. Never over-steep again.</p>
+            <h3>Brew It Right</h3>
+            <p>Built-in timers with temperature and steep time for every tea type. Get notified when your tea is ready. Never over-steep again.</p>
           </div>
           <div class="feature-card">
             <div class="feature-icon">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
             </div>
-            <h3>Private</h3>
-            <p>Your tea journey stays yours. Resteeped collects zero personal data. No tracking, no ads, no selling your information. Ever.</p>
+            <h3>Your Data Stays Yours</h3>
+            <p>Zero personal data collected. No tracking, no ads, no selling your information. Check the App Store privacy label — it says "Data Not Collected." We mean it.</p>
           </div>
         </div>
       </div>
@@ -115,27 +138,50 @@
       </div>
     </section>
 
+    <section class="social-proof">
+      <div class="container">
+        <h2 class="section-title">What Tea Lovers Are Saying</h2>
+        <div class="testimonials">
+          <div class="testimonial">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"Finally an app that gets tea right. The database of smaller shops is exactly what I've been looking for."</p>
+            <span class="testimonial-source">App Store Review</span>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"I love that it doesn't collect any data. Clean, simple, and it actually has the teas I drink."</p>
+            <span class="testimonial-source">App Store Review</span>
+          </div>
+          <div class="testimonial">
+            <div class="testimonial-stars">★★★★★</div>
+            <p class="testimonial-text">"The brew timer alone is worth it. But having my whole tea journal in one place? Perfect."</p>
+            <span class="testimonial-source">App Store Review</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="faq">
       <div class="container">
         <h2 class="section-title">Questions?</h2>
         <div class="faq-list">
           <details class="faq-item"><summary>Is Resteeped really free?</summary><p>Yes. The core app is free forever — browse teas, use brew timers, log your collection, write tasting notes. Premium adds extra features like unlimited collections for $2.99/month or $19.99/year.</p></details>
-          <details class="faq-item"><summary>What teas are in the database?</summary><p>Over 8,000 teas from 70+ independent tea shops worldwide — loose leaf, matcha, herbal, oolong, pu-erh, and more. We add new teas regularly.</p></details>
-          <details class="faq-item"><summary>Do you sell my data?</summary><p>No. We collect zero personal data. Check our App Store listing — it says "Data Not Collected." We mean it. Your tea preferences are nobody's business but yours.</p></details>
+          <details class="faq-item"><summary>What teas are in the database?</summary><p>Over 8,000 teas from 70+ independent tea shops worldwide — loose leaf, matcha, herbal, oolong, pu-erh, and more. We focus on smaller, independent brands and add new teas regularly.</p></details>
+          <details class="faq-item"><summary>Do you sell my data?</summary><p>No. We collect zero personal data. Check our App Store listing — it says "Data Not Collected." Your tea preferences are nobody's business but yours.</p></details>
           <details class="faq-item"><summary>Is there an Android version?</summary><p>Not yet, but it's on our roadmap. For now, Resteeped is iOS only.</p></details>
-          <details class="faq-item"><summary>How is this different from other tea apps?</summary><p>Resteeped is a native iOS app built for mobile-first tea lovers. 8,000+ teas from real independent shops, built-in brew timers, and zero data collection. Browse, brew, and log from your phone — not a desktop browser.</p></details>
+          <details class="faq-item"><summary>How is this different from other tea apps?</summary><p>Resteeped is built for mobile-first tea lovers who care about independent shops. 8,000+ teas from real indie brands, built-in brew timers, and zero data collection. No account required to get started.</p></details>
+          <details class="faq-item"><summary>Who makes Resteeped?</summary><p>Just one person who loves tea. No VC funding, no corporate owner. Resteeped is an indie app built for the tea community.</p></details>
         </div>
       </div>
     </section>
 
-    <section class="blog">
+    <section class="blog" id="blog">
       <div class="container">
         <h2 class="section-title">From the Journal</h2>
         <div class="blog-grid">
           <a href="/blog/how-to-keep-a-tea-journal" class="blog-card"><span class="blog-tag">Guide</span><h3>How to Keep a Tea Journal</h3><p>A simple system for tracking what you drink, what you love, and what to try next.</p><span class="blog-link">Read more →</span></a>
           <a href="/blog/best-loose-leaf-tea-for-beginners" class="blog-card"><span class="blog-tag">Beginners</span><h3>Best Loose Leaf Tea for Beginners</h3><p>Skip the overwhelm. Here are 10 teas that are easy to brew, easy to love, and easy to find.</p><span class="blog-link">Read more →</span></a>
           <a href="/blog/oolong-vs-green-tea" class="blog-card"><span class="blog-tag">Education</span><h3>Oolong vs Green Tea</h3><p>Same plant, different process, completely different cup. Here's what actually sets them apart.</p><span class="blog-link">Read more →</span></a>
-          <a href="/blog/tea-vs-coffee" class="blog-card"><span class="blog-tag">Education</span><h3>Tea vs Coffee</h3><p>Caffeine, cost, flavor, health. An honest comparison for anyone thinking about making the switch.</p><span class="blog-link">Read more →</span></a>
         </div>
       </div>
     </section>
@@ -162,7 +208,7 @@
         <a href="shops.html">Shops</a>
         <a href="https://instagram.com/resteeped" target="_blank" rel="noopener">Instagram</a>
       </nav>
-      <p class="copyright">© 2025 Resteeped. Made with care for tea lovers.</p>
+      <p class="copyright">© 2026 Resteeped. Made with care for tea lovers.</p>
     </div>
   </footer>
   <script>
