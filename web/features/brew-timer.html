@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tea Brew Timer | Resteeped</title>
+  <meta name="description" content="Free tea brew timer with suggested steep times and temperatures for every tea type. Never over-steep again. Built into the Resteeped app.">
+  <meta name="theme-color" content="#0D0D0D">
+  <meta property="og:title" content="Tea Brew Timer - Resteeped">
+  <meta property="og:description" content="Free tea brew timer with suggested steep times and temperatures for every tea type.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://resteeped.com/features/brew-timer">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <style>
+    .feature-page { padding: var(--space-xl) 0; }
+    .feature-page .container { max-width: 720px; }
+    .feature-hero { text-align: center; margin-bottom: var(--space-xl); }
+    .feature-hero .feature-icon { width: 80px; height: 80px; margin: 0 auto var(--space-md); display: flex; align-items: center; justify-content: center; background: var(--bg-secondary); border-radius: 20px; color: var(--accent-primary); }
+    .feature-hero h1 { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3rem); font-weight: 500; margin-bottom: var(--space-sm); }
+    .feature-hero .lead { font-size: 1.25rem; color: var(--text-secondary); max-width: 540px; margin: 0 auto var(--space-lg); line-height: 1.6; }
+    .feature-body h2 { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; margin: var(--space-lg) 0 var(--space-sm); color: var(--accent-primary); }
+    .feature-body p { color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--space-sm); font-size: 1.0625rem; }
+    .feature-body ul { color: var(--text-secondary); line-height: 1.8; margin-bottom: var(--space-sm); padding-left: var(--space-md); font-size: 1.0625rem; }
+    .feature-body li { margin-bottom: var(--space-xs); }
+    .feature-body strong { color: var(--text-primary); }
+    .brew-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--space-sm); margin: var(--space-md) 0; }
+    .brew-card { background: var(--bg-secondary); border-radius: 12px; padding: var(--space-md); text-align: center; }
+    .brew-card h3 { font-family: var(--font-serif); font-size: 1.125rem; margin-bottom: var(--space-xs); color: var(--text-primary); }
+    .brew-card .temp { font-size: 1.5rem; font-weight: 600; color: var(--accent-primary); }
+    .brew-card .time { font-size: 0.875rem; color: var(--text-tertiary); }
+    .feature-cta { background: var(--bg-secondary); border-radius: 16px; padding: var(--space-lg); text-align: center; margin: var(--space-xl) 0 0; }
+    .feature-cta h2 { font-family: var(--font-serif); font-size: 1.75rem; margin-bottom: var(--space-xs); color: var(--text-primary); }
+    .feature-cta p { color: var(--text-secondary); margin-bottom: var(--space-md); }
+    .feature-cta .badge img { height: 48px; }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="feature-page">
+      <div class="container">
+        <a href="/" class="back-link">&larr; Back to Resteeped</a>
+        
+        <div class="feature-hero">
+          <div class="feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h1>Never over-steep again.</h1>
+          <p class="lead">Built-in brew timer with the right temperature and steep time for every tea. Just tap start.</p>
+          <div class="app-badges">
+            <a href="https://apps.apple.com/us/app/resteeped/id6758778808" class="badge badge-single">
+              <img src="/assets/app-store-badge.svg" alt="Download on the App Store" height="54">
+            </a>
+          </div>
+        </div>
+
+        <div class="feature-body">
+          <h2>Why timing matters</h2>
+          <p>Over-steeping is the #1 reason people think they don't like tea. Steep green tea for 5 minutes in boiling water and it's bitter, astringent, and unpleasant. Steep it for 2 minutes at the right temperature and it's smooth, sweet, and completely different.</p>
+          <p>The problem is that every tea has different requirements. Black tea can handle boiling water and longer steeps. Green tea needs cooler water and shorter times. Oolong falls somewhere in between. Remembering all of this is annoying.</p>
+          <p>That's why Resteeped has a built-in timer.</p>
+
+          <h2>How it works</h2>
+          <ul>
+            <li><strong>Browse to any tea</strong> in the database (8,000+ to choose from)</li>
+            <li><strong>See the recommended brew settings</strong> for that specific tea: water temperature, steep time, and leaf amount</li>
+            <li><strong>Tap to start the timer.</strong> Walk away. You'll get a notification when it's done.</li>
+            <li><strong>Re-steep?</strong> Many teas (especially oolongs) get better on the second or third steep. The timer tracks that too.</li>
+          </ul>
+
+          <h2>Quick reference</h2>
+          <div class="brew-guide">
+            <div class="brew-card"><h3>Black</h3><div class="temp">212&deg;F</div><div class="time">3-5 min</div></div>
+            <div class="brew-card"><h3>Green</h3><div class="temp">175&deg;F</div><div class="time">1-3 min</div></div>
+            <div class="brew-card"><h3>Oolong</h3><div class="temp">195&deg;F</div><div class="time">3-5 min</div></div>
+            <div class="brew-card"><h3>White</h3><div class="temp">180&deg;F</div><div class="time">4-5 min</div></div>
+            <div class="brew-card"><h3>Herbal</h3><div class="temp">212&deg;F</div><div class="time">5-7 min</div></div>
+            <div class="brew-card"><h3>Pu-erh</h3><div class="temp">212&deg;F</div><div class="time">3-5 min</div></div>
+          </div>
+          <p>These are general guidelines. Resteeped shows you the exact settings for each specific tea.</p>
+
+          <div class="feature-cta">
+            <h2>Perfect tea, every time.</h2>
+            <p>Download Resteeped and let the timer do the thinking. Free on iOS.</p>
+            <div class="app-badges">
+              <a href="https://apps.apple.com/us/app/resteeped/id6758778808" class="badge badge-single">
+                <img src="/assets/app-store-badge.svg" alt="Download on the App Store">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <nav class="footer-nav">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/contact.html">Contact</a>
+        <a href="https://instagram.com/resteeped" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+      <p class="copyright">&copy; 2025 Resteeped. Made with care for tea lovers.</p>
+    </div>
+  </footer>
+</body>
+</html>
