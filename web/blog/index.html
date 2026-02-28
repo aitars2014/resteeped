@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Resteeped</title>
+  <meta name="description" content="Tea guides, brewing tips, and stories from the Resteeped community. New posts daily.">
+  <meta name="theme-color" content="#0D0D0D">
+  <meta property="og:title" content="Resteeped Blog — Tea Guides & Stories">
+  <meta property="og:description" content="Tea guides, brewing tips, and stories from the Resteeped community.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://resteeped.com/blog">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <style>
+    .blog-index { padding: calc(var(--space-xl) + 60px) 0 var(--space-xl); }
+    .blog-index .container { max-width: 960px; }
+    .blog-header { text-align: center; margin-bottom: var(--space-xl); }
+    .blog-header h1 { font-family: var(--font-serif); font-size: clamp(2rem, 5vw, 3rem); font-weight: 500; margin-bottom: var(--space-sm); }
+    .blog-header p { color: var(--text-secondary); font-size: 1.125rem; max-width: 500px; margin: 0 auto; }
+    .blog-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+    .blog-list-card { background: var(--bg-secondary); border-radius: 16px; overflow: hidden; text-decoration: none; color: inherit; transition: transform 0.2s ease, background 0.2s ease; display: flex; flex-direction: column; }
+    .blog-list-card:hover { transform: translateY(-2px); background: var(--bg-tertiary); }
+    .blog-list-card .card-image { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--bg-tertiary); }
+    .blog-list-card .card-image-placeholder { width: 100%; aspect-ratio: 16/9; background: linear-gradient(135deg, var(--bg-tertiary) 0%, rgba(168, 213, 186, 0.1) 100%); display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+    .blog-list-card .card-body { padding: var(--space-md); display: flex; flex-direction: column; gap: var(--space-xs); flex: 1; }
+    .blog-list-card .card-tag { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent-warm); font-weight: 600; }
+    .blog-list-card h2 { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 500; color: var(--text-primary); line-height: 1.3; }
+    .blog-list-card p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; flex: 1; }
+    .blog-list-card .card-meta { font-size: 0.75rem; color: var(--text-tertiary); margin-top: var(--space-xs); }
+    .blog-list-card.featured { grid-column: 1 / -1; }
+    .blog-list-card.featured .card-image, .blog-list-card.featured .card-image-placeholder { aspect-ratio: 21/9; }
+    .blog-list-card.featured h2 { font-size: 1.75rem; }
+    @media (max-width: 640px) { .blog-list { grid-template-columns: 1fr; } .blog-list-card.featured h2 { font-size: 1.25rem; } }
+  </style>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="container nav-container">
+      <a href="/" class="nav-logo">
+        <img src="../assets/logo.png" alt="Resteeped" height="28">
+      </a>
+      <div class="nav-links">
+        <a href="/#features">Features</a>
+        <a href="/shops.html">Shops</a>
+        <a href="/blog/" class="active">Blog</a>
+        <a href="https://apps.apple.com/us/app/resteeped/id6758778808" class="nav-cta">Get the App</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="blog-index">
+      <div class="container">
+        <div class="blog-header">
+          <h1>From the Journal</h1>
+          <p>Tea guides, brewing tips, and stories for curious drinkers. New posts daily.</p>
+        </div>
+
+        <div class="blog-list">
+          <!-- Most recent first. Featured = spans full width -->
+
+          <a href="/blog/tea-steeping-temperature-guide" class="blog-list-card featured">
+            <div class="card-image-placeholder">🌡️</div>
+            <div class="card-body">
+              <span class="card-tag">Guide</span>
+              <h2>Tea Steeping Temperature Guide</h2>
+              <p>The complete reference for water temperature and steep times across every tea type. Stop guessing, start brewing better.</p>
+              <span class="card-meta">February 2026 · 6 min read</span>
+            </div>
+          </a>
+
+          <a href="/blog/how-to-cold-brew-tea" class="blog-list-card">
+            <div class="card-image-placeholder">🧊</div>
+            <div class="card-body">
+              <span class="card-tag">Guide</span>
+              <h2>How to Cold Brew Tea</h2>
+              <p>Smooth, sweet, and almost impossible to mess up. Everything you need to know about cold brewing tea.</p>
+              <span class="card-meta">February 2026 · 5 min read</span>
+            </div>
+          </a>
+
+          <a href="/blog/tea-vs-coffee" class="blog-list-card">
+            <div class="card-image-placeholder">☕</div>
+            <div class="card-body">
+              <span class="card-tag">Education</span>
+              <h2>Tea vs Coffee</h2>
+              <p>Caffeine, cost, flavor, health. An honest comparison for anyone thinking about making the switch.</p>
+              <span class="card-meta">February 2026 · 7 min read</span>
+            </div>
+          </a>
+
+          <a href="/blog/how-to-keep-a-tea-journal" class="blog-list-card">
+            <div class="card-image-placeholder">📓</div>
+            <div class="card-body">
+              <span class="card-tag">Guide</span>
+              <h2>How to Keep a Tea Journal</h2>
+              <p>A simple system for tracking what you drink, what you love, and what to try next.</p>
+              <span class="card-meta">February 2026 · 5 min read</span>
+            </div>
+          </a>
+
+          <a href="/blog/best-loose-leaf-tea-for-beginners" class="blog-list-card">
+            <div class="card-image-placeholder">🍵</div>
+            <div class="card-body">
+              <span class="card-tag">Beginners</span>
+              <h2>Best Loose Leaf Tea for Beginners</h2>
+              <p>Skip the overwhelm. Here are 10 teas that are easy to brew, easy to love, and easy to find.</p>
+              <span class="card-meta">February 2026 · 6 min read</span>
+            </div>
+          </a>
+
+          <a href="/blog/oolong-vs-green-tea" class="blog-list-card">
+            <div class="card-image-placeholder">🫖</div>
+            <div class="card-body">
+              <span class="card-tag">Education</span>
+              <h2>Oolong vs Green Tea</h2>
+              <p>Same plant, different process, completely different cup. Here's what actually sets them apart.</p>
+              <span class="card-meta">February 2026 · 5 min read</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <nav class="footer-nav">
+        <a href="/privacy.html">Privacy Policy</a>
+        <a href="/terms.html">Terms of Service</a>
+        <a href="/contact.html">Contact</a>
+        <a href="/shops.html">Shops</a>
+        <a href="https://instagram.com/resteeped" target="_blank" rel="noopener">Instagram</a>
+      </nav>
+      <p class="copyright">© 2026 Resteeped. Made with care for tea lovers.</p>
+    </div>
+  </footer>
+</body>
+</html>
