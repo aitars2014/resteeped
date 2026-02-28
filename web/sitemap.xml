@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://resteeped.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://resteeped.com/features/discover</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://resteeped.com/features/tea-journal</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://resteeped.com/features/brew-timer</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://resteeped.com/blog/how-to-keep-a-tea-journal</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://resteeped.com/blog/best-loose-leaf-tea-for-beginners</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://resteeped.com/blog/oolong-vs-green-tea</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://resteeped.com/blog/tea-vs-coffee</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://resteeped.com/blog/how-to-cold-brew-tea</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://resteeped.com/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://resteeped.com/terms.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+  <url><loc>https://resteeped.com/contact.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
+</urlset>
