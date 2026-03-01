@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import {
   View,
+  Linking,
   Text,
   StyleSheet,
   ScrollView,
@@ -12,6 +13,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
@@ -84,6 +86,13 @@ export const HomeScreen = ({ navigation }) => {
 
   // Featured shop: check featured_shops table first, fall back to highest-rated
   const [featuredCompany, setFeaturedCompany] = useState(null);
+  const [instaBannerDismissed, setInstaBannerDismissed] = useState(true);
+
+  useEffect(() => {
+    AsyncStorage.getItem("instaBannerDismissed").then((val) => {
+      if (val !== "true") setInstaBannerDismissed(false);
+    });
+  }, []);
   const adminFeatured = useRef({ loaded: false, company: null });
 
   // Query admin table once on mount
@@ -526,6 +535,39 @@ export const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
+
+        {/* Instagram Follow Banner */}
+        {!instaBannerDismissed && (
+          <TouchableOpacity
+            style={[styles.instaBanner, {
+              backgroundColor: theme.background.secondary,
+              borderColor: theme.border.light,
+            }]}
+            onPress={() => {
+              Linking.openURL("https://www.instagram.com/resteeped/");
+            }}
+            activeOpacity={0.8}
+          >
+            <View style={styles.instaBannerContent}>
+              <Text style={{ fontSize: 24 }}>📸</Text>
+              <View style={styles.instaBannerText}>
+                <Text style={[styles.instaBannerTitle, { color: theme.text.primary }]}>Follow us on Instagram</Text>
+                <Text style={[styles.instaBannerSubtitle, { color: theme.text.secondary }]}>Stay updated with tea tips, recipes & more</Text>
+              </View>
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                AsyncStorage.setItem("instaBannerDismissed", "true");
+                setInstaBannerDismissed(true);
+              }}
+              hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+              style={styles.instaDismiss}
+            >
+              <X size={18} color={theme.text.secondary} />
+            </TouchableOpacity>
+          </TouchableOpacity>
+        )}
+
         {/* 15. Quick Stats */}
         <View style={styles.statsSection}>
           <TouchableOpacity 
@@ -817,6 +859,37 @@ const styles = StyleSheet.create({
   },
   loadingBannerText: {
     fontSize: 13,
+  },
+  instaBanner: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: spacing.md,
+    marginHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.lg,
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  instaBannerContent: {
+    flexDirection: "row",
+    alignItems: "center",
+    flex: 1,
+    gap: 12,
+  },
+  instaBannerText: {
+    flex: 1,
+  },
+  instaBannerTitle: {
+    fontSize: 15,
+    fontFamily: fonts.semiBold,
+    marginBottom: 2,
+  },
+  instaBannerSubtitle: {
+    fontSize: 13,
+    fontFamily: fonts.regular,
+  },
+  instaDismiss: {
+    padding: 4,
   },
 });
 

@@ -275,7 +275,7 @@ export const ProfileScreen = ({ navigation }) => {
           activeOpacity={0.7}
         >
           <View style={styles.statsSectionHeader}>
-            <Text style={[styles.statsSectionTitle, { color: theme.text.secondary }]}>Your Brew Activity</Text>
+            <Text style={[styles.statsSectionTitle, { color: theme.text.secondary }]}>Your Steep Activity</Text>
             <View style={styles.viewHistoryLink}>
               <Text style={[styles.viewHistoryText, { color: theme.accent.primary }]}>View History</Text>
               <ChevronRight size={16} color={theme.accent.primary} />
@@ -378,9 +378,9 @@ export const ProfileScreen = ({ navigation }) => {
         </View>
       </View>
       
-      {/* Brew Stats */}
+      {/* Steep Stats */}
       <View style={styles.statsSection}>
-        <Text style={[styles.statsSectionTitle, { color: theme.text.secondary }]}>Brew Activity</Text>
+        <Text style={[styles.statsSectionTitle, { color: theme.text.secondary }]}>Steep Activity</Text>
         <View style={[styles.statsRow, { 
           backgroundColor: theme.background.secondary,
           borderColor: theme.border.medium,
@@ -443,11 +443,11 @@ export const ProfileScreen = ({ navigation }) => {
           onPress={() => navigation.navigate('BrewHistory')}
           accessible={true}
           accessibilityRole="button"
-          accessibilityLabel="Brew History"
-          accessibilityHint="View your brew history"
+          accessibilityLabel="Steep History"
+          accessibilityHint="View your steep history"
         >
           <Coffee size={20} color={theme.accent.primary} />
-          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Brew History</Text>
+          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Steep History</Text>
           <ChevronRight size={20} color={theme.text.secondary} />
         </TouchableOpacity>
         
