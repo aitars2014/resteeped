@@ -53,7 +53,7 @@
       "mae_taeng",
       "organic",
       "pdqreview",
-      "subscription"
+      "season-fall"
     ],
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-EnglishBreakfast-TC.jpg?v=1762452118",
     "price_per_oz": null,
@@ -80,26 +80,6 @@
     "source_url": "https://www.rishi-tea.com/products/organic-golden-yunnan-black-tea"
   },
   {
-    "name": "Earl Grey Lavender",
-    "brand_name": "Rishi Tea",
-    "tea_type": "black",
-    "description": "Earl Grey Lavender combines the enchanting fragrance of organic lavender blossoms with the stimulating citrusy scent of bergamot pressed from real fruit and flowers.",
-    "origin": null,
-    "steep_temp_f": 212,
-    "steep_time_min": 3,
-    "steep_time_max": 5,
-    "flavor_notes": [
-      "ingredient-bergamot",
-      "kosher",
-      "organic",
-      "pdqreview",
-      "season-spring"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-EarlGreyLavender-TC.jpg?v=1762452120",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/organic-earl-grey-lavender-black-tea"
-  },
-  {
     "name": "China Breakfast",
     "brand_name": "Rishi Tea",
     "tea_type": "black",
@@ -118,6 +98,26 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-ChinaBreakfast-TC.jpg?v=1762452105",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/organic-china-breakfast-black-tea"
+  },
+  {
+    "name": "Earl Grey Lavender",
+    "brand_name": "Rishi Tea",
+    "tea_type": "black",
+    "description": "Earl Grey Lavender combines the enchanting fragrance of organic lavender blossoms with the stimulating citrusy scent of bergamot pressed from real fruit and flowers.",
+    "origin": null,
+    "steep_temp_f": 212,
+    "steep_time_min": 3,
+    "steep_time_max": 5,
+    "flavor_notes": [
+      "ingredient-bergamot",
+      "kosher",
+      "organic",
+      "pdqreview",
+      "season-spring"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-EarlGreyLavender-TC.jpg?v=1762452120",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/organic-earl-grey-lavender-black-tea"
   },
   {
     "name": "Earl Grey",
@@ -316,27 +316,10 @@
     "source_url": "https://www.rishi-tea.com/products/japanese-whisky-barrel-aged-pu-muen"
   },
   {
-    "name": "Oven-Baked Dian Hong Mao Feng Black Tea",
+    "name": "Darjeeling Second Flush Lingia DJ42",
     "brand_name": "Rishi Tea",
     "tea_type": "black",
-    "description": "Dian Hong is full-bodied and far less brisk and astringent than other black teas. Highly regarded for its smooth and malty flavor, its golden-red liquor, and its unique aromatic bouquet of rose, stone fruit and caramel, this tea is produced from the finest grade of the first flush harvest.",
-    "origin": null,
-    "steep_temp_f": 212,
-    "steep_time_min": 3,
-    "steep_time_max": 5,
-    "flavor_notes": [
-      "garden_direct",
-      "yunnan"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/TeaCircle_Oven-Baked_Dian_Hong_Mao_Feng_OBDHMFBT100-RP-2025.jpg?v=1748642795",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/oven-baked-dian-hong-mao-feng-black-tea"
-  },
-  {
-    "name": "Darjeeling Second Flush Chamong DJ73",
-    "brand_name": "Rishi Tea",
-    "tea_type": "black",
-    "description": "A distinguished Darjeeling that unfolds in your cup with notes of ripe peach, nectarine and blossoming flowers. Grown in historic gardens established in the late 19th century, this tea embodies the cool highland air and rich biodiversity of its wild Himalayan terroir.",
+    "description": "A rich Darjeeling shaped by cool Himalayan winds and high-mountain terrain. Plucked from vintage Black China bushes, this micro-lot intoxicates the senses with vivid notes of lily and orchid.",
     "origin": null,
     "steep_temp_f": 212,
     "steep_time_min": 3,
@@ -346,9 +329,9 @@
       "pdqreview",
       "season-fall"
     ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi_TeaCircle_Darjeeling2ndFlush_ChamongD73_CDJ73SFD100-RP_2025.jpg?v=1755144968",
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi_TeaCircle_Darjeeling2ndFlush_LingiaDJ42_LDJ42SFD100-RP_2025.jpg?v=1755144970",
     "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/darjeeling-second-flush-chamong-dj73"
+    "source_url": "https://www.rishi-tea.com/products/darjeeling-second-flush-lingia-dj42"
   },
   {
     "name": "Darjeeling Second Flush Pussimbing DJ74",
@@ -366,24 +349,6 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-TeaCircle-PSSSFDJ65100-RP.jpg?v=1762454875",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/darjeeling-second-flush-pussimbing-dj74"
-  },
-  {
-    "name": "Darjeeling Second Flush Lingia DJ42",
-    "brand_name": "Rishi Tea",
-    "tea_type": "black",
-    "description": "A rich Darjeeling shaped by cool Himalayan winds and high-mountain terrain. Plucked from vintage Black China bushes, this micro-lot intoxicates the senses with vivid notes of lily and orchid.",
-    "origin": null,
-    "steep_temp_f": 212,
-    "steep_time_min": 3,
-    "steep_time_max": 5,
-    "flavor_notes": [
-      "garden_direct",
-      "pdqreview",
-      "season-fall"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi_TeaCircle_Darjeeling2ndFlush_LingiaDJ42_LDJ42SFD100-RP_2025.jpg?v=1755144970",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/darjeeling-second-flush-lingia-dj42"
   },
   {
     "name": "Rose Scented Dian Hong",
@@ -466,6 +431,26 @@
     "source_url": "https://www.rishi-tea.com/products/organic-london-fog-earl-grey-tea-concentrate"
   },
   {
+    "name": "Jasmine",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "Our Jasmine Green features a base tea grown by our partners in Xuan En, Hubei Province, China which is prized for its high mountain character and elegant sweetness.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "cold_brew",
+      "ingredient-jasmine",
+      "organic",
+      "pdqreview",
+      "season-spring"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-JasmineGreenTea-TC.jpg?v=1762452142",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/organic-jasmine-green-tea"
+  },
+  {
     "name": "Jade Cloud",
     "brand_name": "Rishi Tea",
     "tea_type": "green",
@@ -479,7 +464,7 @@
       "organic",
       "pdqreview",
       "roasted",
-      "subscription"
+      "season-spring"
     ],
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-JadeCloud-TC.jpg?v=1762452140",
     "price_per_oz": null,
@@ -524,26 +509,6 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-FSTB-MatchaSuperGreen.jpg?v=1762452189",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/organic-matcha-super-green-teabag-sachets-50-count"
-  },
-  {
-    "name": "Jasmine",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "Our Jasmine Green features a base tea grown by our partners at the Xuan En Yisheng Tea Cooperative, which is prized for its high mountain character and elegant sweetness.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "cold_brew",
-      "ingredient-jasmine",
-      "kosher",
-      "organic",
-      "pdqreview"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-FSTB-Jasmine.jpg?v=1762452140",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/organic-jasmine-green-teabag-sachets-50-count"
   },
   {
     "name": "Genmaicha",
@@ -606,26 +571,6 @@
     "source_url": "https://www.rishi-tea.com/products/jasmine-pearls-green-tea"
   },
   {
-    "name": "Orange Blossom",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "Orange Blossom features fragrant jasmine green tea blended with citrusy herbs like lemongrass and lemon myrtle.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "iced_tea",
-      "ingredient-jasmine",
-      "kosher",
-      "organic",
-      "pdqreview"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-OrangeBlossom-TC.jpg?v=1762452166",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/organic-orange-blossom-green-tea"
-  },
-  {
     "name": "Sencha",
     "brand_name": "Rishi Tea",
     "tea_type": "green",
@@ -644,6 +589,26 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-Sencha-TC.jpg?v=1762452186",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/organic-sencha-green-tea"
+  },
+  {
+    "name": "Orange Blossom",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "Orange Blossom features fragrant jasmine green tea blended with citrusy herbs like lemongrass and lemon myrtle.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "iced_tea",
+      "ingredient-jasmine",
+      "kosher",
+      "organic",
+      "pdqreview"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-OrangeBlossom-TC.jpg?v=1762452166",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/organic-orange-blossom-green-tea"
   },
   {
     "name": "Nishi Sencha First Flush",
@@ -724,6 +689,26 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-MatchaGenmaicha-TC.jpg?v=1762452132",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/organic-matcha-genmaicha-green-tea"
+  },
+  {
+    "name": "Everyday Matcha",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "Since 2006, Rishi has partnered with pioneering organic tea farmers in the volcanic region of Kirishima, Japan to source exclusive cultivars of super premium matcha that we can custom blend for balance and energy.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "coffee_lovers",
+      "matcha",
+      "organic",
+      "subscription",
+      "tea_latte_lovers"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-EverydayMatcha-Tin.jpg?v=1762452120",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/organic-everday-matcha-tin"
   },
   {
     "name": "Matcha Gyokuro",
@@ -846,6 +831,26 @@
     "source_url": "https://www.rishi-tea.com/products/blue-jasmine-green-tea"
   },
   {
+    "name": "Dragon Well",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "Dragon Well is a traditional pan-roasted organic green tea, with a pleasant roasted chestnut flavor and low tannin.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "kosher",
+      "organic",
+      "pdqreview",
+      "season-spring",
+      "subscription"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-DragonWell-TC.jpg?v=1762452115",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/organic-dragon-well-green-tea"
+  },
+  {
     "name": "Green Tea Mint",
     "brand_name": "Rishi Tea",
     "tea_type": "green",
@@ -863,26 +868,6 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-GreenTeaMint-TC.jpg?v=1762452133",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/organic-green-tea-mint-herbal-tea"
-  },
-  {
-    "name": "Bancha",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "Bancha is the traditional daily green tea found throughout Japan.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "kosher",
-      "organic",
-      "pdqreview",
-      "roasted",
-      "season-fall"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-Bancha-TC.jpg?v=1762452098",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/organic-bancha-green-tea"
   },
   {
     "name": "Sweet Matcha",
@@ -905,10 +890,10 @@
     "source_url": "https://www.rishi-tea.com/products/sweet-matcha-powder"
   },
   {
-    "name": "Dragon Well",
+    "name": "Bancha",
     "brand_name": "Rishi Tea",
     "tea_type": "green",
-    "description": "Dragon Well is a traditional pan-roasted organic green tea, with a pleasant roasted chestnut flavor and low tannin.",
+    "description": "Bancha is the traditional daily green tea found throughout Japan.",
     "origin": null,
     "steep_temp_f": 175,
     "steep_time_min": 2,
@@ -917,12 +902,12 @@
       "kosher",
       "organic",
       "pdqreview",
-      "season-spring",
-      "subscription"
+      "roasted",
+      "season-fall"
     ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-DragonWell-TC.jpg?v=1762452115",
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-Bancha-TC.jpg?v=1762452098",
     "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/organic-dragon-well-green-tea"
+    "source_url": "https://www.rishi-tea.com/products/organic-bancha-green-tea"
   },
   {
     "name": "Butterfly Pea Flower",
@@ -1003,25 +988,6 @@
     "source_url": "https://www.rishi-tea.com/products/organic-yerba-mate-tea"
   },
   {
-    "name": "Sweet Houjicha Cocoa Powder",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "A decadent blend of milled houjicha tea leaves, sumptuous cocoa powder and pure cane sugar, our Sweet Houjicha Cocoa makes incomparable tea mocha lattes and café drinks. Distinctively smooth with pleasant chocolate, caramel, and roasted malty character, highlighted with a touch of sweetness. Lovely with milk or blended into creative coffee and tea drinks.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "dessert_lovers",
-      "pdqreview",
-      "roasted",
-      "season-summer"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-SweetHoujichaPowder-TC.jpg?v=1762452217",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/sweet-houjicha-cocoa-powder"
-  },
-  {
     "name": "Jasmine Purple Buds",
     "brand_name": "Rishi Tea",
     "tea_type": "green",
@@ -1040,6 +1006,25 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/YJPB250-JasminePurpleBuds.jpg?v=1762452587",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/jasmine-purple-buds"
+  },
+  {
+    "name": "Sweet Houjicha Cocoa Powder",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "A decadent blend of milled houjicha tea leaves, sumptuous cocoa powder and pure cane sugar, our Sweet Houjicha Cocoa makes incomparable tea mocha lattes and café drinks. Distinctively smooth with pleasant chocolate, caramel, and roasted malty character, highlighted with a touch of sweetness. Lovely with milk or blended into creative coffee and tea drinks.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "dessert_lovers",
+      "pdqreview",
+      "roasted",
+      "season-summer"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-SweetHoujichaPowder-TC.jpg?v=1762452217",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/sweet-houjicha-cocoa-powder"
   },
   {
     "name": "Matcha Hekisui",
@@ -1097,6 +1082,46 @@
     "source_url": "https://www.rishi-tea.com/products/matcha-houju"
   },
   {
+    "name": "Houjicha Powder",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "Rich and evenly roasted Houjicha milled to a powder for a range of barista applications.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "coffee_lovers",
+      "kosher",
+      "mixology",
+      "organic",
+      "pdqreview"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-HoujichaPowder-TC.jpg?v=1762452139",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/organic-houjicha-powder"
+  },
+  {
+    "name": "Nishi-san’s Matcha Okumidori",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "An organic micro-lot matcha made purely from the emerald green Okumidori cultivar. This tea is round, smooth and decadent, offering a hint of dark chocolate that leaves you wanting more.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "garden_direct",
+      "japan",
+      "matcha",
+      "organic",
+      "season-spring"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/TeaCircle_Nishi-San_sMatchaSakimidoriONSMOKDOR30-RP2025.jpg?v=1749163234",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/nishi-sans-matcha-okumidori"
+  },
+  {
     "name": "Ritual Green",
     "brand_name": "Rishi Tea",
     "tea_type": "green",
@@ -1132,6 +1157,46 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/BulkTea_ArtemisiaLemonQiTonic1.jpg?v=1762454832",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/artemisia-qi-tonic"
+  },
+  {
+    "name": "Nishi-san's Matcha Tsuyuhikari",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "An exquisite batch of organic Tsuyuhikari matcha with a lingering alpine floral fragrance and a vivid green hue that shines over ice.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "garden_direct",
+      "gift",
+      "japan",
+      "matcha",
+      "organic"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Nish-San_sMatchaTsuyuhikari_ONSTM30-RP_2025.jpg?v=1753308228",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/nishi-sans-matcha-tsuyuhikari"
+  },
+  {
+    "name": "Nishi-san's Matcha Asanoka",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "Distinguished by its refreshing “morning fragrance,” this batch of organic Asanoka matcha is green, floral and pleasantly bittersweet.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "garden_direct",
+      "gift",
+      "japan",
+      "matcha",
+      "organic"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-TeaCircle-ONSMASNK30-RP.jpg?v=1762455541",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/nishi-sans-matcha-asanoka"
   },
   {
     "name": "Arita Shincha Asatsuyu",
@@ -1171,25 +1236,6 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/TeaCircle_OnizukaShinchaYutakaMidori_SYM100-RP_2025.jpg?v=1749579987",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/onizuka-shincha-yutaka-midori"
-  },
-  {
-    "name": "Gongnong Shaiqing Premium 2025 Vintage",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "A beautifully fragrant micro-lot of sun-dried green tea from Yunnan’s Gong Nong Village. Its delicate flavor blossoms with hints of magnolia, honey and orchid.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "garden_direct",
-      "season-spring",
-      "season-summer",
-      "yunnan"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/TeaCircle_GongnongShaiqingPremium_CSPRE25100-RP-2025.jpg?v=1745939009",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/gongnong-shaiqing-premium-2025-vintage"
   },
   {
     "name": "Uji Hien Gyokuro",
@@ -1232,6 +1278,24 @@
     "source_url": "https://www.rishi-tea.com/products/nishi-sans-gyokuro"
   },
   {
+    "name": "M's Fukamushi Kabuse Sencha",
+    "brand_name": "Rishi Tea",
+    "tea_type": "green",
+    "description": "Sustainably grown in volcanic soil at the base of Mount Fuji, this shaded sencha offers an umami-rich cup with complex aromatics and a brisk, bittersweet finish.",
+    "origin": null,
+    "steep_temp_f": 175,
+    "steep_time_min": 2,
+    "steep_time_max": 3,
+    "flavor_notes": [
+      "garden_direct",
+      "season-spring",
+      "season-summer"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi_TeaCircle_MsFukamuishiKabuseSencha_MFMKSEN100-RP_2025.jpg?v=1761835062",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/ms-fukamushi-kabuse-sencha"
+  },
+  {
     "name": "Shincha Koushun",
     "brand_name": "Rishi Tea",
     "tea_type": "green",
@@ -1251,120 +1315,6 @@
     "source_url": "https://www.rishi-tea.com/products/shincha-koushun"
   },
   {
-    "name": "Utougi Hand-Picked Shincha Yabukita",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "A hand-picked, lightly steamed shincha that delights the senses with hints of umami and a luxurious high-mountain aroma.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "garden_direct",
-      "japan",
-      "season-spring",
-      "season-summer"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/TeaCircle_UtougiHand-PickedShinchaYabukitaUYHP100-RP2025.jpg?v=1750267676",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/utougi-hand-picked-shincha-yabukita"
-  },
-  {
-    "name": "Tamakazura Gyokuro",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "An elite gyokuro crafted with multiple cultivars and vintages from select Uji farms. Rich umami layers unfold throughout several infusions, revealing notes of roasted nori and refreshing hinoki woods.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "garden_direct",
-      "japan",
-      "season-fall",
-      "season-summer",
-      "uji"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi_TeaCircle_TamakazuraGyokuroTAMAGYO50-RP_2025.jpg?v=1757084511",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/tamakazura-gyokuro"
-  },
-  {
-    "name": "M's Fukamushi Kabuse Sencha",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "Sustainably grown in volcanic soil at the base of Mount Fuji, this shaded sencha offers an umami-rich cup with complex aromatics and a brisk, bittersweet finish.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "garden_direct"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi_TeaCircle_MsFukamuishiKabuseSencha_MFMKSEN100-RP_2025.jpg?v=1761835062",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/ms-fukamushi-kabuse-sencha"
-  },
-  {
-    "name": "Yaeyama Shincha Yabukita",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "A mid-steamed shincha to fill your cup with fresh, elegant umami flavor. Grown in a family-operated tea garden, this micro-lot showcases the cool minerality of Kirishima’s mountainous terroir.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "garden_direct",
-      "japan",
-      "season-spring",
-      "season-summer"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/TeaCircle_YaeyamaShinchaYabukita_YAESHINYAB100-RP_2025.jpg?v=1751576091",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/yaeyama-shincha-yabukita"
-  },
-  {
-    "name": "Green Needles Qun Ti Zhong",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "A refreshing pine needle-shaped green tea, from the remote heirloom gardens of Jin Long Ping Village, with notes of mountain minerality, corn silk and osmanthus.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "garden_direct",
-      "mingqian",
-      "pdqreview",
-      "season-spring",
-      "season-summer"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/TeaCircle_GreenNeedlesQunTiZhong_MGNQZ100-RP-2025.jpg?v=1745939007",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/green-needles-qun-ti-zhong"
-  },
-  {
-    "name": "Rikio-san's Hon Yama Sencha",
-    "brand_name": "Rishi Tea",
-    "tea_type": "green",
-    "description": "A classic Hon Yama sencha, harvested in spring and aged for several months. This organic tea yields a beautifully balanced infusion with refreshing alpine nuances and a creamy, satisfying finish.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 3,
-    "flavor_notes": [
-      "garden_direct",
-      "japan",
-      "organic",
-      "season-fall",
-      "season-spring"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-TeaCircle-RikioSansHonYamaGyokuro_ORIKIOHGYO100-RP_2025.jpg?v=1761866186",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/rikio-sans-hon-yama-sencha"
-  },
-  {
     "name": "Iron Goddess of Mercy",
     "brand_name": "Rishi Tea",
     "tea_type": "oolong",
@@ -1375,10 +1325,10 @@
     "steep_time_max": 5,
     "flavor_notes": [
       "cold_brew",
+      "dessert_lovers",
       "kosher",
       "pdqreview",
-      "roasted",
-      "season-fall"
+      "roasted"
     ],
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-IronGoddeessofMercy-TC.jpg?v=1762452082",
     "price_per_oz": null,
@@ -1606,6 +1556,23 @@
     "source_url": "https://www.rishi-tea.com/products/phoenix-dancong-mi-lan-xiang"
   },
   {
+    "name": "Phoenix Dancong Ao Fu Hou",
+    "brand_name": "Rishi Tea",
+    "tea_type": "oolong",
+    "description": "An elite high-mountain Phoenix Dancong oolong that refreshes and comforts the senses with notes of golden gardenia and mineral-rich spring water. This rare Ao Fu Hou micro-lot undergoes a final bake, bringing out soul-warming aromas of cherrywood and berry pie.",
+    "origin": null,
+    "steep_temp_f": 195,
+    "steep_time_min": 3,
+    "steep_time_max": 5,
+    "flavor_notes": [
+      "garden_direct",
+      "high_mountain_oolong"
+    ],
+    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi_TeaCircle_AoFuHouPhoenixDancong_DCOAFY50-RP_2025.jpg?v=1755111643",
+    "price_per_oz": null,
+    "source_url": "https://www.rishi-tea.com/products/phoenix-dancong-ao-fu-hou"
+  },
+  {
     "name": "Phoenix Dancong Zhi Lan Xiang",
     "brand_name": "Rishi Tea",
     "tea_type": "oolong",
@@ -1624,23 +1591,6 @@
     "source_url": "https://www.rishi-tea.com/products/phoenix-dancong-zhi-lan-xiang"
   },
   {
-    "name": "Phoenix Dancong Ao Fu Hou",
-    "brand_name": "Rishi Tea",
-    "tea_type": "oolong",
-    "description": "An elite high-mountain Phoenix Dancong oolong that refreshes and comforts the senses with notes of golden gardenia and mineral-rich spring water. This rare Ao Fu Hou micro-lot undergoes a final bake, bringing out soul-warming aromas of cherrywood and berry pie.",
-    "origin": null,
-    "steep_temp_f": 195,
-    "steep_time_min": 3,
-    "steep_time_max": 5,
-    "flavor_notes": [
-      "garden_direct",
-      "high_mountain_oolong"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi_TeaCircle_AoFuHouPhoenixDancong_DCOAFY50-RP_2025.jpg?v=1755111643",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/phoenix-dancong-ao-fu-hou"
-  },
-  {
     "name": "Peach Blossom",
     "brand_name": "Rishi Tea",
     "tea_type": "white",
@@ -1652,6 +1602,7 @@
     "flavor_notes": [
       "organic",
       "pdqreview",
+      "season-spring",
       "season-summer",
       "subscription"
     ],
@@ -1693,31 +1644,11 @@
       "kosher",
       "organic",
       "pdqreview",
-      "subscription"
+      "season-spring"
     ],
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-SilverNeedles-TC.jpg?v=1762452193",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/organic-silver-needles-white-tea"
-  },
-  {
-    "name": "White Tea Rose Melange",
-    "brand_name": "Rishi Tea",
-    "tea_type": "white",
-    "description": "This white tea blend features a base of White Peony and presents a fresh floral bouquet with a bright minty finish.",
-    "origin": null,
-    "steep_temp_f": 175,
-    "steep_time_min": 2,
-    "steep_time_max": 4,
-    "flavor_notes": [
-      "gift",
-      "ingredient-jasmine",
-      "kosher",
-      "organic",
-      "pdqreview"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-WhiteTeaRoseMelange-TC.jpg?v=1762452209",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/organic-white-tea-rose-melange-tea"
   },
   {
     "name": "Rose Scented Silver Needles",
@@ -1830,10 +1761,10 @@
     "steep_time_max": 5,
     "flavor_notes": [
       "coffee_lovers",
+      "dessert_lovers",
       "mixology",
       "organic",
-      "pdqreview",
-      "season-winter"
+      "pdqreview"
     ],
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-PDP-Carousel-PuerTuoCha-TC.jpg?v=1762452096",
     "price_per_oz": null,
@@ -1913,26 +1844,6 @@
     "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/lprawtb22250-rp-laosshengbrick2022-1_1.jpg?v=1762452084",
     "price_per_oz": null,
     "source_url": "https://www.rishi-tea.com/products/laos-sheng-puer-tea-brick-vintage-2022"
-  },
-  {
-    "name": "Pu'er Tuo Cha Schisandra Clove",
-    "brand_name": "Rishi Tea",
-    "tea_type": "puerh",
-    "description": "Experience a bold and harmonious fusion with our Shu Pu’er tea blend enriched by the warm spice of clove bud and the tangy complexity of schisandra berry.",
-    "origin": null,
-    "steep_temp_f": 212,
-    "steep_time_min": 3,
-    "steep_time_max": 5,
-    "flavor_notes": [
-      "coffee_lovers",
-      "garden_direct",
-      "season-winter",
-      "teacake",
-      "yunnan"
-    ],
-    "image_url": "https://cdn.shopify.com/s/files/1/0645/3788/6970/files/Rishi-TeaCircle-PTCSCHCL-RP.jpg?v=1762456029",
-    "price_per_oz": null,
-    "source_url": "https://www.rishi-tea.com/products/pu-er-tuo-cha-schisandra-clove"
   },
   {
     "name": "Doi Wawee Sheng Pu'er Vintage Spring 2022",

@@ -163,6 +163,8 @@ export const TimerScreen = ({ route, navigation }) => {
   const [hasLogged, setHasLogged] = useState(false);
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [timeModified, setTimeModified] = useState(false);
+  const [teaWeight, setTeaWeight] = useState(null);
+  const [teaWeightUnit, setTeaWeightUnit] = useState('g');
   
   const intervalRef = useRef(null);
   const notificationIdRef = useRef(null);
@@ -182,6 +184,12 @@ export const TimerScreen = ({ route, navigation }) => {
       }
       if (preferredSettings.temperatureF) {
         setTemperatureF(preferredSettings.temperatureF);
+      }
+      if (preferredSettings.teaWeight) {
+        setTeaWeight(preferredSettings.teaWeight);
+      }
+      if (preferredSettings.teaWeightUnit) {
+        setTeaWeightUnit(preferredSettings.teaWeightUnit);
       }
     }
   }, [teaId]); // Only run when tea changes
@@ -349,6 +357,8 @@ export const TimerScreen = ({ route, navigation }) => {
         infusionNumber: multiSteepMode ? currentInfusion : null,
         note: infusionNotes[currentInfusion] || null,
         brewMethod: brewMethod,
+        teaWeight: teaWeight,
+        teaWeightUnit: teaWeightUnit,
       });
 
       // Mark tea as tried in collection if it exists
@@ -404,6 +414,8 @@ export const TimerScreen = ({ route, navigation }) => {
       steepTimeSeconds: totalSeconds,
       brewMethod: brewMethod,
       temperatureF: temperatureF,
+      teaWeight: teaWeight,
+      teaWeightUnit: teaWeightUnit,
     });
     if (error) {
       Alert.alert('Error', 'Could not save your preferred settings. Please try again.');
@@ -808,6 +820,89 @@ export const TimerScreen = ({ route, navigation }) => {
             />
           </View>
         )}
+
+        {/* Tea Weight */}
+        {tea && !isComplete && (
+          <View style={[styles.weightContainer, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
+            <Text style={[styles.weightLabel, { color: theme.text.secondary }]}>Tea Amount</Text>
+            <View style={styles.weightControls}>
+              <TouchableOpacity
+                style={[styles.weightBtn, { backgroundColor: theme.background.primary, borderColor: theme.border.medium }]}
+                onPress={() => {
+                  const step = teaWeightUnit === 'g' ? 0.5 : 0.25;
+                  const min = teaWeightUnit === 'g' ? 0.5 : 0.25;
+                  setTeaWeight(prev => prev ? Math.max(min, prev - step) : min);
+                  setTimeModified(true);
+                }}
+                disabled={isRunning}
+              >
+                <Minus size={16} color={isRunning ? theme.text.secondary : theme.text.primary} />
+              </TouchableOpacity>
+              
+              <TouchableOpacity 
+                style={styles.weightDisplay}
+                onPress={() => {
+                  if (!isRunning) {
+                    setTeaWeight(null);
+                    setTimeModified(true);
+                  }
+                }}
+              >
+                <Text style={[styles.weightValue, { color: theme.text.primary }]}>
+                  {teaWeight ? teaWeight.toFixed(teaWeightUnit === 'g' ? 1 : 2) : '\u2014'}
+                </Text>
+              </TouchableOpacity>
+              
+              <TouchableOpacity
+                style={[styles.weightBtn, { backgroundColor: theme.background.primary, borderColor: theme.border.medium }]}
+                onPress={() => {
+                  const step = teaWeightUnit === 'g' ? 0.5 : 0.25;
+                  const defaultVal = teaWeightUnit === 'g' ? 3 : 1;
+                  setTeaWeight(prev => prev ? prev + step : defaultVal);
+                  setTimeModified(true);
+                }}
+                disabled={isRunning}
+              >
+                <Plus size={16} color={isRunning ? theme.text.secondary : theme.text.primary} />
+              </TouchableOpacity>
+            </View>
+            
+            <View style={styles.unitToggle}>
+              <TouchableOpacity
+                style={[
+                  styles.unitBtn,
+                  teaWeightUnit === 'g' && { backgroundColor: theme.accent.primary },
+                  { borderColor: theme.border.medium }
+                ]}
+                onPress={() => {
+                  if (!isRunning && teaWeightUnit !== 'g') {
+                    setTeaWeightUnit('g');
+                    if (teaWeight) setTeaWeight(Math.round(teaWeight * 2.5 * 2) / 2);
+                    setTimeModified(true);
+                  }
+                }}
+              >
+                <Text style={[styles.unitText, { color: teaWeightUnit === 'g' ? '#fff' : theme.text.secondary }]}>grams</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.unitBtn,
+                  teaWeightUnit === 'tsp' && { backgroundColor: theme.accent.primary },
+                  { borderColor: theme.border.medium }
+                ]}
+                onPress={() => {
+                  if (!isRunning && teaWeightUnit !== 'tsp') {
+                    setTeaWeightUnit('tsp');
+                    if (teaWeight) setTeaWeight(Math.round(teaWeight / 2.5 * 4) / 4);
+                    setTimeModified(true);
+                  }
+                }}
+              >
+                <Text style={[styles.unitText, { color: teaWeightUnit === 'tsp' ? '#fff' : theme.text.secondary }]}>tsp</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
         
         {/* Show current note if exists */}
         {multiSteepMode && infusionNotes[currentInfusion] && !isComplete && (
@@ -876,6 +971,8 @@ export const TimerScreen = ({ route, navigation }) => {
             teaData: tea,
             infusionNumber: multiSteepMode ? currentInfusion : null,
             brewMethod: brewMethod,
+            teaWeight: teaWeight,
+            teaWeightUnit: teaWeightUnit,
             rating: rating,
             tastingNotes: notes,
           });
@@ -1129,6 +1226,56 @@ const styles = StyleSheet.create({
   },
   adjustTimeLabel: {
     ...typography.caption,
+  },
+  weightContainer: {
+    marginHorizontal: 20,
+    marginBottom: 16,
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+  weightLabel: {
+    fontSize: 11,
+    marginBottom: 12,
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+  },
+  weightControls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 16,
+    marginBottom: 12,
+  },
+  weightBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    borderWidth: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  weightDisplay: {
+    minWidth: 60,
+    alignItems: 'center',
+  },
+  weightValue: {
+    fontSize: 24,
+    fontWeight: '600',
+  },
+  unitToggle: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  unitBtn: {
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1,
+  },
+  unitText: {
+    fontSize: 13,
+    fontWeight: '600',
   },
   tempContainer: {
     alignItems: 'center',

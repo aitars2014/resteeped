@@ -1,5 +1,35 @@
 [
   {
+    "name": "Chai Tea Bundle, Set of 4",
+    "brandName": "Vahdam Teas",
+    "teaType": "black",
+    "description": "Savor our spiced chai collection, where bold black tea meets warm, aromatic spices. From cardamom to cinnamon, each blend offers a rich, comforting taste of tradition in every cup.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/3_2f808035-aaec-4019-8374-1b2bb76eb091.jpg?v=1739361203",
+    "productUrl": "https://www.vahdamteas.com/products/chai-tea-bundle-set-of-4-unique-chai-teas",
+    "priceUsd": 56.99,
+    "tags": [],
+    "productType": "Virtual Bundles",
+    "shopifyId": 7325883891755,
+    "createdAt": "2025-02-12T06:54:56-05:00",
+    "updatedAt": "2026-03-01T10:02:59-05:00"
+  },
+  {
+    "name": "Turmeric Tea Bundle, Set of 3",
+    "brandName": "Vahdam Teas",
+    "teaType": "herbal",
+    "description": "Immerse yourself in our collection of turmeric-infused herbal teas, where the rich, earthy essence of turmeric takes center stage. Expertly blended with complementary botanicals, these teas offer a perfect harmony of flavor and aroma.",
+    "imageUrl": "https://cdn.shopify.com/s/files/1/2675/9476/files/Turemric_Chamo.jpg?v=1741701242",
+    "productUrl": "https://www.vahdamteas.com/products/herbal-tea-bundle-set-of-4-unique-turmeric-blends",
+    "priceUsd": 58.59,
+    "tags": [
+      "herbal-teas"
+    ],
+    "productType": "Virtual Bundles",
+    "shopifyId": 7325878255659,
+    "createdAt": "2025-02-12T06:38:12-05:00",
+    "updatedAt": "2026-03-01T10:02:59-05:00"
+  },
+  {
     "name": "Ashwagandha Coffee 1 Pack (FLAT 30% OFF + 6 FREE Gifts worth $50)",
     "brandName": "Vahdam Teas",
     "teaType": "black",
@@ -14,7 +44,7 @@
     "productType": "Coffee",
     "shopifyId": 7517516070955,
     "createdAt": "2025-09-01T10:25:10-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Ginger Herbal Tea Tisane, 100 Count",
@@ -49,7 +79,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 4479547244587,
     "createdAt": "2020-06-19T04:40:48-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Ashwagandha Herbal Tea Tisane, 100 Count",
@@ -78,7 +108,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 6583653793835,
     "createdAt": "2021-06-11T03:55:15-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Ashwagandha Herbal Tea, 18 Count",
@@ -96,7 +126,7 @@
     "productType": "Herbs & Spices",
     "shopifyId": 7260157509675,
     "createdAt": "2024-07-23T09:00:59-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Ashwagandha Instant Mix, 3.53 oz",
@@ -124,7 +154,7 @@
     "productType": "Instant | Lattes",
     "shopifyId": 1819001094187,
     "createdAt": "2019-06-25T04:50:39-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Cosmos Tea Cup (250ml)",
@@ -146,7 +176,7 @@
     "productType": "Accessories | Glass",
     "shopifyId": 6584595021867,
     "createdAt": "2021-06-14T09:30:23-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "2025 Castleton Classic Darjeeling Second Flush Black Tea DJ 354",
@@ -174,7 +204,7 @@
     "productType": "Single Estate",
     "shopifyId": 7427851780139,
     "createdAt": "2025-07-29T04:41:25-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "2025 Castleton Moonlight Darjeeling Second Flush Black Tea DJ 373",
@@ -191,7 +221,7 @@
     "productType": "Single Estate",
     "shopifyId": 7427860529195,
     "createdAt": "2025-07-29T04:47:46-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "2025 Margaret's Hope Premium Darjeeling Second Flush Black Tea  DJ 331",
@@ -217,7 +247,7 @@
     "productType": "Single Estate",
     "shopifyId": 7408434544683,
     "createdAt": "2025-07-04T03:19:10-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "2025 Jungpana Muscatel Darjeeling Second Flush Black Tea DJ 120",
@@ -242,7 +272,7 @@
     "productType": "Single Estate",
     "shopifyId": 7510434775083,
     "createdAt": "2025-08-25T04:46:50-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "2025 Giddapahar Classic Darjeeling Second Flush Black Tea DJ 74",
@@ -271,7 +301,7 @@
     "productType": "Single Estate",
     "shopifyId": 7404092817451,
     "createdAt": "2025-06-26T08:33:58-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "2025 Okayti Classic Darjeeling Second Flush Black Tea DJ 73",
@@ -296,7 +326,7 @@
     "productType": "Single Estate",
     "shopifyId": 7426802352171,
     "createdAt": "2025-07-28T05:11:24-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Himalayan Green Tea, 12 oz",
@@ -323,7 +353,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 4478396530731,
     "createdAt": "2020-06-18T04:57:28-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "India's Original Masala Chai Tea, 12 oz",
@@ -359,7 +389,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 4473857179691,
     "createdAt": "2020-06-10T06:51:17-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "20 Teas Loose Leaf Sampler - 1 Pack",
@@ -381,7 +411,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 7419947057195,
     "createdAt": "2025-07-18T10:27:06-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Black Tea Bundle, Set of 4",
@@ -395,7 +425,7 @@
     "productType": "Virtual Bundles",
     "shopifyId": 7325894475819,
     "createdAt": "2025-02-12T07:29:05-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Green Tea Bundle, Set of 4",
@@ -411,7 +441,7 @@
     "productType": "Virtual Bundles",
     "shopifyId": 7325893165099,
     "createdAt": "2025-02-12T07:20:13-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Sprightly Spearmint Herbal Tea, 100 Count",
@@ -427,7 +457,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 7320817270827,
     "createdAt": "2025-01-31T04:37:43-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Herbal Tea Variety Pack, 36 Infusion Bags",
@@ -444,7 +474,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 7320318410795,
     "createdAt": "2025-01-30T09:05:39-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Hearty Hibiscus Herbal Tea 100 Count",
@@ -460,7 +490,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 7320318050347,
     "createdAt": "2025-01-30T09:00:18-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Zingy Ginger Herbal Tea, 100 Count",
@@ -476,7 +506,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 7320316248107,
     "createdAt": "2025-01-30T08:57:03-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Moringa Leaf Herbal Tea, 100 Count",
@@ -492,7 +522,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 7320313233451,
     "createdAt": "2025-01-30T08:49:26-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Darjeeling Teas Sampler, 10 Teas",
@@ -515,7 +545,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424901341227,
     "createdAt": "2018-08-08T03:42:19-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Foldable Advent Calendar Tea Gift, 24 Loose Leaf Teas, 1.69 Oz, 48g",
@@ -536,7 +566,7 @@
     "productType": "Gifts | Occasion",
     "shopifyId": 7271460569131,
     "createdAt": "2024-09-12T05:16:59-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Foldable Advent Calendar Tea Gift, 24 Teas, 1.69 Oz, 48g",
@@ -553,7 +583,7 @@
     "productType": "Gifts | Christmas",
     "shopifyId": 7269352210475,
     "createdAt": "2024-09-06T03:22:06-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Vanilla Spiced Masala Chai Tea, 100 Count",
@@ -582,7 +612,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 6707166380075,
     "createdAt": "2021-12-13T03:39:24-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Christmas Tea Gift Set, 9 Individually Wrapped Tea Bags",
@@ -600,7 +630,7 @@
     "productType": "Gifts | Christmas",
     "shopifyId": 7260408905771,
     "createdAt": "2024-07-24T06:50:54-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Tea Variety Pack, 20 Teas",
@@ -618,7 +648,7 @@
     "productType": "Herbs & Spices",
     "shopifyId": 7257988628523,
     "createdAt": "2024-07-17T03:04:30-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Citrus Ginger Herbal Tea 18 Count",
@@ -636,7 +666,7 @@
     "productType": "Herbs & Spices",
     "shopifyId": 7257986334763,
     "createdAt": "2024-07-17T02:58:43-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Ginger Herbal Tea 18 Count",
@@ -654,7 +684,7 @@
     "productType": "Herbs & Spices",
     "shopifyId": 7257983057963,
     "createdAt": "2024-07-17T02:50:30-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Classic Advent Calendar, Gift Set, 24 Teas",
@@ -684,7 +714,7 @@
     "productType": "Gifts | Christmas",
     "shopifyId": 7153443307563,
     "createdAt": "2023-09-29T09:01:37-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Lychee Rose Iced Tea | 26 Pitcher Tea Bags",
@@ -712,7 +742,7 @@
     "productType": "Iced Teas | Tea Bags",
     "shopifyId": 7104594804779,
     "createdAt": "2023-05-09T02:51:41-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Butterfly Pea Flower Tea Herbal Tea Tisane, 1.76 oz",
@@ -729,7 +759,7 @@
     "productType": "Herbal Teas | Loose leaf",
     "shopifyId": 7098502348843,
     "createdAt": "2023-04-25T05:47:45-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Butterfly Pea Flower Herbal Tea, 40 Count",
@@ -746,7 +776,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 7098486816811,
     "createdAt": "2023-04-25T03:45:27-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Assam Exotic Black Tea, 100 Count",
@@ -770,7 +800,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 4479521947691,
     "createdAt": "2020-06-19T03:32:59-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Applause CTC Assam Summer Black Tea, 340gm /12oz",
@@ -796,7 +826,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478633607211,
     "createdAt": "2020-06-18T12:24:19-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Assam Exotic Second Flush Black Tea, 3.53 oz",
@@ -821,7 +851,7 @@
     "productType": "Black Teas | Loose leaf",
     "shopifyId": 1463516299307,
     "createdAt": "2018-08-31T03:02:06-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Drift Mug for Teacher, Insulated, 10.1 Oz, 300ml",
@@ -845,7 +875,7 @@
     "productType": "Accessories | Insulated",
     "shopifyId": 7015300726827,
     "createdAt": "2022-11-09T06:43:03-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Imperial Loose Leaf Tea Maker with Infuser",
@@ -870,7 +900,7 @@
     "productType": "Accessories | Glass",
     "shopifyId": 6840668454955,
     "createdAt": "2022-05-04T06:01:28-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Jasmine Green Tea, 100 Count",
@@ -894,7 +924,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 6835293618219,
     "createdAt": "2022-04-26T09:11:18-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Himalayan Green Tea, 3.53 oz",
@@ -920,7 +950,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 6837558640683,
     "createdAt": "2022-04-29T03:31:16-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "World of Tea Gift Sampler, 20 Teas",
@@ -945,7 +975,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 6837467349035,
     "createdAt": "2022-04-29T01:50:33-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Assorted Tea Bags Sampler, (40 Pyramid Tea Bags) 20 Flavors",
@@ -974,7 +1004,7 @@
     "productType": "Tea Bags | Samplers",
     "shopifyId": 6835316523051,
     "createdAt": "2022-04-26T10:04:24-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Darjeeling Premium First Flush Black Tea, 3.53 oz",
@@ -998,7 +1028,7 @@
     "productType": "Black Teas | Loose leaf",
     "shopifyId": 1463518101547,
     "createdAt": "2018-08-31T03:09:26-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Sweet Cinnamon Masala Chai Tea, 30 Count",
@@ -1023,7 +1053,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 1577085796395,
     "createdAt": "2018-11-10T06:05:30-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Decaf Himalayan Green Tea, 100 Count",
@@ -1046,7 +1076,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 6596708139051,
     "createdAt": "2021-07-23T10:15:49-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Mint Melody Green Tea, 30 Count",
@@ -1071,7 +1101,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 1577083535403,
     "createdAt": "2018-11-10T05:58:09-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Lopchu Golden Orange Pekoe Darjeeling Second Flush Black Tea, 3.53 Oz",
@@ -1096,7 +1126,7 @@
     "productType": "Single Estate",
     "shopifyId": 6597389484075,
     "createdAt": "2021-07-26T02:41:46-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Perfect Serve Spoon",
@@ -1117,7 +1147,7 @@
     "productType": "Accessories | Stainless Steel",
     "shopifyId": 1425187405867,
     "createdAt": "2018-08-08T09:09:17-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Signature Private Reserve Gift Set, 24 Teas",
@@ -1147,7 +1177,7 @@
     "productType": "Gifts | Private Reserve",
     "shopifyId": 6630237437995,
     "createdAt": "2021-10-20T02:21:04-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Classic Tea Sampler, Gift Set, 24 Teas",
@@ -1178,7 +1208,7 @@
     "productType": "Gifts | Tea Bags",
     "shopifyId": 6614800662571,
     "createdAt": "2021-09-14T07:59:10-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Herbal Tea Assortment, Gift Set, 36 Teas",
@@ -1211,7 +1241,7 @@
     "productType": "Gifts | Tea Bags",
     "shopifyId": 6614806102059,
     "createdAt": "2021-09-14T08:28:29-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Green Tea Assortment, Gift Set, 36 Teas",
@@ -1244,7 +1274,7 @@
     "productType": "Gifts | Tea Bags",
     "shopifyId": 6614804004907,
     "createdAt": "2021-09-14T08:17:02-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Chai Tea Assortment, Gift Set, 36 Teas",
@@ -1278,7 +1308,7 @@
     "productType": "Gifts | Tea Bags",
     "shopifyId": 6614808592427,
     "createdAt": "2021-09-14T08:44:22-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Vedic Kadha Herbal Tea Tisane, 100 Count",
@@ -1301,7 +1331,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 6561764507691,
     "createdAt": "2021-04-22T00:55:31-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Chamomile Herbal Tea, 100 Count",
@@ -1330,7 +1360,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 6539541938219,
     "createdAt": "2021-03-02T03:43:53-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Pure Mint Herbal Tea Tisane, 100 Count",
@@ -1358,7 +1388,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 6539580964907,
     "createdAt": "2021-03-02T04:55:55-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Lemon Ginger Green Tea, 100 Count",
@@ -1386,7 +1416,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 6539537023019,
     "createdAt": "2021-03-02T03:14:18-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Hibiscus Rose Herbal Tea Tisane, 100 Count",
@@ -1419,7 +1449,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 6539589943339,
     "createdAt": "2021-03-02T05:07:54-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Ginger Mint Green Tea, 100 Count",
@@ -1448,7 +1478,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 6539530666027,
     "createdAt": "2021-03-02T02:43:34-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Classic Chamomile Herbal Tea Tisane, 100 Count",
@@ -1475,7 +1505,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 6539563663403,
     "createdAt": "2021-03-02T04:26:24-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Weekend in London, Gift Set, 9 Teas",
@@ -1503,7 +1533,7 @@
     "productType": "Gifts | Travel",
     "shopifyId": 4831738855467,
     "createdAt": "2020-10-18T16:59:40-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Christmas Holiday Breakfast Gift Set, 9 Teas",
@@ -1531,7 +1561,7 @@
     "productType": "Gifts | Christmas",
     "shopifyId": 4831748030507,
     "createdAt": "2020-10-18T18:05:09-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Chai Tea Assortment Gift Set, 12 Teas",
@@ -1561,7 +1591,7 @@
     "productType": "Gifts | Carnival",
     "shopifyId": 4831749111851,
     "createdAt": "2020-10-18T18:13:25-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Assam Gold Second Flush Black Tea, 3.53 oz",
@@ -1587,7 +1617,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 1397814100011,
     "createdAt": "2018-07-25T02:47:33-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Ginger Herbal Tea Tisane, 30 Count",
@@ -1620,7 +1650,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 1838890680363,
     "createdAt": "2019-07-24T05:02:13-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "High Mountain Oolong Tea, 100 Count",
@@ -1644,7 +1674,7 @@
     "productType": "Oolong Teas | Tea Bags",
     "shopifyId": 4479550783531,
     "createdAt": "2020-06-19T04:56:47-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Moringa Herbal Tea Tisane, 100 Count",
@@ -1671,7 +1701,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 4479548850219,
     "createdAt": "2020-06-19T04:49:00-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Spiced Herbal Tea Tisane, 100 Count",
@@ -1702,7 +1732,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 4479544590379,
     "createdAt": "2020-06-19T04:33:55-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Cardamom Masala Chai Tea, 100 Count",
@@ -1727,7 +1757,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 4479529484331,
     "createdAt": "2020-06-19T03:59:46-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "India's Original Masala Chai Tea, 100 Count",
@@ -1754,7 +1784,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 4479528632363,
     "createdAt": "2020-06-19T03:56:20-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Mint Melody Green Tea, 100 Count",
@@ -1780,7 +1810,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 4479524732971,
     "createdAt": "2020-06-19T03:45:08-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Chamomile Mint Citrus Green Tea, 100 Count",
@@ -1808,7 +1838,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 4479523848235,
     "createdAt": "2020-06-19T03:41:28-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Organic Himalayan Green Tea, 100 Count",
@@ -1839,7 +1869,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 4479522603051,
     "createdAt": "2020-06-19T03:35:39-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Darjeeling Spring Black Tea, 100 Count",
@@ -1863,7 +1893,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 4479520931883,
     "createdAt": "2020-06-19T03:29:10-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Ginger Latte Mix, 3.53 oz",
@@ -1895,7 +1925,7 @@
     "productType": "Instant | Lattes",
     "shopifyId": 1819001487403,
     "createdAt": "2019-06-25T04:52:43-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Earl Grey Black Tea, 100 Count",
@@ -1923,7 +1953,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 4479510675499,
     "createdAt": "2020-06-19T02:38:48-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Darjeeling Summer Black Tea, 100 Count",
@@ -1950,7 +1980,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 4479510151211,
     "createdAt": "2020-06-19T02:35:53-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "English Breakfast Black Tea, 100 Count",
@@ -1976,7 +2006,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 4479507169323,
     "createdAt": "2020-06-19T02:18:35-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Pure Matcha Green Tea Powder, Culinary Grade, 3.53 oz",
@@ -1999,7 +2029,7 @@
     "productType": "Instant | Matcha",
     "shopifyId": 4478730895403,
     "createdAt": "2020-06-18T13:22:33-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Daily Assam Black Tea, 12 oz",
@@ -2030,7 +2060,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478468292651,
     "createdAt": "2020-06-18T09:55:21-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Daily Darjeeling Second Flush Black Tea, 12 oz",
@@ -2053,7 +2083,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478460231723,
     "createdAt": "2020-06-18T09:15:41-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Darjeeling Premium First Flush Black Tea, 12 oz",
@@ -2075,7 +2105,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478458527787,
     "createdAt": "2020-06-18T09:08:27-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Unitea - Blend of Darjeeling & Assam Black Tea, 12 oz",
@@ -2096,7 +2126,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478448762923,
     "createdAt": "2020-06-18T08:35:41-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Earl Grey Black Tea, 12 oz",
@@ -2127,7 +2157,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478439817259,
     "createdAt": "2020-06-18T08:16:17-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "English Breakfast Black Tea, 12 oz",
@@ -2159,7 +2189,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 4478438932523,
     "createdAt": "2020-06-18T08:12:41-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "High Mountain Oolong Tea, 12 oz",
@@ -2183,7 +2213,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 4478427660331,
     "createdAt": "2020-06-18T07:31:41-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Chocolate Vanilla Herbal Tea Tisane, 3.53 oz",
@@ -2209,7 +2239,7 @@
     "productType": "Herbal Teas | Loose leaf",
     "shopifyId": 4465397628971,
     "createdAt": "2020-05-29T10:01:59-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Bloom, Tea Gift Set, 12 Teas",
@@ -2242,7 +2272,7 @@
     "productType": "Gifts | Classic",
     "shopifyId": 1836828524587,
     "createdAt": "2019-07-19T08:16:44-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Matcha Green Tea Powder, 1.76 oz",
@@ -2266,7 +2296,7 @@
     "productType": "Instant | Matcha",
     "shopifyId": 1712090447915,
     "createdAt": "2019-02-26T08:32:37-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Vanilla Matcha Green Tea Powder, 3.53 oz",
@@ -2291,7 +2321,7 @@
     "productType": "Instant | Matcha",
     "shopifyId": 1712087236651,
     "createdAt": "2019-02-26T08:26:41-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Founder's Select Gift Set, 36 Teas",
@@ -2322,7 +2352,7 @@
     "productType": "Gifts | Tea Bags",
     "shopifyId": 1657616171051,
     "createdAt": "2019-01-02T02:15:57-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Chai Tea Private Reserve Gift Set, 3 Teas",
@@ -2353,7 +2383,7 @@
     "productType": "Gifts | Private Reserve",
     "shopifyId": 1617213882411,
     "createdAt": "2018-11-29T06:37:34-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Assorted Selection Tea Sampler, 15 Variants",
@@ -2379,7 +2409,7 @@
     "productType": "Tea Bags | Samplers",
     "shopifyId": 1583283437611,
     "createdAt": "2018-11-14T03:31:07-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Assorted Chai Teas Sampler, 5 Variants",
@@ -2407,7 +2437,7 @@
     "productType": "Tea Bags | Samplers",
     "shopifyId": 1583275376683,
     "createdAt": "2018-11-14T03:12:28-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Assorted Green Teas Sampler, 5 Variants",
@@ -2432,7 +2462,7 @@
     "productType": "Tea Bags | Samplers",
     "shopifyId": 1583241035819,
     "createdAt": "2018-11-14T02:42:19-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Assorted Black Teas Sampler, 5 Variants",
@@ -2457,7 +2487,7 @@
     "productType": "Tea Bags | Samplers",
     "shopifyId": 1583238840363,
     "createdAt": "2018-11-14T02:40:47-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Chamomile Mint Citrus Green Tea, 30 Count",
@@ -2485,7 +2515,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 1577085141035,
     "createdAt": "2018-11-10T06:02:10-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Earl Grey Black Tea, 30 Count",
@@ -2510,7 +2540,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 1577084157995,
     "createdAt": "2018-11-10T06:00:00-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Vanilla Spiced Masala Chai Tea, 30 Count",
@@ -2534,7 +2564,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 1577083797547,
     "createdAt": "2018-11-10T05:59:01-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Cardamom Masala Chai Tea, 30 Count",
@@ -2558,7 +2588,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 1577083338795,
     "createdAt": "2018-11-10T05:57:03-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Imperial Himalayan White Tea Bags, 15 Count",
@@ -2582,7 +2612,7 @@
     "productType": "White Teas | Tea Bags",
     "shopifyId": 1577082650667,
     "createdAt": "2018-11-10T05:53:51-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "High Mountain Oolong Tea, 30 Count",
@@ -2607,7 +2637,7 @@
     "productType": "Oolong Teas | Tea Bags",
     "shopifyId": 1577082290219,
     "createdAt": "2018-11-10T05:51:27-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "English Breakfast Black Tea, 30 Count",
@@ -2632,7 +2662,7 @@
     "productType": "Black Teas | Tea Bags",
     "shopifyId": 1577082060843,
     "createdAt": "2018-11-10T05:50:06-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "India's Original Masala Chai Tea, 30 Count",
@@ -2658,7 +2688,7 @@
     "productType": "Chai Teas | Tea Bags",
     "shopifyId": 1577081962539,
     "createdAt": "2018-11-10T05:48:58-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Organic Himalayan Green Tea, 30 Count",
@@ -2685,7 +2715,7 @@
     "productType": "Green Teas | Tea Bags",
     "shopifyId": 1577081667627,
     "createdAt": "2018-11-10T05:47:29-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Spiced Herbal Tea Tisane, 30 Count",
@@ -2715,7 +2745,7 @@
     "productType": "Herbal Teas | Tea Bags",
     "shopifyId": 1577080815659,
     "createdAt": "2018-11-10T05:44:05-05:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Vanilla Spiced Masala Chai Tea, 3.53 oz",
@@ -2742,7 +2772,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1466269171755,
     "createdAt": "2018-09-01T05:14:20-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Blush, Tea Gift Set, 3 Teas",
@@ -2775,7 +2805,7 @@
     "productType": "Gifts | Classic",
     "shopifyId": 1426383372331,
     "createdAt": "2018-08-09T03:25:49-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Glow, Tea Gift Set, 6 Teas",
@@ -2809,7 +2839,7 @@
     "productType": "Gifts | Classic",
     "shopifyId": 1426382258219,
     "createdAt": "2018-08-09T03:23:47-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Chai Tea Loose Leaf Gift Sampler, 10 Teas",
@@ -2834,7 +2864,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424843931691,
     "createdAt": "2018-08-08T03:19:55-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "White Teas Gift Sampler, 4 Teas",
@@ -2857,7 +2887,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424818470955,
     "createdAt": "2018-08-08T03:13:06-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Oolong Tea Loose Leaf Sampler, 5 Teas",
@@ -2880,7 +2910,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424758702123,
     "createdAt": "2018-08-08T02:58:20-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Green Tea Loose Leaf Sampler, 10 Teas",
@@ -2905,7 +2935,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424682549291,
     "createdAt": "2018-08-08T02:39:20-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Black Tea Loose Leaf Sampler, 10 Teas",
@@ -2931,7 +2961,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1424640933931,
     "createdAt": "2018-08-08T02:24:40-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Assorted Tea Loose Leaf Sampler, 10 Teas",
@@ -2955,7 +2985,7 @@
     "productType": "Loose Leaf | Samplers",
     "shopifyId": 1421564510251,
     "createdAt": "2018-08-06T08:27:50-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Ginger Masala Chai Tea, 3.53 oz",
@@ -2981,7 +3011,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1421394870315,
     "createdAt": "2018-08-06T04:41:54-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Earl Grey Masala Chai Tea, 3.53 oz",
@@ -3008,7 +3038,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1421388742699,
     "createdAt": "2018-08-06T04:32:02-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Maharani Chai Spiced Oolong Tea, 3.53 oz",
@@ -3033,7 +3063,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1421382844459,
     "createdAt": "2018-08-06T04:19:33-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Double Spice Masala Chai Tea, 3.53 oz",
@@ -3065,7 +3095,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1421378420779,
     "createdAt": "2018-08-06T04:13:19-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Imperial Earl Grey White Tea, 1.76 oz",
@@ -3090,7 +3120,7 @@
     "productType": "White Teas | Loose leaf",
     "shopifyId": 1421365149739,
     "createdAt": "2018-08-06T03:33:46-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Silver Needle Sparkle White Tea, 1.76 oz",
@@ -3113,7 +3143,7 @@
     "productType": "White Teas | Loose leaf",
     "shopifyId": 1421363183659,
     "createdAt": "2018-08-06T03:28:51-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Blue Mountain Nilgiri White Tea, 1.76 oz",
@@ -3139,7 +3169,7 @@
     "productType": "White Teas | Loose leaf",
     "shopifyId": 1421342375979,
     "createdAt": "2018-08-06T03:08:04-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Imperial Himalayan White Tea, 1.76 oz",
@@ -3166,7 +3196,7 @@
     "productType": "White Teas | Loose leaf",
     "shopifyId": 1421329891371,
     "createdAt": "2018-08-06T02:52:15-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Maharaja Earl Grey Oolong Tea, 3.53 oz",
@@ -3190,7 +3220,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 1421326516267,
     "createdAt": "2018-08-06T02:46:39-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "White Mountain Darjeeling Oolong Tea, 1.76 oz",
@@ -3214,7 +3244,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 1421320224811,
     "createdAt": "2018-08-06T02:36:01-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Blue Mountain Nilgiri Oolong Tea, 1.76 oz",
@@ -3239,7 +3269,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 1421314261035,
     "createdAt": "2018-08-06T02:22:13-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "High Mountain Oolong Tea, 3.53 oz",
@@ -3266,7 +3296,7 @@
     "productType": "Oolong Teas | Loose leaf",
     "shopifyId": 1409835794475,
     "createdAt": "2018-07-30T04:19:22-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Saffron Herbal Tea Tisane, 3.53 oz",
@@ -3293,7 +3323,7 @@
     "productType": "Herbal Teas | Loose leaf",
     "shopifyId": 1409755283499,
     "createdAt": "2018-07-30T02:36:57-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Spiced Herbal Tea Tisane, 3.53 oz",
@@ -3322,7 +3352,7 @@
     "productType": "Herbal Teas | Loose leaf",
     "shopifyId": 1409746010155,
     "createdAt": "2018-07-30T02:20:45-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Turmeric Ginger Herbal Tea Tisane, 3.53 oz",
@@ -3357,7 +3387,7 @@
     "productType": "Herbal Teas | Loose leaf",
     "shopifyId": 1409743749163,
     "createdAt": "2018-07-30T02:15:21-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Mint Melody Green Tea, 3.53 oz",
@@ -3382,7 +3412,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 1402358726699,
     "createdAt": "2018-07-26T09:07:28-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Ginger Mint Green Tea, 3.53 oz",
@@ -3408,7 +3438,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 1402284015659,
     "createdAt": "2018-07-26T08:50:01-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Earl Grey Citrus Green Tea, 3.53 oz",
@@ -3432,7 +3462,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 1402263502891,
     "createdAt": "2018-07-26T08:33:14-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Himalayan Pearls Green Tea, 3.53 oz",
@@ -3455,7 +3485,7 @@
     "productType": "Green Teas | Loose Leaf",
     "shopifyId": 1401369624619,
     "createdAt": "2018-07-26T06:05:18-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Blooming Rose Black Tea, 3.53 oz",
@@ -3479,7 +3509,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 1397902671915,
     "createdAt": "2018-07-25T05:07:12-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Himalayan Gold Black Tea, 3.53 oz",
@@ -3504,7 +3534,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 1397893988395,
     "createdAt": "2018-07-25T04:53:50-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Darjeeling Muscatel Imperial Black Tea, 3.53 oz",
@@ -3529,7 +3559,7 @@
     "productType": "Black Teas | Loose Leaf",
     "shopifyId": 1397873705003,
     "createdAt": "2018-07-25T04:13:52-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Kashmiri Kahwa Masala Chai Green Tea, 3.53 oz",
@@ -3555,7 +3585,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1396435288107,
     "createdAt": "2018-07-24T05:10:49-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Sweet Cinnamon Masala Chai Tea, 3.53 oz",
@@ -3584,7 +3614,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1396421623851,
     "createdAt": "2018-07-24T04:58:18-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "Cardamom Masala Chai Tea, 3.53 oz",
@@ -3611,7 +3641,7 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1396390395947,
     "createdAt": "2018-07-24T04:10:37-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   },
   {
     "name": "India's Original Masala Chai Tea, 3.53 oz",
@@ -3638,6 +3668,6 @@
     "productType": "Chai Teas | Loose Leaf",
     "shopifyId": 1396348026923,
     "createdAt": "2018-07-24T03:46:47-04:00",
-    "updatedAt": "2026-02-24T20:19:53-05:00"
+    "updatedAt": "2026-03-01T10:02:59-05:00"
   }
 ]
