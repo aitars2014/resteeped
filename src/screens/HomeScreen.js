@@ -552,7 +552,7 @@ export const HomeScreen = ({ navigation }) => {
               <Instagram size={24} color={theme.accent.primary} />
               <View style={styles.instaBannerText}>
                 <Text style={[styles.instaBannerTitle, { color: theme.text.primary }]}>Follow us on Instagram</Text>
-                <Text style={[styles.instaBannerSubtitle, { color: theme.text.secondary }]}>Stay updated with tea tips, recipes & more</Text>
+                <Text style={[styles.instaBannerSubtitle, { color: theme.text.secondary }]}>Discover new teas, tea shops & learn more about tea</Text>
               </View>
             </View>
             <TouchableOpacity
