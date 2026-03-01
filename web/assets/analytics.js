@@ -32,3 +32,17 @@
   };
   document.head.appendChild(script);
 })();
+
+  // Track App Store CTA clicks
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href*="apps.apple.com"]');
+    if (link) {
+      amplitude.track('App Store CTA Clicked', {
+        platform: 'web',
+        page_path: window.location.pathname,
+        page_title: document.title,
+        link_text: (link.textContent || '').trim().substring(0, 100),
+        link_url: link.href
+      });
+    }
+  });
