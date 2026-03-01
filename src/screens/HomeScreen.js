@@ -15,7 +15,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun, Instagram } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
 import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton, BrewPicker } from '../components';
 import { useTeas, useCompanies, useRecommendations, useTeaware } from '../hooks';
@@ -549,7 +549,7 @@ export const HomeScreen = ({ navigation }) => {
             activeOpacity={0.8}
           >
             <View style={styles.instaBannerContent}>
-              <Text style={{ fontSize: 24 }}>📸</Text>
+              <Instagram size={24} color={theme.accent.primary} />
               <View style={styles.instaBannerText}>
                 <Text style={[styles.instaBannerTitle, { color: theme.text.primary }]}>Follow us on Instagram</Text>
                 <Text style={[styles.instaBannerSubtitle, { color: theme.text.secondary }]}>Stay updated with tea tips, recipes & more</Text>
