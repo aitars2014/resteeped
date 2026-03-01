@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { 
   View, 
   Text, 
@@ -9,9 +9,9 @@ import {
   RefreshControl,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Bookmark, Plus } from 'lucide-react-native';
+import { Bookmark, Plus, SlidersHorizontal, Search } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { TeaCard, Button } from '../components';
+import { TeaCard, Button, FilterPills, FilterModal, SearchBar } from '../components';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 
 export const CollectionScreen = ({ navigation }) => {
@@ -20,6 +20,14 @@ export const CollectionScreen = ({ navigation }) => {
   const { collection, loading, refreshCollection } = useCollection();
   const { isPremium, canAddToCollection, getRemainingFreeSlots, FREE_TIER_LIMITS } = useSubscription();
   const [filter, setFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [showFilterModal, setShowFilterModal] = useState(false);
+  const [teaFilters, setTeaFilters] = useState({
+    teaType: 'all',
+    company: 'all',
+    minRating: 'all',
+    sortBy: 'relevance',
+  });
   
   // Re-fetch collection whenever this screen gains focus
   useFocusEffect(
@@ -39,12 +47,72 @@ export const CollectionScreen = ({ navigation }) => {
     }
   };
   
-  const filteredCollection = collection.filter(item => {
-    if (filter === 'all') return true;
-    if (filter === 'tried') return item.status === 'tried';
-    if (filter === 'want') return item.status === 'want_to_try' || !item.status;
-    return false;
-  });
+  const filteredCollection = useMemo(() => {
+    let result = collection.filter(item => {
+      if (filter === 'all') return true;
+      if (filter === 'tried') return item.status === 'tried';
+      if (filter === 'want') return item.status === 'want_to_try' || !item.status;
+      return false;
+    });
+
+    // Apply tea-level filters
+    if (teaFilters.teaType !== 'all') {
+      result = result.filter(item => {
+        const tea = item.tea || {};
+        return (tea.teaType || tea.tea_type) === teaFilters.teaType;
+      });
+    }
+
+    if (teaFilters.company !== 'all') {
+      result = result.filter(item => {
+        const tea = item.tea || {};
+        return (tea.companyId || tea.company_id) === teaFilters.company;
+      });
+    }
+
+    if (teaFilters.minRating !== 'all') {
+      const min = parseInt(teaFilters.minRating, 10);
+      result = result.filter(item => {
+        const rating = item.user_rating || item.tea?.avgRating || item.tea?.avg_rating || 0;
+        return rating >= min;
+      });
+    }
+
+    // Search
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase();
+      result = result.filter(item => {
+        const tea = item.tea || {};
+        return (
+          (tea.name || '').toLowerCase().includes(q) ||
+          (tea.brandName || tea.brand_name || '').toLowerCase().includes(q) ||
+          (tea.teaType || tea.tea_type || '').toLowerCase().includes(q) ||
+          (tea.flavorNotes || tea.flavor_notes || []).some(n => n.toLowerCase().includes(q))
+        );
+      });
+    }
+
+    // Sort
+    switch (teaFilters.sortBy) {
+      case 'rating':
+        result.sort((a, b) => {
+          const rA = a.user_rating || a.tea?.avgRating || a.tea?.avg_rating || 0;
+          const rB = b.user_rating || b.tea?.avgRating || b.tea?.avg_rating || 0;
+          return rB - rA;
+        });
+        break;
+      case 'name':
+        result.sort((a, b) => (a.tea?.name || '').localeCompare(b.tea?.name || ''));
+        break;
+      case 'newest':
+        result.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+        break;
+      default:
+        break;
+    }
+
+    return result;
+  }, [collection, filter, teaFilters, searchQuery]);
   
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
@@ -145,6 +213,25 @@ export const CollectionScreen = ({ navigation }) => {
     );
   };
   
+  const activeFilterCount = [
+    teaFilters.teaType !== 'all',
+    teaFilters.company !== 'all',
+    teaFilters.minRating !== 'all',
+  ].filter(Boolean).length;
+
+  const handleTypeChange = (type) => {
+    setTeaFilters(prev => ({ ...prev, teaType: type }));
+  };
+
+  const handleApplyFilters = (newFilters) => {
+    setTeaFilters(newFilters);
+  };
+
+  const clearAllFilters = () => {
+    setSearchQuery('');
+    setTeaFilters({ teaType: 'all', company: 'all', minRating: 'all', sortBy: 'relevance' });
+  };
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
       <View style={styles.header}>
@@ -190,6 +277,57 @@ export const CollectionScreen = ({ navigation }) => {
           { id: 'want', label: 'Want to Try' },
         ].map(renderTab)}
       </View>
+
+      {/* Search & Filters */}
+      <View style={styles.searchRow}>
+        <View style={styles.searchContainer}>
+          <SearchBar
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            placeholder="Search your collection..."
+          />
+        </View>
+        <TouchableOpacity
+          style={[
+            styles.filterButton,
+            {
+              backgroundColor: activeFilterCount > 0 ? theme.accent.primary : theme.background.secondary,
+              borderColor: activeFilterCount > 0 ? theme.accent.primary : theme.border.light,
+            }
+          ]}
+          onPress={() => setShowFilterModal(true)}
+        >
+          <SlidersHorizontal
+            size={20}
+            color={activeFilterCount > 0 ? theme.text.inverse : theme.text.primary}
+          />
+          {activeFilterCount > 0 && (
+            <View style={[styles.filterBadge, { backgroundColor: theme.status.error }]}>
+              <Text style={[styles.filterBadgeText, { color: theme.text.inverse }]}>{activeFilterCount}</Text>
+            </View>
+          )}
+        </TouchableOpacity>
+      </View>
+
+      {/* Tea Type Pills */}
+      <View style={styles.pillsContainer}>
+        <FilterPills
+          selectedType={teaFilters.teaType}
+          onSelectType={handleTypeChange}
+        />
+      </View>
+
+      {/* Result count */}
+      {(searchQuery || activeFilterCount > 0) && (
+        <View style={styles.resultCount}>
+          <Text style={[styles.resultText, { color: theme.text.secondary }]}>
+            {filteredCollection.length} tea{filteredCollection.length !== 1 ? 's' : ''}
+          </Text>
+          <TouchableOpacity onPress={clearAllFilters}>
+            <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>Clear filters</Text>
+          </TouchableOpacity>
+        </View>
+      )}
       
       {filteredCollection.length === 0 ? (
         renderEmptyState()
@@ -209,6 +347,12 @@ export const CollectionScreen = ({ navigation }) => {
           }
         />
       )}
+      <FilterModal
+        visible={showFilterModal}
+        onClose={() => setShowFilterModal(false)}
+        filters={teaFilters}
+        onApplyFilters={handleApplyFilters}
+      />
     </SafeAreaView>
   );
 };
@@ -305,6 +449,56 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   upgradeBannerText: {
+    ...typography.bodySmall,
+    fontWeight: '600',
+  },
+  searchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.sm,
+    gap: spacing.sm,
+  },
+  searchContainer: {
+    flex: 1,
+  },
+  filterButton: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+  },
+  filterBadge: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  filterBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+  },
+  pillsContainer: {
+    paddingLeft: spacing.screenHorizontal,
+    marginBottom: spacing.sm,
+  },
+  resultCount: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.sm,
+  },
+  resultText: {
+    ...typography.bodySmall,
+  },
+  clearFiltersText: {
     ...typography.bodySmall,
     fontWeight: '600',
   },
