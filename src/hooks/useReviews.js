@@ -58,17 +58,7 @@ export const useReviews = (teaId) => {
 
   const submitReview = async ({ rating, reviewText, brewMethod = null, steepTimeSeconds = null, temperatureF = null, teaWeight = null, teaWeightUnit = null }) => {
     if (!user || !teaId) {
-      // Check if user has a review with matching steeping settings
-  const hasReviewForSettings = useCallback((brewMethod, steepTimeSeconds, temperatureF) => {
-    if (!reviews.length) return false;
-    return reviews.some(r => 
-      r.brew_method === brewMethod && 
-      r.steep_time_seconds === steepTimeSeconds && 
-      r.temperature_f === temperatureF
-    );
-  }, [reviews]);
-
-  return { error: { message: 'Must be signed in' } };
+      return { error: { message: 'Must be signed in' } };
     }
 
     if (isLocalMode) {
@@ -165,6 +155,16 @@ export const useReviews = (teaId) => {
       return { error: err };
     }
   };
+
+  // Check if user has a review with matching steeping settings
+  const hasReviewForSettings = useCallback((brewMethod, steepTimeSeconds, temperatureF) => {
+    if (!reviews.length) return false;
+    return reviews.some(r => 
+      r.brew_method === brewMethod && 
+      r.steep_time_seconds === steepTimeSeconds && 
+      r.temperature_f === temperatureF
+    );
+  }, [reviews]);
 
   return {
     reviews,
