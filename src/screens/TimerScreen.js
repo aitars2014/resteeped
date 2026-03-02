@@ -15,7 +15,7 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from 'react-native';
-import { Minus, Plus, Coffee, Bell, BellOff, Repeat, ChevronLeft, ChevronRight, NotebookPen, X, Check } from 'lucide-react-native';
+import { Minus, Plus, Coffee, Bell, BellOff, Repeat, ChevronLeft, ChevronRight, NotebookPen, X, Check, Search } from 'lucide-react-native';
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
 import { VoiceInputHint } from '../components/VoiceInputHint';
@@ -120,7 +120,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const { logBrewSession, todayBrewCount } = useBrewHistory();
   
   // Get brewing guide
-  const guide = tea ? getBrewingGuide(tea) : null;
+  const guide = tea ? getBrewingGuide(tea) : { steepTime: { min: 180 }, temperature: { f: 200 } };
   const maxInfusions = guide?.infusions || 1;
   const isMultiSteep = maxInfusions > 1;
   
@@ -372,8 +372,8 @@ export const TimerScreen = ({ route, navigation }) => {
         }
       }
       
-      // Show post-brew review modal for tea brews
-      if (tea) {
+      // Show post-brew review modal
+      if (true) {
         setTimeout(() => {
           setShowReviewModal(true);
         }, 1500);
@@ -592,7 +592,7 @@ export const TimerScreen = ({ route, navigation }) => {
         )}
         
         {/* Brew Method Selector */}
-        {tea && (
+        {!isComplete && (
           <View style={styles.multiSteepToggle}>
             {[
               { method: BREW_METHODS.WESTERN, label: 'Western' },
@@ -809,7 +809,7 @@ export const TimerScreen = ({ route, navigation }) => {
         )}
         
         {/* Temperature controls */}
-        {tea && !isComplete && (
+        {!isComplete && (
           <View style={styles.tempContainer}>
             <TemperatureSlider
               value={temperatureF}
@@ -822,7 +822,7 @@ export const TimerScreen = ({ route, navigation }) => {
         )}
 
         {/* Tea Weight */}
-        {tea && !isComplete && (
+        {!isComplete && (
           <View style={[styles.weightContainer, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
             <Text style={[styles.weightLabel, { color: theme.text.secondary }]}>Tea Amount</Text>
             <View style={styles.weightControls}>
@@ -949,10 +949,29 @@ export const TimerScreen = ({ route, navigation }) => {
           </View>
         )}
         
-        {/* Tip for no tea selected */}
-        {!tea && (
+        {/* Post-steep actions when no tea selected */}
+        {!tea && isComplete && (
+          <View style={styles.postSteepActions}>
+            <Text style={[styles.postSteepTitle, { color: theme.text.primary }]}>What did you steep?</Text>
+            <TouchableOpacity
+              style={[styles.postSteepBtn, { backgroundColor: theme.accent.primary }]}
+              onPress={() => navigation.navigate('Discover')}
+            >
+              <Search size={18} color="#fff" />
+              <Text style={[styles.postSteepBtnText, { color: '#fff' }]}>Find Your Tea</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.postSteepBtn, { backgroundColor: theme.background.secondary, borderColor: theme.border.medium, borderWidth: 1 }]}
+              onPress={() => navigation.navigate('AddTea')}
+            >
+              <Plus size={18} color={theme.text.primary} />
+              <Text style={[styles.postSteepBtnText, { color: theme.text.primary }]}>Add a Custom Tea</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+        {!tea && !isComplete && !isRunning && (
           <Text style={[styles.tipText, { color: theme.text.secondary }]}>
-            Tip: Start a timer from a tea's detail page to track your brews
+            Set your preferences and start steeping — find or add the tea after!
           </Text>
         )}
       </ScrollView>
@@ -1344,6 +1363,32 @@ const styles = StyleSheet.create({
   summaryNote: {
     ...typography.caption,
     marginTop: 2,
+  },
+  postSteepActions: {
+    alignItems: 'center',
+    marginTop: 16,
+    gap: 12,
+    paddingHorizontal: 20,
+  },
+  postSteepTitle: {
+    fontSize: 17,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  postSteepBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 14,
+    paddingHorizontal: 24,
+    borderRadius: 12,
+    width: '100%',
+    maxWidth: 280,
+  },
+  postSteepBtnText: {
+    fontSize: 15,
+    fontWeight: '600',
   },
   tipText: {
     ...typography.caption,
