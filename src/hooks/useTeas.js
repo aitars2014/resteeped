@@ -130,7 +130,8 @@ const LIST_FIELDS = `
   avg_rating,
   rating_count,
   company_id,
-  created_at
+  created_at,
+  tea_method
 `;
 
 const fetchAllTeasPaginated = async () => {
