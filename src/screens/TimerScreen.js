@@ -195,8 +195,12 @@ export const TimerScreen = ({ route, navigation }) => {
       if (preferredSettings.teaWeightUnit) {
         setTeaWeightUnit(preferredSettings.teaWeightUnit);
       }
+      if (preferredSettings.steepTimeSeconds) {
+        setTotalSeconds(preferredSettings.steepTimeSeconds);
+        setRemainingSeconds(preferredSettings.steepTimeSeconds);
+      }
     }
-  }, [teaId]); // Only run when tea changes
+  }, [teaId, preferredSettings?.steepTimeSeconds]); // Run when tea or preferred time changes
 
   // Initialize infusion times when tea changes
   useEffect(() => {
