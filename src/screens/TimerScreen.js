@@ -12,6 +12,7 @@ import {
   ScrollView,
   TextInput,
   Modal,
+  FlatList,
   Dimensions,
   KeyboardAvoidingView,
 } from 'react-native';
@@ -22,7 +23,7 @@ import { VoiceInputHint } from '../components/VoiceInputHint';
 import { Audio } from 'expo-av';
 import { typography, spacing } from '../constants';
 import { Button, TeaTypeBadge, TemperatureSlider, PostBrewReviewModal } from '../components';
-import { useBrewHistory } from '../hooks';
+import { useBrewHistory, useTeas } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
 import { useAuth, useTheme, useCollection } from '../context';
 import { getBrewingGuide, getColdBrewGuide, BREW_METHODS } from '../constants/brewingGuides';
@@ -164,6 +165,8 @@ export const TimerScreen = ({ route, navigation }) => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(false);
   const [timeModified, setTimeModified] = useState(false);
   const [teaWeight, setTeaWeight] = useState(null);
+  const [showTeaSearchModal, setShowTeaSearchModal] = useState(false);
+  const [selectedPostBrewTea, setSelectedPostBrewTea] = useState(null);
   const [teaWeightUnit, setTeaWeightUnit] = useState('g');
   
   const intervalRef = useRef(null);
@@ -372,8 +375,8 @@ export const TimerScreen = ({ route, navigation }) => {
         }
       }
       
-      // Show post-brew review modal
-      if (true) {
+      // Show post-brew review modal for tea brews
+      if (tea) {
         setTimeout(() => {
           setShowReviewModal(true);
         }, 1500);
@@ -950,12 +953,12 @@ export const TimerScreen = ({ route, navigation }) => {
         )}
         
         {/* Post-steep actions when no tea selected */}
-        {!tea && isComplete && (
+        {!tea && isComplete && !selectedPostBrewTea && (
           <View style={styles.postSteepActions}>
             <Text style={[styles.postSteepTitle, { color: theme.text.primary }]}>What did you steep?</Text>
             <TouchableOpacity
               style={[styles.postSteepBtn, { backgroundColor: theme.accent.primary }]}
-              onPress={() => navigation.navigate('Discover')}
+              onPress={() => setShowTeaSearchModal(true)}
             >
               <Search size={18} color="#fff" />
               <Text style={[styles.postSteepBtnText, { color: '#fff' }]}>Find Your Tea</Text>
@@ -969,6 +972,17 @@ export const TimerScreen = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
         )}
+        {/* Show selected tea + review after picking */}
+        {!tea && isComplete && selectedPostBrewTea && (
+          <View style={styles.postSteepActions}>
+            <Text style={[styles.postSteepTitle, { color: theme.text.primary }]}>
+              {selectedPostBrewTea.name}
+            </Text>
+            <Text style={[styles.tipText, { color: theme.text.secondary, marginTop: 0 }]}>
+              {selectedPostBrewTea.brandName || selectedPostBrewTea.brand_name}
+            </Text>
+          </View>
+        )}
         {!tea && !isComplete && !isRunning && (
           <Text style={[styles.tipText, { color: theme.text.secondary }]}>
             Set your preferences and start steeping — find or add the tea after!
@@ -976,6 +990,40 @@ export const TimerScreen = ({ route, navigation }) => {
         )}
       </ScrollView>
       
+      {/* Tea Search Modal (for no-tea brews) */}
+      <Modal visible={showTeaSearchModal} animationType="slide" transparent onRequestClose={() => setShowTeaSearchModal(false)}>
+        <View style={{ flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' }}>
+          <View style={[styles.teaSearchModal, { backgroundColor: theme.background.primary }]}>
+            <View style={styles.teaSearchHeader}>
+              <Text style={[styles.teaSearchTitle, { color: theme.text.primary }]}>Find Your Tea</Text>
+              <TouchableOpacity onPress={() => setShowTeaSearchModal(false)}>
+                <X size={24} color={theme.text.secondary} />
+              </TouchableOpacity>
+            </View>
+            <TeaSearchInModal
+              onSelect={(selectedTea) => {
+                setSelectedPostBrewTea(selectedTea);
+                setShowTeaSearchModal(false);
+                // Log the brew session with the selected tea
+                logBrewSession({
+                  teaId: selectedTea.id,
+                  steepTimeSeconds: totalSeconds,
+                  temperatureF: temperatureF,
+                  teaData: selectedTea,
+                  infusionNumber: multiSteepMode ? currentInfusion : null,
+                  brewMethod: brewMethod,
+                  teaWeight: teaWeight,
+                  teaWeightUnit: teaWeightUnit,
+                });
+                // Show review modal
+                setTimeout(() => setShowReviewModal(true), 300);
+              }}
+              theme={theme}
+            />
+          </View>
+        </View>
+      </Modal>
+
       {/* Post-Brew Review Modal */}
       <PostBrewReviewModal
         visible={showReviewModal}
@@ -983,11 +1031,12 @@ export const TimerScreen = ({ route, navigation }) => {
         onSave={({ rating, notes }) => {
           setShowReviewModal(false);
           // Log the review as a separate update to the most recent session
+          const reviewTea = tea || selectedPostBrewTea;
           logBrewSession({
-            teaId: tea?.id,
+            teaId: reviewTea?.id,
             steepTimeSeconds: totalSeconds,
             temperatureF: temperatureF,
-            teaData: tea,
+            teaData: reviewTea,
             infusionNumber: multiSteepMode ? currentInfusion : null,
             brewMethod: brewMethod,
             teaWeight: teaWeight,
@@ -996,7 +1045,7 @@ export const TimerScreen = ({ route, navigation }) => {
             tastingNotes: notes,
           });
         }}
-        teaName={tea?.name}
+        teaName={tea?.name || selectedPostBrewTea?.name}
         brewMethod={brewMethod}
         steepTimeSeconds={totalSeconds}
         temperatureF={temperatureF}
@@ -1058,6 +1107,82 @@ export const TimerScreen = ({ route, navigation }) => {
         </KeyboardAvoidingView>
       </Modal>
     </SafeAreaView>
+  );
+};
+
+// Inline tea search component for the post-brew tea picker
+const TeaSearchInModal = ({ onSelect, theme }) => {
+  const [query, setQuery] = React.useState('');
+  const { teas } = useTeas();
+  
+  const results = React.useMemo(() => {
+    if (!query.trim()) return [];
+    const q = query.toLowerCase();
+    return teas.filter(t =>
+      t.name.toLowerCase().includes(q) ||
+      (t.brandName || '').toLowerCase().includes(q)
+    ).slice(0, 20);
+  }, [query, teas]);
+
+  return (
+    <View style={{ flex: 1 }}>
+      <TextInput
+        style={{
+          borderWidth: 1,
+          borderColor: theme.border.light,
+          backgroundColor: theme.background.secondary,
+          borderRadius: 12,
+          padding: 12,
+          marginBottom: 12,
+          color: theme.text.primary,
+          fontSize: 16,
+        }}
+        placeholder="Search by name or brand..."
+        placeholderTextColor={theme.text.tertiary}
+        value={query}
+        onChangeText={setQuery}
+        autoFocus
+      />
+      <FlatList
+        data={results}
+        keyExtractor={item => item.id}
+        keyboardShouldPersistTaps="handled"
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingVertical: 12,
+              paddingHorizontal: 8,
+              borderBottomWidth: 1,
+              borderBottomColor: theme.border.light,
+            }}
+            onPress={() => onSelect(item)}
+          >
+            <View style={{ flex: 1 }}>
+              <Text style={{ color: theme.text.primary, fontSize: 15, fontWeight: '500' }} numberOfLines={1}>
+                {item.name}
+              </Text>
+              <Text style={{ color: theme.text.secondary, fontSize: 13 }} numberOfLines={1}>
+                {item.brandName}
+              </Text>
+            </View>
+            <TeaTypeBadge teaType={item.teaType} size="small" />
+          </TouchableOpacity>
+        )}
+        ListEmptyComponent={
+          query.trim() ? (
+            <Text style={{ color: theme.text.secondary, textAlign: 'center', marginTop: 20 }}>
+              No teas found
+            </Text>
+          ) : (
+            <Text style={{ color: theme.text.secondary, textAlign: 'center', marginTop: 20 }}>
+              Type to search your tea library
+            </Text>
+          )
+        }
+      />
+    </View>
   );
 };
 
@@ -1363,6 +1488,24 @@ const styles = StyleSheet.create({
   summaryNote: {
     ...typography.caption,
     marginTop: 2,
+  },
+  teaSearchModal: {
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    padding: 20,
+    paddingBottom: 40,
+    maxHeight: '80%',
+    minHeight: '50%',
+  },
+  teaSearchHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  teaSearchTitle: {
+    fontSize: 18,
+    fontWeight: '600',
   },
   postSteepActions: {
     alignItems: 'center',
