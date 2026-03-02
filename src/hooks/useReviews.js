@@ -85,25 +85,71 @@ export const useReviews = (teaId) => {
     try {
       // Upsert review (update if exists, insert if not)
       // onConflict must match the UNIQUE(user_id, tea_id) constraint
-      const { data, error } = await supabase
+      // Check if a review with these exact settings already exists
+      // Build query to find existing review with same settings
+      let existingQuery = supabase
         .from('reviews')
-        .upsert({
-          user_id: user.id,
-          tea_id: teaId,
-          rating,
-          review_text: reviewText || null,
-          brew_method: brewMethod,
-          steep_time_seconds: steepTimeSeconds,
-          temperature_f: temperatureF,
-          tea_weight: teaWeight,
-          tea_weight_unit: teaWeightUnit,
-          updated_at: new Date().toISOString(),
-        }, { onConflict: 'reviews_user_tea_settings_idx' })
-        .select(`
-          *,
-          profile:profiles(username, display_name, avatar_url)
-        `)
-        .single();
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('tea_id', teaId);
+      
+      if (brewMethod) {
+        existingQuery = existingQuery.eq('brew_method', brewMethod);
+      } else {
+        existingQuery = existingQuery.is('brew_method', null);
+      }
+      if (steepTimeSeconds) {
+        existingQuery = existingQuery.eq('steep_time_seconds', steepTimeSeconds);
+      } else {
+        existingQuery = existingQuery.is('steep_time_seconds', null);
+      }
+      if (temperatureF) {
+        existingQuery = existingQuery.eq('temperature_f', temperatureF);
+      } else {
+        existingQuery = existingQuery.is('temperature_f', null);
+      }
+      
+      const { data: existing } = await existingQuery.maybeSingle();
+
+      let data, error;
+      if (existing) {
+        // Update existing review
+        ({ data, error } = await supabase
+          .from('reviews')
+          .update({
+            rating,
+            review_text: reviewText || null,
+            tea_weight: teaWeight,
+            tea_weight_unit: teaWeightUnit,
+            updated_at: new Date().toISOString(),
+          })
+          .eq('id', existing.id)
+          .select(`
+            *,
+            profile:profiles(username, display_name, avatar_url)
+          `)
+          .single());
+      } else {
+        // Insert new review
+        ({ data, error } = await supabase
+          .from('reviews')
+          .insert({
+            user_id: user.id,
+            tea_id: teaId,
+            rating,
+            review_text: reviewText || null,
+            brew_method: brewMethod || null,
+            steep_time_seconds: steepTimeSeconds || null,
+            temperature_f: temperatureF || null,
+            tea_weight: teaWeight,
+            tea_weight_unit: teaWeightUnit,
+          })
+          .select(`
+            *,
+            profile:profiles(username, display_name, avatar_url)
+          `)
+          .single());
+      }
 
       if (error) throw error;
 
@@ -160,9 +206,9 @@ export const useReviews = (teaId) => {
   const hasReviewForSettings = useCallback((brewMethod, steepTimeSeconds, temperatureF) => {
     if (!reviews.length) return false;
     return reviews.some(r => 
-      r.brew_method === brewMethod && 
-      r.steep_time_seconds === steepTimeSeconds && 
-      r.temperature_f === temperatureF
+      (r.brew_method || null) === (brewMethod || null) && 
+      (r.steep_time_seconds || 0) === (steepTimeSeconds || 0) && 
+      (r.temperature_f || 0) === (temperatureF || 0)
     );
   }, [reviews]);
 
