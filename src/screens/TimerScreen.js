@@ -23,7 +23,7 @@ import { VoiceInputHint } from '../components/VoiceInputHint';
 import { Audio } from 'expo-av';
 import { typography, spacing } from '../constants';
 import { Button, TeaTypeBadge, TemperatureSlider, PostBrewReviewModal } from '../components';
-import { useBrewHistory, useTeas } from '../hooks';
+import { useBrewHistory, useTeas, useReviews } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
 import { useAuth, useTheme, useCollection } from '../context';
 import { getBrewingGuide, getColdBrewGuide, BREW_METHODS } from '../constants/brewingGuides';
@@ -119,6 +119,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const { user } = useAuth();
   const { updateInCollection, isInCollection, getCollectionItem, setPreferredSteepTime, getPreferredSteepTime, setPreferredSteepSettings, getPreferredSteepSettings } = useCollection();
   const { logBrewSession, todayBrewCount } = useBrewHistory();
+  const { hasReviewForSettings, submitReview } = useReviews(teaId);
   
   // Get brewing guide
   const guide = tea ? getBrewingGuide(tea) : { steepTime: { min: 180 }, temperature: { f: 200 } };
@@ -375,11 +376,14 @@ export const TimerScreen = ({ route, navigation }) => {
         }
       }
       
-      // Show post-brew review modal for tea brews
+      // Show post-brew review modal — only if settings haven't been reviewed yet
       if (tea) {
-        setTimeout(() => {
-          setShowReviewModal(true);
-        }, 1500);
+        const alreadyReviewed = hasReviewForSettings(brewMethod, totalSeconds, temperatureF);
+        if (!alreadyReviewed) {
+          setTimeout(() => {
+            setShowReviewModal(true);
+          }, 1500);
+        }
       }
     }
   }, [isComplete, hasLogged, tea, totalSeconds, currentInfusion, multiSteepMode, infusionNotes, logBrewSession, isInCollection, getCollectionItem, updateInCollection, navigation]);
@@ -1030,8 +1034,20 @@ export const TimerScreen = ({ route, navigation }) => {
         onClose={() => setShowReviewModal(false)}
         onSave={({ rating, notes }) => {
           setShowReviewModal(false);
-          // Log the review as a separate update to the most recent session
           const reviewTea = tea || selectedPostBrewTea;
+          // Submit as a proper review with steeping settings
+          if (reviewTea?.id) {
+            submitReview({
+              rating,
+              reviewText: notes,
+              brewMethod: brewMethod,
+              steepTimeSeconds: totalSeconds,
+              temperatureF: temperatureF,
+              teaWeight: teaWeight,
+              teaWeightUnit: teaWeightUnit,
+            });
+          }
+          // Also log to brew session
           logBrewSession({
             teaId: reviewTea?.id,
             steepTimeSeconds: totalSeconds,

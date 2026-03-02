@@ -33,7 +33,7 @@ export const PostBrewReviewModal = ({
   };
 
   const handleSave = () => {
-    onSave({ rating, notes: notes.trim() || null });
+    onSave({ rating, notes: notes.trim() || null, brewMethod, steepTimeSeconds, temperatureF });
     setRating(3.5);
     setNotes('');
   };

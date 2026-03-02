@@ -527,6 +527,58 @@ export const TeaDetailScreen = ({ route, navigation }) => {
 
           {/* My Review section removed — consolidated into My Tasting Notes (TARS-48) */}
           
+          {/* My Brew Reviews (per steeping settings) */}
+          {reviews.length > 0 && (
+            <View style={styles.section}>
+              <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>My Brew Reviews</Text>
+              {reviews.map((review) => (
+                <View 
+                  key={review.id} 
+                  style={[styles.brewReviewCard, { 
+                    backgroundColor: theme.background.secondary, 
+                    borderColor: theme.border.light 
+                  }]}
+                >
+                  <View style={styles.brewReviewHeader}>
+                    <StarRating rating={review.rating} size={16} />
+                    <Text style={[styles.brewReviewDate, { color: theme.text.secondary }]}>
+                      {new Date(review.created_at).toLocaleDateString()}
+                    </Text>
+                  </View>
+                  {review.review_text && (
+                    <Text style={[styles.brewReviewText, { color: theme.text.primary }]}>
+                      {review.review_text}
+                    </Text>
+                  )}
+                  {(review.brew_method || review.steep_time_seconds || review.temperature_f) && (
+                    <View style={styles.brewReviewSettings}>
+                      {review.brew_method && (
+                        <Text style={[styles.brewReviewSetting, { color: theme.text.secondary, backgroundColor: theme.background.primary }]}>
+                          {review.brew_method}
+                        </Text>
+                      )}
+                      {review.steep_time_seconds && (
+                        <Text style={[styles.brewReviewSetting, { color: theme.text.secondary, backgroundColor: theme.background.primary }]}>
+                          \u23F1 {Math.floor(review.steep_time_seconds / 60)}:{(review.steep_time_seconds % 60).toString().padStart(2, '0')}
+                        </Text>
+                      )}
+                      {review.temperature_f && (
+                        <Text style={[styles.brewReviewSetting, { color: theme.text.secondary, backgroundColor: theme.background.primary }]}>
+                          \uD83C\uDF21\uFE0F {review.temperature_f}\u00B0F
+                        </Text>
+                      )}
+                      {review.tea_weight && (
+                        <Text style={[styles.brewReviewSetting, { color: theme.text.secondary, backgroundColor: theme.background.primary }]}>
+                          \u2696\uFE0F {review.tea_weight}{review.tea_weight_unit || 'g'}
+                        </Text>
+                      )}
+                    </View>
+                  )}
+                </View>
+              ))}
+            </View>
+          )}
+          
           {/* Buy This Tea */}
           {brandName && (
             <View style={styles.section}>
@@ -783,6 +835,38 @@ const createStyles = (theme) => ({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
+  },
+  brewReviewCard: {
+    padding: 12,
+    borderRadius: 12,
+    borderWidth: 1,
+    marginBottom: 8,
+  },
+  brewReviewHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 6,
+  },
+  brewReviewDate: {
+    fontSize: 12,
+  },
+  brewReviewText: {
+    fontSize: 14,
+    lineHeight: 20,
+    marginBottom: 8,
+  },
+  brewReviewSettings: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+  },
+  brewReviewSetting: {
+    fontSize: 12,
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 8,
+    overflow: 'hidden',
   },
   section: {
     marginBottom: spacing.sectionSpacing,

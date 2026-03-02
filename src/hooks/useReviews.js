@@ -56,9 +56,19 @@ export const useReviews = (teaId) => {
     fetchReviews();
   }, [fetchReviews]);
 
-  const submitReview = async ({ rating, reviewText }) => {
+  const submitReview = async ({ rating, reviewText, brewMethod = null, steepTimeSeconds = null, temperatureF = null, teaWeight = null, teaWeightUnit = null }) => {
     if (!user || !teaId) {
-      return { error: { message: 'Must be signed in' } };
+      // Check if user has a review with matching steeping settings
+  const hasReviewForSettings = useCallback((brewMethod, steepTimeSeconds, temperatureF) => {
+    if (!reviews.length) return false;
+    return reviews.some(r => 
+      r.brew_method === brewMethod && 
+      r.steep_time_seconds === steepTimeSeconds && 
+      r.temperature_f === temperatureF
+    );
+  }, [reviews]);
+
+  return { error: { message: 'Must be signed in' } };
     }
 
     if (isLocalMode) {
@@ -69,6 +79,11 @@ export const useReviews = (teaId) => {
         tea_id: teaId,
         rating,
         review_text: reviewText,
+        brew_method: brewMethod,
+        steep_time_seconds: steepTimeSeconds,
+        temperature_f: temperatureF,
+        tea_weight: teaWeight,
+        tea_weight_unit: teaWeightUnit,
         created_at: new Date().toISOString(),
         profile: { display_name: user.user_metadata?.full_name || 'You' },
       };
@@ -87,8 +102,13 @@ export const useReviews = (teaId) => {
           tea_id: teaId,
           rating,
           review_text: reviewText || null,
+          brew_method: brewMethod,
+          steep_time_seconds: steepTimeSeconds,
+          temperature_f: temperatureF,
+          tea_weight: teaWeight,
+          tea_weight_unit: teaWeightUnit,
           updated_at: new Date().toISOString(),
-        }, { onConflict: 'user_id,tea_id' })
+        }, { onConflict: 'reviews_user_tea_settings_idx' })
         .select(`
           *,
           profile:profiles(username, display_name, avatar_url)
@@ -154,6 +174,7 @@ export const useReviews = (teaId) => {
     submitReview,
     deleteReview,
     refreshReviews: fetchReviews,
+    hasReviewForSettings,
     reviewCount: reviews.length,
     averageRating: userReview?.rating || 0,
   };
