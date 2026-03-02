@@ -26,6 +26,7 @@ export const CollectionScreen = ({ navigation }) => {
     teaType: 'all',
     company: 'all',
     minRating: 'all',
+    teaMethod: 'all',
     sortBy: 'relevance',
   });
   
@@ -67,6 +68,13 @@ export const CollectionScreen = ({ navigation }) => {
       result = result.filter(item => {
         const tea = item.tea || {};
         return (tea.companyId || tea.company_id) === teaFilters.company;
+      });
+    }
+
+    if (teaFilters.teaMethod !== 'all') {
+      result = result.filter(item => {
+        const tea = item.tea || {};
+        return (tea.teaMethod || tea.tea_method) === teaFilters.teaMethod;
       });
     }
 
@@ -217,6 +225,7 @@ export const CollectionScreen = ({ navigation }) => {
     teaFilters.teaType !== 'all',
     teaFilters.company !== 'all',
     teaFilters.minRating !== 'all',
+    teaFilters.teaMethod !== 'all',
   ].filter(Boolean).length;
 
   const handleTypeChange = (type) => {
@@ -229,7 +238,7 @@ export const CollectionScreen = ({ navigation }) => {
 
   const clearAllFilters = () => {
     setSearchQuery('');
-    setTeaFilters({ teaType: 'all', company: 'all', minRating: 'all', sortBy: 'relevance' });
+    setTeaFilters({ teaType: 'all', company: 'all', minRating: 'all', teaMethod: 'all', sortBy: 'relevance' });
   };
 
   return (

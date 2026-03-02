@@ -71,6 +71,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     teaType: initialFilter || 'all',
     company: initialCompanyFilter || 'all',
     minRating: 'all',
+    teaMethod: 'all',
     sortBy: 'relevance',
   });
   
@@ -84,6 +85,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
         teaType: 'all',
         company: 'all',
         minRating: 'all',
+        teaMethod: 'all',
         sortBy: 'relevance',
       });
       return;
@@ -144,6 +146,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     filters.teaType !== 'all',
     filters.company !== 'all',
     filters.minRating !== 'all',
+    filters.teaMethod !== 'all',
   ].filter(Boolean).length;
 
   // Handle scroll position for scroll-to-top button
@@ -265,6 +268,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
               teaType: 'all',
               company: 'all',
               minRating: 'all',
+              teaMethod: 'all',
               sortBy: 'relevance',
             })}
           >

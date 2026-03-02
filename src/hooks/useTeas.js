@@ -88,6 +88,7 @@ const formatTea = (tea) => ({
   ratingCount: tea.rating_count,
   companyId: tea.company_id,
   createdAt: tea.created_at,
+  teaMethod: tea.tea_method,
 });
 
 // --- Cache helpers ---
@@ -267,6 +268,7 @@ export const useTeas = () => {
       company = 'all',
       minRating = 'all',
       sortBy = 'rating',
+      teaMethod = 'all',
     } = filters;
 
     if (teaType !== 'all') {
@@ -280,6 +282,10 @@ export const useTeas = () => {
     if (minRating !== 'all') {
       const min = parseInt(minRating, 10);
       result = result.filter(tea => (tea.avgRating || 0) >= min);
+    }
+
+    if (teaMethod !== 'all') {
+      result = result.filter(tea => tea.teaMethod === teaMethod);
     }
 
     if (query && query.trim()) {

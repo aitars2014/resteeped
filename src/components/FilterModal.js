@@ -34,6 +34,13 @@ const RATING_OPTIONS = [
   { id: '2', label: '2+ Stars', min: 2 },
 ];
 
+const TEA_METHODS = [
+  { id: 'all', label: 'All Methods' },
+  { id: 'teabag', label: 'Tea Bags' },
+  { id: 'loose_leaf', label: 'Loose Leaf' },
+  { id: 'whole_leaf', label: 'Whole Leaf' },
+];
+
 const SORT_OPTIONS = [
   { id: 'relevance', label: 'Best Match' },
   { id: 'rating', label: 'Highest Rated' },
@@ -55,6 +62,7 @@ export const FilterModal = ({
     teaType: 'all',
     company: 'all',
     minRating: 'all',
+    teaMethod: 'all',
     sortBy: 'relevance',
     ...filters,
   });
@@ -66,6 +74,7 @@ export const FilterModal = ({
         teaType: 'all',
         company: 'all',
         minRating: 'all',
+        teaMethod: 'all',
         sortBy: 'relevance',
         ...filters,
       });
@@ -83,6 +92,7 @@ export const FilterModal = ({
       teaType: 'all',
       company: 'all',
       minRating: 'all',
+      teaMethod: 'all',
       sortBy: 'relevance',
     });
   };
@@ -95,6 +105,7 @@ export const FilterModal = ({
     localFilters.teaType !== 'all',
     localFilters.company !== 'all',
     localFilters.minRating !== 'all',
+    localFilters.teaMethod !== 'all',
   ].filter(Boolean).length;
 
   const renderOption = (id, label, selectedId, onSelect, showCheck = true) => {
@@ -267,6 +278,37 @@ export const FilterModal = ({
                           fill={isSelected ? theme.text.inverse : theme.rating.star}
                         />
                       )}
+                      <Text style={[
+                        styles.ratingOptionText,
+                        { color: isSelected ? theme.text.inverse : theme.text.primary },
+                        isSelected && { fontWeight: '600' },
+                      ]}>
+                        {option.label}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </View>
+            </View>
+
+            {/* Tea Method */}
+            <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+              <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Tea Method</Text>
+              <View style={styles.ratingOptions}>
+                {TEA_METHODS.map(option => {
+                  const isSelected = localFilters.teaMethod === option.id;
+                  return (
+                    <TouchableOpacity
+                      key={option.id}
+                      style={[
+                        styles.ratingOption,
+                        { 
+                          backgroundColor: isSelected ? theme.accent.primary : theme.background.secondary,
+                          borderColor: isSelected ? theme.accent.primary : theme.border.light,
+                        },
+                      ]}
+                      onPress={() => toggleFilter('teaMethod', option.id)}
+                    >
                       <Text style={[
                         styles.ratingOptionText,
                         { color: isSelected ? theme.text.inverse : theme.text.primary },
