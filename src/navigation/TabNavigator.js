@@ -96,6 +96,7 @@ const CollectionStack = () => (
 const TimerStack = () => (
   <Stack.Navigator screenOptions={{ headerShown: false }}>
     <Stack.Screen name="TimerHome" component={TimerScreen} />
+    <Stack.Screen name="AddTea" component={AddTeaScreen} options={{ headerShown: true, headerTitle: "Add Tea", headerBackTitle: "Back" }} />
   </Stack.Navigator>
 );
 
