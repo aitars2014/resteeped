@@ -292,9 +292,10 @@ export const TimerScreen = ({ route, navigation }) => {
   
   // Reset when tea changes
   useEffect(() => {
-    const newDefault = tea?.steepTimeMin 
+    // Use preferred time if saved, otherwise tea default
+    const newDefault = preferredTime || (tea?.steepTimeMin 
       ? Math.round(tea.steepTimeMin * 60) 
-      : 180;
+      : 180);
     
     if (!multiSteepMode) {
       setTotalSeconds(newDefault);
