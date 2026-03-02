@@ -121,7 +121,7 @@ export const TimerScreen = ({ route, navigation }) => {
   
   // Get brewing guide
   const guide = tea ? getBrewingGuide(tea) : { steepTime: { min: 180 }, temperature: { f: 200 } };
-  const maxInfusions = guide?.infusions || 1;
+  const maxInfusions = guide?.infusions || (tea ? 1 : 5);
   const isMultiSteep = maxInfusions > 1;
   
   // Check for user's preferred steep settings first
@@ -596,7 +596,7 @@ export const TimerScreen = ({ route, navigation }) => {
           <View style={styles.multiSteepToggle}>
             {[
               { method: BREW_METHODS.WESTERN, label: 'Western' },
-              ...(maxInfusions > 1 ? [{ method: BREW_METHODS.GONGFU, label: `Gongfu (${maxInfusions})` }] : []),
+              { method: BREW_METHODS.GONGFU, label: `Gongfu (${maxInfusions})` },
               { method: BREW_METHODS.COLD_BREW, label: 'Cold Brew' },
             ].map(({ method, label }) => {
               const isActive = brewMethod === method;
