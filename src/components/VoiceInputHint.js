@@ -21,6 +21,9 @@ export const VoiceInputHint = ({ inputRef, onTranscript, style, size = 18 }) => 
   const { theme } = useTheme();
   const [isListening, setIsListening] = useState(false);
 
+  // If native module unavailable, render nothing
+  if (!ExpoSpeechRecognitionModule) return null;
+
   useSpeechRecognitionEvent('result', (event) => {
     const transcript = event.results?.[0]?.transcript;
     if (transcript && event.isFinal && onTranscript) {
