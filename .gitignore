@@ -44,3 +44,4 @@ yarn-error.*
 .env.local
 *.ipa
 credentials.json
+.vercel
