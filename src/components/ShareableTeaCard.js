@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Star, Droplets, Thermometer, Clock, Leaf } from 'lucide-react-native';
+import { Droplets, Thermometer, Clock, Leaf } from 'lucide-react-native';
 import ViewShot from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import { getPlaceholderImage } from '../constants';
@@ -81,7 +81,6 @@ export const ShareableTeaCard = React.forwardRef(({
   showBranding = true,
   instagramHandle = null,
   brewNotes = null,
-  userRating = null,
 }, ref) => {
   const { theme, getTeaTypeColor } = useTheme();
   const viewShotRef = useRef();
@@ -89,7 +88,6 @@ export const ShareableTeaCard = React.forwardRef(({
   const teaType = (tea.teaType || tea.tea_type || 'black').toLowerCase();
   const teaColor = getTeaTypeColor(teaType);
   const gradientColors = TEA_GRADIENTS[teaType] || TEA_GRADIENTS.black;
-  const rating = userRating || tea.avgRating || tea.avg_rating || 0;
   const teaName = tea.name || '';
   const brandName = tea.brandName || tea.brand_name || tea.company?.name || '';
   const description = tea.description || '';
@@ -122,25 +120,7 @@ export const ShareableTeaCard = React.forwardRef(({
     }
   };
   
-  // Render star rating
-  const renderStars = () => {
-    const fullStars = Math.floor(rating);
-    return (
-      <View style={styles.starsRow}>
-        {Array.from({ length: 5 }).map((_, i) => (
-          <Star
-            key={i}
-            size={28}
-            color={i < fullStars ? '#FFD700' : 'rgba(255,255,255,0.2)'}
-            fill={i < fullStars ? '#FFD700' : 'transparent'}
-          />
-        ))}
-        {rating > 0 && (
-          <Text style={styles.ratingText}>{rating.toFixed(1)}</Text>
-        )}
-      </View>
-    );
-  };
+
 
   return (
     <ViewShot 
@@ -192,7 +172,6 @@ export const ShareableTeaCard = React.forwardRef(({
               @{instagramHandle}
             </Text>
           )}
-          {renderStars()}
         </View>
 
         {/* Description snippet */}
@@ -230,7 +209,7 @@ export const ShareableTeaCard = React.forwardRef(({
         {/* Brew notes — user's personal tasting notes */}
         {brewNotes ? (
           <View style={styles.brewNotesSection}>
-            <Text style={styles.brewNotesLabel}>MY TASTING NOTES</Text>
+            <Text style={styles.brewNotesLabel}>TASTING NOTES</Text>
             <Text style={styles.brewNotesText} numberOfLines={3}>
               "{brewNotes.slice(0, 200).trim()}{brewNotes.length > 200 ? '…' : ''}"
             </Text>
@@ -355,17 +334,6 @@ const styles = StyleSheet.create({
     color: 'rgba(255,255,255,0.45)',
     letterSpacing: 1,
     marginBottom: 16,
-  },
-  starsRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  ratingText: {
-    fontSize: 24,
-    fontWeight: '700',
-    color: '#FFD700',
-    marginLeft: 12,
   },
   
   // Description

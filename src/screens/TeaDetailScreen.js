@@ -726,8 +726,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           tea={tea} 
           showBranding={true}
           instagramHandle={company?.instagram_handle}
-          brewNotes={collectionItem?.notes}
-          userRating={collectionItem?.user_rating}
+          brewNotes={tastingNote?.note_text}
         />
       </View>
     </View>
