@@ -7,22 +7,51 @@ import { colors, typography, spacing, getTeaTypeColor } from '../constants';
 import { TeaTypeBadge } from './TeaTypeBadge';
 
 /**
- * Deterministically select a "tea of the day" based on date
- * So everyone sees the same tea on the same day
+ * Simple deterministic hash (djb2) for better distribution than char-code sum.
+ */
+const hashString = (str) => {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) {
+    hash = ((hash << 5) + hash + str.charCodeAt(i)) >>> 0;
+  }
+  return hash;
+};
+
+/**
+ * Deterministically select a "tea of the day" based on date.
+ * Ensures shop diversity: picks a brand first (rotating through all brands),
+ * then picks a tea from that brand. Everyone sees the same tea on the same day.
  */
 const getTeaOfTheDay = (teas, date = new Date()) => {
   if (!teas || teas.length === 0) return null;
-  
-  // Use date as seed for pseudo-random selection
+
   const dateStr = date.toISOString().split('T')[0]; // YYYY-MM-DD
-  const seed = dateStr.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
-  
-  // All teas are eligible (ratings removed)
-  const eligibleTeas = teas.filter(t => t.imageUrl); // prefer teas with images
-  if (eligibleTeas.length === 0) return teas[0];
-  
-  const index = seed % eligibleTeas.length;
-  return eligibleTeas[index];
+  const daySeed = hashString(dateStr);
+
+  // Only consider teas with images
+  const eligible = teas.filter(t => t.imageUrl);
+  if (eligible.length === 0) return teas[0];
+
+  // Group by brand for shop diversity
+  const brandMap = {};
+  for (const t of eligible) {
+    const brand = t.brandName || 'Unknown';
+    if (!brandMap[brand]) brandMap[brand] = [];
+    brandMap[brand].push(t);
+  }
+
+  // Sort brand names for stable ordering
+  const brands = Object.keys(brandMap).sort();
+  if (brands.length === 0) return eligible[0];
+
+  // Pick today's brand, then today's tea within that brand
+  const brandIndex = daySeed % brands.length;
+  const brand = brands[brandIndex];
+  const brandTeas = brandMap[brand];
+  const teaSeed = hashString(dateStr + ':tea');
+  const teaIndex = teaSeed % brandTeas.length;
+
+  return brandTeas[teaIndex];
 };
 
 const TEA_OF_DAY_KEY = '@resteeped_tea_of_day';
