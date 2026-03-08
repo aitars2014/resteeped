@@ -79,6 +79,9 @@ export const ShareableTeaCard = React.forwardRef(({
   tea, 
   style,
   showBranding = true,
+  instagramHandle = null,
+  brewNotes = null,
+  userRating = null,
 }, ref) => {
   const { theme, getTeaTypeColor } = useTheme();
   const viewShotRef = useRef();
@@ -86,7 +89,7 @@ export const ShareableTeaCard = React.forwardRef(({
   const teaType = (tea.teaType || tea.tea_type || 'black').toLowerCase();
   const teaColor = getTeaTypeColor(teaType);
   const gradientColors = TEA_GRADIENTS[teaType] || TEA_GRADIENTS.black;
-  const rating = tea.avgRating || tea.avg_rating || 0;
+  const rating = userRating || tea.avgRating || tea.avg_rating || 0;
   const teaName = tea.name || '';
   const brandName = tea.brandName || tea.brand_name || tea.company?.name || '';
   const description = tea.description || '';
@@ -184,6 +187,11 @@ export const ShareableTeaCard = React.forwardRef(({
           <Text style={styles.brandName}>
             {brandName.toUpperCase()}
           </Text>
+          {instagramHandle && (
+            <Text style={styles.instagramHandle}>
+              @{instagramHandle}
+            </Text>
+          )}
           {renderStars()}
         </View>
 
@@ -219,6 +227,16 @@ export const ShareableTeaCard = React.forwardRef(({
           </View>
         </View>
 
+        {/* Brew notes — user's personal tasting notes */}
+        {brewNotes ? (
+          <View style={styles.brewNotesSection}>
+            <Text style={styles.brewNotesLabel}>MY TASTING NOTES</Text>
+            <Text style={styles.brewNotesText} numberOfLines={3}>
+              "{brewNotes.slice(0, 200).trim()}{brewNotes.length > 200 ? '…' : ''}"
+            </Text>
+          </View>
+        ) : null}
+
         {/* Fun facts pills */}
         <View style={styles.funFactsSection}>
           {selectedFacts.map((fact, i) => (
@@ -232,9 +250,12 @@ export const ShareableTeaCard = React.forwardRef(({
         {showBranding && (
           <View style={styles.footer}>
             <View style={styles.footerDivider} />
-            <Text style={styles.footerDiscovered}>Discovered on</Text>
-            <Text style={styles.footerBrand}>Resteeped</Text>
-            <Text style={styles.footerTagline}>Your tea journey starts here</Text>
+            <Text style={styles.footerQuote}>Good tea is worth remembering</Text>
+            <Image 
+              source={require('../../assets/resteeped-logo-dark.png')} 
+              style={styles.footerLogo}
+              resizeMode="contain"
+            />
           </View>
         )}
       </LinearGradient>
@@ -328,6 +349,13 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: 'center',
   },
+  instagramHandle: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: 'rgba(255,255,255,0.45)',
+    letterSpacing: 1,
+    marginBottom: 16,
+  },
   starsRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -388,6 +416,29 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.15)',
   },
   
+  // Brew notes
+  brewNotesSection: {
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderRadius: 20,
+    padding: 28,
+    marginBottom: 24,
+    borderLeftWidth: 4,
+    borderLeftColor: 'rgba(255,255,255,0.3)',
+  },
+  brewNotesLabel: {
+    fontSize: 13,
+    fontWeight: '800',
+    color: 'rgba(255,255,255,0.4)',
+    letterSpacing: 3,
+    marginBottom: 12,
+  },
+  brewNotesText: {
+    fontSize: 20,
+    fontStyle: 'italic',
+    color: 'rgba(255,255,255,0.8)',
+    lineHeight: 30,
+  },
+  
   // Fun facts
   funFactsSection: {
     flexDirection: 'row',
@@ -413,32 +464,26 @@ const styles = StyleSheet.create({
   // Footer
   footer: {
     alignItems: 'center',
-    gap: 8,
+    gap: 12,
   },
   footerDivider: {
     width: 60,
     height: 2,
     backgroundColor: 'rgba(255,255,255,0.2)',
-    marginBottom: 16,
+    marginBottom: 12,
   },
-  footerDiscovered: {
-    fontSize: 14,
-    fontWeight: '500',
-    color: 'rgba(255,255,255,0.4)',
-    letterSpacing: 2,
-    textTransform: 'uppercase',
-  },
-  footerBrand: {
-    fontSize: 36,
-    fontWeight: '900',
-    color: '#FFFFFF',
-    letterSpacing: 2,
-  },
-  footerTagline: {
-    fontSize: 14,
+  footerQuote: {
+    fontSize: 18,
+    fontStyle: 'italic',
     fontWeight: '400',
-    color: 'rgba(255,255,255,0.35)',
+    color: 'rgba(255,255,255,0.5)',
     letterSpacing: 1,
+    marginBottom: 8,
+  },
+  footerLogo: {
+    width: 200,
+    height: 50,
+    opacity: 0.8,
   },
 });
 

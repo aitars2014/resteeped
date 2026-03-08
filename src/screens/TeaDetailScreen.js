@@ -354,11 +354,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             <Share2 size={20} color={theme.text.primary} />
           </TouchableOpacity>
           
-          {inCollection && (
-            <View style={styles.collectionBadge}>
-              <Check size={16} color={theme.text.inverse} />
-            </View>
-          )}
+
         </View>
         
         {/* Content */}
@@ -729,6 +725,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           ref={shareCardRef}
           tea={tea} 
           showBranding={true}
+          instagramHandle={company?.instagram_handle}
+          brewNotes={collectionItem?.notes}
+          userRating={collectionItem?.user_rating}
         />
       </View>
     </View>
