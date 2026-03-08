@@ -357,18 +357,21 @@ export const TimerScreen = ({ route, navigation }) => {
         infusion: multiSteepMode ? currentInfusion : null,
       });
       
-      // Log the brew session (rating/notes added via review modal callback)
-      logBrewSession({
-        teaId: tea?.id,
-        steepTimeSeconds: totalSeconds,
-        temperatureF: temperatureF,
-        teaData: tea,
-        infusionNumber: multiSteepMode ? currentInfusion : null,
-        note: infusionNotes[currentInfusion] || null,
-        brewMethod: brewMethod,
-        teaWeight: teaWeight,
-        teaWeightUnit: teaWeightUnit,
-      });
+      // Log the brew session — only if a tea is selected.
+      // If no tea, the tea search modal will handle logging after the user picks one.
+      if (tea?.id) {
+        logBrewSession({
+          teaId: tea.id,
+          steepTimeSeconds: totalSeconds,
+          temperatureF: temperatureF,
+          teaData: tea,
+          infusionNumber: multiSteepMode ? currentInfusion : null,
+          note: infusionNotes[currentInfusion] || null,
+          brewMethod: brewMethod,
+          teaWeight: teaWeight,
+          teaWeightUnit: teaWeightUnit,
+        });
+      }
 
       // Mark tea as tried in collection if it exists
       if (teaId && isInCollection(teaId)) {
@@ -1052,19 +1055,8 @@ export const TimerScreen = ({ route, navigation }) => {
               teaWeightUnit: teaWeightUnit,
             });
           }
-          // Also log to brew session
-          logBrewSession({
-            teaId: reviewTea?.id,
-            steepTimeSeconds: totalSeconds,
-            temperatureF: temperatureF,
-            teaData: reviewTea,
-            infusionNumber: multiSteepMode ? currentInfusion : null,
-            brewMethod: brewMethod,
-            teaWeight: teaWeight,
-            teaWeightUnit: teaWeightUnit,
-            rating: rating,
-            tastingNotes: notes,
-          });
+          // Note: brew session already logged when timer completed (useEffect above)
+          // Review rating/notes are submitted via submitReview() — no duplicate log needed
         }}
         teaName={tea?.name || selectedPostBrewTea?.name}
         brewMethod={brewMethod}
