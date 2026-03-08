@@ -876,11 +876,19 @@ async function scrapeBrand(brandKey) {
   const companyId = await ensureCompany(brandKey);
   if (!companyId) return { imported: 0, skipped: 0 };
   
-  // Fetch products
-  const response = await fetch(`${brand.url}/products.json?limit=250`);
-  const data = await response.json();
+  // Fetch all products (paginated — Shopify caps at 250 per page)
+  let allProducts = [];
+  let page = 1;
+  while (true) {
+    const response = await fetch(`${brand.url}/products.json?limit=250&page=${page}`);
+    const data = await response.json();
+    if (!data.products || data.products.length === 0) break;
+    allProducts = allProducts.concat(data.products);
+    if (data.products.length < 250) break;
+    page++;
+  }
   
-  const teas = data.products.filter(isTeaProduct);
+  const teas = allProducts.filter(isTeaProduct);
   console.log(`  Found ${teas.length} tea products`);
   
   let imported = 0;
