@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useRef } from 'react';
 import { 
   View, 
   Text, 
@@ -14,7 +14,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage } from '../constants';
-import { Button, TeaTypeBadge, StarRating, FactCard, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote } from '../components';
+import { Button, TeaTypeBadge, StarRating, FactCard, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote, ShareableTeaCard } from '../components';
+import ViewShot from 'react-native-view-shot';
 import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
@@ -31,6 +32,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const teaColor = getTeaTypeColor(tea.teaType || tea.tea_type);
   const styles = createStyles(theme);
   
+  const shareCardRef = useRef();
   const { user } = useAuth();
   const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, updateInCollection, collection } = useCollection();
   const { canAddToCollection, isPremium } = useSubscription();
@@ -326,7 +328,26 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           
           <TouchableOpacity 
             style={styles.shareButton}
-            onPress={() => shareTea(tea)}
+            onPress={async () => {
+              try {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
+                trackEvent(AnalyticsEvents.TEA_SHARED, {
+                  tea_id: tea.id,
+                  tea_name: tea.name,
+                  tea_type: tea.teaType || tea.tea_type,
+                });
+                // Capture the offscreen share card as an image
+                let imageUri = null;
+                if (shareCardRef.current) {
+                  imageUri = await shareCardRef.current.capture();
+                }
+                await shareTea(tea, imageUri);
+              } catch (error) {
+                console.error('Share error:', error);
+                // Fallback to text-only share
+                await shareTea(tea);
+              }
+            }}
             accessible={true}
             accessibilityRole="button"
             accessibilityLabel="Share this tea"
@@ -702,6 +723,17 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         initialNotes={collectionItem?.notes || ''}
         initialRating={collectionItem?.user_rating || 0}
       />
+      
+      {/* Offscreen shareable card — rendered but hidden for ViewShot capture */}
+      <View style={styles.offscreenCardContainer} pointerEvents="none">
+        <ViewShot ref={shareCardRef} options={{ format: 'png', quality: 1 }}>
+          <ShareableTeaCard 
+            tea={tea} 
+            showBranding={true}
+            style={{ width: 1080 }}
+          />
+        </ViewShot>
+      </View>
     </View>
   );
 };
@@ -1106,5 +1138,10 @@ const createStyles = (theme) => ({
   premiumLockText: {
     ...typography.bodySmall,
     textAlign: 'center',
+  },
+  offscreenCardContainer: {
+    position: 'absolute',
+    left: -9999,
+    top: -9999,
   },
 });

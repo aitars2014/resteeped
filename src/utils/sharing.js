@@ -1,9 +1,38 @@
 import { Share, Platform } from 'react-native';
+import * as Sharing from 'expo-sharing';
 
 /**
- * Share a tea with friends
+ * Share a tea as an image card (primary) or text (fallback)
+ * @param {Object} tea - Tea object
+ * @param {string|null} imageUri - URI of captured card image (from ViewShot)
  */
-export const shareTea = async (tea) => {
+export const shareTea = async (tea, imageUri = null) => {
+  // If we have an image, share it via expo-sharing
+  if (imageUri) {
+    try {
+      const isAvailable = await Sharing.isAvailableAsync();
+      if (isAvailable) {
+        await Sharing.shareAsync(imageUri, {
+          mimeType: 'image/png',
+          dialogTitle: `Share ${tea.name}`,
+          UTI: 'public.png', // iOS UTI for better share sheet behavior
+        });
+        return { success: true };
+      }
+    } catch (error) {
+      console.error('Image share failed, falling back to text:', error);
+      // Fall through to text share
+    }
+  }
+  
+  // Fallback: text-only share
+  return shareTeaText(tea);
+};
+
+/**
+ * Share a tea as text only (fallback)
+ */
+export const shareTeaText = async (tea) => {
   const teaName = tea.name;
   const brandName = tea.brandName;
   const rating = tea.avgRating?.toFixed(1) || 'N/A';
