@@ -13,10 +13,11 @@ import {
 } from 'react-native';
 import { SlidersHorizontal, Clock, X, ArrowUp, Sparkles } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { SearchBar, FilterPills, FilterModal, TeaCard, TeaCardSkeleton } from '../components';
+import { SearchBar, FilterPills, FilterModal, TeaCard, TeaCardSkeleton, TeaCategoryRow } from '../components';
 import { useTeas, useSearchHistory } from '../hooks';
 import { useTheme } from '../context';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
+import { teaTypes } from '../data/teas';
 
 // Skeleton grid for loading state
 const SkeletonGrid = () => (
@@ -246,6 +247,9 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     );
   };
   
+  // Show category browse rows when in default view (no search, no filters)
+  const isDefaultView = !searchQuery && filters.teaType === 'all' && filters.company === 'all' && filters.minRating === 'all' && filters.teaMethod === 'all';
+
   // Memoize the list header (without search bar) to prevent unnecessary re-renders
   const listHeader = useMemo(() => (
     <>
@@ -256,28 +260,48 @@ export const DiscoveryScreen = ({ navigation, route }) => {
           onSelectType={handleTypeChange}
         />
       </View>
+
+      {/* Category Browse Rows — show when no filters active */}
+      {isDefaultView && !loading && teas.length > 0 && (
+        <View style={styles.categorySection}>
+          {teaTypes
+            .filter(t => t.id !== 'all')
+            .map(type => (
+              <TeaCategoryRow
+                key={type.id}
+                title={type.label + ' Tea'}
+                teas={teas}
+                teaType={type.id}
+                onTeaPress={(tea) => navigation.navigate('TeaDetail', { tea })}
+                onSeeAll={() => handleTypeChange(type.id)}
+              />
+            ))}
+        </View>
+      )}
       
-      {/* Result Count */}
-      <View style={styles.resultCount}>
-        <Text style={[styles.resultText, { color: theme.text.secondary }]}>
-          {filteredTeas.length >= 1000 ? `${filteredTeas.length.toLocaleString()}+` : filteredTeas.length.toLocaleString()} tea{filteredTeas.length !== 1 ? 's' : ''}
-        </Text>
-        {activeFilterCount > 0 && (
-          <TouchableOpacity 
-            onPress={() => setFilters({
-              teaType: 'all',
-              company: 'all',
-              minRating: 'all',
-              teaMethod: 'all',
-              sortBy: 'relevance',
-            })}
-          >
-            <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>Clear filters</Text>
-          </TouchableOpacity>
-        )}
-      </View>
+      {/* Result Count — show when filtered or searching */}
+      {!isDefaultView && (
+        <View style={styles.resultCount}>
+          <Text style={[styles.resultText, { color: theme.text.secondary }]}>
+            {filteredTeas.length >= 1000 ? `${filteredTeas.length.toLocaleString()}+` : filteredTeas.length.toLocaleString()} tea{filteredTeas.length !== 1 ? 's' : ''}
+          </Text>
+          {activeFilterCount > 0 && (
+            <TouchableOpacity 
+              onPress={() => setFilters({
+                teaType: 'all',
+                company: 'all',
+                minRating: 'all',
+                teaMethod: 'all',
+                sortBy: 'relevance',
+              })}
+            >
+              <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>Clear filters</Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      )}
     </>
-  ), [filters.teaType, filteredTeas.length, activeFilterCount, theme]);
+  ), [filters.teaType, filteredTeas.length, activeFilterCount, theme, isDefaultView, loading, teas]);
   
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
@@ -338,14 +362,14 @@ export const DiscoveryScreen = ({ navigation, route }) => {
       
       <FlatList
         ref={flatListRef}
-        data={filteredTeas}
+        data={isDefaultView ? [] : filteredTeas}
         renderItem={renderTeaCard}
         keyExtractor={item => item.id}
         numColumns={2}
         contentContainerStyle={styles.listContent}
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={listHeader}
-        ListEmptyComponent={renderEmptyState}
+        ListEmptyComponent={isDefaultView ? null : renderEmptyState}
         keyboardShouldPersistTaps="handled"
         keyboardDismissMode="on-drag"
         onScroll={handleScroll}
@@ -481,6 +505,9 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   filtersContainer: {
+    paddingBottom: spacing.md,
+  },
+  categorySection: {
     paddingBottom: spacing.md,
   },
   resultCount: {

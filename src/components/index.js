@@ -6,6 +6,7 @@ export { StarRating } from './StarRating';
 export { RatingSlider } from './RatingSlider';
 export { TeaTypeBadge } from './TeaTypeBadge';
 export { TeaCard } from './TeaCard';
+export { TeaCategoryRow } from './TeaCategoryRow';
 export { FactCard } from './FactCard';
 export { ReviewCard } from './ReviewCard';
 export { EditorialTastingNote } from './EditorialTastingNote';
