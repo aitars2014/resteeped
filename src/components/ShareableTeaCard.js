@@ -1,42 +1,111 @@
 import React, { useRef } from 'react';
-import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Star, Leaf } from 'lucide-react-native';
+import { Star, Droplets, Thermometer, Clock, Leaf } from 'lucide-react-native';
 import ViewShot from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
-import { typography, spacing, fonts, getPlaceholderImage } from '../constants';
+import { getPlaceholderImage } from '../constants';
 import { useTheme } from '../context';
+import { BREWING_GUIDES } from '../constants/brewingGuides';
+import { HEALTH_BENEFITS } from '../constants/healthBenefits';
 import { haptics } from '../utils/haptics';
 
-const { width } = Dimensions.get('window');
-const CARD_WIDTH = width - 48; // Full width with margin
+// Instagram Story dimensions (9:16 aspect ratio)
+const CARD_WIDTH = 1080;
+const CARD_HEIGHT = 1920;
+
+// Gradient palettes per tea type — bold, Wrapped-inspired
+const TEA_GRADIENTS = {
+  black: ['#1A0A00', '#4A1C0A', '#8B4513', '#D2691E'],
+  green: ['#0A1A0A', '#1B4332', '#2D6A4F', '#52B788'],
+  oolong: ['#1A0F00', '#6B3A0A', '#C66A1D', '#F4A460'],
+  white: ['#1A1A2E', '#3D3D5C', '#8E8EA0', '#D4D4E8'],
+  puerh: ['#0D0A07', '#2C1810', '#5C3A28', '#8B6F47'],
+  herbal: ['#1A0A1A', '#4A1A4A', '#8B3A8B', '#D4A5C7'],
+  yellow: ['#1A1500', '#4A3D0A', '#8B7A1D', '#DAA520'],
+};
+
+// Fun tea facts by type
+const TEA_FACTS = {
+  black: [
+    'Fully oxidized leaves',
+    'Most popular tea worldwide',
+    'Pairs beautifully with milk',
+    'Ages well when stored properly',
+  ],
+  green: [
+    'Minimally oxidized',
+    'Rich in antioxidants (EGCG)',
+    'Best brewed below boiling',
+    'Can be re-steeped 2-3 times',
+  ],
+  oolong: [
+    'Partially oxidized (15-85%)',
+    'Hundreds of flavor profiles',
+    'Can be steeped many times',
+    'Made from mature tea leaves',
+  ],
+  white: [
+    'Least processed tea type',
+    'Made from young buds & leaves',
+    'Delicate, subtle sweetness',
+    'Highest antioxidant content',
+  ],
+  puerh: [
+    'Aged & fermented tea',
+    'Improves with age like wine',
+    'Often pressed into cakes',
+    'Can be decades old',
+  ],
+  herbal: [
+    'Not technically "tea"',
+    'Naturally caffeine-free',
+    'Made from herbs & botanicals',
+    'Enjoyed for thousands of years',
+  ],
+  yellow: [
+    'Rarest of all tea types',
+    'Unique "sealed yellowing" step',
+    'Smooth, mellow flavor',
+    'An ancient Chinese tradition',
+  ],
+};
 
 /**
- * ShareableTeaCard - Screenshot-ready card for social sharing
- * Designed to look great when shared on Instagram, Twitter, etc.
+ * ShareableTeaCard - Spotify Wrapped-inspired story card
+ * Bold gradients, punchy typography, Instagram Story format (9:16)
  */
-export const ShareableTeaCard = ({ 
+export const ShareableTeaCard = React.forwardRef(({ 
   tea, 
   style,
   showBranding = true,
-  variant = 'default', // 'default' | 'minimal' | 'comparison'
-}) => {
-  const { theme, isDark, getTeaTypeColor } = useTheme();
+}, ref) => {
+  const { theme, getTeaTypeColor } = useTheme();
   const viewShotRef = useRef();
-  const teaColor = getTeaTypeColor(tea.teaType || tea.tea_type);
   
+  const teaType = (tea.teaType || tea.tea_type || 'black').toLowerCase();
+  const teaColor = getTeaTypeColor(teaType);
+  const gradientColors = TEA_GRADIENTS[teaType] || TEA_GRADIENTS.black;
   const rating = tea.avgRating || tea.avg_rating || 0;
-  const teaName = tea.name;
+  const teaName = tea.name || '';
   const brandName = tea.brandName || tea.brand_name || tea.company?.name || '';
-  const teaType = (tea.teaType || tea.tea_type || '').toUpperCase();
-  const placeholderImage = getPlaceholderImage(tea.teaType || tea.tea_type);
+  const description = tea.description || '';
+  const placeholderImage = getPlaceholderImage(teaType);
   
+  // Get brewing guide data
+  const guide = BREWING_GUIDES[teaType] || BREWING_GUIDES.black;
+  const healthData = HEALTH_BENEFITS[teaType] || HEALTH_BENEFITS.black;
+  
+  // Pick 2 random facts for this tea type
+  const facts = TEA_FACTS[teaType] || TEA_FACTS.black;
+  const factIndex = teaName.length % (facts.length - 1); // deterministic based on name
+  const selectedFacts = [facts[factIndex], facts[(factIndex + 1) % facts.length]];
+
   // Capture and share
   const captureAndShare = async () => {
     try {
       haptics.medium();
       const uri = await viewShotRef.current.capture();
-      
       if (await Sharing.isAvailableAsync()) {
         await Sharing.shareAsync(uri, {
           mimeType: 'image/png',
@@ -50,7 +119,7 @@ export const ShareableTeaCard = ({
     }
   };
   
-  // Render stars
+  // Render star rating
   const renderStars = () => {
     const fullStars = Math.floor(rating);
     return (
@@ -58,100 +127,114 @@ export const ShareableTeaCard = ({
         {Array.from({ length: 5 }).map((_, i) => (
           <Star
             key={i}
-            size={18}
-            color={i < fullStars ? '#FFB347' : 'rgba(255,255,255,0.3)'}
-            fill={i < fullStars ? '#FFB347' : 'transparent'}
+            size={28}
+            color={i < fullStars ? '#FFD700' : 'rgba(255,255,255,0.2)'}
+            fill={i < fullStars ? '#FFD700' : 'transparent'}
           />
         ))}
-        <Text style={styles.ratingText}>{rating.toFixed(1)}</Text>
+        {rating > 0 && (
+          <Text style={styles.ratingText}>{rating.toFixed(1)}</Text>
+        )}
       </View>
     );
   };
 
   return (
     <ViewShot 
-      ref={viewShotRef} 
-      options={{ format: 'png', quality: 1 }}
+      ref={ref || viewShotRef} 
+      options={{ format: 'png', quality: 1, width: CARD_WIDTH, height: CARD_HEIGHT }}
       style={[styles.container, style]}
     >
       <LinearGradient
-        colors={isDark 
-          ? ['#1A1A1A', '#0D0D0D'] 
-          : ['#FAF8F5', '#F0ECE3']
-        }
+        colors={gradientColors}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
         style={styles.card}
       >
-        {/* Tea image with gradient overlay */}
-        <View style={styles.imageContainer}>
-          <Image 
-            source={tea.imageUrl || tea.image_url 
-              ? { uri: tea.imageUrl || tea.image_url } 
-              : placeholderImage
-            } 
-            style={styles.image} 
-          />
-          <LinearGradient
-            colors={['transparent', 'rgba(0,0,0,0.7)']}
-            style={styles.imageGradient}
-          />
-          
-          {/* Type badge */}
-          <View style={[styles.typeBadge, { backgroundColor: teaColor.primary }]}>
-            <Leaf size={12} color="#FFF" />
-            <Text style={styles.typeText}>{teaType}</Text>
+        {/* Top section — tea type label */}
+        <View style={styles.topSection}>
+          <View style={styles.typePill}>
+            <Leaf size={16} color="#FFF" />
+            <Text style={styles.typeLabel}>
+              {teaType.toUpperCase()} TEA
+            </Text>
           </View>
         </View>
-        
-        {/* Content */}
-        <View style={styles.content}>
-          {/* Brand */}
-          <Text style={[styles.brand, { color: teaColor.primary }]}>
-            {brandName.toUpperCase()}
-          </Text>
-          
-          {/* Name */}
-          <Text style={[styles.name, { color: theme.text.primary }]}>
+
+        {/* Tea image — circular, centered */}
+        <View style={styles.imageSection}>
+          <View style={styles.imageRing}>
+            <View style={styles.imageInnerRing}>
+              <Image 
+                source={tea.imageUrl || tea.image_url 
+                  ? { uri: tea.imageUrl || tea.image_url } 
+                  : placeholderImage
+                } 
+                style={styles.teaImage} 
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* Tea name & brand — big, bold */}
+        <View style={styles.nameSection}>
+          <Text style={styles.teaName} numberOfLines={3}>
             {teaName}
           </Text>
-          
-          {/* Rating */}
+          <Text style={styles.brandName}>
+            {brandName.toUpperCase()}
+          </Text>
           {renderStars()}
-          
-          {/* Description snippet */}
-          {tea.description && (
-            <Text style={[styles.description, { color: theme.text.secondary }]} numberOfLines={2}>
-              {tea.description}
-            </Text>
-          )}
-          
-          {/* Flavor notes if available */}
-          {tea.flavor_notes && tea.flavor_notes.length > 0 && (
-            <View style={styles.flavorsRow}>
-              {tea.flavor_notes.slice(0, 3).map((flavor, i) => (
-                <View 
-                  key={i} 
-                  style={[styles.flavorPill, { 
-                    backgroundColor: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)'
-                  }]}
-                >
-                  <Text style={[styles.flavorText, { color: theme.text.secondary }]}>
-                    {flavor}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          )}
         </View>
-        
+
+        {/* Description snippet */}
+        {description ? (
+          <View style={styles.descriptionSection}>
+            <Text style={styles.descriptionText} numberOfLines={3}>
+              "{description.slice(0, 150).trim()}{description.length > 150 ? '…' : ''}"
+            </Text>
+          </View>
+        ) : null}
+
+        {/* Quick facts — brewing stats */}
+        <View style={styles.factsSection}>
+          <View style={styles.factRow}>
+            <View style={styles.factItem}>
+              <Thermometer size={20} color="rgba(255,255,255,0.7)" />
+              <Text style={styles.factValue}>{guide.waterTemp.fahrenheit}°F</Text>
+              <Text style={styles.factLabel}>Water Temp</Text>
+            </View>
+            <View style={styles.factDivider} />
+            <View style={styles.factItem}>
+              <Clock size={20} color="rgba(255,255,255,0.7)" />
+              <Text style={styles.factValue}>{guide.steepTime.min}-{guide.steepTime.max} min</Text>
+              <Text style={styles.factLabel}>Steep Time</Text>
+            </View>
+            <View style={styles.factDivider} />
+            <View style={styles.factItem}>
+              <Droplets size={20} color="rgba(255,255,255,0.7)" />
+              <Text style={styles.factValue}>{healthData.caffeineRange}</Text>
+              <Text style={styles.factLabel}>Caffeine</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Fun facts pills */}
+        <View style={styles.funFactsSection}>
+          {selectedFacts.map((fact, i) => (
+            <View key={i} style={styles.funFactPill}>
+              <Text style={styles.funFactText}>✦ {fact}</Text>
+            </View>
+          ))}
+        </View>
+
         {/* Branding footer */}
         {showBranding && (
-          <View style={[styles.footer, { borderTopColor: theme.border.light }]}>
-            <Text style={[styles.footerText, { color: theme.text.tertiary }]}>
-              Discovered on
-            </Text>
-            <Text style={[styles.footerBrand, { color: theme.accent.primary }]}>
-              Resteeped
-            </Text>
+          <View style={styles.footer}>
+            <View style={styles.footerDivider} />
+            <Text style={styles.footerDiscovered}>Discovered on</Text>
+            <Text style={styles.footerBrand}>Resteeped</Text>
+            <Text style={styles.footerTagline}>Your tea journey starts here</Text>
           </View>
         )}
       </LinearGradient>
@@ -159,112 +242,205 @@ export const ShareableTeaCard = ({
   );
 };
 
+});
+
 // Expose capture method
 ShareableTeaCard.capture = (ref) => ref.current?.capture?.();
 
 const styles = StyleSheet.create({
   container: {
     width: CARD_WIDTH,
-    alignSelf: 'center',
+    height: CARD_HEIGHT,
   },
   card: {
-    borderRadius: 20,
+    flex: 1,
+    paddingHorizontal: 80,
+    paddingTop: 100,
+    paddingBottom: 80,
+    justifyContent: 'space-between',
+  },
+  
+  // Top section
+  topSection: {
+    alignItems: 'flex-start',
+  },
+  typePill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: 'rgba(255,255,255,0.15)',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 40,
+    gap: 10,
+  },
+  typeLabel: {
+    fontSize: 18,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: 3,
+  },
+  
+  // Image section
+  imageSection: {
+    alignItems: 'center',
+    marginVertical: 40,
+  },
+  imageRing: {
+    width: 380,
+    height: 380,
+    borderRadius: 190,
+    borderWidth: 3,
+    borderColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
+  imageInnerRing: {
+    width: 360,
+    height: 360,
+    borderRadius: 180,
     overflow: 'hidden',
+    backgroundColor: 'rgba(0,0,0,0.3)',
   },
-  imageContainer: {
-    height: 200,
-    position: 'relative',
-  },
-  image: {
+  teaImage: {
     width: '100%',
     height: '100%',
     resizeMode: 'cover',
   },
-  imageGradient: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    height: '50%',
-  },
-  typeBadge: {
-    position: 'absolute',
-    top: 16,
-    right: 16,
-    flexDirection: 'row',
+  
+  // Name section
+  nameSection: {
     alignItems: 'center',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
-    gap: 6,
+    marginBottom: 30,
   },
-  typeText: {
-    fontSize: 11,
-    fontWeight: '700',
-    color: '#FFF',
-    letterSpacing: 1,
-  },
-  content: {
-    padding: 24,
-  },
-  brand: {
-    fontSize: 11,
-    fontWeight: '700',
-    letterSpacing: 1.5,
-    marginBottom: 8,
-  },
-  name: {
-    fontFamily: fonts?.serif || 'Georgia',
-    fontSize: 26,
-    fontWeight: '600',
-    lineHeight: 32,
+  teaName: {
+    fontSize: 52,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    textAlign: 'center',
+    lineHeight: 60,
+    letterSpacing: -1,
     marginBottom: 12,
+  },
+  brandName: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: 'rgba(255,255,255,0.6)',
+    letterSpacing: 4,
+    marginBottom: 16,
+    textAlign: 'center',
   },
   starsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
-    marginBottom: 16,
-  },
-  ratingText: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#FFB347',
-    marginLeft: 8,
-  },
-  description: {
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 16,
-  },
-  flavorsRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  flavorPill: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-  },
-  flavorText: {
-    fontSize: 12,
-    fontWeight: '500',
-  },
-  footer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 16,
-    borderTopWidth: 1,
     gap: 6,
   },
-  footerText: {
-    fontSize: 12,
+  ratingText: {
+    fontSize: 24,
+    fontWeight: '700',
+    color: '#FFD700',
+    marginLeft: 12,
+  },
+  
+  // Description
+  descriptionSection: {
+    marginBottom: 30,
+    paddingHorizontal: 20,
+  },
+  descriptionText: {
+    fontSize: 22,
+    fontStyle: 'italic',
+    color: 'rgba(255,255,255,0.65)',
+    textAlign: 'center',
+    lineHeight: 32,
+  },
+  
+  // Facts section
+  factsSection: {
+    backgroundColor: 'rgba(255,255,255,0.08)',
+    borderRadius: 24,
+    padding: 30,
+    marginBottom: 24,
+  },
+  factRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  factItem: {
+    alignItems: 'center',
+    flex: 1,
+    gap: 8,
+  },
+  factValue: {
+    fontSize: 22,
+    fontWeight: '800',
+    color: '#FFFFFF',
+  },
+  factLabel: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: 'rgba(255,255,255,0.5)',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+  },
+  factDivider: {
+    width: 1,
+    height: 50,
+    backgroundColor: 'rgba(255,255,255,0.15)',
+  },
+  
+  // Fun facts
+  funFactsSection: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    gap: 12,
+    marginBottom: 30,
+  },
+  funFactPill: {
+    backgroundColor: 'rgba(255,255,255,0.1)',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 30,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.15)',
+  },
+  funFactText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: 'rgba(255,255,255,0.8)',
+  },
+  
+  // Footer
+  footer: {
+    alignItems: 'center',
+    gap: 8,
+  },
+  footerDivider: {
+    width: 60,
+    height: 2,
+    backgroundColor: 'rgba(255,255,255,0.2)',
+    marginBottom: 16,
+  },
+  footerDiscovered: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: 'rgba(255,255,255,0.4)',
+    letterSpacing: 2,
+    textTransform: 'uppercase',
   },
   footerBrand: {
-    fontSize: 12,
-    fontWeight: '700',
+    fontSize: 36,
+    fontWeight: '900',
+    color: '#FFFFFF',
+    letterSpacing: 2,
+  },
+  footerTagline: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: 'rgba(255,255,255,0.35)',
+    letterSpacing: 1,
   },
 });
 
