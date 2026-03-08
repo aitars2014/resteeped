@@ -1,236 +1,204 @@
-# Resteeped — Amplitude Dashboard Spec
+# Amplitude Dashboard Spec — Resteeped
 
-> **TARS-56** | Created 2026-02-25
-> Ready to implement in Amplitude UI at https://app.amplitude.com
-
----
-
-## Event Inventory
-
-### All Tracked Events
-
-| Event Name | Source | Key Properties |
-|---|---|---|
-| `sign_up` | AuthContext | `method` (apple/google) |
-| `sign_in` | AuthContext | `method` (apple/google/dev_mode) |
-| `sign_out` | AuthContext | — |
-| `onboarding_started` | OnboardingScreen | — |
-| `onboarding_completed` | OnboardingScreen | step count, selections |
-| `onboarding_skipped` | OnboardingScreen | step count, selections |
-| `onboarding_preferences_saved` | PreferenceCaptureScreen | preference details |
-| `onboarding_preferences_skipped` | PreferenceCaptureScreen | step info |
-| `tea_viewed` | TeaDetailScreen | tea name, type, company |
-| `tea_searched` | DiscoveryScreen | query text |
-| `tea_filtered` | DiscoveryScreen | `tea_type`, filter details |
-| `tea_added_to_collection` | CollectionContext | tea info |
-| `tea_removed_from_collection` | CollectionContext | `tea_id` |
-| `brew_started` | TimerScreen | tea type, steep params |
-| `brew_completed` | TimerScreen | tea type, duration |
-| `brew_cancelled` | (defined, check if used) | — |
-| `review_submitted` | TeaDetailScreen | tea info, rating |
-| `review_edited` | (defined, check if used) | — |
-| `tea_shared` | (defined, check if used) | — |
-| `profile_viewed` | (defined, check if used) | — |
-| `company_viewed` | CompanyProfileScreen | company name |
-| `teaware_viewed` | (defined, check if used) | — |
-| `teaware_added` | (defined, check if used) | — |
-| `tea_finder_search` | (defined, check if used) | — |
-| `tea_finder_result_tap` | (defined, check if used) | — |
-| `tea_sommelier_message` | TeaFinderScreen | `message_length` |
-| `tea_sommelier_recommendations` | TeaFinderScreen | recommendation count |
-| `feed_viewed` | ActivityFeedScreen | — |
-| `feed_refreshed` | (defined, check if used) | — |
-| `brew_history_viewed` | BrewHistoryScreen | — |
-| `paywall_viewed` | PaywallScreen | `source` |
-| `subscription_started` | PaywallScreen | `plan` |
-| `steep_preference_saved` | TimerScreen | steep params |
-| `tasting_notes_saved` | (defined, check if used) | — |
-| `collection_viewed` | (defined, check if used) | — |
-
-### Auto-tracked by Amplitude SDK
-- **Session Start / Session End** (defaultTracking.sessions: true)
-- **App Lifecycle** events (defaultTracking.appLifecycles: true)
-- App Install, App Open, App Updated, App Backgrounded
+*Generated Mar 8, 2026. TARS-97.*
 
 ---
 
-## Dashboard 1: Product Overview
+## Event Taxonomy (currently tracked)
 
-**Purpose:** High-level health metrics at a glance
+### Onboarding
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `onboarding_started` | — | Fires when onboarding screen loads |
+| `onboarding_completed` | `preferences_selected`, `skipped` | User finishes onboarding |
+| `onboarding_skipped` | `step` | User skips onboarding |
+| `onboarding_preferences_saved` | `tea_types`, `caffeine_preference` | Preference capture screen |
+| `onboarding_preferences_skipped` | `step` | Skipped preference capture |
 
-### Charts to Create
+### Authentication
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `sign_up` | `method` (apple/google) | New user registration |
+| `sign_in` | `method` (apple/google/dev_mode) | Returning user login |
+| `sign_out` | — | User signs out |
 
-1. **Daily Active Users (DAU)**
-   - Type: Line chart
-   - Event: Any Active Event
-   - Time: Last 30 days, daily
+### Tea Discovery
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `tea_viewed` | `tea_id`, `tea_name`, `company`, `tea_type` | Tea detail page opened |
+| `tea_searched` | `query`, `results_count` | Search executed |
+| `tea_filtered` | `tea_type`, `filter_type` | Filter applied on discovery screen |
+| `company_viewed` | `company_id`, `company_name` | Company profile viewed |
 
-2. **Weekly Active Users (WAU)**
-   - Type: Line chart
-   - Event: Any Active Event
-   - Time: Last 12 weeks, weekly
+### Collection
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `tea_added_to_collection` | `tea_id`, `source` | Tea added to user collection |
+| `tea_removed_from_collection` | `tea_id` | Tea removed from collection |
+| `collection_viewed` | — | Collection screen opened |
 
-3. **New Users vs Returning**
-   - Type: Stacked area
-   - Segment 1: `sign_up` (new)
-   - Segment 2: `sign_in` (returning)
-   - Time: Last 30 days, daily
+### Brewing
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `brew_started` | `tea_id`, `tea_name`, `duration` | Timer started |
+| `brew_completed` | `tea_id`, `tea_name`, `duration`, `infusion_number` | Timer completed |
+| `brew_cancelled` | — | Timer cancelled |
+| `steep_preference_saved` | `tea_id`, `temperature`, `duration` | Custom steep prefs saved |
+| `brew_history_viewed` | — | Brew history screen opened |
 
-4. **Top Events (Feature Usage)**
-   - Type: Bar chart / Event Segmentation
-   - Events: All custom events
-   - Group by: Event name
-   - Time: Last 30 days
+### Reviews & Tasting
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `review_submitted` | `tea_id`, `rating` | Review posted |
+| `review_edited` | `tea_id` | Review updated |
+| `tasting_notes_saved` | — | Tasting notes captured |
 
-5. **Sessions per User**
-   - Type: Line chart
-   - Metric: Avg sessions per user
-   - Time: Last 30 days, daily
+### Tea Finder (AI)
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `tea_finder_search` | — | AI tea finder opened |
+| `tea_finder_result_tap` | — | AI recommendation tapped |
+| `tea_sommelier_message` | `message_length` | Message sent to AI sommelier |
+| `tea_sommelier_recommendations` | `count` | AI returned recommendations |
 
-6. **Session Duration Distribution**
-   - Type: Distribution / histogram
-   - Metric: Session length
-   - Time: Last 30 days
+### Social & Community
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `tea_shared` | — | Tea shared externally |
+| `profile_viewed` | — | User profile viewed |
+| `feed_viewed` | — | Community feed opened |
+| `feed_refreshed` | — | Feed pull-to-refresh |
 
----
+### Teaware
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `teaware_viewed` | — | Teaware item viewed |
+| `teaware_added` | — | Teaware added to collection |
 
-## Dashboard 2: Core Feature Engagement
-
-**Purpose:** Which features drive usage
-
-### Charts to Create
-
-1. **Tea Discovery Funnel**
-   - Type: Funnel
-   - Steps: `tea_searched` OR `tea_filtered` → `tea_viewed` → `tea_added_to_collection`
-   - Time: Last 30 days
-
-2. **Brewing Funnel**
-   - Type: Funnel
-   - Steps: `tea_viewed` → `brew_started` → `brew_completed`
-   - Time: Last 30 days
-
-3. **Collection Activity**
-   - Type: Line chart
-   - Events: `tea_added_to_collection`, `tea_removed_from_collection`
-   - Time: Last 30 days, daily
-
-4. **Tea Sommelier Usage**
-   - Type: Line chart
-   - Events: `tea_sommelier_message`, `tea_sommelier_recommendations`
-   - Time: Last 30 days, daily
-
-5. **Review Submissions**
-   - Type: Line chart
-   - Event: `review_submitted`
-   - Time: Last 30 days, daily
-
-6. **Screen Popularity**
-   - Type: Bar chart
-   - Events: `tea_viewed`, `feed_viewed`, `brew_history_viewed`, `company_viewed`, `collection_viewed`
-   - Metric: Total count
-   - Time: Last 30 days
-
-7. **Most Viewed Tea Types**
-   - Type: Bar chart
-   - Event: `tea_filtered`
-   - Group by: `tea_type` property
-   - Time: Last 30 days
+### Monetization
+| Event | Properties | Notes |
+|-------|-----------|-------|
+| `paywall_viewed` | `source` | Paywall screen shown |
+| `subscription_started` | `plan` | Subscription purchased |
 
 ---
 
-## Dashboard 3: Onboarding & Conversion
+## Dashboard 1: Acquisition Funnel
 
-**Purpose:** How well we convert new users
+**Purpose:** Where do new users drop off?
 
-### Charts to Create
+**Funnel steps:**
+1. `sign_up` → 2. `onboarding_started` → 3. `onboarding_completed` OR `onboarding_skipped` → 4. `tea_added_to_collection` → 5. `brew_started`
 
-1. **Onboarding Funnel**
-   - Type: Funnel
-   - Steps: `sign_up` → `onboarding_started` → `onboarding_preferences_saved` → `onboarding_completed`
-   - Time: Last 90 days
+**Breakdown by:** `sign_up.method` (Apple vs Google)
 
-2. **Onboarding Skip Rate**
-   - Type: Segmentation
-   - Events: `onboarding_completed` vs `onboarding_skipped`
-   - Show as: Ratio / percentage
-   - Time: Last 90 days
-
-3. **Sign-up Method Breakdown**
-   - Type: Pie/bar chart
-   - Event: `sign_up`
-   - Group by: `method` property
-   - Time: Last 90 days
-
-4. **Paywall Conversion Funnel**
-   - Type: Funnel
-   - Steps: `paywall_viewed` → `subscription_started`
-   - Time: Last 90 days
-
-5. **Paywall Source Analysis**
-   - Type: Bar chart
-   - Event: `paywall_viewed`
-   - Group by: `source` property
-   - Time: Last 90 days
-
-6. **New User Activation** (performed key action within first 7 days)
-   - Type: Funnel
-   - Steps: `sign_up` → `tea_added_to_collection` OR `brew_started`
-   - Conversion window: 7 days
-   - Time: Last 90 days
+**Key questions:**
+- What % of signups complete onboarding?
+- What % add their first tea?
+- What % brew their first cup?
+- Does sign-up method affect completion?
 
 ---
 
-## Dashboard 4: Retention
+## Dashboard 2: Retention Cohorts
 
 **Purpose:** Are users coming back?
 
-### Charts to Create
+**Charts:**
+1. **N-day retention curve** — Day 0, 1, 3, 7, 14, 30
+2. **Weekly retention cohorts** — grouped by signup week
+3. **Retention by signup method** — Apple vs Google
 
-1. **N-day Retention**
-   - Type: Retention chart
-   - Start: `sign_up`
-   - Return: Any Active Event
-   - Time: Last 90 days
-   - Show: Day 1, Day 7, Day 14, Day 30
+**Return event:** Any active event (session_start or any tracked event)
 
-2. **Feature Retention — Brewing**
-   - Type: Retention chart
-   - Start: `brew_completed`
-   - Return: `brew_completed`
-   - Time: Last 90 days
-
-3. **Feature Retention — Collection**
-   - Type: Retention chart
-   - Start: `tea_added_to_collection`
-   - Return: `tea_added_to_collection`
-   - Time: Last 90 days
-
-4. **Engagement Buckets**
-   - Type: Segmentation
-   - Show users by # of days active in last 30 days
-   - Buckets: 1 day, 2-3 days, 4-7 days, 8-14 days, 15+ days
+**Key questions:**
+- What's D1/D7/D30 retention?
+- Is retention improving week-over-week?
+- Which signup cohorts retain best?
 
 ---
 
-## Implementation Notes
+## Dashboard 3: Feature Adoption
 
-- **API Key:** `6fd906d7c65b96543a683b332461044b` (in `.env.local`)
-- **Project:** Check Amplitude Settings → Projects to find project name/ID
-- **Secret Key needed** for REST API access — find in Amplitude Settings → Projects → API Keys
-- All dashboards can be created in Amplitude's web UI under Analytics → Dashboards → New Dashboard
-- Consider setting up a **Saved Segment** for "Activated Users" (users who've completed at least one brew) for reuse across charts
+**Purpose:** Which features do users actually use?
 
-## Events Defined But Possibly Not Tracked
+**Charts (% of weekly active users):**
+1. `tea_viewed` — Browse/discovery
+2. `tea_searched` — Search
+3. `tea_added_to_collection` — Collection building
+4. `brew_started` — Brewing timer
+5. `review_submitted` — Reviews
+6. `tea_sommelier_message` — AI tea finder
+7. `feed_viewed` — Community feed
+8. `teaware_viewed` — Teaware
 
-These are in `AnalyticsEvents` but I didn't find corresponding `trackEvent()` calls — verify and add tracking if needed:
+**Key questions:**
+- Which features are most/least used?
+- What's the "aha moment" feature that correlates with retention?
+- Are users discovering the AI tea finder?
 
-- `brew_cancelled`
-- `review_edited`
-- `tea_shared`
-- `profile_viewed`
-- `teaware_viewed` / `teaware_added`
-- `tea_finder_search` / `tea_finder_result_tap`
-- `feed_refreshed`
-- `tasting_notes_saved`
-- `collection_viewed`
+---
+
+## Dashboard 4: Engagement Depth
+
+**Purpose:** How deeply are users engaging?
+
+**Charts:**
+1. **Sessions per user per week** (distribution)
+2. **Teas added per user per week**
+3. **Brews per user per week**
+4. **Reviews per user per week**
+5. **Power users** — users with 5+ sessions/week
+
+**Key questions:**
+- What does a "healthy" user look like?
+- How many teas does the average user collect?
+- Are there power users? What do they do differently?
+
+---
+
+## Dashboard 5: Monetization Funnel
+
+**Purpose:** How effective is our paywall?
+
+**Funnel steps:**
+1. Any active event → 2. `paywall_viewed` → 3. `subscription_started`
+
+**Breakdown by:** `paywall_viewed.source`
+
+**Charts:**
+1. Paywall view rate (% of active users who see paywall)
+2. Conversion rate (paywall → subscription)
+3. Paywall views by source (what triggers it?)
+
+---
+
+## Event Gaps (recommended additions)
+
+These events would improve our analytics but aren't currently tracked:
+
+| Event | Where | Why |
+|-------|-------|-----|
+| `app_opened` | App.js | Track DAU/WAU/MAU accurately |
+| `collection_sorted` | CollectionScreen | Understand collection usage patterns |
+| `tea_detail_scroll_depth` | TeaDetailScreen | Do users read full descriptions? |
+| `share_method_selected` | Share flow | Which share channels are used? |
+| `search_no_results` | DiscoveryScreen | What are users searching for that we don't have? |
+| `onboarding_step_viewed` | OnboardingScreen | Which onboarding step has highest drop-off? |
+
+---
+
+## Setup Instructions (for Taylor)
+
+Since I can't access the Amplitude dashboard directly, here's how to create these:
+
+1. **Log in** to [app.amplitude.com](https://app.amplitude.com)
+2. **Create a new Dashboard** called "Resteeped Product Analytics"
+3. For each dashboard above:
+   - Click **+ New Chart**
+   - **Funnels** → use the funnel steps listed
+   - **Retention** → use the retention config above
+   - **Event Segmentation** → for feature adoption & engagement charts
+4. **Save each chart** to the dashboard
+
+Or — get the browser relay working and I'll build them all myself.
