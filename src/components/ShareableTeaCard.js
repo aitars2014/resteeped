@@ -137,7 +137,7 @@ export const ShareableTeaCard = React.forwardRef(({
         {/* Top section — tea type label */}
         <View style={styles.topSection}>
           <View style={styles.typePill}>
-            <Leaf size={16} color="#FFF" />
+            <Leaf size={26} color="#FFF" />
             <Text style={styles.typeLabel}>
               {teaType.toUpperCase()} TEA
             </Text>
@@ -187,19 +187,19 @@ export const ShareableTeaCard = React.forwardRef(({
         <View style={styles.factsSection}>
           <View style={styles.factRow}>
             <View style={styles.factItem}>
-              <Thermometer size={20} color="rgba(255,255,255,0.7)" />
+              <Thermometer size={32} color="rgba(255,255,255,0.7)" />
               <Text style={styles.factValue}>{guide.waterTemp.fahrenheit}°F</Text>
               <Text style={styles.factLabel}>Water Temp</Text>
             </View>
             <View style={styles.factDivider} />
             <View style={styles.factItem}>
-              <Clock size={20} color="rgba(255,255,255,0.7)" />
+              <Clock size={32} color="rgba(255,255,255,0.7)" />
               <Text style={styles.factValue}>{guide.steepTime.min}-{guide.steepTime.max} min</Text>
               <Text style={styles.factLabel}>Steep Time</Text>
             </View>
             <View style={styles.factDivider} />
             <View style={styles.factItem}>
-              <Droplets size={20} color="rgba(255,255,255,0.7)" />
+              <Droplets size={32} color="rgba(255,255,255,0.7)" />
               <Text style={styles.factValue}>{healthData.caffeineRange}</Text>
               <Text style={styles.factLabel}>Caffeine</Text>
             </View>
@@ -266,37 +266,37 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0.15)',
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 40,
-    gap: 10,
+    paddingHorizontal: 36,
+    paddingVertical: 18,
+    borderRadius: 50,
+    gap: 14,
   },
   typeLabel: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: '800',
     color: '#FFFFFF',
-    letterSpacing: 3,
+    letterSpacing: 4,
   },
   
   // Image section
   imageSection: {
     alignItems: 'center',
-    marginVertical: 40,
+    marginVertical: 50,
   },
   imageRing: {
-    width: 380,
-    height: 380,
-    borderRadius: 190,
-    borderWidth: 3,
+    width: 420,
+    height: 420,
+    borderRadius: 210,
+    borderWidth: 4,
     borderColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: 8,
+    padding: 10,
   },
   imageInnerRing: {
-    width: 360,
-    height: 360,
-    borderRadius: 180,
+    width: 396,
+    height: 396,
+    borderRadius: 198,
     overflow: 'hidden',
     backgroundColor: 'rgba(0,0,0,0.3)',
   },
@@ -309,52 +309,52 @@ const styles = StyleSheet.create({
   // Name section
   nameSection: {
     alignItems: 'center',
-    marginBottom: 30,
+    marginBottom: 40,
   },
   teaName: {
-    fontSize: 52,
+    fontSize: 72,
     fontWeight: '900',
     color: '#FFFFFF',
     textAlign: 'center',
-    lineHeight: 60,
+    lineHeight: 82,
     letterSpacing: -1,
-    marginBottom: 12,
+    marginBottom: 16,
   },
   brandName: {
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: '700',
     color: 'rgba(255,255,255,0.6)',
-    letterSpacing: 4,
-    marginBottom: 16,
+    letterSpacing: 5,
+    marginBottom: 12,
     textAlign: 'center',
   },
   instagramHandle: {
-    fontSize: 18,
+    fontSize: 26,
     fontWeight: '600',
     color: 'rgba(255,255,255,0.45)',
     letterSpacing: 1,
-    marginBottom: 16,
+    marginBottom: 12,
   },
   
   // Description
   descriptionSection: {
-    marginBottom: 30,
+    marginBottom: 36,
     paddingHorizontal: 20,
   },
   descriptionText: {
-    fontSize: 22,
+    fontSize: 32,
     fontStyle: 'italic',
     color: 'rgba(255,255,255,0.65)',
     textAlign: 'center',
-    lineHeight: 32,
+    lineHeight: 46,
   },
   
   // Facts section
   factsSection: {
     backgroundColor: 'rgba(255,255,255,0.08)',
-    borderRadius: 24,
-    padding: 30,
-    marginBottom: 24,
+    borderRadius: 32,
+    padding: 40,
+    marginBottom: 32,
   },
   factRow: {
     flexDirection: 'row',
@@ -364,47 +364,47 @@ const styles = StyleSheet.create({
   factItem: {
     alignItems: 'center',
     flex: 1,
-    gap: 8,
+    gap: 10,
   },
   factValue: {
-    fontSize: 22,
+    fontSize: 34,
     fontWeight: '800',
     color: '#FFFFFF',
   },
   factLabel: {
-    fontSize: 14,
+    fontSize: 20,
     fontWeight: '500',
     color: 'rgba(255,255,255,0.5)',
-    letterSpacing: 1,
+    letterSpacing: 2,
     textTransform: 'uppercase',
   },
   factDivider: {
     width: 1,
-    height: 50,
+    height: 60,
     backgroundColor: 'rgba(255,255,255,0.15)',
   },
   
   // Brew notes
   brewNotesSection: {
     backgroundColor: 'rgba(255,255,255,0.08)',
-    borderRadius: 20,
-    padding: 28,
-    marginBottom: 24,
-    borderLeftWidth: 4,
+    borderRadius: 28,
+    padding: 36,
+    marginBottom: 32,
+    borderLeftWidth: 5,
     borderLeftColor: 'rgba(255,255,255,0.3)',
   },
   brewNotesLabel: {
-    fontSize: 13,
+    fontSize: 20,
     fontWeight: '800',
     color: 'rgba(255,255,255,0.4)',
-    letterSpacing: 3,
-    marginBottom: 12,
+    letterSpacing: 4,
+    marginBottom: 16,
   },
   brewNotesText: {
-    fontSize: 20,
+    fontSize: 30,
     fontStyle: 'italic',
     color: 'rgba(255,255,255,0.8)',
-    lineHeight: 30,
+    lineHeight: 44,
   },
   
   // Fun facts
@@ -412,19 +412,19 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 12,
-    marginBottom: 30,
+    gap: 16,
+    marginBottom: 40,
   },
   funFactPill: {
     backgroundColor: 'rgba(255,255,255,0.1)',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 30,
+    paddingHorizontal: 28,
+    paddingVertical: 14,
+    borderRadius: 36,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.15)',
   },
   funFactText: {
-    fontSize: 16,
+    fontSize: 24,
     fontWeight: '600',
     color: 'rgba(255,255,255,0.8)',
   },
@@ -432,26 +432,26 @@ const styles = StyleSheet.create({
   // Footer
   footer: {
     alignItems: 'center',
-    gap: 12,
+    gap: 16,
   },
   footerDivider: {
-    width: 60,
-    height: 2,
+    width: 80,
+    height: 3,
     backgroundColor: 'rgba(255,255,255,0.2)',
-    marginBottom: 12,
+    marginBottom: 16,
   },
   footerQuote: {
-    fontSize: 18,
+    fontSize: 28,
     fontStyle: 'italic',
     fontWeight: '400',
-    color: 'rgba(255,255,255,0.5)',
+    color: 'rgba(255,255,255,0.55)',
     letterSpacing: 1,
-    marginBottom: 8,
+    marginBottom: 12,
   },
   footerLogo: {
-    width: 200,
-    height: 50,
-    opacity: 0.8,
+    width: 320,
+    height: 80,
+    opacity: 0.85,
   },
 });
 
