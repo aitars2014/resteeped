@@ -240,8 +240,6 @@ export const ShareableTeaCard = React.forwardRef(({
       </LinearGradient>
     </ViewShot>
   );
-};
-
 });
 
 // Expose capture method
