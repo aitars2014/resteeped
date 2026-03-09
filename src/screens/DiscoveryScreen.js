@@ -5,13 +5,14 @@ import {
   StyleSheet, 
   FlatList, 
   SafeAreaView,
+  ScrollView,
   Dimensions,
   ActivityIndicator,
   RefreshControl,
   TouchableOpacity,
   Animated,
 } from 'react-native';
-import { SlidersHorizontal, Clock, X, ArrowUp, Sparkles } from 'lucide-react-native';
+import { SlidersHorizontal, Clock, X, ArrowUp, Sparkles, ArrowDownAZ, TrendingUp, Star, CalendarPlus, Search, PlusCircle } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { SearchBar, FilterPills, FilterModal, TeaCard, TeaCardSkeleton, TeaCategoryRow, TeawareBrowseRow } from '../components';
 import { useTeas, useSearchHistory, useTeaware } from '../hooks';
@@ -143,6 +144,43 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     setShowHistory(false);
   };
 
+  // Search suggestions — show matching tea names and brands as user types
+  const searchSuggestions = useMemo(() => {
+    if (!searchQuery || searchQuery.trim().length < 2) return [];
+    const q = searchQuery.toLowerCase().trim();
+    
+    // Collect matching brand names (deduplicated)
+    const brandMatches = new Set();
+    const teaMatches = [];
+    
+    for (const tea of teas) {
+      if (brandMatches.size + teaMatches.length >= 8) break;
+      
+      if (tea.brandName?.toLowerCase().includes(q) && !brandMatches.has(tea.brandName)) {
+        brandMatches.add(tea.brandName);
+      }
+      if (tea.name?.toLowerCase().includes(q) && teaMatches.length < 5) {
+        teaMatches.push({ id: tea.id, name: tea.name, brand: tea.brandName, tea });
+      }
+    }
+    
+    const suggestions = [];
+    // Brand suggestions first
+    brandMatches.forEach(brand => {
+      if (suggestions.length < 8) {
+        suggestions.push({ type: 'brand', label: brand, value: brand });
+      }
+    });
+    // Then tea name suggestions
+    teaMatches.forEach(match => {
+      if (suggestions.length < 8) {
+        suggestions.push({ type: 'tea', label: match.name, sublabel: match.brand, value: match.name, tea: match.tea });
+      }
+    });
+    
+    return suggestions;
+  }, [searchQuery, teas]);
+
   // Count active filters (excluding default values)
   const activeFilterCount = [
     filters.teaType !== 'all',
@@ -180,6 +218,20 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     </View>
   );
   
+  // Suggested teas for empty state — grab a few popular teas of the active type
+  const suggestedTeas = useMemo(() => {
+    if (filteredTeas.length > 0) return [];
+    // Get top-rated teas, optionally matching the active filter type
+    let pool = [...teas];
+    if (filters.teaType !== 'all') {
+      // Suggest from a different type since current type has no results
+      pool = teas.filter(t => t.teaType !== filters.teaType);
+    }
+    return pool
+      .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0))
+      .slice(0, 4);
+  }, [filteredTeas.length, teas, filters.teaType]);
+
   const renderEmptyState = () => {
     if (loading) {
       return <SkeletonGrid />;
@@ -187,23 +239,99 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     
     return (
       <View style={styles.emptyState}>
+        <Search size={48} color={theme.text.tertiary} />
         <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>No teas found</Text>
         <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
-          {searchQuery ? 'Try a different search term' : 'Try adjusting your filters'}
+          {searchQuery 
+            ? `No results for "${searchQuery}". Try a different search or browse by type.`
+            : 'Try adjusting your filters or browse a different tea type.'}
         </Text>
         {(searchQuery || filters.teaType !== 'all') && (
           <TouchableOpacity 
-            onPress={() => { setSearchQuery(''); setFilters(f => ({ ...f, teaType: 'all', company: 'all', minRating: 'all' })); }}
+            onPress={() => { setSearchQuery(''); setFilters(f => ({ ...f, teaType: 'all', company: 'all', minRating: 'all', teaMethod: 'all' })); }}
             style={[styles.resetFiltersButton, { backgroundColor: theme.accent.primary + '20' }]}
           >
-            <Text style={[styles.resetFiltersText, { color: theme.accent.primary }]}>Reset filters</Text>
+            <Text style={[styles.resetFiltersText, { color: theme.accent.primary }]}>Reset all filters</Text>
           </TouchableOpacity>
+        )}
+        
+        {/* Add custom tea CTA */}
+        <TouchableOpacity 
+          onPress={() => navigation.navigate('AddTea')}
+          style={[styles.addTeaButton, { borderColor: theme.accent.primary }]}
+        >
+          <PlusCircle size={18} color={theme.accent.primary} />
+          <Text style={[styles.addTeaText, { color: theme.accent.primary }]}>Add a custom tea</Text>
+        </TouchableOpacity>
+        
+        {/* Suggested teas */}
+        {suggestedTeas.length > 0 && (
+          <View style={styles.suggestedSection}>
+            <Text style={[styles.suggestedTitle, { color: theme.text.secondary }]}>You might like</Text>
+            <View style={styles.suggestedGrid}>
+              {suggestedTeas.map(tea => (
+                <View key={tea.id} style={styles.suggestedCardContainer}>
+                  <TeaCard
+                    tea={tea}
+                    onPress={() => navigation.navigate('TeaDetail', { tea })}
+                    compact
+                    hideRating
+                  />
+                </View>
+              ))}
+            </View>
+          </View>
         )}
       </View>
     );
   };
 
   const renderSearchHistory = () => {
+    // Show suggestions when typing, history when focused with empty query
+    if (searchQuery.length >= 2 && searchSuggestions.length > 0) {
+      return (
+        <View style={[styles.historyContainer, { backgroundColor: theme.background.secondary }]}>
+          <View style={styles.historyHeader}>
+            <View style={styles.historyTitleRow}>
+              <Search size={16} color={theme.text.secondary} />
+              <Text style={[styles.historyTitle, { color: theme.text.secondary }]}>Suggestions</Text>
+            </View>
+          </View>
+          {searchSuggestions.map((suggestion, index) => (
+            <TouchableOpacity
+              key={`${suggestion.type}-${index}`}
+              style={[styles.historyItem, { borderBottomColor: theme.border.light }]}
+              onPress={() => {
+                if (suggestion.type === 'tea' && suggestion.tea) {
+                  addToHistory(suggestion.value);
+                  setShowHistory(false);
+                  navigation.navigate('TeaDetail', { tea: suggestion.tea });
+                } else {
+                  setSearchQuery(suggestion.value);
+                  addToHistory(suggestion.value);
+                  setShowHistory(false);
+                }
+              }}
+            >
+              <View style={styles.suggestionContent}>
+                <Text style={[styles.historyQuery, { color: theme.text.primary }]} numberOfLines={1}>
+                  {suggestion.label}
+                </Text>
+                {suggestion.sublabel && (
+                  <Text style={[styles.suggestionSublabel, { color: theme.text.tertiary }]} numberOfLines={1}>
+                    {suggestion.sublabel}
+                  </Text>
+                )}
+              </View>
+              <Text style={[styles.suggestionType, { color: theme.text.tertiary }]}>
+                {suggestion.type === 'brand' ? 'Brand' : 'Tea'}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      );
+    }
+
     if (!showHistory || history.length === 0 || searchQuery.length > 0) return null;
     
     return (
@@ -285,25 +413,62 @@ export const DiscoveryScreen = ({ navigation, route }) => {
         </View>
       )}
       
-      {/* Result Count — show when filtered or searching */}
+      {/* Result Count + Inline Sort — show when filtered or searching */}
       {!isDefaultView && (
-        <View style={styles.resultCount}>
-          <Text style={[styles.resultText, { color: theme.text.secondary }]}>
-            {filteredTeas.length >= 1000 ? `${filteredTeas.length.toLocaleString()}+` : filteredTeas.length.toLocaleString()} tea{filteredTeas.length !== 1 ? 's' : ''}
-          </Text>
-          {activeFilterCount > 0 && (
-            <TouchableOpacity 
-              onPress={() => setFilters({
-                teaType: 'all',
-                company: 'all',
-                minRating: 'all',
-                teaMethod: 'all',
-                sortBy: 'relevance',
-              })}
-            >
-              <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>Clear filters</Text>
-            </TouchableOpacity>
-          )}
+        <View style={styles.resultCountSection}>
+          <View style={styles.resultCount}>
+            <Text style={[styles.resultText, { color: theme.text.secondary }]}>
+              {filteredTeas.length >= 1000 ? `${filteredTeas.length.toLocaleString()}+` : filteredTeas.length.toLocaleString()} tea{filteredTeas.length !== 1 ? 's' : ''}
+            </Text>
+            {activeFilterCount > 0 && (
+              <TouchableOpacity 
+                onPress={() => setFilters({
+                  teaType: 'all',
+                  company: 'all',
+                  minRating: 'all',
+                  teaMethod: 'all',
+                  sortBy: 'relevance',
+                })}
+              >
+                <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>Clear filters</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+          {/* Inline Sort Chips */}
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false} 
+            contentContainerStyle={styles.sortChipsContainer}
+          >
+            {[
+              { id: 'relevance', label: 'Best Match' },
+              { id: 'rating', label: 'Top Rated' },
+              { id: 'name', label: 'A–Z' },
+              { id: 'newest', label: 'Newest' },
+            ].map(sort => {
+              const isActive = filters.sortBy === sort.id;
+              return (
+                <TouchableOpacity
+                  key={sort.id}
+                  style={[
+                    styles.sortChip,
+                    {
+                      backgroundColor: isActive ? theme.accent.primary : theme.background.secondary,
+                      borderColor: isActive ? theme.accent.primary : theme.border.light,
+                    },
+                  ]}
+                  onPress={() => setFilters(prev => ({ ...prev, sortBy: sort.id }))}
+                >
+                  <Text style={[
+                    styles.sortChipText,
+                    { color: isActive ? theme.text.inverse : theme.text.secondary },
+                  ]}>
+                    {sort.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
         </View>
       )}
     </>
@@ -516,18 +681,36 @@ const styles = StyleSheet.create({
   categorySection: {
     paddingBottom: spacing.md,
   },
+  resultCountSection: {
+    paddingBottom: spacing.md,
+  },
   resultCount: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: spacing.screenHorizontal,
-    paddingBottom: spacing.md,
+    paddingBottom: 8,
   },
   resultText: {
     ...typography.bodySmall,
   },
   clearFiltersText: {
     ...typography.bodySmall,
+    fontWeight: '500',
+  },
+  sortChipsContainer: {
+    paddingHorizontal: spacing.screenHorizontal,
+    gap: 8,
+    flexDirection: 'row',
+  },
+  sortChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1,
+  },
+  sortChipText: {
+    ...typography.caption,
     fontWeight: '500',
   },
   listContent: {
@@ -544,23 +727,36 @@ const styles = StyleSheet.create({
   cardRight: {
     marginLeft: spacing.cardGap / 2,
   },
+  suggestionContent: {
+    flex: 1,
+  },
+  suggestionSublabel: {
+    ...typography.caption,
+    marginTop: 1,
+  },
+  suggestionType: {
+    ...typography.caption,
+    marginLeft: 8,
+  },
   emptyState: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 80,
+    paddingTop: 60,
     paddingHorizontal: spacing.screenHorizontal,
+    gap: 8,
   },
   emptyTitle: {
     ...typography.headingMedium,
-    marginBottom: 12,
+    marginTop: 12,
   },
   emptySubtitle: {
     ...typography.body,
     textAlign: 'center',
+    lineHeight: 22,
   },
   resetFiltersButton: {
-    marginTop: 16,
+    marginTop: 8,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 8,
@@ -568,6 +764,39 @@ const styles = StyleSheet.create({
   resetFiltersText: {
     ...typography.caption,
     fontWeight: '600',
+  },
+  addTeaButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginTop: 4,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 8,
+    borderWidth: 1,
+  },
+  addTeaText: {
+    ...typography.bodySmall,
+    fontWeight: '600',
+  },
+  suggestedSection: {
+    width: '100%',
+    marginTop: 32,
+  },
+  suggestedTitle: {
+    ...typography.bodySmall,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginBottom: 12,
+  },
+  suggestedGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.cardGap,
+  },
+  suggestedCardContainer: {
+    width: cardWidth,
   },
   scrollToTopButton: {
     position: 'absolute',
