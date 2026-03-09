@@ -317,15 +317,17 @@ export const DiscoveryScreen = ({ navigation, route }) => {
                 <Text style={[styles.historyQuery, { color: theme.text.primary }]} numberOfLines={1}>
                   {suggestion.label}
                 </Text>
-                {suggestion.sublabel && (
+                {suggestion.type === 'tea' && suggestion.sublabel && (
                   <Text style={[styles.suggestionSublabel, { color: theme.text.tertiary }]} numberOfLines={1}>
-                    {suggestion.sublabel}
+                    by {suggestion.sublabel}
                   </Text>
                 )}
               </View>
-              <Text style={[styles.suggestionType, { color: theme.text.tertiary }]}>
-                {suggestion.type === 'brand' ? 'Brand' : 'Tea'}
-              </Text>
+              {suggestion.type === 'brand' && (
+                <Text style={[styles.suggestionType, { color: theme.text.tertiary }]}>
+                  Shop
+                </Text>
+              )}
             </TouchableOpacity>
           ))}
         </View>
