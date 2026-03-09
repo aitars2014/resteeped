@@ -146,32 +146,35 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     if (!searchQuery || searchQuery.trim().length < 2) return [];
     const q = searchQuery.toLowerCase().trim();
     
-    // Collect matching brand names (deduplicated)
-    const brandMatches = new Set();
+    // Collect matching tea names and brand names separately
     const teaMatches = [];
+    const brandMatches = new Set();
+    const seenTeaNames = new Set();
     
     for (const tea of teas) {
-      if (brandMatches.size + teaMatches.length >= 8) break;
+      // Tea name matches — primary suggestions
+      if (tea.name?.toLowerCase().includes(q) && !seenTeaNames.has(tea.name) && teaMatches.length < 6) {
+        seenTeaNames.add(tea.name);
+        teaMatches.push({ id: tea.id, name: tea.name, brand: tea.brandName, tea });
+      }
       
+      // Brand matches — secondary, only if brand name matches but not already covered by tea results
       if (tea.brandName?.toLowerCase().includes(q) && !brandMatches.has(tea.brandName)) {
         brandMatches.add(tea.brandName);
       }
-      if (tea.name?.toLowerCase().includes(q) && teaMatches.length < 5) {
-        teaMatches.push({ id: tea.id, name: tea.name, brand: tea.brandName, tea });
-      }
     }
     
+    // Tea name suggestions first (with brand as subtitle)
     const suggestions = [];
-    // Brand suggestions first
-    brandMatches.forEach(brand => {
-      if (suggestions.length < 8) {
-        suggestions.push({ type: 'brand', label: brand, value: brand });
-      }
-    });
-    // Then tea name suggestions
     teaMatches.forEach(match => {
-      if (suggestions.length < 8) {
-        suggestions.push({ type: 'tea', label: match.name, sublabel: match.brand, value: match.name, tea: match.tea });
+      suggestions.push({ type: 'tea', label: match.name, sublabel: match.brand, value: match.name, tea: match.tea });
+    });
+    // Then up to 2 brand suggestions at the end (if space remains)
+    let brandCount = 0;
+    brandMatches.forEach(brand => {
+      if (suggestions.length < 8 && brandCount < 2) {
+        suggestions.push({ type: 'brand', label: brand, value: brand });
+        brandCount++;
       }
     });
     
