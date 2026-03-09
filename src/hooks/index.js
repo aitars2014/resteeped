@@ -7,3 +7,4 @@ export { useSearchHistory } from './useSearchHistory';
 export { useTeaware } from './useTeaware';
 export { useTeaRecommendations } from './useTeaRecommendations';
 export { useTastingNotes } from './useTastingNotes';
+export { useNotifications } from './useNotifications';

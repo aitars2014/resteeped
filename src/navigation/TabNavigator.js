@@ -26,6 +26,7 @@ import {
   TeaFinderScreen,
   TeaInsightsScreen,
 } from '../screens';
+import { NotificationSettingsScreen } from '../screens/NotificationSettingsScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -112,6 +113,7 @@ const ProfileStack = () => (
     <Stack.Screen name="Teaware" component={TeawareScreen} />
     <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
     <Stack.Screen name="Contact" component={ContactScreen} />
+    <Stack.Screen name="NotificationSettings" component={NotificationSettingsScreen} />
     <Stack.Screen 
       name="Paywall" 
       component={PaywallScreen}
