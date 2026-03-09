@@ -11,7 +11,7 @@ import {
   Switch,
   Platform,
 } from 'react-native';
-import { User, LogOut, Trash2, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2, Crown, EyeOff, Eye } from 'lucide-react-native';
+import { User, LogOut, Trash2, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2, Crown, EyeOff, Eye, BarChart3 } from 'lucide-react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Application from 'expo-application';
 import { typography, spacing } from '../constants';
@@ -448,6 +448,19 @@ export const ProfileScreen = ({ navigation }) => {
         >
           <Coffee size={20} color={theme.accent.primary} />
           <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Steep History</Text>
+          <ChevronRight size={20} color={theme.text.secondary} />
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
+          onPress={() => navigation.navigate('TeaInsights')}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Tea Insights"
+          accessibilityHint="View your tea collection stats, flavor profile, and milestones"
+        >
+          <BarChart3 size={20} color={theme.accent.primary} />
+          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>Tea Insights</Text>
           <ChevronRight size={20} color={theme.text.secondary} />
         </TouchableOpacity>
         

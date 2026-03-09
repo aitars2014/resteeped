@@ -18,3 +18,4 @@ export { ContactScreen } from './ContactScreen';
 export { PaywallScreen } from './PaywallScreen';
 export { SeasonalCollectionScreen } from './SeasonalCollectionScreen';
 export { TeaFinderScreen } from './TeaFinderScreen';
+export { TeaInsightsScreen } from './TeaInsightsScreen';
