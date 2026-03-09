@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   Animated,
 } from 'react-native';
-import { SlidersHorizontal, Clock, X, ArrowUp, Sparkles, ArrowDownAZ, TrendingUp, Star, CalendarPlus, Search, PlusCircle } from 'lucide-react-native';
+import { SlidersHorizontal, Clock, X, ArrowUp, Sparkles, ArrowDownAZ, CalendarPlus, Search, PlusCircle } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { SearchBar, FilterPills, FilterModal, TeaCard, TeaCardSkeleton, TeaCategoryRow, TeawareBrowseRow } from '../components';
 import { useTeas, useSearchHistory, useTeaware } from '../hooks';
@@ -73,7 +73,6 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   const [filters, setFilters] = useState({
     teaType: initialFilter || 'all',
     company: initialCompanyFilter || 'all',
-    minRating: 'all',
     teaMethod: 'all',
     sortBy: 'relevance',
   });
@@ -87,7 +86,6 @@ export const DiscoveryScreen = ({ navigation, route }) => {
       setFilters({
         teaType: 'all',
         company: 'all',
-        minRating: 'all',
         teaMethod: 'all',
         sortBy: 'relevance',
       });
@@ -115,7 +113,6 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     trackEvent(AnalyticsEvents.TEA_FILTERED, {
       tea_type: newFilters.teaType,
       company: newFilters.company,
-      min_rating: newFilters.minRating,
       sort_by: newFilters.sortBy,
     });
   };
@@ -185,7 +182,6 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   const activeFilterCount = [
     filters.teaType !== 'all',
     filters.company !== 'all',
-    filters.minRating !== 'all',
     filters.teaMethod !== 'all',
   ].filter(Boolean).length;
 
@@ -227,8 +223,9 @@ export const DiscoveryScreen = ({ navigation, route }) => {
       // Suggest from a different type since current type has no results
       pool = teas.filter(t => t.teaType !== filters.teaType);
     }
+    // Grab a sample of teas — shuffle deterministically by name
     return pool
-      .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0))
+      .sort((a, b) => a.name.localeCompare(b.name))
       .slice(0, 4);
   }, [filteredTeas.length, teas, filters.teaType]);
 
@@ -248,7 +245,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
         </Text>
         {(searchQuery || filters.teaType !== 'all') && (
           <TouchableOpacity 
-            onPress={() => { setSearchQuery(''); setFilters(f => ({ ...f, teaType: 'all', company: 'all', minRating: 'all', teaMethod: 'all' })); }}
+            onPress={() => { setSearchQuery(''); setFilters(f => ({ ...f, teaType: 'all', company: 'all', teaMethod: 'all' })); }}
             style={[styles.resetFiltersButton, { backgroundColor: theme.accent.primary + '20' }]}
           >
             <Text style={[styles.resetFiltersText, { color: theme.accent.primary }]}>Reset all filters</Text>
@@ -377,7 +374,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   };
   
   // Show category browse rows when in default view (no search, no filters)
-  const isDefaultView = !searchQuery && filters.teaType === 'all' && filters.company === 'all' && filters.minRating === 'all' && filters.teaMethod === 'all';
+  const isDefaultView = !searchQuery && filters.teaType === 'all' && filters.company === 'all' && filters.teaMethod === 'all';
 
   // Memoize the list header (without search bar) to prevent unnecessary re-renders
   const listHeader = useMemo(() => (
@@ -425,7 +422,6 @@ export const DiscoveryScreen = ({ navigation, route }) => {
                 onPress={() => setFilters({
                   teaType: 'all',
                   company: 'all',
-                  minRating: 'all',
                   teaMethod: 'all',
                   sortBy: 'relevance',
                 })}
@@ -442,7 +438,6 @@ export const DiscoveryScreen = ({ navigation, route }) => {
           >
             {[
               { id: 'relevance', label: 'Best Match' },
-              { id: 'rating', label: 'Top Rated' },
               { id: 'name', label: 'A–Z' },
               { id: 'newest', label: 'Newest' },
             ].map(sort => {

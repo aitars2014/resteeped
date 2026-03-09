@@ -8,7 +8,7 @@ import {
   ScrollView,
   Pressable,
 } from 'react-native';
-import { X, Check, Star, ChevronDown, ChevronUp } from 'lucide-react-native';
+import { X, Check, ChevronDown, ChevronUp } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { Button } from './Button';
@@ -27,13 +27,6 @@ const TEA_TYPES = [
   { id: 'herbal', label: 'Herbal' },
 ];
 
-const RATING_OPTIONS = [
-  { id: 'all', label: 'Any Rating' },
-  { id: '4', label: '4+ Stars', min: 4 },
-  { id: '3', label: '3+ Stars', min: 3 },
-  { id: '2', label: '2+ Stars', min: 2 },
-];
-
 const TEA_METHODS = [
   { id: 'all', label: 'All Methods' },
   { id: 'teabag', label: 'Tea Bags' },
@@ -43,8 +36,6 @@ const TEA_METHODS = [
 
 const SORT_OPTIONS = [
   { id: 'relevance', label: 'Best Match' },
-  { id: 'rating', label: 'Highest Rated' },
-  { id: 'reviews', label: 'Most Reviewed' },
   { id: 'name', label: 'Name (A-Z)' },
   { id: 'newest', label: 'Newest First' },
 ];
@@ -61,7 +52,6 @@ export const FilterModal = ({
   const [localFilters, setLocalFilters] = useState({
     teaType: 'all',
     company: 'all',
-    minRating: 'all',
     teaMethod: 'all',
     sortBy: 'relevance',
     ...filters,
@@ -73,7 +63,6 @@ export const FilterModal = ({
       setLocalFilters({
         teaType: 'all',
         company: 'all',
-        minRating: 'all',
         teaMethod: 'all',
         sortBy: 'relevance',
         ...filters,
@@ -91,7 +80,6 @@ export const FilterModal = ({
     setLocalFilters({
       teaType: 'all',
       company: 'all',
-      minRating: 'all',
       teaMethod: 'all',
       sortBy: 'relevance',
     });
@@ -104,7 +92,6 @@ export const FilterModal = ({
   const activeFilterCount = [
     localFilters.teaType !== 'all',
     localFilters.company !== 'all',
-    localFilters.minRating !== 'all',
     localFilters.teaMethod !== 'all',
   ].filter(Boolean).length;
 
@@ -250,44 +237,6 @@ export const FilterModal = ({
                     </>
                   );
                 })()}
-              </View>
-            </View>
-
-            {/* Rating */}
-            <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
-              <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Minimum Rating</Text>
-              <View style={styles.ratingOptions}>
-                {RATING_OPTIONS.map(option => {
-                  const isSelected = localFilters.minRating === option.id;
-                  return (
-                    <TouchableOpacity
-                      key={option.id}
-                      style={[
-                        styles.ratingOption,
-                        { 
-                          backgroundColor: isSelected ? theme.accent.primary : theme.background.secondary,
-                          borderColor: isSelected ? theme.accent.primary : theme.border.light,
-                        },
-                      ]}
-                      onPress={() => toggleFilter('minRating', option.id)}
-                    >
-                      {option.min && (
-                        <Star 
-                          size={14} 
-                          color={isSelected ? theme.text.inverse : theme.rating.star}
-                          fill={isSelected ? theme.text.inverse : theme.rating.star}
-                        />
-                      )}
-                      <Text style={[
-                        styles.ratingOptionText,
-                        { color: isSelected ? theme.text.inverse : theme.text.primary },
-                        isSelected && { fontWeight: '600' },
-                      ]}>
-                        {option.label}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
               </View>
             </View>
 

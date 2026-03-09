@@ -8,37 +8,19 @@ const CACHE_KEY = '@resteeped_teas_cache';
 const CACHE_TIMESTAMP_KEY = '@resteeped_teas_cache_ts';
 const PAGE_SIZE = 500; // Fetch in batches of 500
 
-// Calculate a ranking score that balances rating quality with popularity
-const calculateRankingScore = (tea) => {
-  const avgRating = tea.avgRating || 0;
-  const ratingCount = tea.ratingCount || 0;
-  const C = 5;
-  const m = 3.8;
-  const bayesianRating = (avgRating * ratingCount + C * m) / (ratingCount + C);
-  const popularityBoost = Math.log10(ratingCount + 1) * 0.1;
-  return bayesianRating + popularityBoost;
-};
-
-// Sort teas by ranking score, then interleave by brand for variety
-const rankAndDiversifyTeas = (teas) => {
+// Interleave teas by brand for variety in default browse order
+const diversifyTeas = (teas) => {
   if (!teas.length) return teas;
 
-  const scoredTeas = teas.map(tea => ({
-    ...tea,
-    _rankScore: calculateRankingScore(tea),
-  }));
-  scoredTeas.sort((a, b) => b._rankScore - a._rankScore);
-
   const byBrand = {};
-  scoredTeas.forEach(tea => {
+  teas.forEach(tea => {
     const brand = tea.brandName || tea.companyId || 'unknown';
     if (!byBrand[brand]) byBrand[brand] = [];
     byBrand[brand].push(tea);
   });
 
-  const brands = Object.keys(byBrand).sort((a, b) => {
-    return byBrand[b][0]._rankScore - byBrand[a][0]._rankScore;
-  });
+  // Sort brands alphabetically for stable ordering
+  const brands = Object.keys(byBrand).sort((a, b) => a.localeCompare(b));
 
   const result = [];
   let hasMore = true;
@@ -48,9 +30,7 @@ const rankAndDiversifyTeas = (teas) => {
     hasMore = false;
     for (const brand of brands) {
       if (byBrand[brand].length > index) {
-        const tea = byBrand[brand][index];
-        delete tea._rankScore;
-        result.push(tea);
+        result.push(byBrand[brand][index]);
         if (byBrand[brand].length > index + 1) hasMore = true;
       }
     }
@@ -146,7 +126,7 @@ const fetchAllTeasPaginated = async () => {
       supabase
         .from('teas')
         .select(LIST_FIELDS)
-        .order('avg_rating', { ascending: false, nullsFirst: false })
+        .order('name', { ascending: true })
         .range(from, to),
       PAGE_TIMEOUT,
       `Tea fetch timed out (page starting at ${from})`
@@ -170,7 +150,7 @@ const fetchAllTeasPaginated = async () => {
 };
 
 export const useTeas = () => {
-  const [teas, setTeas] = useState(() => rankAndDiversifyTeas(localTeas));
+  const [teas, setTeas] = useState(() => diversifyTeas(localTeas));
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false); // For subtle refresh indicator
   const [error, setError] = useState(null);
@@ -184,7 +164,7 @@ export const useTeas = () => {
     const loadCache = async () => {
       const cached = await loadCachedTeas();
       if (cached && cached.length > 0) {
-        setTeas(rankAndDiversifyTeas(cached));
+        setTeas(diversifyTeas(cached));
         setDataSource('cache');
         // Don't set isRemoteData — we still want to fetch fresh data
         // But cache is far better than 60 local teas
@@ -205,7 +185,7 @@ export const useTeas = () => {
     setError(null);
 
     if (!isSupabaseConfigured()) {
-      setTeas(rankAndDiversifyTeas(localTeas));
+      setTeas(diversifyTeas(localTeas));
       setLoading(false);
       setRefreshing(false);
       return;
@@ -217,7 +197,7 @@ export const useTeas = () => {
       const formattedTeas = data.map(formatTea);
 
       // Rank and diversify
-      const ranked = rankAndDiversifyTeas(formattedTeas);
+      const ranked = diversifyTeas(formattedTeas);
       setTeas(ranked);
       setIsRemoteData(true);
       setDataSource('remote');
@@ -267,8 +247,7 @@ export const useTeas = () => {
     const {
       teaType = 'all',
       company = 'all',
-      minRating = 'all',
-      sortBy = 'rating',
+      sortBy = 'relevance',
       teaMethod = 'all',
     } = filters;
 
@@ -278,11 +257,6 @@ export const useTeas = () => {
 
     if (company !== 'all') {
       result = result.filter(tea => tea.companyId === company);
-    }
-
-    if (minRating !== 'all') {
-      const min = parseInt(minRating, 10);
-      result = result.filter(tea => (tea.avgRating || 0) >= min);
     }
 
     if (teaMethod !== 'all') {
@@ -302,20 +276,14 @@ export const useTeas = () => {
     }
 
     switch (sortBy) {
-      case 'rating':
-        result.sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0));
-        break;
       case 'relevance':
-        result.sort((a, b) => calculateRankingScore(b) - calculateRankingScore(a));
+        // Default order — brand-diversified, no re-sort needed
         break;
       case 'name':
         result.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 'newest':
         result.sort((a, b) => new Date(b.createdAt || 0) - new Date(a.createdAt || 0));
-        break;
-      case 'reviews':
-        result.sort((a, b) => (b.ratingCount || 0) - (a.ratingCount || 0));
         break;
       default:
         break;
