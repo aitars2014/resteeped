@@ -13,8 +13,8 @@ import {
 } from 'react-native';
 import { SlidersHorizontal, Clock, X, ArrowUp, Sparkles } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { SearchBar, FilterPills, FilterModal, TeaCard, TeaCardSkeleton, TeaCategoryRow } from '../components';
-import { useTeas, useSearchHistory } from '../hooks';
+import { SearchBar, FilterPills, FilterModal, TeaCard, TeaCardSkeleton, TeaCategoryRow, TeawareBrowseRow } from '../components';
+import { useTeas, useSearchHistory, useTeaware } from '../hooks';
 import { useTheme } from '../context';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { teaTypes } from '../data/teas';
@@ -55,6 +55,7 @@ const cardWidth = (width - spacing.screenHorizontal * 2 - spacing.cardGap) / 2;
 export const DiscoveryScreen = ({ navigation, route }) => {
   const { theme } = useTheme();
   const { teas, loading, refreshing, refreshTeas, filterTeas, dataSource } = useTeas();
+  const { teaware } = useTeaware();
   const { history, addToHistory, removeFromHistory, clearHistory } = useSearchHistory();
   
   // Scroll to top functionality
@@ -276,6 +277,11 @@ export const DiscoveryScreen = ({ navigation, route }) => {
                 onSeeAll={() => handleTypeChange(type.id)}
               />
             ))}
+          <TeawareBrowseRow
+            teaware={teaware}
+            onPress={(item) => navigation.navigate('TeawareDetail', { teaware: item })}
+            onSeeAll={() => navigation.navigate('Teaware')}
+          />
         </View>
       )}
       

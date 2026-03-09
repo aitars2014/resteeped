@@ -33,8 +33,8 @@ const dailyRotate = (arr, category) => {
 
 const MiniTeaCard = ({ tea, onPress, teaColor, theme }) => (
   <TouchableOpacity style={styles.miniCard} onPress={() => onPress(tea)} activeOpacity={0.8}>
-    {tea.imageUrl ? (
-      <Image source={{ uri: tea.imageUrl }} style={styles.miniImage} resizeMode="cover" />
+    {tea.imageUrl || tea.image_url ? (
+      <Image source={{ uri: tea.imageUrl || tea.image_url }} style={styles.miniImage} resizeMode="cover" />
     ) : (
       <LinearGradient
         colors={[teaColor.primary, teaColor.gradient]}
@@ -48,7 +48,7 @@ const MiniTeaCard = ({ tea, onPress, teaColor, theme }) => (
         {tea.name}
       </Text>
       <Text style={[styles.miniBrand, { color: theme.text.secondary }]} numberOfLines={1}>
-        {tea.brandName}
+        {tea.brandName || tea.brand_name || ''}
       </Text>
     </View>
   </TouchableOpacity>
@@ -61,11 +61,10 @@ export const TeaCategoryRow = ({ title, teas, teaType, onTeaPress, onSeeAll, the
   // Filter teas for this category, prioritize ones with images, rotate daily
   const displayTeas = useMemo(() => {
     const categoryTeas = teas.filter(t => t.teaType === teaType);
-    // Prioritize teas with images
+    // Only show teas with images — gradient placeholders look bad in browse rows
     const withImages = categoryTeas.filter(t => t.imageUrl);
-    const withoutImages = categoryTeas.filter(t => !t.imageUrl);
-    const ordered = [...withImages, ...withoutImages];
-    return dailyRotate(ordered, teaType).slice(0, 20); // Show up to 20 in the row
+    if (withImages.length === 0) return [];
+    return dailyRotate(withImages, teaType).slice(0, 20);
   }, [teas, teaType]);
 
   if (displayTeas.length === 0) return null;
@@ -158,5 +157,46 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
 });
+
+/**
+ * Browse row for teaware items. Uses same visual style as tea rows.
+ */
+export const TeawareBrowseRow = ({ teaware, onPress, onSeeAll }) => {
+  const { theme } = useTheme();
+  const teawareColor = { primary: '#C4956A', gradient: '#E8C9A0' };
+
+  const displayItems = useMemo(() => {
+    const withImages = teaware.filter(t => t.image_url);
+    if (withImages.length === 0) return [];
+    return dailyRotate(withImages, 'teaware').slice(0, 20);
+  }, [teaware]);
+
+  if (displayItems.length === 0) return null;
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.titleRow}>
+          <View style={[styles.dot, { backgroundColor: teawareColor.primary }]} />
+          <Text style={[styles.title, { color: theme.text.primary }]}>Teaware</Text>
+        </View>
+        <TouchableOpacity style={styles.seeAll} onPress={onSeeAll}>
+          <Text style={[styles.seeAllText, { color: theme.accent.primary }]}>See All</Text>
+          <ChevronRight size={16} color={theme.accent.primary} />
+        </TouchableOpacity>
+      </View>
+      <FlatList
+        horizontal
+        data={displayItems}
+        renderItem={({ item }) => (
+          <MiniTeaCard tea={item} onPress={onPress} teaColor={teawareColor} theme={theme} />
+        )}
+        keyExtractor={(item) => item.id}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.list}
+      />
+    </View>
+  );
+};
 
 export default TeaCategoryRow;
