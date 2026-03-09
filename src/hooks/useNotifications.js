@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Platform, AppState } from 'react-native';
 import * as Notifications from 'expo-notifications';
-import * as Device from 'expo-device';
+// import * as Device from 'expo-device'; // Requires native build - using fallback
+const Device = { isDevice: true }; // Fallback for dev builds without native module
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
@@ -151,17 +152,21 @@ export function useNotifications() {
 
   const loadPreferences = async () => {
     try {
-      // Try Supabase profile first
-      if (profile?.notification_preferences) {
-        setPreferences({ ...DEFAULT_PREFERENCES, ...profile.notification_preferences });
+      // Always check local storage first — it's updated immediately on toggle
+      // and is more up-to-date than the profile cached at login
+      const stored = await AsyncStorage.getItem(STORAGE_KEYS.NOTIFICATION_PREFS);
+      if (stored) {
+        setPreferences({ ...DEFAULT_PREFERENCES, ...JSON.parse(stored) });
         setLoading(false);
         return;
       }
 
-      // Fall back to local storage
-      const stored = await AsyncStorage.getItem(STORAGE_KEYS.NOTIFICATION_PREFS);
-      if (stored) {
-        setPreferences({ ...DEFAULT_PREFERENCES, ...JSON.parse(stored) });
+      // Fall back to Supabase profile (first launch or cleared storage)
+      if (profile?.notification_preferences) {
+        const prefs = { ...DEFAULT_PREFERENCES, ...profile.notification_preferences };
+        setPreferences(prefs);
+        // Cache to local storage so future loads are fast and consistent
+        await AsyncStorage.setItem(STORAGE_KEYS.NOTIFICATION_PREFS, JSON.stringify(prefs));
       }
     } catch (err) {
       console.error('Failed to load notification preferences:', err);
