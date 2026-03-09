@@ -79,7 +79,6 @@ async function savePushTokenToSupabase(userId, token) {
   if (!isSupabaseConfigured() || !userId || !token) return;
 
   try {
-    // Upsert into push_tokens table
     const { error } = await supabase
       .from('push_tokens')
       .upsert(
@@ -93,7 +92,6 @@ async function savePushTokenToSupabase(userId, token) {
       );
 
     if (error) {
-      // If table doesn't exist yet, just store locally
       if (error.code === '42P01') {
         console.log('push_tokens table not yet created — storing token locally');
         await AsyncStorage.setItem(STORAGE_KEYS.PUSH_TOKEN, token);
@@ -103,7 +101,6 @@ async function savePushTokenToSupabase(userId, token) {
     }
   } catch (err) {
     console.error('Push token save error:', err);
-    // Always cache locally as fallback
     await AsyncStorage.setItem(STORAGE_KEYS.PUSH_TOKEN, token);
   }
 }
@@ -121,7 +118,6 @@ async function savePreferencesToSupabase(userId, preferences) {
       .eq('id', userId);
 
     if (error) {
-      // Column might not exist yet — that's fine, local storage is the fallback
       if (error.code === '42703') {
         console.log('notification_preferences column not yet added to profiles');
         return;
@@ -142,38 +138,46 @@ export function useNotifications() {
   const [permissionStatus, setPermissionStatus] = useState(null);
   const [preferences, setPreferences] = useState(DEFAULT_PREFERENCES);
   const [loading, setLoading] = useState(true);
-  const notificationListener = useRef();
-  const responseListener = useRef();
-
-  // Load saved preferences
+  
+  // Use a ref to always have the latest preferences available in callbacks
+  // This prevents stale closure issues with useCallback
+  const preferencesRef = useRef(preferences);
   useEffect(() => {
-    loadPreferences();
-  }, [user]);
+    preferencesRef.current = preferences;
+  }, [preferences]);
 
-  const loadPreferences = async () => {
-    try {
-      // Always check local storage first — it's updated immediately on toggle
-      // and is more up-to-date than the profile cached at login
-      const stored = await AsyncStorage.getItem(STORAGE_KEYS.NOTIFICATION_PREFS);
-      if (stored) {
-        setPreferences({ ...DEFAULT_PREFERENCES, ...JSON.parse(stored) });
-        setLoading(false);
-        return;
-      }
+  // Load saved preferences on mount
+  useEffect(() => {
+    let cancelled = false;
+    
+    const load = async () => {
+      try {
+        // Always check AsyncStorage first — it's the source of truth
+        // (updated synchronously on every toggle)
+        const stored = await AsyncStorage.getItem(STORAGE_KEYS.NOTIFICATION_PREFS);
+        if (stored && !cancelled) {
+          setPreferences({ ...DEFAULT_PREFERENCES, ...JSON.parse(stored) });
+          setLoading(false);
+          return;
+        }
 
-      // Fall back to Supabase profile (first launch or cleared storage)
-      if (profile?.notification_preferences) {
-        const prefs = { ...DEFAULT_PREFERENCES, ...profile.notification_preferences };
-        setPreferences(prefs);
-        // Cache to local storage so future loads are fast and consistent
-        await AsyncStorage.setItem(STORAGE_KEYS.NOTIFICATION_PREFS, JSON.stringify(prefs));
+        // Fall back to Supabase profile (first launch or cleared storage)
+        if (profile?.notification_preferences && !cancelled) {
+          const prefs = { ...DEFAULT_PREFERENCES, ...profile.notification_preferences };
+          setPreferences(prefs);
+          // Cache to AsyncStorage so future loads are consistent
+          await AsyncStorage.setItem(STORAGE_KEYS.NOTIFICATION_PREFS, JSON.stringify(prefs));
+        }
+      } catch (err) {
+        console.error('Failed to load notification preferences:', err);
+      } finally {
+        if (!cancelled) setLoading(false);
       }
-    } catch (err) {
-      console.error('Failed to load notification preferences:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
+    };
+    
+    load();
+    return () => { cancelled = true; };
+  }, [user, profile]);
 
   // Register for push notifications when user is authenticated
   useEffect(() => {
@@ -187,7 +191,6 @@ export function useNotifications() {
         await AsyncStorage.setItem(STORAGE_KEYS.PUSH_TOKEN, token);
       }
 
-      // Check current permission status
       const { status } = await Notifications.getPermissionsAsync();
       setPermissionStatus(status);
     };
@@ -195,7 +198,7 @@ export function useNotifications() {
     register();
   }, [user]);
 
-  // Re-check permissions when app comes to foreground (user may have toggled in Settings)
+  // Re-check permissions when app comes to foreground
   useEffect(() => {
     const subscription = AppState.addEventListener('change', async (state) => {
       if (state === 'active') {
@@ -209,23 +212,31 @@ export function useNotifications() {
 
   /**
    * Update a single notification preference.
+   * Uses functional setState + ref to avoid stale closure issues.
    */
   const updatePreference = useCallback(async (key, value) => {
-    const updated = { ...preferences, [key]: value };
+    // Use the ref for the latest preferences (avoids stale closure)
+    const current = preferencesRef.current;
+    const updated = { ...current, [key]: value };
+    
+    // Update state
     setPreferences(updated);
 
-    // Save locally
-    await AsyncStorage.setItem(STORAGE_KEYS.NOTIFICATION_PREFS, JSON.stringify(updated));
-
-    // Save to Supabase
-    if (user) {
-      await savePreferencesToSupabase(user.id, updated);
+    // Save to AsyncStorage (synchronous source of truth)
+    try {
+      await AsyncStorage.setItem(STORAGE_KEYS.NOTIFICATION_PREFS, JSON.stringify(updated));
+    } catch (err) {
+      console.error('Failed to save preferences to AsyncStorage:', err);
     }
-  }, [preferences, user]);
+
+    // Save to Supabase (async, best-effort)
+    if (user) {
+      savePreferencesToSupabase(user.id, updated);
+    }
+  }, [user]);
 
   /**
-   * Request notification permissions (if not already granted).
-   * Useful for a manual "Enable Notifications" button.
+   * Request notification permissions.
    */
   const requestPermissions = useCallback(async () => {
     const token = await registerForPushNotificationsAsync();
