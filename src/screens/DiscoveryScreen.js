@@ -313,18 +313,18 @@ export const DiscoveryScreen = ({ navigation, route }) => {
                 }
               }}
             >
-              <View style={styles.suggestionContent}>
-                <Text style={[styles.historyQuery, { color: theme.text.primary }]} numberOfLines={1}>
+              <View style={{ flex: 1 }}>
+                <Text style={[typography.body, { color: theme.text.primary }]} numberOfLines={1}>
                   {suggestion.label}
                 </Text>
                 {suggestion.type === 'tea' && suggestion.sublabel && (
-                  <Text style={[styles.suggestionSublabel, { color: theme.text.tertiary }]} numberOfLines={1}>
+                  <Text style={[typography.caption, { color: theme.text.tertiary, marginTop: 2 }]} numberOfLines={1}>
                     by {suggestion.sublabel}
                   </Text>
                 )}
               </View>
               {suggestion.type === 'brand' && (
-                <Text style={[styles.suggestionType, { color: theme.text.tertiary }]}>
+                <Text style={[typography.caption, { color: theme.text.tertiary, marginLeft: 8 }]}>
                   Shop
                 </Text>
               )}
