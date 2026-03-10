@@ -96,7 +96,10 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     if ((initialFilter !== undefined || initialCompanyFilter !== undefined) && initialSearch === undefined) {
       setSearchQuery('');
     }
-    if (initialSearch !== undefined) setSearchQuery(initialSearch);
+    if (initialSearch !== undefined) {
+      setSearchQuery(initialSearch);
+      setShowSuggestions(false);
+    }
     if (initialFilter !== undefined) {
       setFilters(prev => ({ ...prev, teaType: initialFilter }));
     }
