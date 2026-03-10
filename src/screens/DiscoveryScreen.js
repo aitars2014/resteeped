@@ -70,6 +70,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
   const [searchQuery, setSearchQuery] = useState(initialSearch || '');
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
+  const [showSuggestions, setShowSuggestions] = useState(true);
   const [filters, setFilters] = useState({
     teaType: initialFilter || 'all',
     company: initialCompanyFilter || 'all',
@@ -128,6 +129,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     if (searchQuery.trim()) {
       addToHistory(searchQuery.trim());
       setShowHistory(false);
+      setShowSuggestions(false);
       trackEvent(AnalyticsEvents.TEA_SEARCHED, { 
         query: searchQuery.trim(),
         results_count: filteredTeas.length,
@@ -139,6 +141,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
     setSearchQuery(query);
     addToHistory(query);
     setShowHistory(false);
+    setShowSuggestions(false);
   };
 
   // Search suggestions — show matching tea names and brands as user types
@@ -288,7 +291,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
 
   const renderSearchHistory = () => {
     // Show suggestions when typing, history when focused with empty query
-    if (searchQuery.length >= 2 && searchSuggestions.length > 0) {
+    if (showSuggestions && searchQuery.length >= 2 && searchSuggestions.length > 0) {
       return (
         <View style={[styles.historyContainer, { backgroundColor: theme.background.secondary }]}>
           <View style={styles.historyHeader}>
@@ -487,6 +490,7 @@ export const DiscoveryScreen = ({ navigation, route }) => {
             value={searchQuery}
             onChangeText={(text) => {
               setSearchQuery(text);
+              setShowSuggestions(true);
               if (text.length === 0) setShowHistory(true);
             }}
             onFocus={() => setShowHistory(true)}
