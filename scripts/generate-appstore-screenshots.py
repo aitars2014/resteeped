@@ -38,9 +38,9 @@ SLIDES = [
         "gradient": ["#3A6B4A", "#7FB89A"],
     },
     {
-        "input": "05-collection.png",
-        "headline": "Track Your\nTea Journey",
-        "subhead": "Build your personal collection",
+        "input": "07-home-scroll.png",
+        "headline": "Curated\nFor You",
+        "subhead": "Tea battles, shops & seasonal picks",
         "gradient": ["#8BA0B8", "#D0C8BE"],
         "dark_text": True,
     },
