@@ -3,6 +3,10 @@ const path = require("path");
 
 const config = getSentryExpoConfig(__dirname);
 
+// Required for @opentelemetry package.json "exports" field
+config.resolver = config.resolver || {};
+config.resolver.unstable_enablePackageExports = true;
+
 // Stub out expo-speech-recognition for Expo Go (native module unavailable)
 const stubPath = path.resolve(__dirname, "expo-speech-recognition-stub.js");
 const originalResolveRequest = config.resolver?.resolveRequest;

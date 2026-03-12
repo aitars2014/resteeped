@@ -11,6 +11,7 @@
   "dependencies": {
     "@amplitude/analytics-react-native": "^1.5.37",
     "@gorhom/bottom-sheet": "^5.2.8",
+    "@honeycombio/opentelemetry-react-native": "^0.7.2",
     "@react-native-async-storage/async-storage": "^2.2.0",
     "@react-navigation/bottom-tabs": "^7.12.0",
     "@react-navigation/native": "^7.1.28",
@@ -51,6 +52,7 @@
     "react-native-svg": "15.12.1",
     "react-native-url-polyfill": "^3.0.0",
     "react-native-view-shot": "4.0.3",
+    "react-native-worklets": "^0.7.4",
     "typescript": "~5.9.2"
   },
   "private": true,
