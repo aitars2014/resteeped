@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { withTracing, Tracer, Span } from '../_shared/tracing.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -42,65 +43,78 @@ IMPORTANT: You can ONLY recommend teas that exist in the Resteeped catalog. When
 
 You are Teabeard. Every cup is a small kindness. Share it generously.`
 
-serve(async (req) => {
+serve(withTracing('tea-sommelier', async (req, tracer, rootSpan) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
-  try {
-    const { messages, user_preferences } = await req.json()
+  const { messages, user_preferences } = await req.json()
 
-    if (!messages || !Array.isArray(messages) || messages.length === 0) {
-      return new Response(
-        JSON.stringify({ error: 'Missing or invalid "messages" array' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+  rootSpan.setAttributes({
+    'sommelier.message_count': messages?.length || 0,
+    'sommelier.has_preferences': !!user_preferences,
+  })
+
+  if (!messages || !Array.isArray(messages) || messages.length === 0) {
+    rootSpan.setAttribute('error.type', 'invalid_messages')
+    return new Response(
+      JSON.stringify({ error: 'Missing or invalid "messages" array' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
+  }
+
+  const openaiKey = Deno.env.get('OPENAI_API_KEY')
+  if (!openaiKey) {
+    rootSpan.setError(new Error('OPENAI_API_KEY not configured'))
+    return new Response(
+      JSON.stringify({ error: 'OPENAI_API_KEY not configured' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
+  }
+
+  const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
+  const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+  const supabase = createClient(supabaseUrl, supabaseServiceKey)
+
+  // Build context about user preferences
+  let prefContext = ''
+  if (user_preferences) {
+    const parts = []
+    if (user_preferences.preferred_tea_types?.length) {
+      parts.push(`They enjoy: ${user_preferences.preferred_tea_types.join(', ')} tea`)
+      rootSpan.setAttribute('sommelier.preferred_types', user_preferences.preferred_tea_types.join(','))
     }
-
-    const openaiKey = Deno.env.get('OPENAI_API_KEY')
-    if (!openaiKey) {
-      return new Response(
-        JSON.stringify({ error: 'OPENAI_API_KEY not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
+    if (user_preferences.caffeine_preference) {
+      parts.push(`Caffeine preference: ${user_preferences.caffeine_preference}`)
+      rootSpan.setAttribute('sommelier.caffeine_pref', user_preferences.caffeine_preference)
     }
-
-    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
-
-    // Build context about user preferences if available
-    let prefContext = ''
-    if (user_preferences) {
-      const parts = []
-      if (user_preferences.preferred_tea_types?.length) {
-        parts.push(`They enjoy: ${user_preferences.preferred_tea_types.join(', ')} tea`)
-      }
-      if (user_preferences.caffeine_preference) {
-        parts.push(`Caffeine preference: ${user_preferences.caffeine_preference}`)
-      }
-      if (user_preferences.preferred_flavors?.length) {
-        parts.push(`Flavor preferences: ${user_preferences.preferred_flavors.join(', ')}`)
-      }
-      if (parts.length) {
-        prefContext = `\n\nWhat you know about this customer: ${parts.join('. ')}.`
-      }
+    if (user_preferences.preferred_flavors?.length) {
+      parts.push(`Flavor preferences: ${user_preferences.preferred_flavors.join(', ')}`)
     }
+    if (parts.length) {
+      prefContext = `\n\nWhat you know about this customer: ${parts.join('. ')}.`
+    }
+  }
 
-    let teaContext = ''
-    let searchResults: any[] = []
+  let teaContext = ''
+  let searchResults: any[] = []
 
-    // Build a search query from the full conversation context
-    // Always search — let the sommelier decide whether to recommend or ask more questions
-    const lastUserMsg = [...messages].reverse().find((m: any) => m.role === 'user')?.content || ''
-    const conversationSummary = messages
-      .filter((m: any) => m.role === 'user')
-      .map((m: any) => m.content)
-      .join('. ')
+  const lastUserMsg = [...messages].reverse().find((m: any) => m.role === 'user')?.content || ''
+  const conversationSummary = messages
+    .filter((m: any) => m.role === 'user')
+    .map((m: any) => m.content)
+    .join('. ')
 
-    if (conversationSummary.length > 5) {
-      // Use a quick rewrite to build the best search query from all context
-      const rewriteResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+  rootSpan.setAttribute('sommelier.last_user_message', lastUserMsg.slice(0, 200))
+
+  if (conversationSummary.length > 5) {
+    // Rewrite conversation into search query
+    let searchQuery = conversationSummary
+    const rewriteResponse = await tracer.trace(
+      'openai.chat.rewrite_query',
+      rootSpan.context,
+      { 'openai.model': 'gpt-4o-mini', 'openai.operation': 'conversation_rewrite' },
+      () => fetch('https://api.openai.com/v1/chat/completions', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${openaiKey}`,
@@ -118,16 +132,21 @@ serve(async (req) => {
           max_tokens: 150,
           temperature: 0.2,
         }),
-      })
+      }),
+    )
 
-      let searchQuery = conversationSummary
-      if (rewriteResponse.ok) {
-        const rewriteData = await rewriteResponse.json()
-        searchQuery = rewriteData.choices?.[0]?.message?.content?.trim() || conversationSummary
-      }
+    if (rewriteResponse.ok) {
+      const rewriteData = await rewriteResponse.json()
+      searchQuery = rewriteData.choices?.[0]?.message?.content?.trim() || conversationSummary
+      rootSpan.setAttribute('sommelier.rewritten_query', searchQuery.slice(0, 200))
+    }
 
-      // Generate embedding
-      const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+    // Generate embedding
+    const embeddingResponse = await tracer.trace(
+      'openai.embeddings',
+      rootSpan.context,
+      { 'openai.model': 'text-embedding-3-small', 'openai.operation': 'embedding' },
+      () => fetch('https://api.openai.com/v1/embeddings', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${openaiKey}`,
@@ -137,34 +156,48 @@ serve(async (req) => {
           model: 'text-embedding-3-small',
           input: searchQuery,
         }),
-      })
+      }),
+    )
 
-      if (embeddingResponse.ok) {
-        const embeddingData = await embeddingResponse.json()
-        const embedding = embeddingData.data[0].embedding
+    if (embeddingResponse.ok) {
+      const embeddingData = await embeddingResponse.json()
+      const embedding = embeddingData.data[0].embedding
 
-        const { data: teas, error } = await supabase.rpc('match_teas', {
+      const { data: teas, error } = await tracer.trace(
+        'supabase.rpc.match_teas',
+        rootSpan.context,
+        { 'db.system': 'postgresql', 'db.operation': 'rpc', 'db.rpc.name': 'match_teas' },
+        () => supabase.rpc('match_teas', {
           query_embedding: embedding,
           match_threshold: 0.2,
           match_count: 20,
-        })
+        }),
+      )
 
-        if (!error && teas?.length > 0) {
-          searchResults = teas
-          teaContext = `\n\nHere are teas from your catalog that match what they're looking for. Pick 2-4 of the BEST matches and include the RECOMMENDATIONS_JSON block in your response:\n${teas.map((t: any) => 
-            `- "${t.name}" by ${t.brand_name} (${t.tea_type}) — ${t.description?.slice(0, 120) || 'No description'}${t.flavor_notes?.length ? ` | Flavors: ${t.flavor_notes.join(', ')}` : ''}`
-          ).join('\n')}\n\nONLY recommend teas from this list. Use exact tea names. You MUST include the RECOMMENDATIONS_JSON: block at the end of your response.`
-        }
+      if (!error && teas?.length > 0) {
+        searchResults = teas
+        rootSpan.setAttribute('sommelier.search_results_count', teas.length)
+        teaContext = `\n\nHere are teas from your catalog that match what they're looking for. Pick 2-4 of the BEST matches and include the RECOMMENDATIONS_JSON block in your response:\n${teas.map((t: any) => 
+          `- "${t.name}" by ${t.brand_name} (${t.tea_type}) — ${t.description?.slice(0, 120) || 'No description'}${t.flavor_notes?.length ? ` | Flavors: ${t.flavor_notes.join(', ')}` : ''}`
+        ).join('\n')}\n\nONLY recommend teas from this list. Use exact tea names. You MUST include the RECOMMENDATIONS_JSON: block at the end of your response.`
+      } else {
+        rootSpan.setAttribute('sommelier.search_results_count', 0)
+        if (error) rootSpan.addEvent('search_error', { 'error.message': error.message })
       }
     }
+  }
 
-    // Now generate the sommelier response
-    const sommelierMessages = [
-      { role: 'system', content: SYSTEM_PROMPT + prefContext + teaContext },
-      ...messages.map((m: any) => ({ role: m.role, content: m.content })),
-    ]
+  // Generate sommelier response
+  const sommelierMessages = [
+    { role: 'system', content: SYSTEM_PROMPT + prefContext + teaContext },
+    ...messages.map((m: any) => ({ role: m.role, content: m.content })),
+  ]
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
+  const response = await tracer.trace(
+    'openai.chat.sommelier_response',
+    rootSpan.context,
+    { 'openai.model': 'gpt-4o-mini', 'openai.operation': 'sommelier_chat', 'openai.temperature': 0.9 },
+    () => fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${openaiKey}`,
@@ -176,73 +209,63 @@ serve(async (req) => {
         max_tokens: 800,
         temperature: 0.9,
       }),
-    })
+    }),
+  )
 
-    if (!response.ok) {
-      const err = await response.text()
-      throw new Error(`OpenAI API error: ${err}`)
-    }
-
-    const data = await response.json()
-    const reply = data.choices?.[0]?.message?.content?.trim() || "I'd love to help you find the perfect tea. What are you in the mood for today?"
-
-    // Try to extract recommendations JSON from the reply using the RECOMMENDATIONS_JSON: marker
-    let recommendations: any[] = []
-    
-    // Try marker-based extraction first, then fall back to regex
-    let jsonStr = ''
-    const markerIdx = reply.indexOf('RECOMMENDATIONS_JSON:')
-    if (markerIdx !== -1) {
-      jsonStr = reply.slice(markerIdx + 'RECOMMENDATIONS_JSON:'.length).trim()
-    } else {
-      // Fallback: find any JSON with recommendations key (greedy match for nested brackets)
-      const jsonMatch = reply.match(/\{"recommendations"\s*:\s*\[[\s\S]*?\]\s*\}/)
-      if (jsonMatch) jsonStr = jsonMatch[0]
-    }
-
-    if (jsonStr) {
-      // Clean up: remove markdown code fences if present
-      jsonStr = jsonStr.replace(/^```json?\s*/i, '').replace(/\s*```\s*$/, '').trim()
-      try {
-        const parsed = JSON.parse(jsonStr)
-        if (parsed.recommendations) {
-          recommendations = parsed.recommendations.map((rec: any) => {
-            const recName = (rec.name || '').toLowerCase()
-            const match = searchResults.find((t: any) => {
-              const tName = (t.name || '').toLowerCase()
-              return tName === recName ||
-                tName.includes(recName) ||
-                recName.includes(tName)
-            })
-            return { ...rec, tea: match || null }
-          }).filter((r: any) => r.tea)
-        }
-      } catch (_) {
-        // JSON parsing failed, continue without recommendations
-      }
-    }
-
-    // Clean the reply text — remove the JSON block and marker
-    let cleanReply = reply
-    if (markerIdx !== -1) {
-      cleanReply = reply.slice(0, markerIdx).trim()
-    } else {
-      cleanReply = reply.replace(/\{"recommendations"\s*:\s*\[[\s\S]*?\]\s*\}/g, '').trim()
-    }
-    // Also remove any stray markdown code fences
-    cleanReply = cleanReply.replace(/```json?\s*[\s\S]*?```/g, '').trim()
-
-    return new Response(
-      JSON.stringify({ 
-        reply: cleanReply,
-        recommendations,
-      }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    )
-  } catch (err) {
-    return new Response(
-      JSON.stringify({ error: err.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    )
+  if (!response.ok) {
+    const err = await response.text()
+    throw new Error(`OpenAI API error: ${err}`)
   }
-})
+
+  const data = await response.json()
+  const reply = data.choices?.[0]?.message?.content?.trim() || "I'd love to help you find the perfect tea. What are you in the mood for today?"
+
+  rootSpan.setAttribute('sommelier.response_tokens', data.usage?.completion_tokens || 0)
+  rootSpan.setAttribute('sommelier.total_tokens', data.usage?.total_tokens || 0)
+
+  // Extract recommendations JSON
+  let recommendations: any[] = []
+  let jsonStr = ''
+  const markerIdx = reply.indexOf('RECOMMENDATIONS_JSON:')
+  if (markerIdx !== -1) {
+    jsonStr = reply.slice(markerIdx + 'RECOMMENDATIONS_JSON:'.length).trim()
+  } else {
+    const jsonMatch = reply.match(/\{"recommendations"\s*:\s*\[[\s\S]*?\]\s*\}/)
+    if (jsonMatch) jsonStr = jsonMatch[0]
+  }
+
+  if (jsonStr) {
+    jsonStr = jsonStr.replace(/^```json?\s*/i, '').replace(/\s*```\s*$/, '').trim()
+    try {
+      const parsed = JSON.parse(jsonStr)
+      if (parsed.recommendations) {
+        recommendations = parsed.recommendations.map((rec: any) => {
+          const recName = (rec.name || '').toLowerCase()
+          const match = searchResults.find((t: any) => {
+            const tName = (t.name || '').toLowerCase()
+            return tName === recName || tName.includes(recName) || recName.includes(tName)
+          })
+          return { ...rec, tea: match || null }
+        }).filter((r: any) => r.tea)
+      }
+    } catch (_) {
+      rootSpan.addEvent('json_parse_error', { 'exception.slug': 'err-recommendations-json-parse' })
+    }
+  }
+
+  rootSpan.setAttribute('sommelier.recommendations_count', recommendations.length)
+
+  // Clean the reply text
+  let cleanReply = reply
+  if (markerIdx !== -1) {
+    cleanReply = reply.slice(0, markerIdx).trim()
+  } else {
+    cleanReply = reply.replace(/\{"recommendations"\s*:\s*\[[\s\S]*?\]\s*\}/g, '').trim()
+  }
+  cleanReply = cleanReply.replace(/```json?\s*[\s\S]*?```/g, '').trim()
+
+  return new Response(
+    JSON.stringify({ reply: cleanReply, recommendations }),
+    { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+  )
+}))

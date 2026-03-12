@@ -1,27 +1,11 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { withTracing } from '../_shared/tracing.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 }
-
-/**
- * Send push notifications via Expo's Push API.
- * 
- * This function is designed to be called by:
- * - A cron job (pg_cron or external scheduler)
- * - An admin API call
- * - A database trigger (e.g., new teas added)
- * 
- * Request body:
- * {
- *   "type": "daily_suggestion" | "brew_reminder" | "new_teas" | "seasonal",
- *   "title": "Optional override title",
- *   "body": "Optional override body",
- *   "data": { ... optional deep-link data ... }
- * }
- */
 
 interface ExpoPushMessage {
   to: string
@@ -36,7 +20,6 @@ interface ExpoPushMessage {
 async function sendExpoPushNotifications(messages: ExpoPushMessage[]) {
   if (messages.length === 0) return { tickets: [] }
 
-  // Expo accepts batches of up to 100 messages
   const batches: ExpoPushMessage[][] = []
   for (let i = 0; i < messages.length; i += 100) {
     batches.push(messages.slice(i, i + 100))
@@ -63,53 +46,57 @@ async function sendExpoPushNotifications(messages: ExpoPushMessage[]) {
   return { tickets: allTickets }
 }
 
-serve(async (req) => {
+serve(withTracing('send-notifications', async (req, tracer, rootSpan) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
-  try {
-    // This function should be called with service role key or verified admin
-    const authHeader = req.headers.get('Authorization')
-    if (!authHeader) {
-      return new Response(JSON.stringify({ error: 'Unauthorized' }), {
-        status: 401,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
+  const authHeader = req.headers.get('Authorization')
+  if (!authHeader) {
+    rootSpan.setAttribute('error.type', 'no_auth_header')
+    return new Response(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
 
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+  const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+  const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+  const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    const { type, title, body, data } = await req.json()
+  const { type, title, body, data } = await req.json()
 
-    if (!type) {
-      return new Response(JSON.stringify({ error: 'Missing notification type' }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
+  rootSpan.setAttribute('notification.type', type || 'unknown')
 
-    // Map notification type to the preference key
-    const prefKeyMap: Record<string, string> = {
-      daily_suggestion: 'dailySuggestion',
-      brew_reminder: 'brewReminder',
-      new_teas: 'newTeasFromBrands',
-      seasonal: 'seasonalPrompts',
-    }
+  if (!type) {
+    return new Response(JSON.stringify({ error: 'Missing notification type' }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
 
-    const prefKey = prefKeyMap[type]
-    if (!prefKey) {
-      return new Response(JSON.stringify({ error: `Unknown notification type: ${type}` }), {
-        status: 400,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
+  const prefKeyMap: Record<string, string> = {
+    daily_suggestion: 'dailySuggestion',
+    brew_reminder: 'brewReminder',
+    new_teas: 'newTeasFromBrands',
+    seasonal: 'seasonalPrompts',
+  }
 
-    // Fetch users who have this notification type enabled
-    // Join push_tokens with profiles to check preferences
-    const { data: tokens, error: tokensError } = await supabase
+  const prefKey = prefKeyMap[type]
+  if (!prefKey) {
+    rootSpan.setAttribute('error.type', 'unknown_notification_type')
+    return new Response(JSON.stringify({ error: `Unknown notification type: ${type}` }), {
+      status: 400,
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+    })
+  }
+
+  // Fetch eligible push tokens
+  const { data: tokens, error: tokensError } = await tracer.trace(
+    'supabase.query.push_tokens',
+    rootSpan.context,
+    { 'db.system': 'postgresql', 'db.operation': 'select', 'db.table': 'push_tokens' },
+    () => supabase
       .from('push_tokens')
       .select(`
         token,
@@ -117,88 +104,86 @@ serve(async (req) => {
         profiles!inner (
           notification_preferences
         )
-      `)
+      `),
+  )
 
-    if (tokensError) {
-      console.error('Error fetching tokens:', tokensError)
-      return new Response(JSON.stringify({ error: 'Failed to fetch tokens' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
+  if (tokensError) {
+    throw new Error(`Failed to fetch tokens: ${tokensError.message}`)
+  }
 
-    // Filter to users who have opted in to this notification type
-    const eligibleTokens = (tokens || []).filter((t: any) => {
-      const prefs = t.profiles?.notification_preferences
-      return prefs && prefs[prefKey] === true
-    })
+  const eligibleTokens = (tokens || []).filter((t: any) => {
+    const prefs = t.profiles?.notification_preferences
+    return prefs && prefs[prefKey] === true
+  })
 
-    if (eligibleTokens.length === 0) {
-      return new Response(JSON.stringify({ 
-        success: true, 
-        sent: 0, 
-        message: 'No users opted in for this notification type' 
-      }), {
-        status: 200,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
-    }
+  rootSpan.setAttributes({
+    'notification.total_tokens': (tokens || []).length,
+    'notification.eligible_tokens': eligibleTokens.length,
+  })
 
-    // Default messages per type
-    const defaultMessages: Record<string, { title: string; body: string }> = {
-      daily_suggestion: {
-        title: '🍵 Your morning tea suggestion',
-        body: 'Time to discover something new — tap to see today\'s pick.',
-      },
-      brew_reminder: {
-        title: '🫖 Missing your daily steep?',
-        body: 'It\'s been a while since your last brew. Ready for a cup?',
-      },
-      new_teas: {
-        title: '🆕 New teas just added',
-        body: 'Check out the latest additions from your favorite brands.',
-      },
-      seasonal: {
-        title: '🌿 Seasonal teas are here',
-        body: 'Explore this season\'s freshest picks.',
-      },
-    }
-
-    const defaults = defaultMessages[type]
-
-    // Build push messages
-    const messages: ExpoPushMessage[] = eligibleTokens.map((t: any) => ({
-      to: t.token,
-      title: title || defaults.title,
-      body: body || defaults.body,
-      data: data || { type, screen: 'Home' },
-      sound: 'default',
-    }))
-
-    // Send via Expo Push API
-    const result = await sendExpoPushNotifications(messages)
-
-    // Log errors from tickets
-    const errors = result.tickets.filter((t: any) => t.status === 'error')
-    if (errors.length > 0) {
-      console.error('Push notification errors:', JSON.stringify(errors))
-    }
-
-    return new Response(JSON.stringify({
-      success: true,
-      sent: messages.length,
-      errors: errors.length,
-      tickets: result.tickets,
+  if (eligibleTokens.length === 0) {
+    rootSpan.addEvent('no_eligible_users')
+    return new Response(JSON.stringify({ 
+      success: true, sent: 0, 
+      message: 'No users opted in for this notification type' 
     }), {
       status: 200,
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
     })
-
-  } catch (error) {
-    console.error('Notification function error:', error)
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-    })
   }
-})
+
+  const defaultMessages: Record<string, { title: string; body: string }> = {
+    daily_suggestion: {
+      title: '🍵 Your morning tea suggestion',
+      body: 'Time to discover something new — tap to see today\'s pick.',
+    },
+    brew_reminder: {
+      title: '🫖 Missing your daily steep?',
+      body: 'It\'s been a while since your last brew. Ready for a cup?',
+    },
+    new_teas: {
+      title: '🆕 New teas just added',
+      body: 'Check out the latest additions from your favorite brands.',
+    },
+    seasonal: {
+      title: '🌿 Seasonal teas are here',
+      body: 'Explore this season\'s freshest picks.',
+    },
+  }
+
+  const defaults = defaultMessages[type]
+  const pushMessages: ExpoPushMessage[] = eligibleTokens.map((t: any) => ({
+    to: t.token,
+    title: title || defaults.title,
+    body: body || defaults.body,
+    data: data || { type, screen: 'Home' },
+    sound: 'default',
+  }))
+
+  const result = await tracer.trace(
+    'expo.push.send',
+    rootSpan.context,
+    { 'expo.message_count': pushMessages.length },
+    () => sendExpoPushNotifications(pushMessages),
+  )
+
+  const errors = result.tickets.filter((t: any) => t.status === 'error')
+  rootSpan.setAttributes({
+    'notification.sent': pushMessages.length,
+    'notification.errors': errors.length,
+  })
+
+  if (errors.length > 0) {
+    rootSpan.addEvent('push_errors', { 'error.count': errors.length })
+  }
+
+  return new Response(JSON.stringify({
+    success: true,
+    sent: pushMessages.length,
+    errors: errors.length,
+    tickets: result.tickets,
+  }), {
+    status: 200,
+    headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+  })
+}))

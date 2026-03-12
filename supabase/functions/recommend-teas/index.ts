@@ -1,5 +1,6 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts'
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { withTracing, Tracer, Span } from '../_shared/tracing.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -21,34 +22,50 @@ function extractFilters(query: string): { wantCaffeineFree: boolean; wantHerbal:
   return { wantCaffeineFree, wantHerbal, excludeTypes }
 }
 
-serve(async (req) => {
+serve(withTracing('recommend-teas', async (req, tracer, rootSpan) => {
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
 
-  try {
-    const { query, match_threshold = 0.3, match_count = 10 } = await req.json()
+  const { query, match_threshold = 0.3, match_count = 10 } = await req.json()
 
-    if (!query || typeof query !== 'string') {
-      return new Response(
-        JSON.stringify({ error: 'Missing or invalid "query" field' }),
-        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
+  rootSpan.setAttributes({
+    'recommend.query': query || '',
+    'recommend.match_threshold': match_threshold,
+    'recommend.match_count': match_count,
+  })
 
-    const openaiKey = Deno.env.get('OPENAI_API_KEY')
-    if (!openaiKey) {
-      return new Response(
-        JSON.stringify({ error: 'OPENAI_API_KEY not configured' }),
-        { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-      )
-    }
+  if (!query || typeof query !== 'string') {
+    rootSpan.setAttribute('error.type', 'invalid_query')
+    return new Response(
+      JSON.stringify({ error: 'Missing or invalid "query" field' }),
+      { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
+  }
 
-    const filters = extractFilters(query)
+  const openaiKey = Deno.env.get('OPENAI_API_KEY')
+  if (!openaiKey) {
+    rootSpan.setError(new Error('OPENAI_API_KEY not configured'))
+    return new Response(
+      JSON.stringify({ error: 'OPENAI_API_KEY not configured' }),
+      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+    )
+  }
 
-    // Use ChatGPT to rewrite the query into optimal embedding search terms
-    // This handles negation better than raw embedding
-    const rewriteResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+  const filters = extractFilters(query)
+  rootSpan.setAttributes({
+    'recommend.filter.caffeine_free': filters.wantCaffeineFree,
+    'recommend.filter.herbal': filters.wantHerbal,
+  })
+
+  // Rewrite query via ChatGPT for better embedding search
+  let searchText = query
+  const rewriteStart = Date.now()
+  const rewriteResponse = await tracer.trace(
+    'openai.chat.rewrite_query',
+    rootSpan.context,
+    { 'openai.model': 'gpt-4o-mini', 'openai.operation': 'query_rewrite' },
+    () => fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${openaiKey}`,
@@ -66,16 +83,22 @@ serve(async (req) => {
         max_tokens: 150,
         temperature: 0.3,
       }),
-    })
+    }),
+  )
+  rootSpan.setAttribute('recommend.rewrite_duration_ms', Date.now() - rewriteStart)
 
-    let searchText = query
-    if (rewriteResponse.ok) {
-      const rewriteData = await rewriteResponse.json()
-      searchText = rewriteData.choices?.[0]?.message?.content?.trim() || query
-    }
+  if (rewriteResponse.ok) {
+    const rewriteData = await rewriteResponse.json()
+    searchText = rewriteData.choices?.[0]?.message?.content?.trim() || query
+    rootSpan.setAttribute('recommend.rewritten_query', searchText)
+  }
 
-    // Generate embedding for the rewritten query
-    const embeddingResponse = await fetch('https://api.openai.com/v1/embeddings', {
+  // Generate embedding
+  const embeddingResponse = await tracer.trace(
+    'openai.embeddings',
+    rootSpan.context,
+    { 'openai.model': 'text-embedding-3-small', 'openai.operation': 'embedding' },
+    () => fetch('https://api.openai.com/v1/embeddings', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${openaiKey}`,
@@ -85,69 +108,74 @@ serve(async (req) => {
         model: 'text-embedding-3-small',
         input: searchText,
       }),
-    })
+    }),
+  )
 
-    if (!embeddingResponse.ok) {
-      const err = await embeddingResponse.text()
-      throw new Error(`OpenAI API error: ${err}`)
-    }
+  if (!embeddingResponse.ok) {
+    const err = await embeddingResponse.text()
+    throw new Error(`OpenAI API error: ${err}`)
+  }
 
-    const embeddingData = await embeddingResponse.json()
-    const embedding = embeddingData.data[0].embedding
+  const embeddingData = await embeddingResponse.json()
+  const embedding = embeddingData.data[0].embedding
 
-    // Query Supabase for similar teas — fetch more than needed so we can filter
-    const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
-    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-    const supabase = createClient(supabaseUrl, supabaseServiceKey)
+  // Query Supabase for similar teas
+  const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
+  const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+  const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-    const fetchCount = filters.wantCaffeineFree ? match_count * 4 : match_count * 2
+  const fetchCount = filters.wantCaffeineFree ? match_count * 4 : match_count * 2
 
-    const { data: teas, error } = await supabase.rpc('match_teas', {
+  const { data: teas, error } = await tracer.trace(
+    'supabase.rpc.match_teas',
+    rootSpan.context,
+    { 'db.system': 'postgresql', 'db.operation': 'rpc', 'db.rpc.name': 'match_teas', 'db.fetch_count': fetchCount },
+    () => supabase.rpc('match_teas', {
       query_embedding: embedding,
       match_threshold,
       match_count: fetchCount,
-    })
+    }),
+  )
 
-    if (error) {
-      throw new Error(`Supabase RPC error: ${error.message}`)
-    }
-
-    // Post-filter: if user wants caffeine-free, boost herbal/rooibos and penalize caffeinated types
-    let results = teas || []
-    if (filters.wantCaffeineFree) {
-      const caffeineFreeTypes = ['herbal', 'rooibos', 'fruit', 'tisane']
-      const caffeineTypes = ['black', 'green', 'oolong', 'white', 'puerh', 'pu-erh', 'matcha', 'yerba mate']
-      
-      results = results
-        .map((tea: any) => {
-          const teaType = (tea.tea_type || '').toLowerCase()
-          const name = (tea.name || '').toLowerCase()
-          const desc = (tea.description || '').toLowerCase()
-          
-          // Check if this tea mentions being decaf/caffeine-free
-          const isDecaf = /caffeine.?free|decaf|no caffeine|naturally caffeine/.test(name + ' ' + desc)
-          
-          if (caffeineFreeTypes.includes(teaType) || isDecaf) {
-            return { ...tea, similarity: tea.similarity + 0.2 } // boost
-          } else if (caffeineTypes.includes(teaType) && !isDecaf) {
-            return { ...tea, similarity: tea.similarity - 0.3 } // penalize
-          }
-          return tea
-        })
-        .sort((a: any, b: any) => b.similarity - a.similarity)
-    }
-
-    // Return top N
-    results = results.slice(0, match_count)
-
-    return new Response(
-      JSON.stringify({ teas: results }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    )
-  } catch (err) {
-    return new Response(
-      JSON.stringify({ error: err.message }),
-      { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    )
+  if (error) {
+    throw new Error(`Supabase RPC error: ${error.message}`)
   }
-})
+
+  // Post-filter for caffeine preferences
+  let results = teas || []
+  if (filters.wantCaffeineFree) {
+    const caffeineFreeTypes = ['herbal', 'rooibos', 'fruit', 'tisane']
+    const caffeineTypes = ['black', 'green', 'oolong', 'white', 'puerh', 'pu-erh', 'matcha', 'yerba mate']
+    
+    results = results
+      .map((tea: any) => {
+        const teaType = (tea.tea_type || '').toLowerCase()
+        const name = (tea.name || '').toLowerCase()
+        const desc = (tea.description || '').toLowerCase()
+        
+        const isDecaf = /caffeine.?free|decaf|no caffeine|naturally caffeine/.test(name + ' ' + desc)
+        
+        if (caffeineFreeTypes.includes(teaType) || isDecaf) {
+          return { ...tea, similarity: tea.similarity + 0.2 }
+        } else if (caffeineTypes.includes(teaType) && !isDecaf) {
+          return { ...tea, similarity: tea.similarity - 0.3 }
+        }
+        return tea
+      })
+      .sort((a: any, b: any) => b.similarity - a.similarity)
+  }
+
+  results = results.slice(0, match_count)
+
+  rootSpan.setAttributes({
+    'recommend.results_count': results.length,
+    'recommend.raw_results_count': (teas || []).length,
+    'recommend.top_tea': results[0]?.name || 'none',
+    'recommend.top_similarity': results[0]?.similarity || 0,
+  })
+
+  return new Response(
+    JSON.stringify({ teas: results }),
+    { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+  )
+}))
