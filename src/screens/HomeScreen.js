@@ -70,15 +70,34 @@ export const HomeScreen = ({ navigation }) => {
   const [randomizerVisible, setRandomizerVisible] = useState(false);
   const [randomizerSource, setRandomizerSource] = useState('all');
 
-  const featuredTeas = teas
-    .filter(t => t.avgRating >= 4.0 || t.avg_rating >= 4.0)
-    .sort((a, b) => (b.avgRating || b.avg_rating || 0) - (a.avgRating || a.avg_rating || 0))
-    .slice(0, 8);
+  // Brand-diverse selection: pick top teas but cap any single brand to MAX_PER_BRAND
+  const diversePick = (candidates, limit, MAX_PER_BRAND = 2) => {
+    const result = [];
+    const brandCounts = {};
+    for (const tea of candidates) {
+      const brand = tea.brandName || tea.brand_name || 'Unknown';
+      const count = brandCounts[brand] || 0;
+      if (count >= MAX_PER_BRAND) continue;
+      brandCounts[brand] = count + 1;
+      result.push(tea);
+      if (result.length >= limit) break;
+    }
+    return result;
+  };
 
-  const trendingTeas = teas
-    .filter(t => (t.ratingCount || t.rating_count || 0) > 0)
-    .sort((a, b) => (b.ratingCount || b.rating_count || 0) - (a.ratingCount || a.rating_count || 0))
-    .slice(0, 8);
+  const featuredTeas = diversePick(
+    teas
+      .filter(t => t.avgRating >= 4.0 || t.avg_rating >= 4.0)
+      .sort((a, b) => (b.avgRating || b.avg_rating || 0) - (a.avgRating || a.avg_rating || 0)),
+    8
+  );
+
+  const trendingTeas = diversePick(
+    teas
+      .filter(t => (t.ratingCount || t.rating_count || 0) > 0)
+      .sort((a, b) => (b.ratingCount || b.rating_count || 0) - (a.ratingCount || a.rating_count || 0)),
+    8
+  );
 
   const newTeas = [...teas]
     .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))

@@ -128,13 +128,29 @@ export const useRecommendations = (limit = 10) => {
       })
       .sort((a, b) => b.score - a.score);
 
+    // Brand-diverse selection: cap any single brand to avoid dominance
+    const diversePick = (candidates, count, maxPerBrand = 2) => {
+      const result = [];
+      const brandCounts = {};
+      for (const item of candidates) {
+        const tea = item.tea || item;
+        const brand = tea.brandName || 'Unknown';
+        const c = brandCounts[brand] || 0;
+        if (c >= maxPerBrand) continue;
+        brandCounts[brand] = c + 1;
+        result.push(item);
+        if (result.length >= count) break;
+      }
+      return result;
+    };
+
     // "For You" - Personalized recommendations (if user has preferences)
     const forYou = preferredTypes.length > 0
-      ? scoredTeas.slice(0, limit).map(item => item.tea)
+      ? diversePick(scoredTeas, limit).map(item => item.tea)
       : [];
 
     // "Explore" - Different from user's usual preferences
-    const explore = teas
+    const exploreCandidates = teas
       .filter(tea => {
         // Not in collection
         if (collectionTeaIds.has(tea.id)) return false;
@@ -142,14 +158,14 @@ export const useRecommendations = (limit = 10) => {
         if (preferredTypes.length > 0 && preferredTypes.includes(tea.teaType)) return false;
         return true;
       })
-      .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0))
-      .slice(0, limit);
+      .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0));
+    const explore = diversePick(exploreCandidates, limit);
 
     // "Top Rated" - Highest rated teas overall
-    const topRated = teas
+    const topRatedCandidates = teas
       .filter(tea => !collectionTeaIds.has(tea.id))
-      .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0))
-      .slice(0, limit);
+      .sort((a, b) => (b.avgRating || 0) - (a.avgRating || 0));
+    const topRated = diversePick(topRatedCandidates, limit);
 
     return {
       forYou,
