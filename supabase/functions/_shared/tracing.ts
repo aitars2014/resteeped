@@ -6,7 +6,7 @@
  * manually construct spans and export via OTLP/HTTP JSON.
  */
 
-const HONEYCOMB_ENDPOINT = 'https://api-dogfood.honeycomb.io/v1/traces'
+const HONEYCOMB_ENDPOINT = 'https://api.honeycomb.io/v1/traces'
 const SERVICE_NAME = 'resteeped-edge-functions'
 
 interface SpanContext {
