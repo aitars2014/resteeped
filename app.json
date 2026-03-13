@@ -68,8 +68,7 @@
           "icon": "./assets/ios-icons/Default.png",
           "sounds": []
         }
-      ],
-      "@honeycombio/opentelemetry-react-native"
+      ]
     ],
     "runtimeVersion": {
       "policy": "appVersion"
