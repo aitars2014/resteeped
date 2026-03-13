@@ -1,12 +1,3 @@
-// Honeycomb Frontend Observability — initialize before all other imports
-import { HoneycombReactNativeSDK } from '@honeycombio/opentelemetry-react-native';
-
-const honeycombSDK = new HoneycombReactNativeSDK({
-  apiKey: '0Qam7rs00Qt5MnULUsY8tA',
-  serviceName: 'resteeped-react-native',
-});
-honeycombSDK.start();
-
 import React, { useEffect, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
