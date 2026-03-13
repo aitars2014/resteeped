@@ -58,7 +58,9 @@
           "icon": "./assets/ios-icons/Default.png",
           "sounds": []
         }
-      ]
+      ],
+      "./plugins/withHoneycomb",
+      "@honeycombio/opentelemetry-react-native"
     ],
     "runtimeVersion": {
       "policy": "appVersion"
