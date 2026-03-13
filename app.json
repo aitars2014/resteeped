@@ -41,7 +41,12 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.resteeped"
+      "package": "com.anonymous.resteeped",
+      "autolinking": {
+        "exclude": [
+          "@honeycombio/opentelemetry-react-native"
+        ]
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -64,7 +69,6 @@
           "sounds": []
         }
       ],
-      "./plugins/withHoneycomb",
       "@honeycombio/opentelemetry-react-native"
     ],
     "runtimeVersion": {
