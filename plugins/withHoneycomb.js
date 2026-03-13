@@ -39,17 +39,12 @@ function withHoneycombIOS(config) {
 }
 
 // iOS: Enable use_frameworks! via Podfile.properties.json
+// NOTE: Disabled — causes EAS cloud build failures with some Expo pods.
+// The Honeycomb SDK docs say this is required, but the JS-side SDK + 
+// autolinking may handle it without use_frameworks on Expo.
+// If native startup metrics don't appear, re-enable and debug pod conflicts.
 function withUseFrameworks(config) {
-  config = withDangerousMod(config, ['ios', (config) => {
-    const podfilePropsPath = path.join(config.modRequest.platformProjectRoot, 'Podfile.properties.json');
-    let props = {};
-    if (fs.existsSync(podfilePropsPath)) {
-      props = JSON.parse(fs.readFileSync(podfilePropsPath, 'utf8'));
-    }
-    props['ios.useFrameworks'] = 'static';
-    fs.writeFileSync(podfilePropsPath, JSON.stringify(props, null, 2));
-    return config;
-  }]);
+  // Intentionally no-op for now
   return config;
 }
 
