@@ -28,6 +28,11 @@
       "usesAppleSignIn": true,
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
+      },
+      "autolinking": {
+        "exclude": [
+          "@honeycombio/opentelemetry-react-native"
+        ]
       }
     },
     "android": {
