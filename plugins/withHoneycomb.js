@@ -10,31 +10,12 @@ const SERVICE_NAME = 'resteeped-react-native';
  * @honeycombio/opentelemetry-react-native
  */
 
-// iOS: Add import and initialization to AppDelegate.swift
+// iOS: Native initialization disabled for now.
+// The Honeycomb RN SDK's iOS pod has compatibility issues with EAS cloud builds.
+// JS-side SDK still captures: fetch instrumentation, exceptions, slow event loops.
+// Native startup time + hang detection require this — will re-enable once
+// pod compatibility is resolved.
 function withHoneycombIOS(config) {
-  config = withAppDelegate(config, (config) => {
-    let contents = config.modResults.contents;
-
-    // Add import
-    if (!contents.includes('HoneycombOpentelemetryReactNative')) {
-      contents = contents.replace(
-        'import Expo',
-        'import Expo\nimport HoneycombOpentelemetryReactNative'
-      );
-    }
-
-    // Add initialization at the start of application(didFinishLaunchingWithOptions:)
-    if (!contents.includes('HoneycombReactNative.configure')) {
-      contents = contents.replace(
-        'didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil\n  ) -> Bool {',
-        `didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil\n  ) -> Bool {\n    // Honeycomb Frontend Observability\n    let honeycombOptions = HoneycombReactNative.optionsBuilder()\n        .setAPIKey("${HONEYCOMB_API_KEY}")\n        .setServiceName("${SERVICE_NAME}")\n    HoneycombReactNative.configure(honeycombOptions)\n`
-      );
-    }
-
-    config.modResults.contents = contents;
-    return config;
-  });
-
   return config;
 }
 
