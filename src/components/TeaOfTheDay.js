@@ -58,12 +58,16 @@ const TEA_OF_DAY_KEY = '@resteeped_tea_of_day';
 
 export const TeaOfTheDay = ({ teas, onPress }) => {
   const [tea, setTea] = useState(null);
-  const resolved = useRef(false);
+  const lastResolvedDate = useRef(null);
+  const resolving = useRef(false);
 
   useEffect(() => {
-    if (!teas || teas.length === 0 || resolved.current) return;
+    if (!teas || teas.length === 0 || resolving.current) return;
 
     const today = new Date().toISOString().split('T')[0];
+    if (lastResolvedDate.current === today) return;
+
+    resolving.current = true;
 
     (async () => {
       try {
@@ -73,7 +77,7 @@ export const TeaOfTheDay = ({ teas, onPress }) => {
           if (date === today) {
             const found = teas.find(t => t.id === teaId);
             if (found) {
-              resolved.current = true;
+              lastResolvedDate.current = today;
               setTea(found);
               return;
             }
@@ -84,11 +88,14 @@ export const TeaOfTheDay = ({ teas, onPress }) => {
       // Select new tea for today
       const selected = getTeaOfTheDay(teas);
       if (selected) {
-        resolved.current = true;
+        lastResolvedDate.current = today;
         setTea(selected);
         AsyncStorage.setItem(TEA_OF_DAY_KEY, JSON.stringify({ date: today, teaId: selected.id })).catch(() => {});
       }
-    })();
+    })()
+      .finally(() => {
+        resolving.current = false;
+      });
   }, [teas]);
   
   if (!tea) return null;
