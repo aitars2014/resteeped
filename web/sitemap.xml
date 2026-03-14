@@ -31,9 +31,11 @@
   <url><loc>https://resteeped.com/blog/tea-for-energy-without-jitters</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://resteeped.com/blog/best-tea-accessories</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 
+  <url><loc>https://resteeped.com/blog/japanese-green-tea-types</loc><lastmod>2026-03-14</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://resteeped.com/blog/how-to-store-tea</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
   <!-- Legal/utility -->
   <url><loc>https://resteeped.com/privacy.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://resteeped.com/terms.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://resteeped.com/contact.html</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
-  <url><loc>https://resteeped.com/blog/how-to-store-tea</loc><lastmod>2026-03-13</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 </urlset>
