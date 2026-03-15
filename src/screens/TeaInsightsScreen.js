@@ -7,11 +7,12 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ArrowLeft, Leaf, Coffee, Award, Star, Trophy, Target, Sparkles, Crown, Heart } from 'lucide-react-native';
+import { ArrowLeft, Leaf, Coffee, Award, Star, Trophy, Target, Sparkles, Crown, Heart, Share2 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { FlavorRadar } from '../components';
 import { useCollection, useTheme, useAuth } from '../context';
 import { useBrewHistory } from '../hooks';
+import { shareInsights } from '../utils/sharing';
 
 // ─── Helpers ────────────────────────────────────────────────────────────────
 
@@ -177,6 +178,23 @@ export const TeaInsightsScreen = ({ navigation }) => {
   // ── Empty State ──
   const hasData = collection.length > 0 || brewSessions.length > 0;
 
+  // ── Share handler ──
+
+  const handleShare = () => {
+    // Find favorite type (highest count)
+    const topType = TEA_TYPES.reduce((best, type) =>
+      collectionStats.typeCounts[type] > (collectionStats.typeCounts[best] || 0) ? type : best
+    , TEA_TYPES[0]);
+
+    shareInsights({
+      totalTeas: collectionStats.total,
+      uniqueBrands: collectionStats.uniqueBrands,
+      uniqueTypes: collectionStats.uniqueTypes,
+      totalBrews: brewStats.totalBrews,
+      favoriteType: collectionStats.typeCounts[topType] > 0 ? TEA_TYPE_LABELS[topType] : null,
+    });
+  };
+
   // ── Render ──
 
   return (
@@ -191,7 +209,18 @@ export const TeaInsightsScreen = ({ navigation }) => {
           <ArrowLeft size={24} color={theme.text.primary} />
         </TouchableOpacity>
         <Text style={[styles.headerTitle, { color: theme.text.primary }]}>Tea Insights</Text>
-        <View style={{ width: 24 }} />
+        {hasData ? (
+          <TouchableOpacity
+            onPress={handleShare}
+            hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+            accessibilityRole="button"
+            accessibilityLabel="Share your tea insights"
+          >
+            <Share2 size={22} color={theme.text.primary} />
+          </TouchableOpacity>
+        ) : (
+          <View style={{ width: 24 }} />
+        )}
       </View>
 
       <ScrollView

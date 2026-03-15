@@ -1,6 +1,8 @@
 import { Share, Platform } from 'react-native';
 import * as Sharing from 'expo-sharing';
 
+const APP_STORE_URL = 'https://apps.apple.com/app/resteeped/id6758778808';
+
 /**
  * Share a tea as an image card (primary) or text (fallback)
  * @param {Object} tea - Tea object
@@ -42,7 +44,7 @@ export const shareTeaText = async (tea) => {
     `🍵 ${teaName}\n` +
     `🏪 ${brandName}\n` +
     `⭐ ${rating} rating\n\n` +
-    `Download Resteeped to discover your next favorite tea!`;
+    `Find it on Resteeped: ${APP_STORE_URL}`;
 
   try {
     const result = await Share.share({
@@ -73,7 +75,7 @@ export const shareCompany = async (company) => {
     (location ? `📍 ${location}\n` : '') +
     `⭐ ${rating} rating\n` +
     `🍵 ${teaCount} teas\n\n` +
-    `Download Resteeped to discover your next favorite tea!`;
+    `Find them on Resteeped: ${APP_STORE_URL}`;
 
   try {
     const result = await Share.share({
@@ -98,7 +100,7 @@ export const shareCollection = async (stats) => {
     `📚 ${totalTeas} teas in my collection\n` +
     `✅ ${triedCount} teas tried\n` +
     (favoriteType ? `💚 Favorite: ${favoriteType} tea\n` : '') +
-    `\nJoin me on Resteeped and start your tea discovery!`;
+    `\nStart your tea journey: ${APP_STORE_URL}`;
 
   try {
     const result = await Share.share({
@@ -109,6 +111,33 @@ export const shareCollection = async (stats) => {
     return { success: result.action === Share.sharedAction, result };
   } catch (error) {
     console.error('Error sharing collection:', error);
+    return { success: false, error };
+  }
+};
+
+/**
+ * Share tea insights / stats summary
+ */
+export const shareInsights = async (stats) => {
+  const { totalTeas, uniqueBrands, uniqueTypes, totalBrews, favoriteType } = stats;
+  
+  const lines = [`My Tea Insights on Resteeped 🍵\n`];
+  if (totalTeas > 0) lines.push(`📚 ${totalTeas} teas collected`);
+  if (uniqueBrands > 0) lines.push(`🏪 ${uniqueBrands} brands explored`);
+  if (uniqueTypes > 0) lines.push(`🎨 ${uniqueTypes}/7 tea types tried`);
+  if (totalBrews > 0) lines.push(`☕ ${totalBrews} brew sessions`);
+  if (favoriteType) lines.push(`💚 Favorite type: ${favoriteType}`);
+  lines.push(`\nDiscover your tea stats: ${APP_STORE_URL}`);
+
+  try {
+    const result = await Share.share({
+      message: lines.join('\n'),
+      title: 'My Tea Insights — Resteeped',
+    });
+    
+    return { success: result.action === Share.sharedAction, result };
+  } catch (error) {
+    console.error('Error sharing insights:', error);
     return { success: false, error };
   }
 };
