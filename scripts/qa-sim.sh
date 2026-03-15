@@ -23,12 +23,21 @@ DO_LAUNCH=true
 WAIT_SECONDS=8
 BUNDLE_ID=""  # auto-detected from simulator if not specified
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
-BUILD_CONFIG="Release"  # Release = embedded JS bundle, no Metro needed
+METRO_PID=""
 
 usage() {
   head -10 "$0" | grep '^#' | sed 's/^# *//'
   exit 0
 }
+
+cleanup() {
+  if [ -n "$METRO_PID" ] && kill -0 "$METRO_PID" 2>/dev/null; then
+    echo "🛑 Stopping Metro (PID $METRO_PID)..."
+    kill "$METRO_PID" 2>/dev/null || true
+    wait "$METRO_PID" 2>/dev/null || true
+  fi
+}
+trap cleanup EXIT
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -80,11 +89,9 @@ fi
 
 # Build and install if requested
 if [ "$DO_BUILD" = true ]; then
-  echo "🔨 Building Resteeped for simulator (${BUILD_CONFIG})..."
+  echo "🔨 Building Resteeped for simulator..."
   cd "$PROJECT_DIR"
-
-  # Build with release config so JS bundle is embedded (no Metro needed)
-  npx expo run:ios --device "$UDID" --configuration "$BUILD_CONFIG" 2>&1 | tail -20
+  npx expo run:ios --device "$UDID" 2>&1 | tail -20
   echo "✅ Build complete"
 fi
 
@@ -109,8 +116,26 @@ if [ -n "$DATE_OVERRIDE" ]; then
   xcrun simctl status_bar "$UDID" override --time "$DATE_OVERRIDE"
 fi
 
-# Launch app
+# Launch app — start Metro in background if needed (dev client requires it)
 if [ "$DO_LAUNCH" = true ]; then
+  # Check if Metro is already running
+  if curl -s http://localhost:8081/status 2>/dev/null | grep -q "packager-status:running"; then
+    echo "✅ Metro already running"
+  else
+    echo "⏳ Starting Metro bundler (production mode)..."
+    cd "$PROJECT_DIR"
+    npx expo start --dev-client --port 8081 --no-dev &>/dev/null &
+    METRO_PID=$!
+    # Wait for Metro to be ready
+    for i in $(seq 1 30); do
+      if curl -s http://localhost:8081/status 2>/dev/null | grep -q "packager-status:running"; then
+        echo "✅ Metro ready"
+        break
+      fi
+      sleep 1
+    done
+  fi
+
   echo "🚀 Launching $BUNDLE_ID..."
   # Terminate if already running
   xcrun simctl terminate "$UDID" "$BUNDLE_ID" 2>/dev/null || true
@@ -127,7 +152,6 @@ SCREENSHOT_PATH="$SCREENSHOT_DIR/qa_${TIMESTAMP}.png"
 xcrun simctl io "$UDID" screenshot "$SCREENSHOT_PATH"
 echo "📸 Screenshot saved: $SCREENSHOT_PATH"
 
-# Also grab a few more screens if app is running (navigate via deep links if available)
 echo ""
 echo "=== QA Summary ==="
 echo "Device:     $DEVICE_NAME"
