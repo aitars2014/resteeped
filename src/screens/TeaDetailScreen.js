@@ -17,6 +17,7 @@ import { typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote, ShareableTeaCard } from '../components';
 import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
+import { maybeRequestReview } from '../utils/reviewPrompt';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useReviews, useCompanies, useTeas, useTastingNotes } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
@@ -257,6 +258,12 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       return;
     }
     setShowTastingNotes(false);
+
+    // After a positive rating, maybe prompt for App Store review
+    if (rating >= 4) {
+      const totalNotes = collection.filter(item => item.notes || item.user_rating).length;
+      maybeRequestReview(rating, totalNotes);
+    }
   };
   
   const handleBuyTea = async () => {
