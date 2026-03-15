@@ -17,8 +17,9 @@ SCREENSHOT_DIR="/tmp/resteeped-qa"
 DO_BUILD=false
 DO_LAUNCH=true
 WAIT_SECONDS=8
-BUNDLE_ID="com.resteeped.app"
+BUNDLE_ID=""  # auto-detected from simulator if not specified
 PROJECT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+BUILD_CONFIG="Release"  # Release = embedded JS bundle, no Metro needed
 
 usage() {
   head -10 "$0" | grep '^#' | sed 's/^# *//'
@@ -75,12 +76,27 @@ fi
 
 # Build and install if requested
 if [ "$DO_BUILD" = true ]; then
-  echo "🔨 Building Resteeped for simulator..."
+  echo "🔨 Building Resteeped for simulator (${BUILD_CONFIG})..."
   cd "$PROJECT_DIR"
 
-  # Build the app for simulator
-  npx expo run:ios --device "$UDID" --no-install 2>&1 | tail -5
+  # Build with release config so JS bundle is embedded (no Metro needed)
+  npx expo run:ios --device "$UDID" --configuration "$BUILD_CONFIG" 2>&1 | tail -20
   echo "✅ Build complete"
+fi
+
+# Auto-detect bundle ID from installed apps if not specified
+if [ -z "$BUNDLE_ID" ]; then
+  BUNDLE_ID=$(xcrun simctl listapps "$UDID" 2>/dev/null | python3 -c "
+import sys, re
+content = sys.stdin.read()
+# Find resteeped bundle ID
+matches = re.findall(r'CFBundleIdentifier = \"(com\.[^\"]*resteeped[^\"]*)\";', content, re.IGNORECASE)
+if matches:
+    print(matches[0])
+else:
+    print('com.resteeped.app')
+" 2>/dev/null)
+  echo "🔍 Detected bundle ID: $BUNDLE_ID"
 fi
 
 # Set date override if specified
