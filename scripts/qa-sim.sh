@@ -11,6 +11,10 @@
 
 set -euo pipefail
 
+# Fix Ruby/CocoaPods encoding issue on Ruby 4.x
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
 DEVICE_NAME="iPhone 17 Pro"
 DATE_OVERRIDE=""
 SCREENSHOT_DIR="/tmp/resteeped-qa"
