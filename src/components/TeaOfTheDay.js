@@ -56,30 +56,40 @@ const getTeaOfTheDay = (teas, date = new Date()) => {
 
 const TEA_OF_DAY_KEY = '@resteeped_tea_of_day';
 
+// Minimum tea count that indicates full remote data has loaded.
+// Local fallback is ~60 teas (all one brand) — don't lock in a selection from that.
+const MIN_TEAS_FOR_SELECTION = 100;
+
 export const TeaOfTheDay = ({ teas, onPress }) => {
   const [tea, setTea] = useState(null);
-  const lastResolvedDate = useRef(null);
+  const lastResolvedCount = useRef(0);
   const resolving = useRef(false);
 
   useEffect(() => {
     if (!teas || teas.length === 0 || resolving.current) return;
 
     const today = new Date().toISOString().split('T')[0];
-    if (lastResolvedDate.current === today) return;
+    const hasFullData = teas.length >= MIN_TEAS_FOR_SELECTION;
+
+    // If we already resolved with full data today, skip
+    if (lastResolvedCount.current >= MIN_TEAS_FOR_SELECTION) return;
 
     resolving.current = true;
 
     (async () => {
       try {
-        const cached = await AsyncStorage.getItem(TEA_OF_DAY_KEY);
-        if (cached) {
-          const { date, teaId } = JSON.parse(cached);
-          if (date === today) {
-            const found = teas.find(t => t.id === teaId);
-            if (found) {
-              lastResolvedDate.current = today;
-              setTea(found);
-              return;
+        // Only trust the cache if we have full data or cache was made with full data
+        if (hasFullData) {
+          const cached = await AsyncStorage.getItem(TEA_OF_DAY_KEY);
+          if (cached) {
+            const { date, teaId, teaCount } = JSON.parse(cached);
+            if (date === today && teaCount >= MIN_TEAS_FOR_SELECTION) {
+              const found = teas.find(t => t.id === teaId);
+              if (found) {
+                lastResolvedCount.current = teas.length;
+                setTea(found);
+                return;
+              }
             }
           }
         }
@@ -88,9 +98,16 @@ export const TeaOfTheDay = ({ teas, onPress }) => {
       // Select new tea for today
       const selected = getTeaOfTheDay(teas);
       if (selected) {
-        lastResolvedDate.current = today;
+        lastResolvedCount.current = teas.length;
         setTea(selected);
-        AsyncStorage.setItem(TEA_OF_DAY_KEY, JSON.stringify({ date: today, teaId: selected.id })).catch(() => {});
+        // Only persist cache when we have full data
+        if (hasFullData) {
+          AsyncStorage.setItem(TEA_OF_DAY_KEY, JSON.stringify({
+            date: today,
+            teaId: selected.id,
+            teaCount: teas.length,
+          })).catch(() => {});
+        }
       }
     })()
       .finally(() => {

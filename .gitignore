@@ -45,3 +45,5 @@ yarn-error.*
 *.ipa
 credentials.json
 .vercel
+hermes-engine/
+.last_build_configuration
