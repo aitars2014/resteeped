@@ -127,7 +127,6 @@ export const TabNavigator = () => {
   
   return (
     <Tab.Navigator
-      initialRouteName="Profile"
       screenOptions={({ route }) => ({
         headerShown: false,
         tabBarActiveTintColor: theme.tabBar.active,

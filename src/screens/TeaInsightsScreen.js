@@ -178,8 +178,6 @@ export const TeaInsightsScreen = ({ navigation }) => {
   // ── Empty State ──
   const hasData = collection.length > 0 || brewSessions.length > 0;
 
-
-
   // ── Share handler ──
 
   const handleShare = () => {
