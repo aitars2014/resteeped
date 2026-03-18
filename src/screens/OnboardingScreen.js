@@ -14,8 +14,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { 
   Coffee, 
   Search, 
-  Clock, 
-  Star, 
   BookmarkCheck, 
 } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,7 +32,7 @@ const ONBOARDING_SLIDES = [
     gradientColors: ['#F5E6D3', '#E8D5C4'],
     title: 'Welcome to Resteeped',
     subtitle: 'Your personal tea companion',
-    description: 'Discover new teas, track what you\'ve tried, and brew the perfect cup every time.',
+    description: 'Discover new teas, track your collection, and brew the perfect cup every time.',
   },
   {
     id: '2',
@@ -42,35 +40,17 @@ const ONBOARDING_SLIDES = [
     iconColor: '#2E8B57',
     gradientColors: ['#E8F5E9', '#C8E6C9'],
     title: 'Explore & Discover',
-    subtitle: 'Find your next favorite',
-    description: 'Browse hundreds of teas from trusted shops. Filter by type, rating, or flavor notes.',
+    subtitle: 'Thousands of teas from top shops',
+    description: 'Browse by type, flavor, or brand. Find your next favorite with personalized recommendations.',
   },
   {
     id: '3',
-    icon: Clock,
-    iconColor: '#4169E1',
-    gradientColors: ['#E3F2FD', '#BBDEFB'],
-    title: 'Perfect Every Brew',
-    subtitle: 'Built-in steeping timer',
-    description: 'Each tea has recommended temperatures and steep times. We\'ll notify you when it\'s ready.',
-  },
-  {
-    id: '4',
     icon: BookmarkCheck,
     iconColor: '#9C27B0',
     gradientColors: ['#F3E5F5', '#E1BEE7'],
-    title: 'Build Your Collection',
-    subtitle: 'Track & rate your teas',
-    description: 'Save teas to try, rate the ones you love, and add personal tasting notes.',
-  },
-  {
-    id: '5',
-    icon: Star,
-    iconColor: '#FF9800',
-    gradientColors: ['#FFF3E0', '#FFE0B2'],
-    title: 'Ready to Steep?',
-    subtitle: 'Let\'s get started',
-    description: 'Dive into the world of tea. Your perfect cup is just a few taps away.',
+    title: 'Your Tea Journey',
+    subtitle: 'Track, rate & brew',
+    description: 'Build your collection, add tasting notes, and use built-in timers for the perfect steep.',
   },
 ];
 

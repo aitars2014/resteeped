@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TabNavigator } from './TabNavigator';
 import { OnboardingScreen, isOnboardingComplete } from '../screens';
 import { PreferenceCaptureScreen } from '../screens/PreferenceCaptureScreen';
+import { RecommendedTeasScreen } from '../screens/RecommendedTeasScreen';
 import { useTheme, useAuth } from '../context';
 
 const Stack = createNativeStackNavigator();
@@ -15,6 +16,7 @@ export const AppNavigator = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
+  const [showRecommended, setShowRecommended] = useState(false);
 
   useEffect(() => {
     checkOnboarding();
@@ -38,6 +40,11 @@ export const AppNavigator = () => {
 
   const handlePreferencesComplete = () => {
     setShowPreferences(false);
+    setShowRecommended(true);
+  };
+
+  const handleRecommendedComplete = () => {
+    setShowRecommended(false);
   };
 
   if (isLoading) {
@@ -67,6 +74,12 @@ export const AppNavigator = () => {
         <Stack.Screen name="Preferences">
           {(props) => (
             <PreferenceCaptureScreen {...props} onComplete={handlePreferencesComplete} />
+          )}
+        </Stack.Screen>
+      ) : showRecommended ? (
+        <Stack.Screen name="RecommendedTeas">
+          {(props) => (
+            <RecommendedTeasScreen {...props} onComplete={handleRecommendedComplete} />
           )}
         </Stack.Screen>
       ) : (
