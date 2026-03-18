@@ -182,17 +182,20 @@ export const AppTourScreen = ({ onComplete }) => {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background.primary }]}>
-      {/* Skip button */}
-      <TouchableOpacity
-        style={styles.skipButton}
-        onPress={handleSkip}
-        accessible={true}
-        accessibilityRole="button"
-        accessibilityLabel="Skip tour"
-        accessibilityHint="Skip to the main app"
-      >
-        <Text style={[styles.skipText, { color: theme.text.secondary }]}>Skip</Text>
-      </TouchableOpacity>
+      {/* Skip button row */}
+      <View style={styles.skipRow}>
+        <TouchableOpacity
+          style={styles.skipButton}
+          onPress={handleSkip}
+          accessible={true}
+          accessibilityRole="button"
+          accessibilityLabel="Skip tour"
+          accessibilityHint="Skip to the main app"
+          hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+        >
+          <Text style={[styles.skipText, { color: theme.text.secondary }]}>Skip</Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Slides */}
       <FlatList
@@ -237,12 +240,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  skipRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    paddingHorizontal: spacing.screenHorizontal,
+    paddingTop: spacing.xs,
+  },
   skipButton: {
-    position: 'absolute',
-    top: 12,
-    right: spacing.screenHorizontal,
-    zIndex: 10,
-    padding: spacing.sm,
+    paddingVertical: spacing.sm,
+    paddingHorizontal: spacing.sm,
   },
   skipText: {
     ...typography.body,

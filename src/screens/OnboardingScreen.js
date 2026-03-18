@@ -13,8 +13,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { 
   Coffee, 
-  Search, 
-  BookmarkCheck, 
 } from 'lucide-react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { typography, spacing } from '../constants';
@@ -33,24 +31,6 @@ const ONBOARDING_SLIDES = [
     title: 'Welcome to Resteeped',
     subtitle: 'Your personal tea companion',
     description: 'Discover new teas, track your collection, and brew the perfect cup every time.',
-  },
-  {
-    id: '2',
-    icon: Search,
-    iconColor: '#2E8B57',
-    gradientColors: ['#E8F5E9', '#C8E6C9'],
-    title: 'Explore & Discover',
-    subtitle: 'Thousands of teas from top shops',
-    description: 'Browse by type, flavor, or brand. Find your next favorite with personalized recommendations.',
-  },
-  {
-    id: '3',
-    icon: BookmarkCheck,
-    iconColor: '#9C27B0',
-    gradientColors: ['#F3E5F5', '#E1BEE7'],
-    title: 'Your Tea Journey',
-    subtitle: 'Track, rate & brew',
-    description: 'Build your collection, add tasting notes, and use built-in timers for the perfect steep.',
   },
 ];
 
@@ -231,7 +211,7 @@ export const OnboardingScreen = ({ navigation, onComplete }) => {
 
       {/* Bottom section */}
       <View style={styles.bottomSection}>
-        {renderPagination()}
+        {ONBOARDING_SLIDES.length > 1 && renderPagination()}
         
         <View style={styles.buttonContainer}>
           <Button
