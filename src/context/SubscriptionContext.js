@@ -56,7 +56,15 @@ export const SubscriptionProvider = ({ children }) => {
           await Purchases.logIn(user.id);
           if (user.email) await Purchases.setEmail(user.email);
         } else {
-          await Purchases.logOut();
+          // Only log out if RevenueCat has a non-anonymous user
+          try {
+            const { customerInfo } = await Purchases.getCustomerInfo();
+            if (!customerInfo.originalAppUserId.startsWith('$RCAnonymousID:')) {
+              await Purchases.logOut();
+            }
+          } catch {
+            // If we can't check, skip logout — RevenueCat will reset on next init
+          }
         }
       } catch (e) {
         console.warn('RevenueCat user sync failed:', e);
