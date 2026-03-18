@@ -234,7 +234,7 @@ export const AppTourScreen = ({ onComplete }) => {
   );
 };
 
-const SCREENSHOT_HEIGHT = height * 0.48;
+const SCREENSHOT_HEIGHT = height * 0.42;
 
 const styles = StyleSheet.create({
   container: {
@@ -259,7 +259,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
-    paddingTop: spacing.xl,
+    paddingTop: spacing.md,
   },
   screenshotContainer: {
     width: width * 0.72,
@@ -280,7 +280,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     alignItems: 'center',
     paddingHorizontal: spacing.xl,
-    paddingTop: spacing.lg,
+    paddingTop: spacing.md,
   },
   iconBadge: {
     width: 44,
