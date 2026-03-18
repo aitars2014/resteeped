@@ -1,10 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 import { StatusBar } from 'expo-status-bar';
+import { AppState } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Constants from 'expo-constants';
 import * as Notifications from 'expo-notifications';
+import * as Updates from 'expo-updates';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { AuthProvider, CollectionProvider, ThemeProvider, SubscriptionProvider, useTheme } from './src/context';
 import { initAnalytics } from './src/utils';
@@ -74,11 +76,38 @@ const AppContent = () => {
   );
 };
 
+// Background OTA update check — downloads update silently, applies on next cold start.
+// Never calls reloadAsync mid-session to avoid jarring reloads or crashes.
+const checkForOTAUpdate = async () => {
+  if (__DEV__) return; // Skip in development
+  try {
+    const update = await Updates.checkForUpdateAsync();
+    if (update.isAvailable) {
+      await Updates.fetchUpdateAsync();
+      // Update is now cached — it will apply on next app launch automatically.
+      console.log('[OTA] Update downloaded, will apply on next launch.');
+    }
+  } catch (e) {
+    // Non-fatal — app continues with current bundle
+    console.log('[OTA] Update check failed:', e.message);
+  }
+};
+
 export default Sentry.wrap(function App() {
   // Initialize analytics and check cache on app start
   useEffect(() => {
     checkAndClearCache();
     initAnalytics();
+
+    // Check for OTA updates after a brief delay (don't block startup)
+    const updateTimer = setTimeout(checkForOTAUpdate, 5000);
+
+    // Also check when app returns to foreground
+    const subscription = AppState.addEventListener('change', (nextState) => {
+      if (nextState === 'active') {
+        setTimeout(checkForOTAUpdate, 2000);
+      }
+    });
 
     // Defer heavy Sentry integrations until after first render
     const deferTimer = setTimeout(() => {
@@ -88,7 +117,11 @@ export default Sentry.wrap(function App() {
         client.addIntegration(Sentry.feedbackIntegration());
       }
     }, 3000);
-    return () => clearTimeout(deferTimer);
+    return () => {
+      clearTimeout(deferTimer);
+      clearTimeout(updateTimer);
+      subscription.remove();
+    };
   }, []);
 
   return (
