@@ -3,8 +3,7 @@ import { View, Image, StyleSheet, Dimensions } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { TabNavigator } from './TabNavigator';
 import { OnboardingScreen, isOnboardingComplete } from '../screens';
-import { PreferenceCaptureScreen } from '../screens/PreferenceCaptureScreen';
-import { RecommendedTeasScreen } from '../screens/RecommendedTeasScreen';
+import { AppTourScreen } from '../screens/AppTourScreen';
 import { useTheme, useAuth } from '../context';
 
 const Stack = createNativeStackNavigator();
@@ -15,8 +14,7 @@ export const AppNavigator = () => {
   const { user } = useAuth();
   const [isLoading, setIsLoading] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(false);
-  const [showPreferences, setShowPreferences] = useState(false);
-  const [showRecommended, setShowRecommended] = useState(false);
+  const [showTour, setShowTour] = useState(false);
 
   useEffect(() => {
     checkOnboarding();
@@ -29,22 +27,12 @@ export const AppNavigator = () => {
   };
 
   const handleOnboardingComplete = () => {
-    // After onboarding slides, show preference capture if user is logged in
-    if (user) {
-      setShowOnboarding(false);
-      setShowPreferences(true);
-    } else {
-      setShowOnboarding(false);
-    }
+    setShowOnboarding(false);
+    setShowTour(true);
   };
 
-  const handlePreferencesComplete = () => {
-    setShowPreferences(false);
-    setShowRecommended(true);
-  };
-
-  const handleRecommendedComplete = () => {
-    setShowRecommended(false);
+  const handleTourComplete = () => {
+    setShowTour(false);
   };
 
   if (isLoading) {
@@ -70,16 +58,10 @@ export const AppNavigator = () => {
             <OnboardingScreen {...props} onComplete={handleOnboardingComplete} />
           )}
         </Stack.Screen>
-      ) : showPreferences ? (
-        <Stack.Screen name="Preferences">
+      ) : showTour ? (
+        <Stack.Screen name="AppTour">
           {(props) => (
-            <PreferenceCaptureScreen {...props} onComplete={handlePreferencesComplete} />
-          )}
-        </Stack.Screen>
-      ) : showRecommended ? (
-        <Stack.Screen name="RecommendedTeas">
-          {(props) => (
-            <RecommendedTeasScreen {...props} onComplete={handleRecommendedComplete} />
+            <AppTourScreen {...props} onComplete={handleTourComplete} />
           )}
         </Stack.Screen>
       ) : (
