@@ -18,6 +18,7 @@ export const FilterPills = ({ selectedType, onSelectType, options, selected, onS
   
   // Handle tap on a filter pill - toggle if already selected
   const handlePillPress = (typeId) => {
+    if (!handleSelect) return;
     // If tapping the already-selected type, toggle back to 'all'
     // Exception: if 'all' is selected, tapping it does nothing
     if (currentSelection === typeId && typeId !== 'all') {
