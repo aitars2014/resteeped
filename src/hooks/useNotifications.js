@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Platform, AppState } from 'react-native';
 import * as Notifications from 'expo-notifications';
-// import * as Device from 'expo-device'; // Requires native build - using fallback
-const Device = { isDevice: true }; // Fallback for dev builds without native module
+import * as Device from 'expo-device';
 import Constants from 'expo-constants';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
@@ -23,6 +22,24 @@ const DEFAULT_PREFERENCES = {
 };
 
 /**
+ * Read notification permission status without exploding on simulators.
+ */
+async function getPermissionStatusSafe() {
+  if (!Device.isDevice) {
+    console.log('Skipping notification permission check on simulator');
+    return 'unavailable';
+  }
+
+  try {
+    const { status } = await Notifications.getPermissionsAsync();
+    return status;
+  } catch (error) {
+    console.error('Failed to get notification permissions:', error);
+    return 'unavailable';
+  }
+}
+
+/**
  * Register for push notifications and get the Expo push token.
  * Returns null if permissions are denied or device is a simulator.
  */
@@ -34,7 +51,7 @@ async function registerForPushNotificationsAsync() {
   }
 
   // Check existing permission status
-  const { status: existingStatus } = await Notifications.getPermissionsAsync();
+  const existingStatus = await getPermissionStatusSafe();
   let finalStatus = existingStatus;
 
   // Request permission if not already granted
@@ -191,7 +208,7 @@ export function useNotifications() {
         await AsyncStorage.setItem(STORAGE_KEYS.PUSH_TOKEN, token);
       }
 
-      const { status } = await Notifications.getPermissionsAsync();
+      const status = await getPermissionStatusSafe();
       setPermissionStatus(status);
     };
 
@@ -202,7 +219,7 @@ export function useNotifications() {
   useEffect(() => {
     const subscription = AppState.addEventListener('change', async (state) => {
       if (state === 'active') {
-        const { status } = await Notifications.getPermissionsAsync();
+        const status = await getPermissionStatusSafe();
         setPermissionStatus(status);
       }
     });
@@ -247,7 +264,7 @@ export function useNotifications() {
       }
     }
 
-    const { status } = await Notifications.getPermissionsAsync();
+    const status = await getPermissionStatusSafe();
     setPermissionStatus(status);
     return status;
   }, [user]);
