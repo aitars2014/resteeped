@@ -10,6 +10,7 @@ import * as Updates from 'expo-updates';
 import { AppNavigator } from './src/navigation/AppNavigator';
 import { AuthProvider, CollectionProvider, ThemeProvider, SubscriptionProvider, useTheme } from './src/context';
 import { initAnalytics } from './src/utils';
+import { recordFirstOpen } from './src/utils/reviewPrompt';
 import * as Sentry from '@sentry/react-native';
 
 // Global notification handler — controls how notifications appear when app is in foreground
@@ -98,6 +99,7 @@ export default Sentry.wrap(function App() {
   useEffect(() => {
     checkAndClearCache();
     initAnalytics();
+    recordFirstOpen();
 
     // Check for OTA updates after a brief delay (don't block startup)
     const updateTimer = setTimeout(checkForOTAUpdate, 5000);

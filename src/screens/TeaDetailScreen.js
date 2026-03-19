@@ -17,7 +17,7 @@ import { typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote, ShareableTeaCard } from '../components';
 import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
-import { maybeRequestReview } from '../utils/reviewPrompt';
+import { maybeRequestReview, maybeRequestReviewOnCollectionAdd } from '../utils/reviewPrompt';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useReviews, useCompanies, useTeas, useTastingNotes } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
@@ -87,6 +87,9 @@ export const TeaDetailScreen = ({ route, navigation }) => {
       if (result?.error) {
         Alert.alert('Error', `Could not add to collection: ${result.error.message || JSON.stringify(result.error)}`);
         console.error('Add to collection failed:', result.error);
+      } else {
+        // Check review prompt after successful collection add
+        maybeRequestReviewOnCollectionAdd(collection.length + 1);
       }
     } catch (err) {
       Alert.alert('Unexpected Error', err.message || String(err));
@@ -259,8 +262,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     }
     setShowTastingNotes(false);
 
-    // After a positive rating, maybe prompt for App Store review
-    if (rating >= 4) {
+    // After saving a tasting note with a positive rating, maybe prompt for review
+    if (rating > 0) {
       const totalNotes = collection.filter(item => item.notes || item.user_rating).length;
       maybeRequestReview(rating, totalNotes);
     }

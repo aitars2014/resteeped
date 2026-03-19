@@ -20,6 +20,7 @@ import { typography, spacing, fonts } from '../constants';
 import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton, BrewPicker } from '../components';
 import { useTeas, useCompanies, useRecommendations, useTeaware } from '../hooks';
 import { useTheme } from '../context';
+import { maybeRequestReviewByAge } from '../utils/reviewPrompt';
 
 // Skeleton for horizontal tea list while loading
 const HorizontalListSkeleton = () => (
@@ -111,6 +112,8 @@ export const HomeScreen = ({ navigation }) => {
     AsyncStorage.getItem("instaBannerDismissed").then((val) => {
       if (val !== "true") setInstaBannerDismissed(false);
     });
+    // Check if 7+ days since install — prompt for review
+    maybeRequestReviewByAge();
   }, []);
   const adminFeatured = useRef({ loaded: false, company: null });
 

@@ -181,4 +181,7 @@ export const AnalyticsEvents = {
   
   // Collection
   COLLECTION_VIEWED: 'collection_viewed',
+  
+  // Store Review
+  STORE_REVIEW_PROMPTED: 'store_review_prompted',
 };

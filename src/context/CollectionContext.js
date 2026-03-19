@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from './AuthContext';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
+import { maybeRequestReviewOnCollectionAdd } from '../utils/reviewPrompt';
 
 const CollectionContext = createContext({});
 const COLLECTION_CACHE_KEY = '@resteeped_collection_cache';
@@ -152,6 +153,8 @@ export const CollectionProvider = ({ children }) => {
         tea_name: teaData?.name,
         tea_type: teaData?.teaType || teaData?.tea_type,
       });
+      // Prompt for review at collection milestone
+      maybeRequestReviewOnCollectionAdd(collection.length + 1);
       return { error: null };
     }
 
@@ -174,6 +177,8 @@ export const CollectionProvider = ({ children }) => {
         tea_id: teaId, 
         status,
       });
+      // Prompt for review at collection milestone
+      maybeRequestReviewOnCollectionAdd(collection.length + 1);
       return { data, error: null };
     } catch (error) {
       console.error('Error adding to collection:', error);
