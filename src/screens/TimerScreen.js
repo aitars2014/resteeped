@@ -26,6 +26,7 @@ import { Button, TeaTypeBadge, TemperatureSlider, PostBrewReviewModal } from '..
 import { useBrewHistory, useTeas, useReviews } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
 import { useAuth, useTheme, useCollection } from '../context';
+import { haptics } from '../utils/haptics';
 import { getBrewingGuide, getColdBrewGuide, BREW_METHODS } from '../constants/brewingGuides';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
@@ -241,6 +242,7 @@ export const TimerScreen = ({ route, navigation }) => {
         setRemainingSeconds(0);
         setIsRunning(false);
         setIsComplete(true);
+        haptics.success();
         Vibration.vibrate([500, 200, 500, 200, 500]);
       } else {
         setRemainingSeconds(remaining);
@@ -315,6 +317,7 @@ export const TimerScreen = ({ route, navigation }) => {
             clearInterval(intervalRef.current);
             setIsRunning(false);
             setIsComplete(true);
+            haptics.success();
             Vibration.vibrate([500, 200, 500, 200, 500]);
             playCompletionSound();
             notificationIdRef.current = null;
@@ -397,6 +400,7 @@ export const TimerScreen = ({ route, navigation }) => {
   
   const adjustTime = (delta) => {
     if (isRunning) return;
+    haptics.light();
     
     const maxTime = brewMethod === BREW_METHODS.COLD_BREW ? 86400 : 900; // 24h for cold brew
     const newTime = Math.max(10, Math.min(maxTime, totalSeconds + delta));
@@ -417,6 +421,7 @@ export const TimerScreen = ({ route, navigation }) => {
   // Save current steep settings as preferred for this tea
   const handleSavePreferredSettings = async () => {
     if (!teaId || !isInCollection(teaId)) return;
+    haptics.success();
     
     const { error } = await setPreferredSteepSettings(teaId, {
       steepTimeSeconds: totalSeconds,
@@ -445,6 +450,7 @@ export const TimerScreen = ({ route, navigation }) => {
   };
   
   const handleStartPause = () => {
+    haptics.medium();
     if (isComplete) {
       setRemainingSeconds(totalSeconds);
       setIsComplete(false);
@@ -473,6 +479,7 @@ export const TimerScreen = ({ route, navigation }) => {
   };
   
   const handleReset = async () => {
+    haptics.light();
     setIsRunning(false);
     setRemainingSeconds(totalSeconds);
     setIsComplete(false);
@@ -483,6 +490,7 @@ export const TimerScreen = ({ route, navigation }) => {
   // Multi-steep navigation
   const goToNextInfusion = () => {
     if (currentInfusion < totalInfusions) {
+      haptics.medium();
       const nextInfusion = currentInfusion + 1;
       setCurrentInfusion(nextInfusion);
       const nextTime = infusionTimes[nextInfusion - 1] || totalSeconds + 30;
@@ -495,6 +503,7 @@ export const TimerScreen = ({ route, navigation }) => {
   
   const goToPrevInfusion = () => {
     if (currentInfusion > 1) {
+      haptics.light();
       const prevInfusion = currentInfusion - 1;
       setCurrentInfusion(prevInfusion);
       const prevTime = infusionTimes[prevInfusion - 1] || totalSeconds - 30;
@@ -529,6 +538,7 @@ export const TimerScreen = ({ route, navigation }) => {
   // Handle brew method change
   const handleBrewMethodChange = (method) => {
     if (isRunning) return;
+    haptics.selection();
     setBrewMethod(method);
     setTimeModified(true);
     setIsComplete(false);

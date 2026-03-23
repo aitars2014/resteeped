@@ -13,6 +13,7 @@ import { Bookmark, Plus, SlidersHorizontal, Search } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { TeaCard, Button, FilterPills, FilterModal, SearchBar } from '../components';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
+import { haptics } from '../utils/haptics';
 
 export const CollectionScreen = ({ navigation }) => {
   const { theme } = useTheme();
@@ -203,7 +204,7 @@ export const CollectionScreen = ({ navigation }) => {
           styles.tab, 
           isActive && { borderBottomColor: theme.accent.primary, borderBottomWidth: 2 }
         ]}
-        onPress={() => setFilter(tab.id)}
+        onPress={() => { haptics.selection(); setFilter(tab.id); }}
         accessible={true}
         accessibilityRole="tab"
         accessibilityLabel={`${tab.label} filter`}
@@ -304,7 +305,7 @@ export const CollectionScreen = ({ navigation }) => {
               borderColor: activeFilterCount > 0 ? theme.accent.primary : theme.border.light,
             }
           ]}
-          onPress={() => setShowFilterModal(true)}
+          onPress={() => { haptics.light(); setShowFilterModal(true); }}
         >
           <SlidersHorizontal
             size={20}
