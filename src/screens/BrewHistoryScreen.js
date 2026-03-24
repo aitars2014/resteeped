@@ -8,12 +8,13 @@ import {
   RefreshControl,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeft, Coffee, Clock, Thermometer, Award } from 'lucide-react-native';
+import { ChevronLeft, Coffee, Clock, Thermometer, Award, RotateCcw } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { TeaTypeBadge } from '../components';
 import { useBrewHistory } from '../hooks';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
+import { haptics } from '../utils/haptics';
 
 const BrewHistoryScreen = ({ navigation }) => {
   const { theme, getTeaTypeColor } = useTheme();
@@ -169,18 +170,38 @@ const BrewHistoryScreen = ({ navigation }) => {
             </Text>
             <Text style={[styles.brewTime, { color: theme.text.secondary }]}>{formatTimestamp(item.created_at)}</Text>
           </View>
-          <View style={styles.brewDetails}>
-            <View style={styles.brewDetail}>
-              <Clock size={12} color={theme.text.secondary} />
-              <Text style={[styles.brewDetailText, { color: theme.text.secondary }]}>
-                {formatTime(item.steep_time_seconds)}
-              </Text>
-            </View>
-            {item.temperature_f && (
+          <View style={styles.brewDetailsRow}>
+            <View style={styles.brewDetails}>
               <View style={styles.brewDetail}>
-                <Thermometer size={12} color={theme.text.secondary} />
-                <Text style={[styles.brewDetailText, { color: theme.text.secondary }]}>{item.temperature_f}°F</Text>
+                <Clock size={12} color={theme.text.secondary} />
+                <Text style={[styles.brewDetailText, { color: theme.text.secondary }]}>
+                  {formatTime(item.steep_time_seconds)}
+                </Text>
               </View>
+              {item.temperature_f && (
+                <View style={styles.brewDetail}>
+                  <Thermometer size={12} color={theme.text.secondary} />
+                  <Text style={[styles.brewDetailText, { color: theme.text.secondary }]}>{item.temperature_f}°F</Text>
+                </View>
+              )}
+            </View>
+            {tea && (
+              <TouchableOpacity
+                style={[styles.brewAgainBtn, { backgroundColor: theme.accent.primary + '18' }]}
+                onPress={(e) => {
+                  e.stopPropagation && e.stopPropagation();
+                  haptics.medium();
+                  trackEvent(AnalyticsEvents.BREW_AGAIN_TAPPED || 'brew_again_tapped', { tea_id: tea.id });
+                  navigation.navigate('Timer', { tea, presetSeconds: item.steep_time_seconds, presetTempF: item.temperature_f });
+                }}
+                accessible={true}
+                accessibilityRole="button"
+                accessibilityLabel={`Brew ${tea.name} again`}
+                hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+              >
+                <RotateCcw size={13} color={theme.accent.primary} />
+                <Text style={[styles.brewAgainText, { color: theme.accent.primary }]}>Brew Again</Text>
+              </TouchableOpacity>
             )}
           </View>
         </View>
@@ -414,9 +435,26 @@ const styles = StyleSheet.create({
   brewTime: {
     ...typography.caption,
   },
+  brewDetailsRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   brewDetails: {
     flexDirection: 'row',
     gap: spacing.md,
+  },
+  brewAgainBtn: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 12,
+  },
+  brewAgainText: {
+    ...typography.caption,
+    fontWeight: '600',
   },
   brewDetail: {
     flexDirection: 'row',

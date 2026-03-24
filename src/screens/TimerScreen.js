@@ -107,6 +107,8 @@ const getInfusionTimes = (tea, totalInfusions) => {
 export const TimerScreen = ({ route, navigation }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const tea = route?.params?.tea;
+  const presetSeconds = route?.params?.presetSeconds;
+  const presetTempF = route?.params?.presetTempF;
   const teaId = useResolvedTeaId(tea);
   const teaColor = tea ? getTeaTypeColor(tea.teaType) : null;
   
@@ -126,7 +128,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const teaDefaultTime = tea?.steepTimeMin 
     ? Math.round(tea.steepTimeMin * 60) 
     : 180;
-  const defaultTimeSeconds = preferredTime || teaDefaultTime;
+  const defaultTimeSeconds = presetSeconds || preferredTime || teaDefaultTime;
   const hasCustomTime = preferredTime !== null;
   
   // Multi-steep state
@@ -144,8 +146,8 @@ export const TimerScreen = ({ route, navigation }) => {
     isMultiSteep ? BREW_METHODS.GONGFU : BREW_METHODS.WESTERN
   );
   
-  // Temperature state - default from tea data or guide
-  const defaultTempF = tea?.steepTempF || guide?.waterTemp?.fahrenheit || 200;
+  // Temperature state - default from tea data or guide (presetTempF overrides)
+  const defaultTempF = presetTempF || tea?.steepTempF || guide?.waterTemp?.fahrenheit || 200;
   const [temperatureF, setTemperatureF] = useState(defaultTempF);
   
   // Post-brew review modal
