@@ -9,6 +9,7 @@ import {
   Linking,
   Alert,
   Dimensions,
+  Clipboard,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { 
@@ -81,9 +82,16 @@ export default function TeawareDetailScreen({ route, navigation }) {
         await WebBrowser.openBrowserAsync(buyUrl);
       } catch (e) {
         try {
-          await Linking.openURL(buyUrl);
+          const canOpen = await Linking.canOpenURL(buyUrl);
+          if (canOpen) {
+            await Linking.openURL(buyUrl);
+          } else {
+            try { Clipboard.setString(buyUrl); } catch (_) {}
+            Alert.alert('Link Copied', `Couldn't open the link directly. It's been copied to your clipboard.`);
+          }
         } catch (e2) {
-          Alert.alert('Unable to open link', buyUrl);
+          try { Clipboard.setString(buyUrl); } catch (_) {}
+          Alert.alert('Link Copied', `Couldn't open the link. It's been copied to your clipboard.`);
         }
       }
     }

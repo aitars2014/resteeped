@@ -9,6 +9,7 @@ import {
   Alert,
   FlatList,
   Linking,
+  Clipboard,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
@@ -287,9 +288,24 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     } catch (error) {
       // Fallback to Linking if in-app browser fails
       try {
-        await Linking.openURL(url);
+        const canOpen = await Linking.canOpenURL(url);
+        if (canOpen) {
+          await Linking.openURL(url);
+        } else {
+          // URL can't be opened — copy to clipboard so user can paste in browser
+          Clipboard.setString(url);
+          Alert.alert(
+            'Link Copied',
+            `Couldn't open ${brandName}'s website directly. The link has been copied to your clipboard.`
+          );
+        }
       } catch (e) {
-        Alert.alert('Error', 'Could not open the link.');
+        // Last resort — copy URL and tell the user
+        try { Clipboard.setString(url); } catch (_) {}
+        Alert.alert(
+          'Link Copied', 
+          `Couldn't open the link. It's been copied to your clipboard:\n\n${url}`
+        );
       }
     }
   };

@@ -10,6 +10,7 @@ import {
   ActivityIndicator,
   Alert,
   FlatList,
+  Clipboard,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -187,9 +188,16 @@ const CompanyProfileScreen = ({ route, navigation }) => {
         await WebBrowser.openBrowserAsync(company.website_url);
       } catch (e) {
         try {
-          await Linking.openURL(company.website_url);
+          const canOpen = await Linking.canOpenURL(company.website_url);
+          if (canOpen) {
+            await Linking.openURL(company.website_url);
+          } else {
+            Alert.alert('Link Copied', `Couldn't open the website directly. Link copied to clipboard.`);
+            try { Clipboard.setString(company.website_url); } catch (_) {}
+          }
         } catch (e2) {
-          Alert.alert('Unable to open link', company.website_url);
+          try { Clipboard.setString(company.website_url); } catch (_) {}
+          Alert.alert('Link Copied', `Couldn't open the link. It's been copied to your clipboard.`);
         }
       }
     }
