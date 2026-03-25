@@ -71,7 +71,7 @@ export const HomeScreen = ({ navigation }) => {
   const { companies, refreshing: companiesRefreshing, refreshCompanies } = useCompanies();
   const { teaware } = useTeaware();
   const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
-  const { getBrewStreak, todayBrewCount } = useBrewHistory();
+  const { getBrewStreak, todayBrewCount, loading: brewHistoryLoading } = useBrewHistory();
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -360,6 +360,20 @@ export const HomeScreen = ({ navigation }) => {
 
         {/* 2.5. Brew Streak — right below search */}
         {(() => {
+          // Show skeleton while brew history loads to reserve space
+          if (brewHistoryLoading) {
+            return (
+              <View style={[styles.streakCard, { backgroundColor: theme.background.secondary, borderColor: theme.border.medium }]}>
+                <View style={styles.streakLeft}>
+                  <Skeleton width={28} height={28} borderRadius={14} />
+                  <View style={styles.streakInfo}>
+                    <Skeleton width={80} height={20} borderRadius={4} />
+                    <Skeleton width={120} height={14} borderRadius={4} style={{ marginTop: 4 }} />
+                  </View>
+                </View>
+              </View>
+            );
+          }
           const streak = getBrewStreak();
           if (streak.current === 0 && streak.longest === 0) return null;
           const streakColor = getStreakColor(streak.current) || theme.text.secondary;
