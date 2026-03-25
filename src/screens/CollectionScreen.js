@@ -256,7 +256,7 @@ export const CollectionScreen = ({ navigation }) => {
         <View style={{ flexDirection: 'row', gap: 10 }}>
           {collection.length >= 3 && (
             <TouchableOpacity
-              style={[styles.addButton, { backgroundColor: theme.bg.secondary }]}
+              style={[styles.addButton, { backgroundColor: theme.background.secondary }]}
               onPress={async () => {
                 haptics.medium();
                 try {
