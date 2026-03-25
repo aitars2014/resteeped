@@ -57,6 +57,14 @@ const TEA_TYPES = [
   { type: 'herbal', name: 'Herbal', Icon: Flower2 },
 ];
 
+// Streak color ramps like the temperature slider: cold → warm → hot
+const getStreakColor = (days) => {
+  if (days <= 0) return null;      // no streak — uses theme.text.secondary
+  if (days <= 3) return '#4A90D9'; // blue — just getting started
+  if (days <= 6) return '#F5A623'; // yellow — building momentum
+  return '#D0021B';                // red — on fire
+};
+
 export const HomeScreen = ({ navigation }) => {
   const { theme, isDark, getTeaTypeColor } = useTheme();
   const { teas, loading: teasLoading, refreshing: teasRefreshing, refreshTeas, dataSource } = useTeas();
@@ -354,6 +362,7 @@ export const HomeScreen = ({ navigation }) => {
         {(() => {
           const streak = getBrewStreak();
           if (streak.current === 0 && streak.longest === 0) return null;
+          const streakColor = getStreakColor(streak.current) || theme.text.secondary;
           return (
             <TouchableOpacity
               style={[styles.streakCard, { backgroundColor: theme.background.secondary, borderColor: theme.border.medium }]}
@@ -364,9 +373,9 @@ export const HomeScreen = ({ navigation }) => {
               accessibilityLabel={`Brew streak: ${streak.current} day${streak.current !== 1 ? 's' : ''}. Tap to pick a tea to brew.`}
             >
               <View style={styles.streakLeft}>
-                <Flame size={28} color={streak.current > 0 ? '#FF6B35' : theme.text.secondary} />
+                <Flame size={28} color={streakColor} />
                 <View style={styles.streakInfo}>
-                  <Text style={[styles.streakCount, { color: streak.current > 0 ? '#FF6B35' : theme.text.secondary }]}>
+                  <Text style={[styles.streakCount, { color: streakColor }]}>
                     {streak.current} day{streak.current !== 1 ? 's' : ''}
                   </Text>
                   <Text style={[styles.streakLabel, { color: theme.text.secondary }]}>
@@ -376,8 +385,8 @@ export const HomeScreen = ({ navigation }) => {
                 </View>
               </View>
               {todayBrewCount === 0 && streak.current > 0 && (
-                <View style={[styles.streakReminder, { backgroundColor: '#FF6B3520' }]}>
-                  <Text style={{ color: '#FF6B35', fontSize: 12, fontWeight: '600' }}>Brew today!</Text>
+                <View style={[styles.streakReminder, { backgroundColor: `${streakColor}20` }]}>
+                  <Text style={{ color: streakColor, fontSize: 12, fontWeight: '600' }}>Brew today!</Text>
                 </View>
               )}
             </TouchableOpacity>
