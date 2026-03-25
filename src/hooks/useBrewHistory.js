@@ -184,6 +184,55 @@ export const useBrewHistory = () => {
     return grouped;
   };
 
+  // Calculate consecutive brew streak (days in a row with at least 1 brew)
+  const getBrewStreak = () => {
+    if (brewSessions.length === 0) return { current: 0, longest: 0 };
+    
+    // Get unique brew dates sorted descending
+    const brewDates = [...new Set(
+      brewSessions.map(s => {
+        const d = new Date(s.created_at);
+        return new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime();
+      })
+    )].sort((a, b) => b - a);
+    
+    if (brewDates.length === 0) return { current: 0, longest: 0 };
+    
+    const ONE_DAY = 86400000;
+    const today = new Date();
+    const todayMs = new Date(today.getFullYear(), today.getMonth(), today.getDate()).getTime();
+    
+    // Current streak: must include today or yesterday
+    let current = 0;
+    const mostRecent = brewDates[0];
+    if (todayMs - mostRecent > ONE_DAY) {
+      current = 0; // Last brew was more than 1 day ago
+    } else {
+      current = 1;
+      for (let i = 1; i < brewDates.length; i++) {
+        if (brewDates[i - 1] - brewDates[i] === ONE_DAY) {
+          current++;
+        } else {
+          break;
+        }
+      }
+    }
+    
+    // Longest streak
+    let longest = 1;
+    let streak = 1;
+    for (let i = 1; i < brewDates.length; i++) {
+      if (brewDates[i - 1] - brewDates[i] === ONE_DAY) {
+        streak++;
+        longest = Math.max(longest, streak);
+      } else {
+        streak = 1;
+      }
+    }
+    
+    return { current, longest };
+  };
+
   return {
     brewSessions,
     loading,
@@ -194,5 +243,6 @@ export const useBrewHistory = () => {
     getMostBrewedTeas,
     getBrewStats,
     getBrewsByDate,
+    getBrewStreak,
   };
 };

@@ -15,10 +15,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun, Instagram } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun, Instagram, Flame } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
 import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton, BrewPicker } from '../components';
-import { useTeas, useCompanies, useRecommendations, useTeaware } from '../hooks';
+import { useTeas, useCompanies, useRecommendations, useTeaware, useBrewHistory } from '../hooks';
 import { useTheme } from '../context';
 import { maybeRequestReviewByAge } from '../utils/reviewPrompt';
 
@@ -63,6 +63,7 @@ export const HomeScreen = ({ navigation }) => {
   const { companies, refreshing: companiesRefreshing, refreshCompanies } = useCompanies();
   const { teaware } = useTeaware();
   const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
+  const { getBrewStreak, todayBrewCount } = useBrewHistory();
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -590,6 +591,40 @@ export const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         )}
 
+        {/* 14.5. Brew Streak */}
+        {(() => {
+          const streak = getBrewStreak();
+          if (streak.current === 0 && streak.longest === 0) return null;
+          return (
+            <TouchableOpacity
+              style={[styles.streakCard, { backgroundColor: theme.background.secondary, borderColor: theme.border.medium }]}
+              onPress={() => navigation.navigate('BrewHistory')}
+              activeOpacity={0.7}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={`Brew streak: ${streak.current} day${streak.current !== 1 ? 's' : ''}. Tap to view brew history.`}
+            >
+              <View style={styles.streakLeft}>
+                <Flame size={28} color={streak.current > 0 ? '#FF6B35' : theme.text.secondary} />
+                <View style={styles.streakInfo}>
+                  <Text style={[styles.streakCount, { color: streak.current > 0 ? '#FF6B35' : theme.text.secondary }]}>
+                    {streak.current} day{streak.current !== 1 ? 's' : ''}
+                  </Text>
+                  <Text style={[styles.streakLabel, { color: theme.text.secondary }]}>
+                    {streak.current > 0 ? 'Brew streak' : 'Streak paused'}
+                    {streak.longest > streak.current ? ` · Best: ${streak.longest}` : ''}
+                  </Text>
+                </View>
+              </View>
+              {todayBrewCount === 0 && streak.current > 0 && (
+                <View style={[styles.streakReminder, { backgroundColor: '#FF6B3520' }]}>
+                  <Text style={{ color: '#FF6B35', fontSize: 12, fontWeight: '600' }}>Brew today!</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+          );
+        })()}
+
         {/* 15. Quick Stats */}
         <View style={styles.statsSection}>
           <TouchableOpacity 
@@ -820,6 +855,36 @@ const styles = StyleSheet.create({
     ...typography.caption,
     color: 'rgba(255,255,255,0.6)',
     marginHorizontal: 8,
+  },
+  streakCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.md,
+    padding: spacing.md,
+    borderRadius: 16,
+    borderWidth: 1,
+  },
+  streakLeft: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  streakInfo: {
+    gap: 2,
+  },
+  streakCount: {
+    ...typography.headingSmall,
+    fontWeight: '700',
+  },
+  streakLabel: {
+    ...typography.caption,
+  },
+  streakReminder: {
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 12,
   },
   statsSection: {
     flexDirection: 'row',
