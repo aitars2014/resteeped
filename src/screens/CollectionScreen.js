@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React, { useState, useCallback, useMemo, useRef } from 'react';
 import { 
   View, 
   Text, 
@@ -9,9 +9,9 @@ import {
   RefreshControl,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Bookmark, Plus, SlidersHorizontal, Search } from 'lucide-react-native';
+import { Bookmark, Plus, SlidersHorizontal, Search, Share2 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { TeaCard, Button, FilterPills, FilterModal, SearchBar } from '../components';
+import { TeaCard, Button, FilterPills, FilterModal, SearchBar, ShareableCollectionCard } from '../components';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { haptics } from '../utils/haptics';
 
@@ -31,6 +31,8 @@ export const CollectionScreen = ({ navigation }) => {
     sortBy: 'relevance',
   });
   
+  const collectionCardRef = useRef();
+
   // Re-fetch collection whenever this screen gains focus
   useFocusEffect(
     useCallback(() => {
@@ -251,18 +253,48 @@ export const CollectionScreen = ({ navigation }) => {
             <Text style={[styles.count, { color: theme.text.secondary }]}>{collection.length} teas</Text>
           )}
         </View>
-        <TouchableOpacity 
-          style={[styles.addButton, { backgroundColor: theme.accent.primary }]}
-          onPress={handleAddTea}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel="Add new tea"
-          accessibilityHint={canAddToCollection(collection.length) 
-            ? "Opens form to add a custom tea to your collection" 
-            : "Upgrade to premium to add more teas"}
-        >
-          <Plus size={20} color="#fff" strokeWidth={2.5} />
-        </TouchableOpacity>
+        <View style={{ flexDirection: 'row', gap: 10 }}>
+          {collection.length >= 3 && (
+            <TouchableOpacity
+              style={[styles.addButton, { backgroundColor: theme.bg.secondary }]}
+              onPress={async () => {
+                haptics.medium();
+                try {
+                  const uri = await collectionCardRef.current.capture();
+                  const Sharing = require('expo-sharing');
+                  if (await Sharing.isAvailableAsync()) {
+                    await Sharing.shareAsync(uri, {
+                      mimeType: 'image/png',
+                      dialogTitle: 'Share My Tea Collection',
+                    });
+                    haptics.success();
+                  }
+                } catch (e) {
+                  console.error('Error sharing collection:', e);
+                  haptics.error();
+                }
+              }}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel="Share my tea collection"
+              accessibilityHint="Creates a shareable image card of your tea collection"
+            >
+              <Share2 size={20} color={theme.text.primary} strokeWidth={2.5} />
+            </TouchableOpacity>
+          )}
+          <TouchableOpacity 
+            style={[styles.addButton, { backgroundColor: theme.accent.primary }]}
+            onPress={handleAddTea}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Add new tea"
+            accessibilityHint={canAddToCollection(collection.length) 
+              ? "Opens form to add a custom tea to your collection" 
+              : "Upgrade to premium to add more teas"}
+          >
+            <Plus size={20} color="#fff" strokeWidth={2.5} />
+          </TouchableOpacity>
+        </View>
       </View>
       
       {/* Upgrade Banner */}
@@ -363,6 +395,13 @@ export const CollectionScreen = ({ navigation }) => {
         filters={teaFilters}
         onApplyFilters={handleApplyFilters}
       />
+      {/* Hidden shareable card for capture */}
+      <View style={{ position: 'absolute', left: -9999, top: -9999 }}>
+        <ShareableCollectionCard
+          ref={collectionCardRef}
+          collection={collection}
+        />
+      </View>
     </SafeAreaView>
   );
 };
