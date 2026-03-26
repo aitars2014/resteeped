@@ -19,7 +19,7 @@ import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users,
 import { typography, spacing, fonts } from '../constants';
 import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton, BrewPicker } from '../components';
 import { useTeas, useCompanies, useRecommendations, useTeaware, useBrewHistory } from '../hooks';
-import { useTheme } from '../context';
+import { useTheme, useCollection } from '../context';
 import { maybeRequestReviewByAge } from '../utils/reviewPrompt';
 
 // Skeleton for horizontal tea list while loading
@@ -72,6 +72,17 @@ export const HomeScreen = ({ navigation }) => {
   const { teaware } = useTeaware();
   const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
   const { getBrewStreak, todayBrewCount, loading: brewHistoryLoading } = useBrewHistory();
+  const { collection } = useCollection();
+  
+  // Get user's favorite teas (rated 4-5 stars)
+  const favoriteTeas = React.useMemo(() => {
+    return collection
+      .filter(item => item.user_rating >= 4 && item.tea)
+      .sort((a, b) => (b.user_rating || 0) - (a.user_rating || 0))
+      .slice(0, 8)
+      .map(item => item.tea);
+  }, [collection]);
+  
   const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   
@@ -406,6 +417,32 @@ export const HomeScreen = ({ navigation }) => {
             </TouchableOpacity>
           );
         })()}
+
+        {/* 2.7. Your Favorites — quick access to top-rated teas */}
+        {favoriteTeas.length >= 3 && (
+          <View style={styles.section}>
+            {renderSectionHeader(
+              <Heart size={18} color={theme.accent.primary} fill={theme.accent.primary} />,
+              'Your Favorites',
+              () => handleSeeAll('collection')
+            )}
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: spacing.screenHorizontal, gap: spacing.cardGap }}
+            >
+              {favoriteTeas.map((tea) => (
+                <View key={tea.id} style={{ width: CARD_WIDTH }}>
+                  <TeaCard
+                    tea={tea}
+                    onPress={() => navigation.navigate('TeaDetail', { tea })}
+                    compact
+                  />
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        )}
 
         {/* 3. Browse by Type */}
         <View style={styles.section}>
