@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Zap } from 'lucide-react-native';
-import { colors, typography, spacing } from '../constants';
+import { typography } from '../constants';
+import { useTheme } from '../context';
 
 // Caffeine levels by tea type (approximate mg per 8oz serving)
 const CAFFEINE_BY_TYPE = {
@@ -14,7 +15,7 @@ const CAFFEINE_BY_TYPE = {
 };
 
 const LEVEL_COLORS = {
-  0: colors.text.secondary,
+  0: null,       // Caffeine-free — uses theme color
   1: '#7CB89D',  // Low - green
   2: '#A8D5BA',  // Low-medium - light green
   3: '#F4A460',  // Medium - amber
@@ -27,6 +28,7 @@ export const CaffeineIndicator = ({
   showLabel = true,
   size = 'medium',  // 'small', 'medium', 'large'
 }) => {
+  const { theme } = useTheme();
   const teaInfo = CAFFEINE_BY_TYPE[teaType?.toLowerCase()] || CAFFEINE_BY_TYPE.black;
   const bars = customLevel?.bars ?? teaInfo.bars;
   const label = customLevel?.level ?? teaInfo.level;
@@ -45,7 +47,7 @@ export const CaffeineIndicator = ({
       <View style={[styles.barsContainer, { gap }]}>
         {[1, 2, 3, 4].map((barNum) => {
           const isActive = barNum <= bars;
-          const barColor = isActive ? LEVEL_COLORS[bars] : colors.border.light;
+          const barColor = isActive ? LEVEL_COLORS[bars] : theme.border.medium;
           const height = barHeight * (0.5 + (barNum * 0.125));
           
           return (
@@ -70,7 +72,7 @@ export const CaffeineIndicator = ({
   if (bars === 0) {
     return (
       <View style={styles.container}>
-        <Text style={[styles.caffeineLabel, size === 'small' && styles.smallLabel]}>
+        <Text style={[styles.caffeineLabel, { color: theme.text.secondary }, size === 'small' && styles.smallLabel]}>
           Caffeine-free
         </Text>
       </View>
@@ -82,7 +84,7 @@ export const CaffeineIndicator = ({
       <Zap size={iconSize} color={LEVEL_COLORS[bars]} />
       {renderBars()}
       {showLabel && (
-        <Text style={[styles.caffeineLabel, size === 'small' && styles.smallLabel]}>
+        <Text style={[styles.caffeineLabel, { color: theme.text.secondary }, size === 'small' && styles.smallLabel]}>
           {label} ({mg}mg)
         </Text>
       )}
@@ -105,7 +107,6 @@ const styles = StyleSheet.create({
   },
   caffeineLabel: {
     ...typography.caption,
-    color: colors.text.secondary,
     textTransform: 'capitalize',
   },
   smallLabel: {
