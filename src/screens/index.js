@@ -19,4 +19,5 @@ export { PaywallScreen } from './PaywallScreen';
 export { SeasonalCollectionScreen } from './SeasonalCollectionScreen';
 export { TeaFinderScreen } from './TeaFinderScreen';
 export { TeaInsightsScreen } from './TeaInsightsScreen';
+export { TeaGuideScreen } from './TeaGuideScreen';
 export { AppTourScreen } from './AppTourScreen';

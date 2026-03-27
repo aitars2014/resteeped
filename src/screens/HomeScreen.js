@@ -446,7 +446,12 @@ export const HomeScreen = ({ navigation }) => {
 
         {/* 3. Browse by Type */}
         <View style={styles.section}>
-          <Text style={[styles.browseTitle, { color: theme.text.primary }]}>Browse by Type</Text>
+          <View style={styles.browseTypeHeader}>
+            <Text style={[styles.browseTitle, { color: theme.text.primary }]}>Browse by Type</Text>
+            <TouchableOpacity onPress={() => navigation.navigate('TeaGuide')} hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}>
+              <Text style={[styles.teaGuideLink, { color: theme.accent.primary }]}>Tea Guide →</Text>
+            </TouchableOpacity>
+          </View>
           <View style={styles.teaTypeGrid}>
             {TEA_TYPES.map(renderTeaTypeButton)}
           </View>
@@ -798,12 +803,21 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     lineHeight: 24,
   },
+  browseTypeHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.md,
+  },
   browseTitle: {
     fontFamily: fonts?.serif || 'Georgia',
     fontSize: 18,
     fontWeight: '600',
-    paddingHorizontal: spacing.screenHorizontal,
-    marginBottom: spacing.md,
+  },
+  teaGuideLink: {
+    fontSize: 13,
+    fontWeight: '500',
   },
   seeAllText: {
     ...typography.bodySmall,

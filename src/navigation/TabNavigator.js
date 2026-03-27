@@ -25,6 +25,7 @@ import {
   SeasonalCollectionScreen,
   TeaFinderScreen,
   TeaInsightsScreen,
+  TeaGuideScreen,
 } from '../screens';
 import { NotificationSettingsScreen } from '../screens/NotificationSettingsScreen';
 
@@ -44,6 +45,7 @@ const HomeStack = () => (
     <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
     <Stack.Screen name="SeasonalCollection" component={SeasonalCollectionScreen} />
     <Stack.Screen name="TeaFinder" component={TeaFinderScreen} />
+    <Stack.Screen name="TeaGuide" component={TeaGuideScreen} />
     <Stack.Screen 
       name="Paywall" 
       component={PaywallScreen}
