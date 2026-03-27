@@ -26,6 +26,10 @@
         "tinted": "./assets/ios-icons/TintedDark.png"
       },
       "usesAppleSignIn": true,
+      "associatedDomains": [
+        "applinks:resteeped.com",
+        "webcredentials:resteeped.com"
+      ],
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       },

@@ -1,0 +1,35 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appIDs": ["A5ZVGXZSH4.com.resteeped.app"],
+        "components": [
+          {
+            "/": "/tea/*",
+            "comment": "Tea detail pages"
+          },
+          {
+            "/": "/shops",
+            "comment": "Tea shops directory"
+          },
+          {
+            "/": "/discover",
+            "comment": "Discovery screen"
+          },
+          {
+            "/": "/timer",
+            "comment": "Brew timer"
+          },
+          {
+            "/": "/collections/*",
+            "comment": "Seasonal collections"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": ["A5ZVGXZSH4.com.resteeped.app"]
+  }
+}

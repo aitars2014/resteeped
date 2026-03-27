@@ -65,12 +65,56 @@ Sentry.init({
   ],
 });
 
+// Universal links / deep link config
+// AASA file is served at https://resteeped.com/.well-known/apple-app-site-association
+// Universal links / deep link config
+// AASA file is served at https://resteeped.com/.well-known/apple-app-site-association
+const linking = {
+  prefixes: ['https://resteeped.com', 'resteeped://'],
+  config: {
+    screens: {
+      Main: {
+        screens: {
+          // Tab: Home — tea detail, company, shops, seasonal collections
+          Home: {
+            screens: {
+              HomeMain: '',
+              TeaDetail: 'tea/:teaId',
+              CompanyProfile: 'company/:companyId',
+              TeaShops: 'shops',
+              SeasonalCollection: 'collections/:collectionId',
+            },
+          },
+          // Tab: Discover
+          Discover: {
+            screens: {
+              DiscoveryHome: 'discover',
+            },
+          },
+          // Tab: Timer
+          Timer: {
+            screens: {
+              TimerHome: 'timer',
+            },
+          },
+          // Tab: My Teas
+          MyTeas: {
+            screens: {
+              CollectionHome: 'my-teas',
+            },
+          },
+        },
+      },
+    },
+  },
+};
+
 // Wrapper to access theme for StatusBar
 const AppContent = () => {
   const { isDark } = useTheme();
   
   return (
-    <NavigationContainer>
+    <NavigationContainer linking={linking}>
       <StatusBar style={isDark ? 'light' : 'dark'} />
       <AppNavigator />
     </NavigationContainer>
