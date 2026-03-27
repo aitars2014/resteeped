@@ -14,13 +14,13 @@ import {
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
 import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee } from 'lucide-react-native';
-import { typography, spacing, getPlaceholderImage } from '../constants';
+import { typography, spacing, getPlaceholderImage, getBrewingGuide } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote, ShareableTeaCard } from '../components';
 import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { maybeRequestReview, maybeRequestReviewOnCollectionAdd } from '../utils/reviewPrompt';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
-import { useReviews, useCompanies, useTeas, useTastingNotes } from '../hooks';
+import { useReviews, useCompanies, useTeas, useTastingNotes, useBrewHistory } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
 import * as Haptics from 'expo-haptics';
 
@@ -63,6 +63,24 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   }, [teas, tea.id, tea.teaType]);
   
   const [showTastingNotes, setShowTastingNotes] = useState(false);
+  const [quickBrewLogged, setQuickBrewLogged] = useState(false);
+  const { logBrewSession } = useBrewHistory();
+
+  const handleQuickBrew = async () => {
+    if (quickBrewLogged) return;
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+    const guide = getBrewingGuide(fullTea.teaType || fullTea.tea_type || 'black', fullTea);
+    const steepSecs = Math.round(((guide.steepTime.min + guide.steepTime.max) / 2) * 60);
+    const tempF = guide.waterTemp?.fahrenheit || null;
+    await logBrewSession({
+      teaId,
+      steepTimeSeconds: steepSecs,
+      temperatureF: tempF,
+      teaData: fullTea,
+    });
+    setQuickBrewLogged(true);
+    setTimeout(() => setQuickBrewLogged(false), 3000);
+  };
   
   // Track tea view
   useEffect(() => {
@@ -707,10 +725,22 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             activeOpacity={0.6}
             hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
             accessible={true}
-            accessibilityLabel="Steep this tea"
+            accessibilityLabel="Steep this tea with timer"
           >
             <Coffee size={20} color={theme.text.primary} />
             <Text style={[styles.iconActionLabel, { color: theme.text.secondary }]} numberOfLines={1}>Steep</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.iconAction, { backgroundColor: quickBrewLogged ? theme.accent.primary : theme.background.secondary }]}
+            onPress={handleQuickBrew}
+            activeOpacity={0.6}
+            hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
+            accessible={true}
+            accessibilityLabel="Quick log brew"
+            accessibilityHint="Log a brew session instantly with default steep parameters"
+          >
+            <Text style={{ fontSize: 18 }}>{quickBrewLogged ? '✓' : '☕'}</Text>
+            <Text style={[styles.iconActionLabel, { color: quickBrewLogged ? theme.text.inverse : theme.text.secondary }]} numberOfLines={1}>{quickBrewLogged ? 'Done!' : 'Log'}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[styles.iconAction, { backgroundColor: personalRating > 0 ? theme.accent.primary : theme.background.secondary }]}

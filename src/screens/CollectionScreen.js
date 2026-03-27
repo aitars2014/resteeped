@@ -7,12 +7,15 @@ import {
   SafeAreaView,
   TouchableOpacity,
   RefreshControl,
+  Animated,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { Bookmark, Plus, SlidersHorizontal, Search, Share2 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { TeaCard, Button, FilterPills, FilterModal, SearchBar, ShareableCollectionCard } from '../components';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
+import { useBrewHistory } from '../hooks';
+import { getBrewingGuide } from '../constants/brewingGuides';
 import { haptics } from '../utils/haptics';
 
 export const CollectionScreen = ({ navigation }) => {
@@ -32,6 +35,30 @@ export const CollectionScreen = ({ navigation }) => {
   });
   
   const collectionCardRef = useRef();
+  const { logBrewSession } = useBrewHistory();
+  const [brewingTeaId, setBrewingTeaId] = useState(null);
+  const brewFeedbackOpacity = useRef(new Animated.Value(0)).current;
+
+  const handleQuickBrew = useCallback(async (tea, teaId) => {
+    if (brewingTeaId) return; // debounce
+    setBrewingTeaId(teaId);
+    haptics.success();
+    const guide = getBrewingGuide(tea.teaType || tea.tea_type || 'black', tea);
+    const steepSecs = Math.round(((guide.steepTime.min + guide.steepTime.max) / 2) * 60);
+    const tempF = guide.waterTemp?.fahrenheit || null;
+    await logBrewSession({
+      teaId,
+      steepTimeSeconds: steepSecs,
+      temperatureF: tempF,
+      teaData: tea,
+    });
+    // Flash feedback
+    Animated.sequence([
+      Animated.timing(brewFeedbackOpacity, { toValue: 1, duration: 150, useNativeDriver: true }),
+      Animated.delay(900),
+      Animated.timing(brewFeedbackOpacity, { toValue: 0, duration: 300, useNativeDriver: true }),
+    ]).start(() => setBrewingTeaId(null));
+  }, [brewingTeaId, logBrewSession, brewFeedbackOpacity]);
 
   // Re-fetch collection whenever this screen gains focus
   useFocusEffect(
@@ -181,6 +208,9 @@ export const CollectionScreen = ({ navigation }) => {
       productUrl: rawTea.productUrl || rawTea.product_url,
     };
     
+    const teaId = item.tea?.id || item.tea_id;
+    const isJustBrewed = brewingTeaId === teaId;
+
     return (
       <View style={styles.teaItem}>
         <TeaCard 
@@ -193,6 +223,19 @@ export const CollectionScreen = ({ navigation }) => {
             <Text style={[styles.ratingText, { color: theme.text.inverse }]}>★ {item.user_rating.toFixed(1)}</Text>
           </View>
         )}
+        {/* Quick Brew button */}
+        <TouchableOpacity
+          style={[styles.quickBrewBtn, { backgroundColor: theme.background.secondary, borderColor: theme.border.default }]}
+          onPress={() => handleQuickBrew(tea, teaId)}
+          activeOpacity={0.7}
+          accessibilityLabel={`Quick brew ${tea.name}`}
+          accessibilityHint="Log a brew session with default steep parameters"
+        >
+          <Text style={styles.quickBrewIcon}>{isJustBrewed ? '✓' : '☕'}</Text>
+          <Text style={[styles.quickBrewLabel, { color: isJustBrewed ? theme.accent.primary : theme.text.secondary }]}>
+            {isJustBrewed ? 'Logged!' : 'Brew'}
+          </Text>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -453,6 +496,25 @@ const styles = StyleSheet.create({
   teaItem: {
     marginBottom: spacing.cardGap,
     position: 'relative',
+  },
+  quickBrewBtn: {
+    position: 'absolute',
+    bottom: 12,
+    right: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 14,
+    borderWidth: 1,
+    gap: 4,
+  },
+  quickBrewIcon: {
+    fontSize: 13,
+  },
+  quickBrewLabel: {
+    fontSize: 12,
+    fontWeight: '600',
   },
   ratingBadge: {
     position: 'absolute',
