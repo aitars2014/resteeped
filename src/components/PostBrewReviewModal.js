@@ -1,13 +1,31 @@
 import React, { useState } from 'react';
 import { 
   View, Text, StyleSheet, Modal, TouchableOpacity, TextInput,
-  KeyboardAvoidingView, Platform,
+  KeyboardAvoidingView, Platform, ScrollView,
 } from 'react-native';
 import { X } from 'lucide-react-native';
 import { useTheme } from '../context';
 import { typography, spacing } from '../constants';
 import { Button } from '../components';
 import { RatingSlider } from './RatingSlider';
+import haptics from '../utils/haptics';
+
+const FLAVOR_TAGS = [
+  { label: 'Floral', emoji: '🌸' },
+  { label: 'Fruity', emoji: '🍑' },
+  { label: 'Sweet', emoji: '🍯' },
+  { label: 'Earthy', emoji: '🌿' },
+  { label: 'Smoky', emoji: '🔥' },
+  { label: 'Umami', emoji: '🍵' },
+  { label: 'Nutty', emoji: '🥜' },
+  { label: 'Creamy', emoji: '🥛' },
+  { label: 'Astringent', emoji: '🍋' },
+  { label: 'Woody', emoji: '🪵' },
+  { label: 'Spicy', emoji: '🌶️' },
+  { label: 'Grassy', emoji: '🌾' },
+  { label: 'Malty', emoji: '🍞' },
+  { label: 'Mineral', emoji: '💎' },
+];
 
 export const PostBrewReviewModal = ({ 
   visible, 
@@ -21,6 +39,14 @@ export const PostBrewReviewModal = ({
   const { theme } = useTheme();
   const [rating, setRating] = useState(3.5);
   const [notes, setNotes] = useState('');
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const toggleTag = (label) => {
+    haptics.selection();
+    setSelectedTags(prev => 
+      prev.includes(label) ? prev.filter(t => t !== label) : [...prev, label]
+    );
+  };
 
   const formatTime = (s) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
   const formatTimeLong = (s) => {
@@ -33,15 +59,21 @@ export const PostBrewReviewModal = ({
   };
 
   const handleSave = () => {
-    onSave({ rating, notes: notes.trim() || null, brewMethod, steepTimeSeconds, temperatureF });
+    const allNotes = [
+      selectedTags.length > 0 ? selectedTags.join(', ') : null,
+      notes.trim() || null,
+    ].filter(Boolean).join(' — ');
+    onSave({ rating, notes: allNotes || null, brewMethod, steepTimeSeconds, temperatureF });
     setRating(3.5);
     setNotes('');
+    setSelectedTags([]);
   };
 
   const handleSkip = () => {
     onClose();
     setRating(3.5);
     setNotes('');
+    setSelectedTags([]);
   };
 
   return (
@@ -86,6 +118,38 @@ export const PostBrewReviewModal = ({
           <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Rating</Text>
           <RatingSlider value={rating} onValueChange={setRating} size="small" />
 
+          {/* Flavor Tags */}
+          <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Flavor Profile</Text>
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.tagsContainer}
+            style={styles.tagsScroll}
+          >
+            {FLAVOR_TAGS.map(tag => {
+              const isSelected = selectedTags.includes(tag.label);
+              return (
+                <TouchableOpacity
+                  key={tag.label}
+                  style={[
+                    styles.tag,
+                    { 
+                      borderColor: isSelected ? theme.accent.primary : theme.border.light,
+                      backgroundColor: isSelected ? (theme.accent.primary + '18') : theme.background.secondary,
+                    },
+                  ]}
+                  onPress={() => toggleTag(tag.label)}
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.tagEmoji}>{tag.emoji}</Text>
+                  <Text style={[styles.tagLabel, { color: isSelected ? theme.accent.primary : theme.text.secondary }]}>
+                    {tag.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
+
           {/* Notes */}
           <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Tasting Notes</Text>
           <TextInput
@@ -127,6 +191,11 @@ const styles = StyleSheet.create({
   summaryItem: { ...typography.bodySmall },
   sectionLabel: { ...typography.bodySmall, fontWeight: '600', marginBottom: 4, marginLeft: 4 },
   notesInput: { borderWidth: 1, borderRadius: 12, padding: 12, minHeight: 80, ...typography.body, marginBottom: 20 },
+  tagsScroll: { marginBottom: 16, marginHorizontal: -20 },
+  tagsContainer: { flexDirection: 'row', gap: 8, paddingHorizontal: 20 },
+  tag: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, borderWidth: 1.5 },
+  tagEmoji: { fontSize: 14 },
+  tagLabel: { ...typography.bodySmall, fontWeight: '500' },
   actions: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   skipButton: { paddingVertical: 14, paddingHorizontal: 20 },
   skipText: { ...typography.body, fontWeight: '500' },
