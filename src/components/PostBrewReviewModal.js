@@ -10,6 +10,17 @@ import { Button } from '../components';
 import { RatingSlider } from './RatingSlider';
 import haptics from '../utils/haptics';
 
+const MOOD_TAGS = [
+  { label: 'Morning ritual', emoji: '🌅' },
+  { label: 'Afternoon break', emoji: '☀️' },
+  { label: 'Evening wind-down', emoji: '🌙' },
+  { label: 'With food', emoji: '🍽️' },
+  { label: 'Reading', emoji: '📖' },
+  { label: 'Working', emoji: '💻' },
+  { label: 'Relaxing', emoji: '🧘' },
+  { label: 'Social', emoji: '👥' },
+];
+
 const FLAVOR_TAGS = [
   { label: 'Floral', emoji: '🌸' },
   { label: 'Fruity', emoji: '🍑' },
@@ -40,12 +51,18 @@ export const PostBrewReviewModal = ({
   const [rating, setRating] = useState(3.5);
   const [notes, setNotes] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedMood, setSelectedMood] = useState(null);
 
   const toggleTag = (label) => {
     haptics.selection();
     setSelectedTags(prev => 
       prev.includes(label) ? prev.filter(t => t !== label) : [...prev, label]
     );
+  };
+
+  const toggleMood = (label) => {
+    haptics.selection();
+    setSelectedMood(prev => prev === label ? null : label);
   };
 
   const formatTime = (s) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
@@ -60,6 +77,7 @@ export const PostBrewReviewModal = ({
 
   const handleSave = () => {
     const allNotes = [
+      selectedMood ? `[${selectedMood}]` : null,
       selectedTags.length > 0 ? selectedTags.join(', ') : null,
       notes.trim() || null,
     ].filter(Boolean).join(' — ');
@@ -67,6 +85,7 @@ export const PostBrewReviewModal = ({
     setRating(3.5);
     setNotes('');
     setSelectedTags([]);
+    setSelectedMood(null);
   };
 
   const handleSkip = () => {
@@ -74,6 +93,7 @@ export const PostBrewReviewModal = ({
     setRating(3.5);
     setNotes('');
     setSelectedTags([]);
+    setSelectedMood(null);
   };
 
   return (
@@ -83,6 +103,7 @@ export const PostBrewReviewModal = ({
         style={styles.overlay}
       >
         <View style={[styles.modal, { backgroundColor: theme.background.primary }]}>
+          <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
           <View style={styles.header}>
             <Text style={[styles.title, { color: theme.text.primary }]}>How was your brew?</Text>
             <TouchableOpacity onPress={handleSkip}>
@@ -113,6 +134,38 @@ export const PostBrewReviewModal = ({
               )}
             </View>
           </View>
+
+          {/* Mood Tags */}
+          <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Moment</Text>
+          <ScrollView 
+            horizontal 
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.tagsContainer}
+            style={styles.moodScroll}
+          >
+            {MOOD_TAGS.map(tag => {
+              const isSelected = selectedMood === tag.label;
+              return (
+                <TouchableOpacity
+                  key={tag.label}
+                  style={[
+                    styles.tag,
+                    { 
+                      borderColor: isSelected ? theme.accent.primary : theme.border.light,
+                      backgroundColor: isSelected ? (theme.accent.primary + '18') : theme.background.secondary,
+                    },
+                  ]}
+                  onPress={() => toggleMood(tag.label)}
+                  activeOpacity={0.7}
+                >
+                  <Text style={styles.tagEmoji}>{tag.emoji}</Text>
+                  <Text style={[styles.tagLabel, { color: isSelected ? theme.accent.primary : theme.text.secondary }]}>
+                    {tag.label}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </ScrollView>
 
           {/* Rating slider */}
           <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Rating</Text>
@@ -174,6 +227,7 @@ export const PostBrewReviewModal = ({
             </TouchableOpacity>
             <Button title="Save Review" onPress={handleSave} variant="primary" style={{ flex: 1 }} />
           </View>
+          </ScrollView>
         </View>
       </KeyboardAvoidingView>
     </Modal>
@@ -182,7 +236,7 @@ export const PostBrewReviewModal = ({
 
 const styles = StyleSheet.create({
   overlay: { flex: 1, justifyContent: 'flex-end', backgroundColor: 'rgba(0,0,0,0.5)' },
-  modal: { borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, paddingBottom: 40 },
+  modal: { borderTopLeftRadius: 20, borderTopRightRadius: 20, padding: 20, paddingBottom: 40, maxHeight: '85%' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },
   title: { ...typography.headingSmall },
   summary: { padding: 12, borderRadius: 12, borderWidth: 1, marginBottom: 20 },
@@ -191,6 +245,7 @@ const styles = StyleSheet.create({
   summaryItem: { ...typography.bodySmall },
   sectionLabel: { ...typography.bodySmall, fontWeight: '600', marginBottom: 4, marginLeft: 4 },
   notesInput: { borderWidth: 1, borderRadius: 12, padding: 12, minHeight: 80, ...typography.body, marginBottom: 20 },
+  moodScroll: { marginBottom: 16, marginHorizontal: -20 },
   tagsScroll: { marginBottom: 16, marginHorizontal: -20 },
   tagsContainer: { flexDirection: 'row', gap: 8, paddingHorizontal: 20 },
   tag: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, borderWidth: 1.5 },
