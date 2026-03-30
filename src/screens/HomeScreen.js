@@ -17,7 +17,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun, Instagram, Flame } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
-import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton, BrewPicker } from '../components';
+import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton, BrewPicker, WeeklyChallenge } from '../components';
 import { useTeas, useCompanies, useRecommendations, useTeaware, useBrewHistory } from '../hooks';
 import { useTheme, useCollection } from '../context';
 import { maybeRequestReviewByAge } from '../utils/reviewPrompt';
@@ -477,6 +477,11 @@ export const HomeScreen = ({ navigation }) => {
             </LinearGradient>
           </TouchableOpacity>
         )}
+
+        {/* 4.5. Weekly Challenge */}
+        <View style={styles.section}>
+          <WeeklyChallenge onPress={() => navigation.navigate('Discover')} />
+        </View>
 
         {/* 5. Tea of the Day */}
         <View style={styles.section}>

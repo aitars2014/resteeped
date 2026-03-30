@@ -25,6 +25,7 @@ export { PostBrewReviewModal } from './PostBrewReviewModal';
 export { BrewingGuide } from './BrewingGuide';
 export { HealthBenefits } from './HealthBenefits';
 export { TeaBattle } from './TeaBattle';
+export { WeeklyChallenge } from './WeeklyChallenge';
 export { Skeleton, TeaCardSkeleton, TeaListSkeleton, TeaDetailSkeleton, SectionSkeleton, CompanyProfileSkeleton } from './Skeleton';
 export { ShareableTeaCard } from './ShareableTeaCard';
 export { ShareableComparisonCard } from './ShareableComparisonCard';
