@@ -163,11 +163,20 @@ export const useBrewHistory = () => {
     const avgSteepTime = totalBrews > 0 ? Math.round(totalSteepTime / totalBrews) : 0;
     const uniqueTeas = new Set(brewSessions.map(s => s.tea_id).filter(Boolean)).size;
     
+    // Find most-brewed tea type
+    const typeCounts = {};
+    brewSessions.forEach(s => {
+      const teaType = s.tea?.tea_type;
+      if (teaType) typeCounts[teaType] = (typeCounts[teaType] || 0) + 1;
+    });
+    const favoriteType = Object.entries(typeCounts).sort((a, b) => b[1] - a[1])[0]?.[0] || null;
+    
     return {
       totalBrews,
       totalSteepTime,
       avgSteepTime,
       uniqueTeas,
+      favoriteType,
     };
   };
 

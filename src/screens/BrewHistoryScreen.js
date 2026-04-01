@@ -8,7 +8,7 @@ import {
   RefreshControl,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ChevronLeft, Coffee, Clock, Thermometer, Award, RotateCcw } from 'lucide-react-native';
+import { ChevronLeft, Coffee, Clock, Thermometer, Award, RotateCcw, Star } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
 import { TeaTypeBadge } from '../components';
@@ -99,6 +99,13 @@ const BrewHistoryScreen = ({ navigation }) => {
           </Text>
         </View>
       )}
+      {stats.favoriteType && (
+        <View style={[styles.avgSteepTime, { borderTopColor: stats.avgSteepTime > 0 ? 'transparent' : theme.border.light }]}>
+          <Text style={[styles.avgSteepText, { color: theme.text.secondary }]}>
+            Favorite type: {stats.favoriteType}
+          </Text>
+        </View>
+      )}
     </View>
   );
 
@@ -184,6 +191,12 @@ const BrewHistoryScreen = ({ navigation }) => {
                   <Text style={[styles.brewDetailText, { color: theme.text.secondary }]}>{item.temperature_f}°F</Text>
                 </View>
               )}
+              {item.rating != null && (
+                <View style={styles.brewDetail}>
+                  <Star size={12} color="#F59E0B" fill="#F59E0B" />
+                  <Text style={[styles.brewDetailText, { color: theme.text.secondary }]}>{item.rating.toFixed(1)}</Text>
+                </View>
+              )}
             </View>
             {tea && (
               <TouchableOpacity
@@ -205,6 +218,11 @@ const BrewHistoryScreen = ({ navigation }) => {
             )}
           </View>
         </View>
+          {item.note && (
+            <Text style={[styles.brewNote, { color: theme.text.secondary }]} numberOfLines={2}>
+              {item.note}
+            </Text>
+          )}
       </TouchableOpacity>
     );
   };
@@ -455,6 +473,12 @@ const styles = StyleSheet.create({
   brewAgainText: {
     ...typography.caption,
     fontWeight: '600',
+  },
+  brewNote: {
+    ...typography.caption,
+    marginTop: 4,
+    fontStyle: 'italic',
+    lineHeight: 16,
   },
   brewDetail: {
     flexDirection: 'row',
