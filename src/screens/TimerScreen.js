@@ -1067,6 +1067,7 @@ export const TimerScreen = ({ route, navigation }) => {
         brewMethod={brewMethod}
         steepTimeSeconds={totalSeconds}
         temperatureF={temperatureF}
+        initialInfusion={multiSteepMode ? currentInfusion : 1}
       />
       
       {/* Notes Modal */}

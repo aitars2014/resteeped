@@ -46,12 +46,15 @@ export const PostBrewReviewModal = ({
   brewMethod,
   steepTimeSeconds,
   temperatureF,
+  initialInfusion = 1,
 }) => {
   const { theme } = useTheme();
   const [rating, setRating] = useState(3.5);
   const [notes, setNotes] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedMood, setSelectedMood] = useState(null);
+  const [infusion, setInfusion] = useState(initialInfusion);
+  const showInfusion = brewMethod === 'Gongfu' || initialInfusion > 1;
 
   const toggleTag = (label) => {
     haptics.selection();
@@ -81,11 +84,12 @@ export const PostBrewReviewModal = ({
       selectedTags.length > 0 ? selectedTags.join(', ') : null,
       notes.trim() || null,
     ].filter(Boolean).join(' — ');
-    onSave({ rating, notes: allNotes || null, brewMethod, steepTimeSeconds, temperatureF });
+    onSave({ rating, notes: allNotes || null, brewMethod, steepTimeSeconds, temperatureF, infusionNumber: showInfusion ? infusion : null });
     setRating(3.5);
     setNotes('');
     setSelectedTags([]);
     setSelectedMood(null);
+    setInfusion(initialInfusion);
   };
 
   const handleSkip = () => {
@@ -94,6 +98,7 @@ export const PostBrewReviewModal = ({
     setNotes('');
     setSelectedTags([]);
     setSelectedMood(null);
+    setInfusion(initialInfusion);
   };
 
   return (
@@ -134,6 +139,29 @@ export const PostBrewReviewModal = ({
               )}
             </View>
           </View>
+
+          {/* Infusion counter — only for gongfu */}
+          {showInfusion && (
+            <View style={[styles.infusionRow, { borderColor: theme.border.light }]}>
+              <Text style={[styles.infusionLabel, { color: theme.text.secondary }]}>Infusion</Text>
+              <View style={styles.infusionStepper}>
+                <TouchableOpacity
+                  onPress={() => { if (infusion > 1) { haptics.selection(); setInfusion(n => n - 1); } }}
+                  style={[styles.stepperBtn, { borderColor: theme.border.light, opacity: infusion <= 1 ? 0.3 : 1 }]}
+                  disabled={infusion <= 1}
+                >
+                  <Text style={[styles.stepperBtnText, { color: theme.text.primary }]}>−</Text>
+                </TouchableOpacity>
+                <Text style={[styles.infusionNum, { color: theme.text.primary }]}>#{infusion}</Text>
+                <TouchableOpacity
+                  onPress={() => { haptics.selection(); setInfusion(n => n + 1); }}
+                  style={[styles.stepperBtn, { borderColor: theme.border.light }]}
+                >
+                  <Text style={[styles.stepperBtnText, { color: theme.text.primary }]}>+</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
 
           {/* Mood Tags */}
           <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Moment</Text>
@@ -254,4 +282,10 @@ const styles = StyleSheet.create({
   actions: { flexDirection: 'row', alignItems: 'center', gap: 12 },
   skipButton: { paddingVertical: 14, paddingHorizontal: 20 },
   skipText: { ...typography.body, fontWeight: '500' },
+  infusionRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderWidth: 1, borderRadius: 12, paddingHorizontal: 16, paddingVertical: 10, marginBottom: 16 },
+  infusionLabel: { ...typography.bodySmall, fontWeight: '600' },
+  infusionStepper: { flexDirection: 'row', alignItems: 'center', gap: 16 },
+  infusionNum: { ...typography.body, fontWeight: '700', minWidth: 28, textAlign: 'center' },
+  stepperBtn: { width: 32, height: 32, borderRadius: 16, borderWidth: 1, alignItems: 'center', justifyContent: 'center' },
+  stepperBtnText: { ...typography.body, fontWeight: '600', lineHeight: 20 },
 });
