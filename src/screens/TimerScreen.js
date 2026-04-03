@@ -16,13 +16,13 @@ import {
   Dimensions,
   KeyboardAvoidingView,
 } from 'react-native';
-import { Minus, Plus, Coffee, Bell, BellOff, Repeat, ChevronLeft, ChevronRight, NotebookPen, X, Check, Search } from 'lucide-react-native';
+import { Minus, Plus, Coffee, Bell, BellOff, Repeat, ChevronLeft, ChevronRight, NotebookPen, X, Check, Search, Share2 } from 'lucide-react-native';
 import Svg, { Circle } from 'react-native-svg';
 import * as Notifications from 'expo-notifications';
 import { VoiceInputHint } from '../components/VoiceInputHint';
 import { Audio } from 'expo-av';
 import { typography, spacing } from '../constants';
-import { Button, TeaTypeBadge, TemperatureSlider, PostBrewReviewModal } from '../components';
+import { Button, TeaTypeBadge, TemperatureSlider, PostBrewReviewModal, ShareableBrewCard } from '../components';
 import { useBrewHistory, useTeas, useReviews } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
 import { useAuth, useTheme, useCollection } from '../context';
@@ -170,6 +170,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const notificationIdRef = useRef(null);
   const appStateRef = useRef(AppState.currentState);
   const timerEndTimeRef = useRef(null);
+  const brewCardRef = useRef(null);
   
   // Apply preferred brew method and temperature on mount
   useEffect(() => {
@@ -952,6 +953,22 @@ export const TimerScreen = ({ route, navigation }) => {
           )}
         </View>
         
+        {/* Share brew session */}
+        {tea && (isRunning || isComplete) && (
+          <TouchableOpacity
+            style={[styles.shareBrewButton, { borderColor: theme.accent.primary }]}
+            onPress={() => brewCardRef.current?.capture()}
+            accessible={true}
+            accessibilityRole="button"
+            accessibilityLabel="Share your brew session"
+          >
+            <Share2 size={18} color={theme.accent.primary} />
+            <Text style={[styles.shareBrewText, { color: theme.accent.primary }]}>
+              {isRunning ? 'Share Active Brew' : 'Share Brew Session'}
+            </Text>
+          </TouchableOpacity>
+        )}
+        
         {/* Infusion Summary (when completed session) */}
         {multiSteepMode && isComplete && Object.keys(infusionNotes).length > 0 && (
           <View style={[styles.sessionSummary, { borderColor: theme.border.light }]}>
@@ -1125,6 +1142,18 @@ export const TimerScreen = ({ route, navigation }) => {
           </View>
         </KeyboardAvoidingView>
       </Modal>
+      {/* Offscreen shareable brew card */}
+      {tea && (
+        <ShareableBrewCard
+          ref={brewCardRef}
+          tea={tea}
+          brewMethod={brewMethod}
+          temperatureF={temperatureF}
+          totalSeconds={totalSeconds}
+          currentInfusion={currentInfusion}
+          isActive={isRunning}
+        />
+      )}
     </SafeAreaView>
   );
 };
@@ -1456,6 +1485,22 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   savePreferredText: {
+    ...typography.bodySmall,
+    fontWeight: '600',
+  },
+  shareBrewButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'center',
+    gap: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderWidth: 1,
+    borderRadius: 20,
+    marginTop: 8,
+    marginBottom: 12,
+  },
+  shareBrewText: {
     ...typography.bodySmall,
     fontWeight: '600',
   },

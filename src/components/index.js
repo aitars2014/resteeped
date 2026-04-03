@@ -30,6 +30,7 @@ export { Skeleton, TeaCardSkeleton, TeaListSkeleton, TeaDetailSkeleton, SectionS
 export { ShareableTeaCard } from './ShareableTeaCard';
 export { ShareableComparisonCard } from './ShareableComparisonCard';
 export { ShareableCollectionCard } from './ShareableCollectionCard';
+export { default as ShareableBrewCard } from './ShareableBrewCard';
 export { TeawareCard } from './TeawareCard';
 export { default as Avatar } from './Avatar';
 export { default as AvatarPicker, AVATAR_STYLES } from './AvatarPicker';
