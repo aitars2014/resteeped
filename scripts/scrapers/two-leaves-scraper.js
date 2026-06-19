@@ -5,9 +5,14 @@
 
 const fs = require('fs');
 const path = require('path');
+const { fetchWithRetry } = require('./lib/http');
 
 const OUTPUT_DIR = path.join(__dirname, '../../data/scraped');
 const OUTPUT_FILE = path.join(OUTPUT_DIR, 'two-leaves-teas.json');
+const SCRAPER_HEADERS = {
+  'Accept': 'application/json,text/plain,*/*',
+  'User-Agent': 'ResteepedTwoLeavesScraper/1.0 (+https://resteeped.com; tea inventory updater)',
+};
 
 // Map Shopify tags to our tea types
 function getTeaType(tags) {
@@ -46,7 +51,18 @@ function cleanDescription(html) {
 async function scrape() {
   console.log('Fetching Two Leaves products...');
   
-  const response = await fetch('https://twoleavestea.com/products.json?limit=250');
+  const response = await fetchWithRetry('https://twoleavestea.com/products.json?limit=250', {
+    headers: SCRAPER_HEADERS,
+  }, {
+    label: 'Two Leaves products',
+    retries: 5,
+    baseDelayMs: 5000,
+    maxDelayMs: 120000,
+    timeoutMs: 30000,
+  });
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
   const data = await response.json();
   
   const teas = data.products

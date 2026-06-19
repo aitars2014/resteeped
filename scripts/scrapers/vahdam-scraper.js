@@ -5,9 +5,14 @@
 
 const fs = require('fs');
 const path = require('path');
+const { fetchWithRetry, sleep } = require('./lib/http');
 
 const BASE_URL = 'https://www.vahdamteas.com/products.json';
 const OUTPUT_DIR = path.join(__dirname, '../../data/scraped');
+const SCRAPER_HEADERS = {
+  'Accept': 'application/json,text/plain,*/*',
+  'User-Agent': 'ResteepedVahdamScraper/1.0 (+https://resteeped.com; tea inventory updater)',
+};
 
 // Tea type detection
 function detectTeaType(tags, title, productType) {
@@ -62,7 +67,15 @@ async function fetchPage(page = 1, limit = 250) {
   const url = `${BASE_URL}?page=${page}&limit=${limit}`;
   console.log(`Fetching page ${page}...`);
   
-  const response = await fetch(url);
+  const response = await fetchWithRetry(url, {
+    headers: SCRAPER_HEADERS,
+  }, {
+    label: `Vahdam page ${page}`,
+    retries: 5,
+    baseDelayMs: 5000,
+    maxDelayMs: 120000,
+    timeoutMs: 30000,
+  });
   if (!response.ok) {
     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
   }
@@ -100,7 +113,7 @@ async function scrapeAll() {
         
         if (page > 30) hasMore = false;
         
-        await new Promise(r => setTimeout(r, 500));
+        await sleep(1500);
       }
     } catch (err) {
       console.error(`Error on page ${page}:`, err.message);

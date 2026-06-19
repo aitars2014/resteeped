@@ -6,11 +6,18 @@
 const fs = require('fs');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
+const { fetchWithRetry, sleep } = require('./lib/http');
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 const supabaseUrl = process.env.EXPO_PUBLIC_SUPABASE_URL;
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_KEY;
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const SHOP_DELAY_MS = Number(process.env.SHOPIFY_SCRAPER_SHOP_DELAY_MS || 3000);
+const PAGE_DELAY_MS = Number(process.env.SHOPIFY_SCRAPER_PAGE_DELAY_MS || 1500);
+const SCRAPER_HEADERS = {
+  'Accept': 'application/json,text/plain,*/*',
+  'User-Agent': 'ResteepedShopifyScraper/1.0 (+https://resteeped.com; tea inventory updater)',
+};
 
 // Brand configurations
 const BRANDS = {
@@ -934,6 +941,7 @@ function getTeaType(tags, title) {
   if (str.includes('white tea')) return 'white';
   if (str.includes('green tea') || str.includes('matcha')) return 'green';
   if (str.includes('black tea') || str.includes('chai') || str.includes('earl grey') || str.includes('english breakfast')) return 'black';
+  if (str.includes('yerba') || str.includes('mate')) return 'herbal';
   if (str.includes('herbal') || str.includes('rooibos') || str.includes('chamomile') || str.includes('peppermint') || str.includes('tisane')) return 'herbal';
   // Default based on keywords
   if (str.includes('green')) return 'green';
@@ -965,11 +973,16 @@ function isTeaProduct(product) {
   const excludePatterns = [
     'gift', 'sampler', 'variety pack', 'assortment', 'discovery box',
     'mug', 'cup', 'teapot', 'infuser', 'accessory', 'accessories',
+    'tumbler', 'glass pitcher', 'iced tea pitcher', 'tea strainer',
+    'chawan', 'yunomi', 'kyusu', 'tea pot', 'tea scoop', 'chashaku',
+    'tea caddy', 'katakuchi', 'chabu', 'tea towel', 'lid holder',
+    'incense holder', 'gong fu tea set', 'whisk holder', 'matcha whisk',
     'honey', 'sweetener', 'cookie', 'biscuit',
     'lozenge', 'capsule', 'supplement', 'carbon offset', 'carbon neutral',
     'latte powder', 'drinking chocolate',
     'teaware', 'gift card', 'membership', 'bundle', 'custom gift', 'tea gift',
-    'combo', 'set of',
+    'combo', 'set of', 'class |', 'virtual class', 'tea club',
+    'starter set', 'instant lemonade powder', 'enamel pin',
   ];
   
   if (excludePatterns.some(p => title.includes(p) || type.includes(p))) return false;
@@ -995,6 +1008,17 @@ async function ensureCompany(brandKey) {
   if (existing) {
     console.log(`  Company exists: ${brand.name} (${existing.id})`);
     return existing.id;
+  }
+
+  const { data: existingByName } = await supabase
+    .from('companies')
+    .select('id')
+    .eq('name', brand.name)
+    .single();
+
+  if (existingByName) {
+    console.log(`  Company exists: ${brand.name} (${existingByName.id})`);
+    return existingByName.id;
   }
   
   // Create
@@ -1034,12 +1058,24 @@ async function scrapeBrand(brandKey) {
   let allProducts = [];
   let page = 1;
   while (true) {
-    const response = await fetch(`${brand.url}/products.json?limit=250&page=${page}`);
+    const response = await fetchWithRetry(`${brand.url}/products.json?limit=250&page=${page}`, {
+      headers: SCRAPER_HEADERS,
+    }, {
+      label: `${brand.name} page ${page}`,
+      retries: 5,
+      baseDelayMs: 5000,
+      maxDelayMs: 120000,
+      timeoutMs: 30000,
+    });
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+    }
     const data = await response.json();
     if (!data.products || data.products.length === 0) break;
     allProducts = allProducts.concat(data.products);
     if (data.products.length < 250) break;
     page++;
+    await sleep(PAGE_DELAY_MS);
   }
   
   const teas = allProducts.filter(isTeaProduct);
@@ -1047,8 +1083,16 @@ async function scrapeBrand(brandKey) {
   
   let imported = 0;
   let skipped = 0;
+  const seenNames = new Set();
   
   for (const product of teas) {
+    const nameKey = product.title.toLowerCase().trim();
+    if (seenNames.has(nameKey)) {
+      skipped++;
+      continue;
+    }
+    seenNames.add(nameKey);
+
     // Check for duplicate
     const { data: existing } = await supabase
       .from('teas')
@@ -1092,11 +1136,13 @@ async function main() {
     console.log('Scraping all brands:', Object.keys(BRANDS).join(', '));
     for (const brand of Object.keys(BRANDS)) {
       await scrapeBrand(brand);
+      await sleep(SHOP_DELAY_MS);
     }
   } else {
     for (const brand of brands) {
       if (BRANDS[brand]) {
         await scrapeBrand(brand);
+        await sleep(SHOP_DELAY_MS);
       } else {
         console.error(`Unknown brand: ${brand}`);
       }

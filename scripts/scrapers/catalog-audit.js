@@ -7,6 +7,7 @@
 const fs = require('fs');
 const path = require('path');
 const { createClient } = require('@supabase/supabase-js');
+const { fetchWithRetry, sleep } = require('./lib/http');
 require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 const supabase = createClient(
@@ -15,6 +16,11 @@ const supabase = createClient(
 );
 
 const LOG_FILE = path.join(__dirname, '../../data/catalog-audit-log.json');
+const SHOP_DELAY_MS = Number(process.env.SHOPIFY_AUDIT_SHOP_DELAY_MS || 3000);
+const SCRAPER_HEADERS = {
+  'Accept': 'application/json,text/plain,*/*',
+  'User-Agent': 'ResteepedCatalogAudit/1.0 (+https://resteeped.com; tea inventory updater)',
+};
 
 // Tea type detection from tags/title
 function getTeaType(tags, title) {
@@ -22,7 +28,7 @@ function getTeaType(tags, title) {
   if (/\bpu-?erh\b|\bpuer\b|\bshou\b|\bsheng\b/.test(text)) return 'puerh';
   if (/\bmatcha\b/.test(text)) return 'green';
   if (/\brookibos\b/.test(text)) return 'rooibos';
-  if (/\bmate\b|\byerba\b/.test(text)) return 'mate';
+  if (/\bmate\b|\byerba\b/.test(text)) return 'herbal';
   if (/\bchai\b/.test(text)) return 'black';
   if (/\bherbal\b|\btisane\b|\bchamomile\b|\bhibiscus\b|\bmint\b|\bpeppermint\b/.test(text)) return 'herbal';
   if (/\bwhite\s*tea\b|\bsilver\s*needle\b|\bbai\s*mu\b/.test(text)) return 'white';
@@ -47,10 +53,15 @@ function isTeaProduct(product) {
     'gift card', 'e-gift', 'subscription', 'merch', 't-shirt', 'tote', 'candle',
     'gift', 'sampler', 'variety pack', 'assortment', 'discovery box',
     'mug', 'cup', 'teapot', 'infuser', 'accessory', 'accessories',
+    'tumbler', 'glass pitcher', 'iced tea pitcher', 'tea strainer',
+    'chawan', 'yunomi', 'kyusu', 'tea pot', 'tea scoop', 'chashaku',
+    'tea caddy', 'katakuchi', 'chabu', 'tea towel', 'lid holder',
+    'incense holder', 'gong fu tea set', 'whisk holder', 'matcha whisk',
     'honey', 'sweetener', 'cookie', 'biscuit',
     'lozenge', 'capsule', 'supplement', 'carbon offset',
     'teaware', 'gift card', 'membership', 'bundle', 'custom gift',
-    'combo', 'set of',
+    'combo', 'set of', 'class |', 'virtual class', 'tea club',
+    'starter set', 'instant lemonade powder', 'enamel pin',
   ];
   if (excludePatterns.some(p => title.includes(p) || type.includes(p))) return false;
   
@@ -89,8 +100,20 @@ async function getCompanyId(slug) {
   return data?.id || null;
 }
 
+async function getCompanyIdByName(name) {
+  const { data } = await supabase
+    .from('companies')
+    .select('id')
+    .eq('name', name)
+    .single();
+  return data?.id || null;
+}
+
 async function ensureCompany(brand) {
   let id = await getCompanyId(brand.slug);
+  if (id) return id;
+
+  id = await getCompanyIdByName(brand.name);
   if (id) return id;
   
   const { data, error } = await supabase
@@ -116,9 +139,14 @@ async function ensureCompany(brand) {
 
 async function scrapeShopifyBrand(brand) {
   try {
-    const resp = await fetch(`${brand.url}/products.json?limit=250`, {
-      signal: AbortSignal.timeout(30000),
-      headers: { 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7)' }
+    const resp = await fetchWithRetry(`${brand.url}/products.json?limit=250`, {
+      headers: SCRAPER_HEADERS,
+    }, {
+      label: brand.name,
+      retries: 5,
+      baseDelayMs: 5000,
+      maxDelayMs: 120000,
+      timeoutMs: 30000,
     });
     if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
     const data = await resp.json();
@@ -150,7 +178,6 @@ async function auditBrand(brandKey, brand) {
     const nameKey = product.title.toLowerCase().trim();
     if (existing.has(nameKey)) continue;
     
-    newTeas.push(product.title);
     const teaData = {
       name: product.title,
       company_id: companyId,
@@ -166,6 +193,8 @@ async function auditBrand(brandKey, brand) {
       console.error(`  Failed to insert "${product.title}": ${error.message}`);
     } else {
       added++;
+      existing.add(nameKey);
+      newTeas.push(product.title);
     }
   }
   
@@ -219,6 +248,7 @@ async function main() {
       console.error(`  Error auditing ${key}: ${e.message}`);
       results.push({ brand: BRANDS[key].name, status: 'error', error: e.message, added: 0 });
     }
+    await sleep(SHOP_DELAY_MS);
   }
   
   // Summary
