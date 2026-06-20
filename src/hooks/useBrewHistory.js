@@ -101,8 +101,14 @@ export const useBrewHistory = () => {
           tea_id: teaId || null,
           steep_time_seconds: steepTimeSeconds,
           temperature_f: temperatureF || null,
+          infusion_number: infusionNumber || null,
+          note: note || null,
+          rating: rating || null,
+          tasting_notes: tastingNotes || null,
+          brew_method: brewMethod || null,
           tea_weight: teaWeight || null,
           tea_weight_unit: teaWeightUnit || null,
+          is_public: true,
         })
         .select()
         .single();

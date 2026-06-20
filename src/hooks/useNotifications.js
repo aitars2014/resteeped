@@ -19,6 +19,8 @@ const DEFAULT_PREFERENCES = {
   brewReminder: false,
   newTeasFromBrands: false,
   seasonalPrompts: false,
+  followedTeaTypes: [],
+  followedBrandNames: [],
 };
 
 /**

@@ -296,6 +296,21 @@ const ActivityCard = ({ activity, theme, onTeaPress, onUserPress }) => {
               </View>
               <Bookmark size={18} color={theme.accent.primary} fill={theme.accent.primary} accessibilityElementsHidden={true} />
             </TouchableOpacity>
+            {(activity.rating || activity.note || activity.brewMethod) && (
+              <View style={styles.reviewContent}>
+                {activity.rating && <StarRating rating={activity.rating} size={15} />}
+                {activity.note && (
+                  <Text style={[styles.reviewText, { color: theme.text.secondary }]} numberOfLines={2}>
+                    "{activity.note}"
+                  </Text>
+                )}
+                {(activity.brewMethod || activity.infusionNumber) && (
+                  <Text style={[styles.brewMetaText, { color: theme.text.tertiary }]}>
+                    {[activity.brewMethod, activity.infusionNumber ? `Infusion ${activity.infusionNumber}` : null].filter(Boolean).join(' · ')}
+                  </Text>
+                )}
+              </View>
+            )}
           </>
         );
         
@@ -423,6 +438,7 @@ export const ActivityFeedScreen = ({ navigation }) => {
           withTimeout(supabase
             .from('brew_sessions')
             .select('*, profiles:user_id(id, display_name, avatar_url, is_private), tea:tea_id(id, name, tea_type, brand_name, image_url)')
+            .eq('is_public', true)
             .order('created_at', { ascending: false })
             .limit(10)),
           // Collection adds
@@ -472,6 +488,10 @@ export const ActivityFeedScreen = ({ navigation }) => {
                   imageUrl: brew.tea.image_url,
                 },
                 steepTime: brew.steep_time_seconds ? Math.round(brew.steep_time_seconds / 60) : null,
+                rating: brew.rating,
+                note: brew.note,
+                brewMethod: brew.brew_method,
+                infusionNumber: brew.infusion_number,
                 timestamp: new Date(brew.created_at),
               });
             }
@@ -761,6 +781,10 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   brewTime: {
+    ...typography.caption,
+    fontWeight: '600',
+  },
+  brewMetaText: {
     ...typography.caption,
     fontWeight: '600',
   },

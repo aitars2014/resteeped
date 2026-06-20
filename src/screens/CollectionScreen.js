@@ -17,11 +17,12 @@ import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useBrewHistory } from '../hooks';
 import { getBrewingGuide } from '../constants/brewingGuides';
 import { haptics } from '../utils/haptics';
+import { COLLECTION_STATUSES, COLLECTION_STATUS_LABELS } from '../utils/tasteProfile';
 
 export const CollectionScreen = ({ navigation }) => {
   const { theme } = useTheme();
   const { user } = useAuth();
-  const { collection, loading, refreshCollection } = useCollection();
+  const { collection, loading, refreshCollection, updateInCollection } = useCollection();
   const { isPremium, canAddToCollection, getRemainingFreeSlots, FREE_TIER_LIMITS } = useSubscription();
   const [filter, setFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
@@ -81,9 +82,8 @@ export const CollectionScreen = ({ navigation }) => {
   const filteredCollection = useMemo(() => {
     let result = collection.filter(item => {
       if (filter === 'all') return true;
-      if (filter === 'tried') return item.status === 'tried';
-      if (filter === 'want') return item.status === 'want_to_try' || !item.status;
-      return false;
+      if (filter === 'want_to_try') return item.status === 'want_to_try' || !item.status;
+      return item.status === filter;
     });
 
     // Apply tea-level filters
@@ -210,6 +210,7 @@ export const CollectionScreen = ({ navigation }) => {
     
     const teaId = item.tea?.id || item.tea_id;
     const isJustBrewed = brewingTeaId === teaId;
+    const statusLabel = COLLECTION_STATUS_LABELS[item.status || 'want_to_try'] || 'Saved';
 
     return (
       <View style={styles.teaItem}>
@@ -223,6 +224,9 @@ export const CollectionScreen = ({ navigation }) => {
             <Text style={[styles.ratingText, { color: theme.text.inverse }]}>★ {item.user_rating.toFixed(1)}</Text>
           </View>
         )}
+        <View style={[styles.statusBadge, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
+          <Text style={[styles.statusBadgeText, { color: theme.text.secondary }]}>{statusLabel}</Text>
+        </View>
         {/* Quick Brew button */}
         <TouchableOpacity
           style={[styles.quickBrewBtn, { backgroundColor: theme.background.secondary, borderColor: theme.border.default }]}
@@ -236,6 +240,41 @@ export const CollectionScreen = ({ navigation }) => {
             {isJustBrewed ? 'Logged!' : 'Brew'}
           </Text>
         </TouchableOpacity>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          style={[styles.statusActions, { backgroundColor: theme.background.primary, borderColor: theme.border.light }]}
+          contentContainerStyle={styles.statusActionsContent}
+        >
+          {COLLECTION_STATUSES.filter(status => status.id !== 'all').map(status => {
+            const isActive = (item.status || 'want_to_try') === status.id;
+            return (
+              <TouchableOpacity
+                key={status.id}
+                style={[
+                  styles.statusAction,
+                  {
+                    backgroundColor: isActive ? theme.accent.primary : theme.background.secondary,
+                    borderColor: isActive ? theme.accent.primary : theme.border.light,
+                  },
+                ]}
+                onPress={() => {
+                  haptics.selection();
+                  updateInCollection(teaId, { status: status.id });
+                }}
+                accessibilityRole="button"
+                accessibilityLabel={`Mark ${tea.name} as ${status.label}`}
+              >
+                <Text style={[
+                  styles.statusActionText,
+                  { color: isActive ? theme.text.inverse : theme.text.secondary },
+                ]}>
+                  {status.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
       </View>
     );
   };
@@ -356,11 +395,9 @@ export const CollectionScreen = ({ navigation }) => {
       
       {/* Filter tabs */}
       <View style={[styles.filterTabs, { borderBottomColor: theme.border.light }]}>
-        {[
-          { id: 'all', label: 'All' },
-          { id: 'tried', label: 'Tried' },
-          { id: 'want', label: 'Want to Try' },
-        ].map(renderTab)}
+        <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+          {COLLECTION_STATUSES.map(renderTab)}
+        </ScrollView>
       </View>
 
       {/* Search & Filters */}
@@ -497,6 +534,19 @@ const styles = StyleSheet.create({
     marginBottom: spacing.cardGap,
     position: 'relative',
   },
+  statusBadge: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 14,
+    borderWidth: 1,
+  },
+  statusBadgeText: {
+    ...typography.caption,
+    fontWeight: '700',
+  },
   quickBrewBtn: {
     position: 'absolute',
     bottom: 12,
@@ -523,6 +573,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 14,
+  },
+  statusActions: {
+    borderWidth: 1,
+    borderTopWidth: 0,
+    borderBottomLeftRadius: spacing.cardBorderRadius,
+    borderBottomRightRadius: spacing.cardBorderRadius,
+  },
+  statusActionsContent: {
+    gap: 8,
+    padding: 8,
+  },
+  statusAction: {
+    alignItems: 'center',
+    minWidth: 82,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  statusActionText: {
+    ...typography.caption,
+    fontWeight: '700',
   },
   ratingText: {
     ...typography.caption,

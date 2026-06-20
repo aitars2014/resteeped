@@ -48,6 +48,7 @@ export default function AddTeaScreen({ navigation }) {
   const [purchaseLocation, setPurchaseLocation] = useState('');
   const [notes, setNotes] = useState('');
   const [image, setImage] = useState(null);
+  const [scanMode, setScanMode] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const pickImage = async () => {
@@ -71,7 +72,7 @@ export default function AddTeaScreen({ navigation }) {
     }
   };
 
-  const takePhoto = async () => {
+  const takePhoto = async (mode = 'photo') => {
     haptics.light();
     
     const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -88,6 +89,7 @@ export default function AddTeaScreen({ navigation }) {
 
     if (!result.canceled) {
       setImage(result.assets[0]);
+      setScanMode(mode === 'scan');
     }
   };
 
@@ -290,7 +292,7 @@ export default function AddTeaScreen({ navigation }) {
                 </TouchableOpacity>
                 <TouchableOpacity 
                   style={styles.imageButton} 
-                  onPress={takePhoto}
+                  onPress={() => takePhoto('photo')}
                   accessible={true}
                   accessibilityRole="button"
                   accessibilityLabel="Take a photo with camera"
@@ -298,9 +300,28 @@ export default function AddTeaScreen({ navigation }) {
                   <Ionicons name="camera-outline" size={28} color={theme.text.tertiary} />
                   <Text style={styles.imageButtonText}>Take Photo</Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.imageButton, styles.scanButton]}
+                  onPress={() => takePhoto('scan')}
+                  accessible={true}
+                  accessibilityRole="button"
+                  accessibilityLabel="Scan a tea label"
+                >
+                  <Ionicons name="scan-outline" size={28} color={theme.accent.primary} />
+                  <Text style={[styles.imageButtonText, { color: theme.accent.primary }]}>Scan Label</Text>
+                </TouchableOpacity>
               </View>
             )}
           </View>
+
+          {scanMode && (
+            <View style={styles.scanNotice}>
+              <Ionicons name="sparkles-outline" size={18} color={theme.accent.primary} />
+              <Text style={styles.scanNoticeText}>
+                Label photo attached. Add the tea details below and Resteeped will save the package image with your tea.
+              </Text>
+            </View>
+          )}
 
           {/* Tea Name */}
           <View style={styles.inputGroup}>
@@ -477,10 +498,12 @@ const createStyles = (theme) => StyleSheet.create({
   },
   imagePlaceholder: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
     gap: spacing.md,
   },
   imageButton: {
-    flex: 1,
+    flexGrow: 1,
+    flexBasis: '30%',
     height: 120,
     backgroundColor: theme.background.secondary,
     borderRadius: 16,
@@ -494,6 +517,24 @@ const createStyles = (theme) => StyleSheet.create({
   imageButtonText: {
     fontSize: 14,
     color: theme.text.tertiary,
+  },
+  scanButton: {
+    borderColor: theme.accent.primary,
+    backgroundColor: theme.accent.primary + '10',
+  },
+  scanNotice: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: spacing.sm,
+    padding: spacing.md,
+    marginBottom: spacing.md,
+    borderRadius: 12,
+    backgroundColor: theme.accent.primary + '10',
+  },
+  scanNoticeText: {
+    flex: 1,
+    ...typography.bodySmall,
+    color: theme.text.secondary,
   },
   inputGroup: {
     marginBottom: spacing.lg,

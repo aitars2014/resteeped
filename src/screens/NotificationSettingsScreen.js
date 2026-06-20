@@ -16,6 +16,16 @@ import { typography, spacing } from '../constants';
 import { useTheme, useAuth } from '../context';
 import { useNotifications } from '../hooks/useNotifications';
 
+const TEA_TYPE_FOLLOWS = [
+  { id: 'black', label: 'Black' },
+  { id: 'green', label: 'Green' },
+  { id: 'oolong', label: 'Oolong' },
+  { id: 'white', label: 'White' },
+  { id: 'puerh', label: "Pu'erh" },
+  { id: 'yellow', label: 'Yellow' },
+  { id: 'herbal', label: 'Herbal' },
+];
+
 export const NotificationSettingsScreen = ({ navigation }) => {
   const { theme } = useTheme();
   const { user } = useAuth();
@@ -48,6 +58,17 @@ export const NotificationSettingsScreen = ({ navigation }) => {
         'Permission Required',
         'Notifications help you discover new teas and maintain your brewing routine. You can enable them anytime in Settings.',
       );
+    }
+  };
+
+  const toggleFollowedTeaType = async (teaType) => {
+    const current = preferences.followedTeaTypes || [];
+    const next = current.includes(teaType)
+      ? current.filter(type => type !== teaType)
+      : [...current, teaType];
+    await updatePreference('followedTeaTypes', next);
+    if (!preferences.newTeasFromBrands && next.length > 0) {
+      await updatePreference('newTeasFromBrands', true);
     }
   };
 
@@ -167,6 +188,40 @@ export const NotificationSettingsScreen = ({ navigation }) => {
         <Text style={[styles.footnote, { color: theme.text.tertiary || theme.text.secondary }]}>
           Brew timer notifications are always enabled when you start a timer — they're not affected by these settings.
         </Text>
+
+        <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>
+          FOLLOWED TEA TYPES
+        </Text>
+        <View style={styles.followGrid}>
+          {TEA_TYPE_FOLLOWS.map(type => {
+            const isActive = (preferences.followedTeaTypes || []).includes(type.id);
+            return (
+              <TouchableOpacity
+                key={type.id}
+                style={[
+                  styles.followPill,
+                  {
+                    backgroundColor: isActive ? theme.accent.primary : theme.background.secondary,
+                    borderColor: isActive ? theme.accent.primary : theme.border.medium,
+                    opacity: isPermissionGranted ? 1 : 0.55,
+                  },
+                ]}
+                onPress={() => toggleFollowedTeaType(type.id)}
+                disabled={!isPermissionGranted}
+                accessibilityRole="button"
+                accessibilityState={{ selected: isActive, disabled: !isPermissionGranted }}
+                accessibilityLabel={`Follow ${type.label} tea notifications`}
+              >
+                <Text style={[
+                  styles.followPillText,
+                  { color: isActive ? theme.text.inverse : theme.text.primary },
+                ]}>
+                  {type.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
@@ -269,6 +324,23 @@ const styles = StyleSheet.create({
     marginTop: spacing.md,
     marginBottom: spacing.xl,
     lineHeight: 16,
+  },
+  followGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: spacing.sm,
+    marginHorizontal: spacing.md,
+    marginBottom: spacing.xl,
+  },
+  followPill: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+    borderRadius: 18,
+    borderWidth: 1,
+  },
+  followPillText: {
+    ...typography.caption,
+    fontWeight: '700',
   },
 });
 

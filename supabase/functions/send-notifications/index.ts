@@ -111,9 +111,32 @@ serve(withTracing('send-notifications', async (req, tracer, rootSpan) => {
     throw new Error(`Failed to fetch tokens: ${tokensError.message}`)
   }
 
+  const normalize = (value: unknown) => String(value || '').trim().toLowerCase()
+  const notificationTeaType = normalize(data?.tea_type || data?.teaType)
+  const notificationBrand = normalize(data?.brand_name || data?.brandName || data?.shop_name || data?.shopName)
+
   const eligibleTokens = (tokens || []).filter((t: any) => {
     const prefs = t.profiles?.notification_preferences
-    return prefs && prefs[prefKey] === true
+    if (!prefs || prefs[prefKey] !== true) return false
+
+    if (type === 'new_teas') {
+      const followedTypes = Array.isArray(prefs.followedTeaTypes)
+        ? prefs.followedTeaTypes.map(normalize)
+        : []
+      const followedBrands = Array.isArray(prefs.followedBrandNames)
+        ? prefs.followedBrandNames.map(normalize)
+        : []
+
+      const hasSpecificFollows = followedTypes.length > 0 || followedBrands.length > 0
+      if (!hasSpecificFollows) return true
+
+      return (
+        (notificationTeaType && followedTypes.includes(notificationTeaType)) ||
+        (notificationBrand && followedBrands.includes(notificationBrand))
+      )
+    }
+
+    return true
   })
 
   rootSpan.setAttributes({

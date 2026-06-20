@@ -15,12 +15,13 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun, Instagram, Flame } from 'lucide-react-native';
+import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun, Instagram, Flame, Bell } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
 import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton, BrewPicker, WeeklyChallenge } from '../components';
 import { useTeas, useCompanies, useRecommendations, useTeaware, useBrewHistory } from '../hooks';
 import { useTheme, useCollection } from '../context';
 import { maybeRequestReviewByAge } from '../utils/reviewPrompt';
+import { buildTasteProfile, getMatchScore, pickBrewTodayTea } from '../utils/tasteProfile';
 
 // Skeleton for horizontal tea list while loading
 const HorizontalListSkeleton = () => (
@@ -73,6 +74,9 @@ export const HomeScreen = ({ navigation }) => {
   const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
   const { getBrewStreak, todayBrewCount, loading: brewHistoryLoading } = useBrewHistory();
   const { collection } = useCollection();
+  const tasteProfile = React.useMemo(() => buildTasteProfile(collection), [collection]);
+  const brewTodayTea = React.useMemo(() => pickBrewTodayTea(collection, forYou.length > 0 ? forYou : teas), [collection, forYou, teas]);
+  const brewTodayMatch = React.useMemo(() => getMatchScore(brewTodayTea, tasteProfile), [brewTodayTea, tasteProfile]);
   
   // Get user's favorite teas (rated 4-5 stars)
   const favoriteTeas = React.useMemo(() => {
@@ -368,6 +372,68 @@ export const HomeScreen = ({ navigation }) => {
             )}
           </View>
         </TouchableOpacity>
+
+        {/* Welcome-back release card */}
+        <View style={[styles.releaseCard, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
+          <View style={[styles.releaseIcon, { backgroundColor: theme.accent.primary + '18' }]}>
+            <Sparkles size={20} color={theme.accent.primary} />
+          </View>
+          <View style={styles.releaseContent}>
+            <Text style={[styles.releaseTitle, { color: theme.text.primary }]}>Resteeped is back</Text>
+            <Text style={[styles.releaseBody, { color: theme.text.secondary }]}>
+              Your collection, timer, tasting notes, and recommendations are ready for a fresh brew.
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={[styles.releaseAction, { borderColor: theme.border.medium }]}
+            onPress={() => navigation.navigate('Profile', { screen: 'NotificationSettings' })}
+            accessibilityRole="button"
+            accessibilityLabel="Open notification settings"
+          >
+            <Bell size={16} color={theme.accent.primary} />
+          </TouchableOpacity>
+        </View>
+
+        {/* Brew Today */}
+        {brewTodayTea && (
+          <TouchableOpacity
+            style={[styles.brewTodayCard, { backgroundColor: theme.background.secondary, borderColor: theme.border.medium }]}
+            onPress={() => navigation.navigate('Timer', {
+              screen: 'TimerHome',
+              params: { tea: brewTodayTea },
+            })}
+            activeOpacity={0.78}
+            accessibilityRole="button"
+            accessibilityLabel={`Brew ${brewTodayTea.name} today`}
+          >
+            <View style={styles.brewTodayHeader}>
+              <View>
+                <Text style={[styles.brewTodayEyebrow, { color: theme.accent.primary }]}>BREW TODAY</Text>
+                <Text style={[styles.brewTodayTitle, { color: theme.text.primary }]} numberOfLines={1}>
+                  {brewTodayTea.name}
+                </Text>
+                <Text style={[styles.brewTodaySubtitle, { color: theme.text.secondary }]} numberOfLines={1}>
+                  {brewTodayTea.brandName || 'Recommended tea'}
+                </Text>
+              </View>
+              {brewTodayMatch && (
+                <View style={[styles.matchBadge, { backgroundColor: theme.accent.primary + '18' }]}>
+                  <Sparkles size={13} color={theme.accent.primary} />
+                  <Text style={[styles.matchBadgeText, { color: theme.accent.primary }]}>{brewTodayMatch}%</Text>
+                </View>
+              )}
+            </View>
+            <View style={styles.brewTodayFooter}>
+              <View style={styles.brewTodayMeta}>
+                <Coffee size={16} color={theme.text.secondary} />
+                <Text style={[styles.brewTodayMetaText, { color: theme.text.secondary }]}>
+                  Start timer, then log notes after steeping
+                </Text>
+              </View>
+              <ChevronRight size={18} color={theme.text.secondary} />
+            </View>
+          </TouchableOpacity>
+        )}
 
         {/* 2.5. Brew Streak — right below search */}
         {(() => {
@@ -769,7 +835,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     paddingHorizontal: spacing.screenHorizontal,
-    marginBottom: spacing.xl,
+    marginBottom: spacing.md,
   },
   searchBar: {
     flexDirection: 'row',
@@ -833,6 +899,95 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screenHorizontal,
     marginBottom: spacing.sm,
     fontStyle: 'italic',
+  },
+  releaseCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.md,
+    padding: spacing.md,
+    borderRadius: spacing.cardBorderRadius,
+    borderWidth: 1,
+    gap: 12,
+  },
+  releaseIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  releaseContent: {
+    flex: 1,
+  },
+  releaseTitle: {
+    ...typography.body,
+    fontWeight: '700',
+  },
+  releaseBody: {
+    ...typography.caption,
+    marginTop: 2,
+  },
+  releaseAction: {
+    width: 34,
+    height: 34,
+    borderRadius: 17,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 1,
+  },
+  brewTodayCard: {
+    marginHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.md,
+    padding: spacing.md,
+    borderRadius: spacing.cardBorderRadius,
+    borderWidth: 1,
+  },
+  brewTodayHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    gap: 12,
+  },
+  brewTodayEyebrow: {
+    ...typography.overline,
+    letterSpacing: 0.8,
+  },
+  brewTodayTitle: {
+    ...typography.headingSmall,
+    marginTop: 2,
+  },
+  brewTodaySubtitle: {
+    ...typography.bodySmall,
+    marginTop: 2,
+  },
+  matchBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-start',
+    paddingHorizontal: 8,
+    paddingVertical: 5,
+    borderRadius: 12,
+    gap: 4,
+  },
+  matchBadgeText: {
+    ...typography.caption,
+    fontWeight: '700',
+  },
+  brewTodayFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: spacing.md,
+  },
+  brewTodayMeta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    flex: 1,
+    gap: 8,
+  },
+  brewTodayMetaText: {
+    ...typography.caption,
+    flex: 1,
   },
   teaTypeGrid: {
     flexDirection: 'row',

@@ -25,6 +25,7 @@ import {
   TrendingUp,
   Star,
   Users,
+  Bell,
 } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
@@ -32,6 +33,7 @@ import { Button, StarRating, TeaCard, WriteCompanyReviewModal, CompanyProfileSke
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { useAuth } from '../context';
 import { useCompanyReviews } from '../hooks';
+import { useNotifications } from '../hooks/useNotifications';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 
 const SORT_OPTIONS = [
@@ -44,6 +46,7 @@ const CompanyProfileScreen = ({ route, navigation }) => {
   const { theme } = useTheme();
   const { companyId, company: passedCompany } = route.params || {};
   const { user, isDevMode } = useAuth();
+  const { preferences, updatePreference, requestPermissions, isPermissionGranted } = useNotifications();
   
   // Derive effective company ID from params directly
   const effectiveCompanyId = companyId || passedCompany?.id;
@@ -61,6 +64,8 @@ const CompanyProfileScreen = ({ route, navigation }) => {
 
   // Get the company reviews hook for submitting reviews
   const { submitReview, userReview, refreshReviews } = useCompanyReviews(effectiveCompanyId);
+  const followedBrandNames = preferences.followedBrandNames || [];
+  const isFollowingBrand = company?.name ? followedBrandNames.includes(company.name) : false;
 
   // Update company when passedCompany changes (fixes Bug 3 - stale state on reuse)
   useEffect(() => {
@@ -232,6 +237,21 @@ const CompanyProfileScreen = ({ route, navigation }) => {
     setShowReviewModal(true);
   };
 
+  const handleToggleFollow = async () => {
+    if (!company?.name) return;
+    if (!isPermissionGranted) {
+      await requestPermissions();
+    }
+    const current = preferences.followedBrandNames || [];
+    const next = current.includes(company.name)
+      ? current.filter(name => name !== company.name)
+      : [...current, company.name];
+    await updatePreference('followedBrandNames', next);
+    if (!preferences.newTeasFromBrands && next.length > 0) {
+      await updatePreference('newTeasFromBrands', true);
+    }
+  };
+
   const handleSubmitReview = async (reviewData) => {
     const { error, moderation } = await submitReview(reviewData);
     if (error) {
@@ -358,6 +378,18 @@ const CompanyProfileScreen = ({ route, navigation }) => {
                 <Instagram size={20} color={brandColor} />
               </TouchableOpacity>
             )}
+            <TouchableOpacity
+              style={[
+                styles.socialButton,
+                { backgroundColor: isFollowingBrand ? brandColor : theme.background.secondary },
+              ]}
+              onPress={handleToggleFollow}
+              accessible={true}
+              accessibilityRole="button"
+              accessibilityLabel={isFollowingBrand ? `Unfollow ${company.name} inventory alerts` : `Follow ${company.name} inventory alerts`}
+            >
+              <Bell size={20} color={isFollowingBrand ? theme.text.inverse : brandColor} />
+            </TouchableOpacity>
           </View>
         </View>
 

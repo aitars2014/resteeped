@@ -13,12 +13,13 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee } from 'lucide-react-native';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee, Sparkles } from 'lucide-react-native';
 import { typography, spacing, getPlaceholderImage, getBrewingGuide } from '../constants';
 import { Button, TeaTypeBadge, StarRating, FactCard, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote, ShareableTeaCard } from '../components';
 import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { maybeRequestReview, maybeRequestReviewOnCollectionAdd } from '../utils/reviewPrompt';
+import { buildTasteProfile, getMatchScore } from '../utils/tasteProfile';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useReviews, useCompanies, useTeas, useTastingNotes, useBrewHistory } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
@@ -99,6 +100,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   
   const inCollection = isInCollection(teaId);
   const collectionItem = getCollectionItem(teaId);
+  const tasteProfile = useMemo(() => buildTasteProfile(collection), [collection]);
+  const matchScore = useMemo(() => getMatchScore(fullTea, tasteProfile), [fullTea, tasteProfile]);
   
   const addTeaWithStatus = async (status) => {
     try {
@@ -424,13 +427,19 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           </TouchableOpacity>
           
           <View style={styles.badgeRow}>
-            <TeaTypeBadge teaType={tea.teaType} size="large" />
+            <TeaTypeBadge teaType={tea.teaType || tea.tea_type} size="large" />
             {personalRating > 0 && (
               <View style={styles.ratingPill}>
                 <Star size={14} color={theme.rating.star} fill={theme.rating.star} />
                 <Text style={styles.ratingText}>
                   {personalRating.toFixed(1)} (My Rating)
                 </Text>
+              </View>
+            )}
+            {matchScore && (
+              <View style={styles.matchPill}>
+                <Sparkles size={14} color={theme.accent.primary} />
+                <Text style={styles.matchPillText}>{matchScore}% Match</Text>
               </View>
             )}
           </View>
@@ -875,6 +884,20 @@ const createStyles = (theme) => ({
     paddingHorizontal: 10,
     paddingVertical: 6,
     borderRadius: 12,
+  },
+  matchPill: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
+    backgroundColor: theme.accent.primary + '18',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+  matchPillText: {
+    ...typography.bodySmall,
+    color: theme.accent.primary,
+    fontWeight: '700',
   },
   ratingText: {
     ...typography.bodySmall,
