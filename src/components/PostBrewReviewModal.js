@@ -49,11 +49,12 @@ export const PostBrewReviewModal = ({
   initialInfusion = 1,
 }) => {
   const { theme } = useTheme();
-  const [rating, setRating] = useState(3.5);
+  const [rating, setRating] = useState(0);
   const [notes, setNotes] = useState('');
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedMood, setSelectedMood] = useState(null);
   const [infusion, setInfusion] = useState(initialInfusion);
+  const [ratingActive, setRatingActive] = useState(false);
   const showInfusion = brewMethod === 'Gongfu' || initialInfusion > 1;
 
   const toggleTag = (label) => {
@@ -85,7 +86,7 @@ export const PostBrewReviewModal = ({
       notes.trim() || null,
     ].filter(Boolean).join(' — ');
     onSave({ rating, notes: allNotes || null, brewMethod, steepTimeSeconds, temperatureF, infusionNumber: showInfusion ? infusion : null });
-    setRating(3.5);
+    setRating(0);
     setNotes('');
     setSelectedTags([]);
     setSelectedMood(null);
@@ -94,7 +95,7 @@ export const PostBrewReviewModal = ({
 
   const handleSkip = () => {
     onClose();
-    setRating(3.5);
+    setRating(0);
     setNotes('');
     setSelectedTags([]);
     setSelectedMood(null);
@@ -108,9 +109,13 @@ export const PostBrewReviewModal = ({
         style={styles.overlay}
       >
         <View style={[styles.modal, { backgroundColor: theme.background.primary }]}>
-          <ScrollView showsVerticalScrollIndicator={false} bounces={false}>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            bounces={false}
+            scrollEnabled={!ratingActive}
+          >
           <View style={styles.header}>
-            <Text style={[styles.title, { color: theme.text.primary }]}>How was your brew?</Text>
+            <Text style={[styles.title, { color: theme.text.primary }]}>Rate this tea</Text>
             <TouchableOpacity onPress={handleSkip}>
               <X size={24} color={theme.text.secondary} />
             </TouchableOpacity>
@@ -196,8 +201,14 @@ export const PostBrewReviewModal = ({
           </ScrollView>
 
           {/* Rating slider */}
-          <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Rating</Text>
-          <RatingSlider value={rating} onValueChange={setRating} size="small" />
+          <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Your Rating</Text>
+          <RatingSlider
+            value={rating}
+            onValueChange={setRating}
+            onInteractionStart={() => setRatingActive(true)}
+            onInteractionEnd={() => setRatingActive(false)}
+            size="small"
+          />
 
           {/* Flavor Tags */}
           <Text style={[styles.sectionLabel, { color: theme.text.secondary }]}>Flavor Profile</Text>
@@ -253,7 +264,13 @@ export const PostBrewReviewModal = ({
             <TouchableOpacity style={styles.skipButton} onPress={handleSkip}>
               <Text style={[styles.skipText, { color: theme.text.secondary }]}>Skip</Text>
             </TouchableOpacity>
-            <Button title="Save Review" onPress={handleSave} variant="primary" style={{ flex: 1 }} />
+            <Button
+              title="Save Rating"
+              onPress={handleSave}
+              variant="primary"
+              style={{ flex: 1 }}
+              disabled={rating <= 0}
+            />
           </View>
           </ScrollView>
         </View>

@@ -13,15 +13,16 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as WebBrowser from 'expo-web-browser';
-import { ChevronLeft, Thermometer, Clock, MapPin, Star, Check, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee, Sparkles } from 'lucide-react-native';
-import { typography, spacing, getPlaceholderImage, getBrewingGuide } from '../constants';
-import { Button, TeaTypeBadge, StarRating, FactCard, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote, ShareableTeaCard } from '../components';
+import { ChevronLeft, Thermometer, Clock, MapPin, Star, NotebookPen, ExternalLink, ShoppingCart, Share2, Crown, Heart, Bookmark, Coffee, Sparkles } from 'lucide-react-native';
+import { typography, spacing, getPlaceholderImage } from '../constants';
+import { Button, TeaTypeBadge, TastingNotesModal, TeaCard, CaffeineIndicator, FlavorRadar, BrewingGuide, EditorialTastingNote, ShareableTeaCard, TeaTasteCharacteristics } from '../components';
 import { shareTea } from '../utils/sharing';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
 import { maybeRequestReview, maybeRequestReviewOnCollectionAdd } from '../utils/reviewPrompt';
+import { getTeaRatingGuidance } from '../utils/ratingScale';
 import { buildTasteProfile, getMatchScore } from '../utils/tasteProfile';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
-import { useReviews, useCompanies, useTeas, useTastingNotes, useBrewHistory } from '../hooks';
+import { useCompanies, useTeas, useTastingNotes } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
 import * as Haptics from 'expo-haptics';
 
@@ -38,7 +39,6 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   const { user } = useAuth();
   const { isInCollection, addToCollection, removeFromCollection, getCollectionItem, updateInCollection, collection } = useCollection();
   const { canAddToCollection, isPremium } = useSubscription();
-  const { reviews, userReview, submitReview, reviewCount, averageRating, loading: reviewsLoading } = useReviews(tea.id);
   const { tastingNote } = useTastingNotes(tea.id);
   const { companies } = useCompanies();
   const { teas, getTeaDetails } = useTeas();
@@ -64,24 +64,6 @@ export const TeaDetailScreen = ({ route, navigation }) => {
   }, [teas, tea.id, tea.teaType]);
   
   const [showTastingNotes, setShowTastingNotes] = useState(false);
-  const [quickBrewLogged, setQuickBrewLogged] = useState(false);
-  const { logBrewSession } = useBrewHistory();
-
-  const handleQuickBrew = async () => {
-    if (quickBrewLogged) return;
-    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-    const guide = getBrewingGuide(fullTea.teaType || fullTea.tea_type || 'black', fullTea);
-    const steepSecs = Math.round(((guide.steepTime.min + guide.steepTime.max) / 2) * 60);
-    const tempF = guide.waterTemp?.fahrenheit || null;
-    await logBrewSession({
-      teaId,
-      steepTimeSeconds: steepSecs,
-      temperatureF: tempF,
-      teaData: fullTea,
-    });
-    setQuickBrewLogged(true);
-    setTimeout(() => setQuickBrewLogged(false), 3000);
-  };
   
   // Track tea view
   useEffect(() => {
@@ -197,7 +179,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     }
   };
   
-  const handleWriteReview = () => {
+  const handleRateTea = () => {
     if (!user) {
       Alert.alert(
         'Sign In Required',
@@ -211,30 +193,6 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     }
     // Open the tasting notes modal (which includes rating)
     setShowTastingNotes(true);
-  };
-  
-  const handleSubmitReview = async ({ rating, reviewText }) => {
-    const { error, moderation } = await submitReview({ rating, reviewText });
-    if (error) {
-      Alert.alert('Error', 'Could not submit review. Please try again.');
-    } else {
-      trackEvent(AnalyticsEvents.REVIEW_SUBMITTED, {
-        tea_id: teaId,
-        tea_name: tea.name,
-        rating,
-        has_text: !!reviewText,
-      });
-      // Show moderation message if review was flagged
-      if (moderation) {
-        setTimeout(() => {
-          Alert.alert(
-            'Review Under Review',
-            moderation.message || 'Your review has been submitted and is pending moderation. It will appear once approved.',
-            [{ text: 'OK' }]
-          );
-        }, 300);
-      }
-    }
   };
   
   const handleBrewTea = async () => {
@@ -342,7 +300,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
     return fullTea.steepTimeMin ? `${fullTea.steepTimeMin} min` : '—';
   };
   
-  const personalRating = userReview?.rating || collectionItem?.user_rating || 0;
+  const personalRating = collectionItem?.user_rating || 0;
+  const personalRatingGuidance = getTeaRatingGuidance(personalRating);
   
   return (
     <View style={[styles.container, { backgroundColor: theme.background.primary }]}>
@@ -432,7 +391,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
               <View style={styles.ratingPill}>
                 <Star size={14} color={theme.rating.star} fill={theme.rating.star} />
                 <Text style={styles.ratingText}>
-                  {personalRating.toFixed(1)} (My Rating)
+                  {personalRating.toFixed(1)} {personalRatingGuidance.label}
                 </Text>
               </View>
             )}
@@ -495,6 +454,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
               </View>
             </View>
           )}
+
+          <TeaTasteCharacteristics tea={fullTea} />
           
           {/* Flavor Profile Radar - Premium Feature */}
           {fullTea.flavorNotes && fullTea.flavorNotes.length >= 2 && (
@@ -525,7 +486,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
           {inCollection && (
             <View style={styles.section}>
               <View style={styles.tastingNotesHeader}>
-                <Text style={styles.sectionTitle}>My Tasting Notes</Text>
+                <Text style={styles.sectionTitle}>My Rating & Tasting Notes</Text>
                 {isPremium && (
                   <TouchableOpacity 
                     onPress={() => setShowTastingNotes(true)} 
@@ -544,7 +505,14 @@ export const TeaDetailScreen = ({ route, navigation }) => {
                   {collectionItem?.user_rating > 0 && (
                     <View style={styles.myRating}>
                       <Text style={styles.myRatingLabel}>My Rating:</Text>
-                      <StarRating rating={collectionItem.user_rating} size={18} />
+                      <View>
+                        <Text style={styles.myRatingValue}>
+                          {collectionItem.user_rating.toFixed(1)} / 5 - {getTeaRatingGuidance(collectionItem.user_rating).label}
+                        </Text>
+                        <Text style={styles.myRatingMeaning}>
+                          {getTeaRatingGuidance(collectionItem.user_rating).description}
+                        </Text>
+                      </View>
                     </View>
                   )}
                   
@@ -574,10 +542,10 @@ export const TeaDetailScreen = ({ route, navigation }) => {
                 >
                   <Crown size={32} color={theme.accent.primary} />
                   <Text style={[styles.premiumLockTitle, { color: theme.text.primary }]}>
-                    Unlock Tasting Notes
+                    Unlock Rating & Tasting Notes
                   </Text>
                   <Text style={[styles.premiumLockText, { color: theme.text.secondary }]}>
-                    Upgrade to Premium to add personal notes and ratings
+                    Upgrade to Premium to add personal ratings and tasting notes
                   </Text>
                 </TouchableOpacity>
               )}
@@ -594,60 +562,6 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             </View>
           )}
 
-          {/* My Review section removed — consolidated into My Tasting Notes (TARS-48) */}
-          
-          {/* My Brew Reviews (per steeping settings) */}
-          {reviews.length > 0 && (
-            <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: theme.text.primary }]}>My Brew Reviews</Text>
-              {reviews.map((review) => (
-                <View 
-                  key={review.id} 
-                  style={[styles.brewReviewCard, { 
-                    backgroundColor: theme.background.secondary, 
-                    borderColor: theme.border.light 
-                  }]}
-                >
-                  <View style={styles.brewReviewHeader}>
-                    <StarRating rating={review.rating} size={16} />
-                    <Text style={[styles.brewReviewDate, { color: theme.text.secondary }]}>
-                      {new Date(review.created_at).toLocaleDateString()}
-                    </Text>
-                  </View>
-                  {review.review_text && (
-                    <Text style={[styles.brewReviewText, { color: theme.text.primary }]}>
-                      {review.review_text}
-                    </Text>
-                  )}
-                  {(review.brew_method || review.steep_time_seconds || review.temperature_f) && (
-                    <View style={styles.brewReviewSettings}>
-                      {review.brew_method && (
-                        <Text style={[styles.brewReviewSetting, { color: theme.text.secondary, backgroundColor: theme.background.primary }]}>
-                          {review.brew_method}
-                        </Text>
-                      )}
-                      {review.steep_time_seconds && (
-                        <Text style={[styles.brewReviewSetting, { color: theme.text.secondary, backgroundColor: theme.background.primary }]}>
-                          \u23F1 {Math.floor(review.steep_time_seconds / 60)}:{(review.steep_time_seconds % 60).toString().padStart(2, '0')}
-                        </Text>
-                      )}
-                      {review.temperature_f && (
-                        <Text style={[styles.brewReviewSetting, { color: theme.text.secondary, backgroundColor: theme.background.primary }]}>
-                          \uD83C\uDF21\uFE0F {review.temperature_f}\u00B0F
-                        </Text>
-                      )}
-                      {review.tea_weight && (
-                        <Text style={[styles.brewReviewSetting, { color: theme.text.secondary, backgroundColor: theme.background.primary }]}>
-                          \u2696\uFE0F {review.tea_weight}{review.tea_weight_unit || 'g'}
-                        </Text>
-                      )}
-                    </View>
-                  )}
-                </View>
-              ))}
-            </View>
-          )}
-          
           {/* Buy This Tea */}
           {brandName && (
             <View style={styles.section}>
@@ -701,7 +615,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         </View>
       </ScrollView>
       
-      {/* Sticky Action Buttons - 4 CTAs */}
+      {/* Sticky Action Buttons */}
       <View style={styles.buttonContainer}>
         <View style={styles.buttonRow}>
           <TouchableOpacity
@@ -740,20 +654,8 @@ export const TeaDetailScreen = ({ route, navigation }) => {
             <Text style={[styles.iconActionLabel, { color: theme.text.secondary }]} numberOfLines={1}>Steep</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={[styles.iconAction, { backgroundColor: quickBrewLogged ? theme.accent.primary : theme.background.secondary }]}
-            onPress={handleQuickBrew}
-            activeOpacity={0.6}
-            hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
-            accessible={true}
-            accessibilityLabel="Quick log brew"
-            accessibilityHint="Log a brew session instantly with default steep parameters"
-          >
-            <Text style={{ fontSize: 18 }}>{quickBrewLogged ? '✓' : '☕'}</Text>
-            <Text style={[styles.iconActionLabel, { color: quickBrewLogged ? theme.text.inverse : theme.text.secondary }]} numberOfLines={1}>{quickBrewLogged ? 'Done!' : 'Log'}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
             style={[styles.iconAction, { backgroundColor: personalRating > 0 ? theme.accent.primary : theme.background.secondary }]}
-            onPress={handleWriteReview}
+            onPress={handleRateTea}
             activeOpacity={0.6}
             hitSlop={{ top: 8, bottom: 8, left: 4, right: 4 }}
             accessible={true}
@@ -774,7 +676,7 @@ export const TeaDetailScreen = ({ route, navigation }) => {
         )}
       </View>
       
-      {/* Tasting Notes Modal (consolidated with reviews — TARS-48) */}
+      {/* Tasting Notes Modal */}
       <TastingNotesModal
         visible={showTastingNotes}
         onClose={() => setShowTastingNotes(false)}
@@ -942,38 +844,6 @@ const createStyles = (theme) => ({
     shadowRadius: 4,
     elevation: 2,
   },
-  brewReviewCard: {
-    padding: 12,
-    borderRadius: 12,
-    borderWidth: 1,
-    marginBottom: 8,
-  },
-  brewReviewHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 6,
-  },
-  brewReviewDate: {
-    fontSize: 12,
-  },
-  brewReviewText: {
-    fontSize: 14,
-    lineHeight: 20,
-    marginBottom: 8,
-  },
-  brewReviewSettings: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 6,
-  },
-  brewReviewSetting: {
-    fontSize: 12,
-    paddingHorizontal: 8,
-    paddingVertical: 3,
-    borderRadius: 8,
-    overflow: 'hidden',
-  },
   section: {
     marginBottom: spacing.sectionSpacing,
   },
@@ -1032,6 +902,17 @@ const createStyles = (theme) => ({
     ...typography.bodySmall,
     color: theme.text.secondary,
   },
+  myRatingValue: {
+    ...typography.bodySmall,
+    color: theme.text.primary,
+    fontWeight: '700',
+    marginBottom: 2,
+  },
+  myRatingMeaning: {
+    ...typography.caption,
+    color: theme.text.secondary,
+    lineHeight: 18,
+  },
   notesCard: {
     backgroundColor: theme.background.secondary,
     borderRadius: 12,
@@ -1055,58 +936,6 @@ const createStyles = (theme) => ({
     borderStyle: 'dashed',
   },
   addNotesText: {
-    ...typography.bodySmall,
-    color: theme.text.secondary,
-  },
-  reviewsHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  writeReviewButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  writeReviewText: {
-    ...typography.bodySmall,
-    color: theme.accent.primary,
-    fontWeight: '500',
-  },
-  noReviews: {
-    backgroundColor: theme.background.secondary,
-    borderRadius: spacing.cardBorderRadius,
-    padding: spacing.cardPadding,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: theme.border.light,
-  },
-  noReviewsText: {
-    ...typography.body,
-    color: theme.text.secondary,
-    textAlign: 'center',
-  },
-  seeAllButton: {
-    alignItems: 'center',
-    paddingVertical: 12,
-  },
-  seeAllText: {
-    ...typography.bodySmall,
-    color: theme.accent.primary,
-    fontWeight: '500',
-  },
-  externalReviewsLink: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: 8,
-    paddingVertical: 14,
-    marginTop: 8,
-    borderTopWidth: 1,
-    borderTopColor: theme.border.light,
-  },
-  externalReviewsText: {
     ...typography.bodySmall,
     color: theme.text.secondary,
   },

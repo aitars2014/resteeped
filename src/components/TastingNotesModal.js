@@ -37,6 +37,7 @@ export const TastingNotesModal = ({
   const [notes, setNotes] = useState(initialNotes);
   const [rating, setRating] = useState(initialRating);
   const [showSuggestions, setShowSuggestions] = useState(false);
+  const [ratingActive, setRatingActive] = useState(false);
   const notesInputRef = useRef(null);
 
   useEffect(() => {
@@ -81,7 +82,7 @@ export const TastingNotesModal = ({
               <TouchableOpacity onPress={onClose} style={styles.closeButton}>
                 <X size={24} color={theme.text.primary} />
               </TouchableOpacity>
-              <Text style={[styles.title, { color: theme.text.primary }]}>Tasting Notes</Text>
+              <Text style={[styles.title, { color: theme.text.primary }]}>Rating & Tasting Notes</Text>
               <View style={{ width: 40 }} />
             </View>
 
@@ -89,6 +90,7 @@ export const TastingNotesModal = ({
               style={styles.content}
               showsVerticalScrollIndicator={false}
               keyboardShouldPersistTaps="handled"
+              scrollEnabled={!ratingActive}
             >
               {/* Tea Name */}
               <Text style={[styles.teaName, { color: theme.accent.primary }]}>{teaName}</Text>
@@ -99,6 +101,8 @@ export const TastingNotesModal = ({
                 <RatingSlider
                   value={rating}
                   onValueChange={setRating}
+                  onInteractionStart={() => setRatingActive(true)}
+                  onInteractionEnd={() => setRatingActive(false)}
                   size="medium"
                 />
               </View>

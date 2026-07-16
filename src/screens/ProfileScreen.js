@@ -11,7 +11,7 @@ import {
   Switch,
   Platform,
 } from 'react-native';
-import { User, LogOut, Trash2, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Package, Mail, Edit2, Crown, EyeOff, Eye, BarChart3, Bell } from 'lucide-react-native';
+import { User, LogOut, Trash2, ChevronRight, Coffee, Star, Bookmark, Clock, Moon, Sun, Download, GitCompare, RotateCcw, MessageSquare, Calendar, Award, Mail, Edit2, Crown, EyeOff, Eye, BarChart3, Bell } from 'lucide-react-native';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Application from 'expo-application';
 import { typography, spacing } from '../constants';
@@ -477,19 +477,6 @@ export const ProfileScreen = ({ navigation }) => {
           <ChevronRight size={20} color={theme.text.secondary} />
         </TouchableOpacity>
         
-        <TouchableOpacity 
-          style={[styles.menuItem, { borderBottomColor: theme.border.light }]}
-          onPress={() => navigation.navigate('Teaware')}
-          accessible={true}
-          accessibilityRole="button"
-          accessibilityLabel="My Teaware"
-          accessibilityHint="Browse your teaware collection"
-        >
-          <Package size={20} color={theme.accent.primary} />
-          <Text style={[styles.menuItemText, { color: theme.text.primary }]}>My Teaware</Text>
-          <ChevronRight size={20} color={theme.text.secondary} />
-        </TouchableOpacity>
-        
         {collection.length > 0 && (
           <TouchableOpacity 
             style={[styles.menuItem, styles.menuItemLast]}
@@ -577,7 +564,7 @@ export const ProfileScreen = ({ navigation }) => {
           )}
           <View style={{ flex: 1, marginLeft: 12 }}>
             <Text style={[styles.menuItemText, { color: theme.text.primary, marginLeft: 0 }]}>Private Profile</Text>
-            <Text style={[styles.menuItemSubtext, { color: theme.text.secondary }]}>Hide your activity from the community feed</Text>
+            <Text style={[styles.menuItemSubtext, { color: theme.text.secondary }]}>Keep your profile activity private</Text>
           </View>
           <Switch
             value={isPrivate}

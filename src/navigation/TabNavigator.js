@@ -15,11 +15,7 @@ import {
   BrewHistoryScreen,
   TeaShopsScreen,
   CompareTeasScreen,
-  ActivityFeedScreen,
-  TeawareScreen,
   AddTeaScreen,
-  TeawareDetailScreen,
-  UserProfileScreen,
   ContactScreen,
   PaywallScreen,
   SeasonalCollectionScreen,
@@ -39,10 +35,7 @@ const HomeStack = () => (
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
     <Stack.Screen name="CompanyProfile" component={CompanyProfileScreen} />
     <Stack.Screen name="TeaShops" component={TeaShopsScreen} />
-    <Stack.Screen name="ActivityFeed" component={ActivityFeedScreen} />
-    <Stack.Screen name="UserProfile" component={UserProfileScreen} />
     <Stack.Screen name="CompareTeas" component={CompareTeasScreen} />
-    <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
     <Stack.Screen name="SeasonalCollection" component={SeasonalCollectionScreen} />
     <Stack.Screen name="TeaFinder" component={TeaFinderScreen} />
     <Stack.Screen name="TeaGuide" component={TeaGuideScreen} />
@@ -61,8 +54,6 @@ const DiscoveryStack = () => (
     <Stack.Screen name="TeaFinder" component={TeaFinderScreen} />
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
     <Stack.Screen name="CompanyProfile" component={CompanyProfileScreen} />
-    <Stack.Screen name="Teaware" component={TeawareScreen} />
-    <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
     <Stack.Screen 
       name="Paywall" 
       component={PaywallScreen}
@@ -112,8 +103,6 @@ const ProfileStack = () => (
     <Stack.Screen name="TeaInsights" component={TeaInsightsScreen} />
     <Stack.Screen name="TeaDetail" component={TeaDetailScreen} />
     <Stack.Screen name="CompareTeas" component={CompareTeasScreen} />
-    <Stack.Screen name="Teaware" component={TeawareScreen} />
-    <Stack.Screen name="TeawareDetail" component={TeawareDetailScreen} />
     <Stack.Screen name="Contact" component={ContactScreen} />
     <Stack.Screen name="NotificationSettings" component={NotificationSettingsScreen} />
     <Stack.Screen 
@@ -175,7 +164,7 @@ export const TabNavigator = () => {
         listeners={({ navigation }) => ({
           tabPress: (e) => {
             // Reset Discovery stack to root when tab is pressed
-            // This ensures tapping Discover always shows teas, not teaware
+            // This ensures tapping Discover always resets to the browse root.
             navigation.navigate('Discover', { screen: 'DiscoveryHome', params: {} });
           },
         })}

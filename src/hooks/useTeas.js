@@ -3,6 +3,7 @@ import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { teas as localTeas } from '../data/teas';
+import { isDisplayableTea } from '../utils/teaCatalogQuality';
 
 const CACHE_KEY = '@resteeped_teas_cache';
 const CACHE_TIMESTAMP_KEY = '@resteeped_teas_cache_ts';
@@ -150,7 +151,7 @@ const fetchAllTeasPaginated = async () => {
 };
 
 export const useTeas = () => {
-  const [teas, setTeas] = useState(() => diversifyTeas(localTeas));
+  const [teas, setTeas] = useState(() => diversifyTeas(localTeas.filter(tea => isDisplayableTea(tea))));
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false); // For subtle refresh indicator
   const [error, setError] = useState(null);
@@ -164,7 +165,7 @@ export const useTeas = () => {
     const loadCache = async () => {
       const cached = await loadCachedTeas();
       if (cached && cached.length > 0) {
-        setTeas(diversifyTeas(cached));
+        setTeas(diversifyTeas(cached.filter(tea => isDisplayableTea(tea, { requireImage: true }))));
         setDataSource('cache');
         // Don't set isRemoteData — we still want to fetch fresh data
         // But cache is far better than 60 local teas
@@ -185,7 +186,7 @@ export const useTeas = () => {
     setError(null);
 
     if (!isSupabaseConfigured()) {
-      setTeas(diversifyTeas(localTeas));
+      setTeas(diversifyTeas(localTeas.filter(tea => isDisplayableTea(tea))));
       setLoading(false);
       setRefreshing(false);
       return;
@@ -194,7 +195,9 @@ export const useTeas = () => {
     try {
       const data = await fetchAllTeasPaginated();
 
-      const formattedTeas = data.map(formatTea);
+      const formattedTeas = data
+        .map(formatTea)
+        .filter(tea => isDisplayableTea(tea, { requireImage: true }));
 
       // Rank and diversify
       const ranked = diversifyTeas(formattedTeas);

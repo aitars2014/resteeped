@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Star, Swords, Thermometer, Clock, Leaf } from 'lucide-react-native';
+import { Star, Thermometer, Clock, Leaf } from 'lucide-react-native';
 import ViewShot from 'react-native-view-shot';
 import * as Sharing from 'expo-sharing';
 import { typography, spacing, fonts, getPlaceholderImage } from '../constants';
@@ -12,8 +12,7 @@ const { width } = Dimensions.get('window');
 const CARD_WIDTH = width - 32;
 
 /**
- * ShareableComparisonCard - Side-by-side tea comparison for social sharing
- * "Tea Battle" style card perfect for Instagram stories
+ * ShareableComparisonCard - Side-by-side tea comparison for social sharing.
  */
 export const ShareableComparisonCard = ({ 
   tea1, 
@@ -129,9 +128,9 @@ export const ShareableComparisonCard = ({
       >
         {/* Header */}
         <View style={styles.header}>
-          <Swords size={20} color={theme.accent.warm || theme.accent.primary} />
+          <Leaf size={20} color={theme.accent.warm || theme.accent.primary} />
           <Text style={[styles.headerTitle, { color: theme.text.primary }]}>
-            Tea Battle
+            Tea Comparison
           </Text>
         </View>
         

@@ -162,10 +162,6 @@ export const AnalyticsEvents = {
   TEA_FINDER_SEARCH: 'tea_finder_search',
   TEA_FINDER_RESULT_TAP: 'tea_finder_result_tap',
   
-  // Community Feed
-  FEED_VIEWED: 'feed_viewed',
-  FEED_REFRESHED: 'feed_refreshed',
-  
   // Brew History
   BREW_HISTORY_VIEWED: 'brew_history_viewed',
   

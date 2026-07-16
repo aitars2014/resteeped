@@ -15,10 +15,10 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Search, ChevronRight, Star, TrendingUp, Award, Sparkles, Coffee, Users, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Cuboid, Shuffle, Sun, Instagram, Flame, Bell } from 'lucide-react-native';
+import { Search, ChevronRight, Award, Sparkles, Coffee, X, Leaf, Flower2, Sprout, Heart, Mountain, TreeDeciduous, Shuffle, Sun, Instagram, Flame } from 'lucide-react-native';
 import { typography, spacing, fonts } from '../constants';
-import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, TeaBattle, TeawareCard, Skeleton, TeaCardSkeleton, BrewPicker, WeeklyChallenge } from '../components';
-import { useTeas, useCompanies, useRecommendations, useTeaware, useBrewHistory } from '../hooks';
+import { TeaCard, TeaOfTheDay, SeasonalHighlights, TeaRandomizer, Skeleton, TeaCardSkeleton, BrewPicker } from '../components';
+import { useTeas, useCompanies, useRecommendations, useBrewHistory } from '../hooks';
 import { useTheme, useCollection } from '../context';
 import { maybeRequestReviewByAge } from '../utils/reviewPrompt';
 import { buildTasteProfile, getMatchScore, pickBrewTodayTea } from '../utils/tasteProfile';
@@ -38,7 +38,7 @@ const HorizontalListSkeleton = () => (
   </ScrollView>
 );
 
-// Skeleton for Tea of the Day
+// Skeleton for featured tea
 const TeaOfDaySkeleton = () => (
   <View style={{ marginHorizontal: spacing.screenHorizontal, borderRadius: 16, overflow: 'hidden' }}>
     <Skeleton height={200} borderRadius={16} />
@@ -70,8 +70,7 @@ export const HomeScreen = ({ navigation }) => {
   const { theme, isDark, getTeaTypeColor } = useTheme();
   const { teas, loading: teasLoading, refreshing: teasRefreshing, refreshTeas, dataSource } = useTeas();
   const { companies, refreshing: companiesRefreshing, refreshCompanies } = useCompanies();
-  const { teaware } = useTeaware();
-  const { forYou, explore, hasPreferences, preferences } = useRecommendations(8);
+  const { forYou, hasPreferences, preferences } = useRecommendations(8);
   const { getBrewStreak, todayBrewCount, loading: brewHistoryLoading } = useBrewHistory();
   const { collection } = useCollection();
   const tasteProfile = React.useMemo(() => buildTasteProfile(collection), [collection]);
@@ -94,35 +93,6 @@ export const HomeScreen = ({ navigation }) => {
   const brewPickerRef = useRef(null);
   const [randomizerVisible, setRandomizerVisible] = useState(false);
   const [randomizerSource, setRandomizerSource] = useState('all');
-
-  // Brand-diverse selection: pick top teas but cap any single brand to MAX_PER_BRAND
-  const diversePick = (candidates, limit, MAX_PER_BRAND = 2) => {
-    const result = [];
-    const brandCounts = {};
-    for (const tea of candidates) {
-      const brand = tea.brandName || tea.brand_name || 'Unknown';
-      const count = brandCounts[brand] || 0;
-      if (count >= MAX_PER_BRAND) continue;
-      brandCounts[brand] = count + 1;
-      result.push(tea);
-      if (result.length >= limit) break;
-    }
-    return result;
-  };
-
-  const featuredTeas = diversePick(
-    teas
-      .filter(t => t.avgRating >= 4.0 || t.avg_rating >= 4.0)
-      .sort((a, b) => (b.avgRating || b.avg_rating || 0) - (a.avgRating || a.avg_rating || 0)),
-    8
-  );
-
-  const trendingTeas = diversePick(
-    teas
-      .filter(t => (t.ratingCount || t.rating_count || 0) > 0)
-      .sort((a, b) => (b.ratingCount || b.rating_count || 0) - (a.ratingCount || a.rating_count || 0)),
-    8
-  );
 
   const newTeas = [...teas]
     .sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0))
@@ -373,69 +343,7 @@ export const HomeScreen = ({ navigation }) => {
           </View>
         </TouchableOpacity>
 
-        {/* Welcome-back release card */}
-        <View style={[styles.releaseCard, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
-          <View style={[styles.releaseIcon, { backgroundColor: theme.accent.primary + '18' }]}>
-            <Sparkles size={20} color={theme.accent.primary} />
-          </View>
-          <View style={styles.releaseContent}>
-            <Text style={[styles.releaseTitle, { color: theme.text.primary }]}>Resteeped is back</Text>
-            <Text style={[styles.releaseBody, { color: theme.text.secondary }]}>
-              Your collection, timer, tasting notes, and recommendations are ready for a fresh brew.
-            </Text>
-          </View>
-          <TouchableOpacity
-            style={[styles.releaseAction, { borderColor: theme.border.medium }]}
-            onPress={() => navigation.navigate('Profile', { screen: 'NotificationSettings' })}
-            accessibilityRole="button"
-            accessibilityLabel="Open notification settings"
-          >
-            <Bell size={16} color={theme.accent.primary} />
-          </TouchableOpacity>
-        </View>
-
-        {/* Brew Today */}
-        {brewTodayTea && (
-          <TouchableOpacity
-            style={[styles.brewTodayCard, { backgroundColor: theme.background.secondary, borderColor: theme.border.medium }]}
-            onPress={() => navigation.navigate('Timer', {
-              screen: 'TimerHome',
-              params: { tea: brewTodayTea },
-            })}
-            activeOpacity={0.78}
-            accessibilityRole="button"
-            accessibilityLabel={`Brew ${brewTodayTea.name} today`}
-          >
-            <View style={styles.brewTodayHeader}>
-              <View>
-                <Text style={[styles.brewTodayEyebrow, { color: theme.accent.primary }]}>BREW TODAY</Text>
-                <Text style={[styles.brewTodayTitle, { color: theme.text.primary }]} numberOfLines={1}>
-                  {brewTodayTea.name}
-                </Text>
-                <Text style={[styles.brewTodaySubtitle, { color: theme.text.secondary }]} numberOfLines={1}>
-                  {brewTodayTea.brandName || 'Recommended tea'}
-                </Text>
-              </View>
-              {brewTodayMatch && (
-                <View style={[styles.matchBadge, { backgroundColor: theme.accent.primary + '18' }]}>
-                  <Sparkles size={13} color={theme.accent.primary} />
-                  <Text style={[styles.matchBadgeText, { color: theme.accent.primary }]}>{brewTodayMatch}%</Text>
-                </View>
-              )}
-            </View>
-            <View style={styles.brewTodayFooter}>
-              <View style={styles.brewTodayMeta}>
-                <Coffee size={16} color={theme.text.secondary} />
-                <Text style={[styles.brewTodayMetaText, { color: theme.text.secondary }]}>
-                  Start timer, then log notes after steeping
-                </Text>
-              </View>
-              <ChevronRight size={18} color={theme.text.secondary} />
-            </View>
-          </TouchableOpacity>
-        )}
-
-        {/* 2.5. Brew Streak — right below search */}
+        {/* 1. Brew Streak */}
         {(() => {
           // Show skeleton while brew history loads to reserve space
           if (brewHistoryLoading) {
@@ -484,33 +392,7 @@ export const HomeScreen = ({ navigation }) => {
           );
         })()}
 
-        {/* 2.7. Your Favorites — quick access to top-rated teas */}
-        {favoriteTeas.length >= 3 && (
-          <View style={styles.section}>
-            {renderSectionHeader(
-              <Heart size={18} color={theme.accent.primary} fill={theme.accent.primary} />,
-              'Your Favorites',
-              () => handleSeeAll('collection')
-            )}
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={{ paddingHorizontal: spacing.screenHorizontal, gap: spacing.cardGap }}
-            >
-              {favoriteTeas.map((tea) => (
-                <View key={tea.id} style={{ width: CARD_WIDTH }}>
-                  <TeaCard
-                    tea={tea}
-                    onPress={() => navigation.navigate('TeaDetail', { tea })}
-                    compact
-                  />
-                </View>
-              ))}
-            </ScrollView>
-          </View>
-        )}
-
-        {/* 3. Browse by Type */}
+        {/* 2. Browse by Type */}
         <View style={styles.section}>
           <View style={styles.browseTypeHeader}>
             <Text style={[styles.browseTitle, { color: theme.text.primary }]}>Browse by Type</Text>
@@ -523,7 +405,7 @@ export const HomeScreen = ({ navigation }) => {
           </View>
         </View>
 
-        {/* 4. "What should I brew?" button */}
+        {/* 3. "What should I brew?" button */}
         {teas.length > 0 && (
           <TouchableOpacity
             style={[styles.triggerButton, { backgroundColor: theme.accent.primary }]}
@@ -544,24 +426,48 @@ export const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         )}
 
-        {/* 4.5. Weekly Challenge */}
-        <View style={styles.section}>
-          <WeeklyChallenge onPress={() => navigation.navigate('Discover')} />
-        </View>
+        {/* 4. Brew Today */}
+        {brewTodayTea && (
+          <TouchableOpacity
+            style={[styles.brewTodayCard, { backgroundColor: theme.background.secondary, borderColor: theme.border.medium }]}
+            onPress={() => navigation.navigate('Timer', {
+              screen: 'TimerHome',
+              params: { tea: brewTodayTea },
+            })}
+            activeOpacity={0.78}
+            accessibilityRole="button"
+            accessibilityLabel={`Brew ${brewTodayTea.name} today`}
+          >
+            <View style={styles.brewTodayHeader}>
+              <View>
+                <Text style={[styles.brewTodayEyebrow, { color: theme.accent.primary }]}>BREW TODAY</Text>
+                <Text style={[styles.brewTodayTitle, { color: theme.text.primary }]} numberOfLines={1}>
+                  {brewTodayTea.name}
+                </Text>
+                <Text style={[styles.brewTodaySubtitle, { color: theme.text.secondary }]} numberOfLines={1}>
+                  {brewTodayTea.brandName || 'Recommended tea'}
+                </Text>
+              </View>
+              {brewTodayMatch && (
+                <View style={[styles.matchBadge, { backgroundColor: theme.accent.primary + '18' }]}>
+                  <Sparkles size={13} color={theme.accent.primary} />
+                  <Text style={[styles.matchBadgeText, { color: theme.accent.primary }]}>{brewTodayMatch}%</Text>
+                </View>
+              )}
+            </View>
+            <View style={styles.brewTodayFooter}>
+              <View style={styles.brewTodayMeta}>
+                <Coffee size={16} color={theme.text.secondary} />
+                <Text style={[styles.brewTodayMetaText, { color: theme.text.secondary }]}>
+                  Start timer, then log notes after steeping
+                </Text>
+              </View>
+              <ChevronRight size={18} color={theme.text.secondary} />
+            </View>
+          </TouchableOpacity>
+        )}
 
-        {/* 5. Tea of the Day */}
-        <View style={styles.section}>
-          {teasLoading ? (
-            <TeaOfDaySkeleton />
-          ) : teas.length > 0 ? (
-            <TeaOfTheDay 
-              teas={teas} 
-              onPress={(tea) => navigation.navigate('TeaDetail', { tea })}
-            />
-          ) : null}
-        </View>
-
-        {/* 6. Featured Tea Shop */}
+        {/* 5. Featured Shop */}
         {featuredCompany && (
           <View style={styles.section}>
             {renderSectionHeader(
@@ -599,6 +505,44 @@ export const HomeScreen = ({ navigation }) => {
           </View>
         )}
 
+        {/* 6. Featured Tea */}
+        <View style={styles.section}>
+          {teasLoading ? (
+            <TeaOfDaySkeleton />
+          ) : teas.length > 0 ? (
+            <TeaOfTheDay
+              teas={teas}
+              onPress={(tea) => navigation.navigate('TeaDetail', { tea })}
+            />
+          ) : null}
+        </View>
+
+        {/* Your Favorites */}
+        {favoriteTeas.length >= 3 && (
+          <View style={styles.section}>
+            {renderSectionHeader(
+              <Heart size={18} color={theme.accent.primary} fill={theme.accent.primary} />,
+              'Your Favorites',
+              () => handleSeeAll('collection')
+            )}
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={{ paddingHorizontal: spacing.screenHorizontal, gap: spacing.cardGap }}
+            >
+              {favoriteTeas.map((tea) => (
+                <View key={tea.id} style={{ width: CARD_WIDTH }}>
+                  <TeaCard
+                    tea={tea}
+                    onPress={() => navigation.navigate('TeaDetail', { tea })}
+                    compact
+                  />
+                </View>
+              ))}
+            </ScrollView>
+          </View>
+        )}
+
         {/* 7. Seasonal Highlights (carousel only — banner removed) */}
         <SeasonalHighlights
           teas={teas}
@@ -614,18 +558,7 @@ export const HomeScreen = ({ navigation }) => {
           hideCarousel
         />
 
-        {/* 8. Tea Battle */}
-        {teas.length > 1 && (
-          <TeaBattle
-            teas={teas}
-            onCompare={(tea1, tea2) => navigation.navigate('CompareTeas', { 
-              initialTeas: [tea1, tea2] 
-            })}
-            onViewTea={(tea) => navigation.navigate('TeaDetail', { tea })}
-          />
-        )}
-
-        {/* 9. For You / Explore Something New */}
+        {/* For You */}
         {hasPreferences && forYou.length > 0 && (
           <View style={styles.section}>
             {renderSectionHeader(
@@ -640,94 +573,11 @@ export const HomeScreen = ({ navigation }) => {
           </View>
         )}
 
-        {hasPreferences && explore.length > 0 && (
-          <View style={styles.section}>
-            {renderSectionHeader(
-              <Search size={18} color={theme.accent.primary} />,
-              'Try Something New',
-              null
-            )}
-            <Text style={[styles.recommendationHint, { color: theme.text.secondary }]}>
-              Different from your usual — expand your palate
-            </Text>
-            {renderHorizontalTeaList(explore.slice(0, 6), 'Start rating teas to unlock recommendations')}
-          </View>
-        )}
-
-        {/* 10. Featured Teas */}
-        <View style={styles.section}>
-          {renderSectionHeader(
-            <Star size={18} color={theme.accent.primary} />,
-            'Featured Teas',
-            () => handleSeeAll('featured')
-          )}
-          {renderHorizontalTeaList(featuredTeas, 'No featured teas yet')}
-        </View>
-
-        {/* 11. Trending Now */}
-        <View style={styles.section}>
-          {renderSectionHeader(
-            <TrendingUp size={18} color={theme.accent.primary} />,
-            'Trending Now',
-            () => handleSeeAll('trending')
-          )}
-          {renderHorizontalTeaList(trendingTeas, 'Check back for trending teas')}
-        </View>
-
-        {/* 12. New Arrivals */}
+        {/* New Arrivals */}
         <View style={styles.section}>
           {renderSectionHeader(null, 'New Arrivals', () => handleSeeAll('new'))}
           {renderHorizontalTeaList(newTeas, 'New teas coming soon')}
         </View>
-
-        {/* 13. Teaware */}
-        {teaware.length > 0 && (
-          <View style={styles.section}>
-            {renderSectionHeader(
-              <Cuboid size={18} color={theme.accent.primary} />,
-              'Teaware',
-              () => navigation.navigate('Discover', { screen: 'Teaware' })
-            )}
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.horizontalList}
-            >
-              {teaware.slice(0, 6).map((item) => (
-                <TeawareCard
-                  key={item.id}
-                  item={item}
-                  onPress={() => navigation.navigate('TeawareDetail', { teaware: item })}
-                  compact
-                />
-              ))}
-            </ScrollView>
-          </View>
-        )}
-
-        {/* 14. Community Activity */}
-        <View style={styles.section}>
-          <TouchableOpacity
-            style={[styles.communityCard, { 
-              backgroundColor: theme.background.secondary,
-              borderColor: theme.border.light,
-            }]}
-            onPress={() => navigation.navigate('ActivityFeed')}
-            activeOpacity={0.8}
-          >
-            <View style={[styles.communityIcon, { backgroundColor: theme.accent.primary + '20' }]}>
-              <Users size={24} color={theme.accent.primary} />
-            </View>
-            <View style={styles.communityContent}>
-              <Text style={[styles.communityTitle, { color: theme.text.primary }]}>Community Feed</Text>
-              <Text style={[styles.communitySubtitle, { color: theme.text.secondary }]}>
-                See what other tea lovers are brewing
-              </Text>
-            </View>
-            <ChevronRight size={20} color={theme.text.secondary} />
-          </TouchableOpacity>
-        </View>
-
 
         {/* Instagram Follow Banner */}
         {!instaBannerDismissed && (
@@ -761,9 +611,7 @@ export const HomeScreen = ({ navigation }) => {
           </TouchableOpacity>
         )}
 
-        {/* (streak card moved to after search bar) */}
-
-        {/* 15. Quick Stats */}
+        {/* Quick Stats */}
         <View style={styles.statsSection}>
           <TouchableOpacity 
             style={[styles.statCard, { 
@@ -773,7 +621,7 @@ export const HomeScreen = ({ navigation }) => {
             onPress={() => navigation.navigate('Discover')}
             activeOpacity={0.7}
           >
-            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{teas.length >= 1000 ? `${teas.length.toLocaleString()}+` : teas.length.toLocaleString()}</Text>
+            <Text style={[styles.statNumber, { color: theme.accent.primary }]}>{teas.length.toLocaleString()}</Text>
             <Text style={[styles.statLabel, { color: theme.text.secondary }]}>Teas to Explore</Text>
           </TouchableOpacity>
           <TouchableOpacity 
@@ -899,42 +747,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.screenHorizontal,
     marginBottom: spacing.sm,
     fontStyle: 'italic',
-  },
-  releaseCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: spacing.screenHorizontal,
-    marginBottom: spacing.md,
-    padding: spacing.md,
-    borderRadius: spacing.cardBorderRadius,
-    borderWidth: 1,
-    gap: 12,
-  },
-  releaseIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  releaseContent: {
-    flex: 1,
-  },
-  releaseTitle: {
-    ...typography.body,
-    fontWeight: '700',
-  },
-  releaseBody: {
-    ...typography.caption,
-    marginTop: 2,
-  },
-  releaseAction: {
-    width: 34,
-    height: 34,
-    borderRadius: 17,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 1,
   },
   brewTodayCard: {
     marginHorizontal: spacing.screenHorizontal,
@@ -1142,33 +954,6 @@ const styles = StyleSheet.create({
   statLabel: {
     ...typography.caption,
     marginTop: 6,
-  },
-  communityCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginHorizontal: spacing.screenHorizontal,
-    padding: spacing.cardPadding,
-    borderRadius: spacing.cardBorderRadius,
-    borderWidth: 1,
-  },
-  communityIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: spacing.md,
-  },
-  communityContent: {
-    flex: 1,
-  },
-  communityTitle: {
-    ...typography.body,
-    fontWeight: '600',
-    marginBottom: 2,
-  },
-  communitySubtitle: {
-    ...typography.caption,
   },
   loadingBanner: {
     flexDirection: 'row',

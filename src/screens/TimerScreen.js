@@ -23,7 +23,7 @@ import { VoiceInputHint } from '../components/VoiceInputHint';
 import { Audio } from 'expo-av';
 import { typography, spacing } from '../constants';
 import { Button, TeaTypeBadge, TemperatureSlider, PostBrewReviewModal, ShareableBrewCard } from '../components';
-import { useBrewHistory, useTeas, useReviews } from '../hooks';
+import { useBrewHistory, useTeas } from '../hooks';
 import { useResolvedTeaId } from '../hooks/useResolvedTeaId';
 import { useAuth, useTheme, useCollection } from '../context';
 import { haptics } from '../utils/haptics';
@@ -113,9 +113,8 @@ export const TimerScreen = ({ route, navigation }) => {
   const teaColor = tea ? getTeaTypeColor(tea.teaType) : null;
   
   const { user } = useAuth();
-  const { updateInCollection, isInCollection, getCollectionItem, setPreferredSteepTime, getPreferredSteepTime, setPreferredSteepSettings, getPreferredSteepSettings } = useCollection();
+  const { addToCollection, updateInCollection, isInCollection, getCollectionItem, setPreferredSteepTime, getPreferredSteepTime, setPreferredSteepSettings, getPreferredSteepSettings } = useCollection();
   const { logBrewSession, todayBrewCount } = useBrewHistory();
-  const { hasReviewForSettings, submitReview } = useReviews(teaId);
   
   // Get brewing guide
   const guide = tea ? getBrewingGuide(tea) : { steepTime: { min: 180 }, temperature: { f: 200 } };
@@ -150,7 +149,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const defaultTempF = presetTempF || tea?.steepTempF || guide?.waterTemp?.fahrenheit || 200;
   const [temperatureF, setTemperatureF] = useState(defaultTempF);
   
-  // Post-brew review modal
+  // Post-brew rating modal
   const [showReviewModal, setShowReviewModal] = useState(false);
   
   // Timer state
@@ -171,6 +170,44 @@ export const TimerScreen = ({ route, navigation }) => {
   const appStateRef = useRef(AppState.currentState);
   const timerEndTimeRef = useRef(null);
   const brewCardRef = useRef(null);
+
+  const hasRatedTea = (targetTeaId) => {
+    if (!targetTeaId) return false;
+    return (getCollectionItem(targetTeaId)?.user_rating || 0) > 0;
+  };
+
+  const shouldAskForPostBrewRating = (targetTeaId) => {
+    return !!user && !!targetTeaId && !hasRatedTea(targetTeaId);
+  };
+
+  const savePostBrewRating = async ({ rating, notes }) => {
+    setShowReviewModal(false);
+    const ratingTea = tea || selectedPostBrewTea;
+    const ratingTeaId = tea ? teaId : selectedPostBrewTea?.id;
+    if (!user || !ratingTeaId) return;
+
+    try {
+      if (!isInCollection(ratingTeaId)) {
+        const addResult = await addToCollection(ratingTeaId, 'tried', ratingTea);
+        if (addResult?.error) throw addResult.error;
+      }
+
+      const updates = {
+        user_rating: rating,
+        status: 'tried',
+        tried_at: new Date().toISOString(),
+      };
+      if (notes) {
+        updates.notes = notes;
+      }
+
+      const result = await updateInCollection(ratingTeaId, updates);
+      if (result?.error) throw result.error;
+    } catch (error) {
+      console.error('Error saving post-brew rating:', error);
+      Alert.alert('Error', 'Could not save your rating. Please try again.');
+    }
+  };
   
   // Apply preferred brew method and temperature on mount
   useEffect(() => {
@@ -383,14 +420,11 @@ export const TimerScreen = ({ route, navigation }) => {
         }
       }
       
-      // Show post-brew review modal — only if settings haven't been reviewed yet
-      if (tea) {
-        const alreadyReviewed = hasReviewForSettings(brewMethod, totalSeconds, temperatureF);
-        if (!alreadyReviewed) {
-          setTimeout(() => {
-            setShowReviewModal(true);
-          }, 1500);
-        }
+      // Ask for a tea rating only once. Brew history is logged every time.
+      if (tea && shouldAskForPostBrewRating(teaId)) {
+        setTimeout(() => {
+          setShowReviewModal(true);
+        }, 1500);
       }
     }
   }, [isComplete, hasLogged, tea, totalSeconds, currentInfusion, multiSteepMode, infusionNotes, logBrewSession, isInCollection, getCollectionItem, updateInCollection, navigation]);
@@ -1006,7 +1040,7 @@ export const TimerScreen = ({ route, navigation }) => {
             </TouchableOpacity>
           </View>
         )}
-        {/* Show selected tea + review after picking */}
+        {/* Show selected tea and rating prompt after picking */}
         {!tea && isComplete && selectedPostBrewTea && (
           <View style={styles.postSteepActions}>
             <Text style={[styles.postSteepTitle, { color: theme.text.primary }]}>
@@ -1049,8 +1083,9 @@ export const TimerScreen = ({ route, navigation }) => {
                   teaWeight: teaWeight,
                   teaWeightUnit: teaWeightUnit,
                 });
-                // Show review modal
-                setTimeout(() => setShowReviewModal(true), 300);
+                if (shouldAskForPostBrewRating(selectedTea.id)) {
+                  setTimeout(() => setShowReviewModal(true), 300);
+                }
               }}
               theme={theme}
             />
@@ -1058,28 +1093,11 @@ export const TimerScreen = ({ route, navigation }) => {
         </View>
       </Modal>
 
-      {/* Post-Brew Review Modal */}
+      {/* Post-Brew Rating Modal */}
       <PostBrewReviewModal
         visible={showReviewModal}
         onClose={() => setShowReviewModal(false)}
-        onSave={({ rating, notes }) => {
-          setShowReviewModal(false);
-          const reviewTea = tea || selectedPostBrewTea;
-          // Submit as a proper review with steeping settings
-          if (reviewTea?.id) {
-            submitReview({
-              rating,
-              reviewText: notes,
-              brewMethod: brewMethod,
-              steepTimeSeconds: totalSeconds,
-              temperatureF: temperatureF,
-              teaWeight: teaWeight,
-              teaWeightUnit: teaWeightUnit,
-            });
-          }
-          // Note: brew session already logged when timer completed (useEffect above)
-          // Review rating/notes are submitted via submitReview() — no duplicate log needed
-        }}
+        onSave={savePostBrewRating}
         teaName={tea?.name || selectedPostBrewTea?.name}
         brewMethod={brewMethod}
         steepTimeSeconds={totalSeconds}

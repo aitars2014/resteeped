@@ -5,19 +5,21 @@ import {
   StyleSheet, 
   FlatList, 
   SafeAreaView,
+  ScrollView,
   TouchableOpacity,
   RefreshControl,
   Animated,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Bookmark, Plus, SlidersHorizontal, Search, Share2 } from 'lucide-react-native';
+import { Bookmark, Plus, SlidersHorizontal, Share2, ChevronDown, Check } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
-import { TeaCard, Button, FilterPills, FilterModal, SearchBar, ShareableCollectionCard } from '../components';
+import { TeaCard, Button, FilterModal, SearchBar, ShareableCollectionCard } from '../components';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useBrewHistory } from '../hooks';
 import { getBrewingGuide } from '../constants/brewingGuides';
 import { haptics } from '../utils/haptics';
 import { COLLECTION_STATUSES, COLLECTION_STATUS_LABELS } from '../utils/tasteProfile';
+import { teaTypes } from '../data/teas';
 
 export const CollectionScreen = ({ navigation }) => {
   const { theme } = useTheme();
@@ -27,6 +29,8 @@ export const CollectionScreen = ({ navigation }) => {
   const [filter, setFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilterModal, setShowFilterModal] = useState(false);
+  const [openStatusMenuId, setOpenStatusMenuId] = useState(null);
+  const [showTeaTypeMenu, setShowTeaTypeMenu] = useState(false);
   const [teaFilters, setTeaFilters] = useState({
     teaType: 'all',
     company: 'all',
@@ -210,7 +214,9 @@ export const CollectionScreen = ({ navigation }) => {
     
     const teaId = item.tea?.id || item.tea_id;
     const isJustBrewed = brewingTeaId === teaId;
+    const itemStatus = item.status || 'want_to_try';
     const statusLabel = COLLECTION_STATUS_LABELS[item.status || 'want_to_try'] || 'Saved';
+    const isStatusMenuOpen = openStatusMenuId === teaId;
 
     return (
       <View style={styles.teaItem}>
@@ -224,9 +230,6 @@ export const CollectionScreen = ({ navigation }) => {
             <Text style={[styles.ratingText, { color: theme.text.inverse }]}>★ {item.user_rating.toFixed(1)}</Text>
           </View>
         )}
-        <View style={[styles.statusBadge, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
-          <Text style={[styles.statusBadgeText, { color: theme.text.secondary }]}>{statusLabel}</Text>
-        </View>
         {/* Quick Brew button */}
         <TouchableOpacity
           style={[styles.quickBrewBtn, { backgroundColor: theme.background.secondary, borderColor: theme.border.default }]}
@@ -240,41 +243,56 @@ export const CollectionScreen = ({ navigation }) => {
             {isJustBrewed ? 'Logged!' : 'Brew'}
           </Text>
         </TouchableOpacity>
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={[styles.statusActions, { backgroundColor: theme.background.primary, borderColor: theme.border.light }]}
-          contentContainerStyle={styles.statusActionsContent}
-        >
-          {COLLECTION_STATUSES.filter(status => status.id !== 'all').map(status => {
-            const isActive = (item.status || 'want_to_try') === status.id;
-            return (
-              <TouchableOpacity
-                key={status.id}
-                style={[
-                  styles.statusAction,
-                  {
-                    backgroundColor: isActive ? theme.accent.primary : theme.background.secondary,
-                    borderColor: isActive ? theme.accent.primary : theme.border.light,
-                  },
-                ]}
-                onPress={() => {
-                  haptics.selection();
-                  updateInCollection(teaId, { status: status.id });
-                }}
-                accessibilityRole="button"
-                accessibilityLabel={`Mark ${tea.name} as ${status.label}`}
-              >
-                <Text style={[
-                  styles.statusActionText,
-                  { color: isActive ? theme.text.inverse : theme.text.secondary },
-                ]}>
-                  {status.label}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </ScrollView>
+        <View style={[styles.statusSelector, { backgroundColor: theme.background.primary, borderColor: theme.border.light }]}>
+          <TouchableOpacity
+            style={styles.statusSelectorButton}
+            onPress={() => {
+              haptics.selection();
+              setOpenStatusMenuId(prev => prev === teaId ? null : teaId);
+            }}
+            activeOpacity={0.7}
+            accessibilityRole="button"
+            accessibilityLabel={`Status: ${statusLabel}. Change status`}
+            accessibilityState={{ expanded: isStatusMenuOpen }}
+          >
+            <Text style={[styles.statusSelectorLabel, { color: theme.text.tertiary }]}>Status</Text>
+            <View style={styles.statusSelectorValue}>
+              <Text style={[styles.statusSelectorText, { color: theme.text.primary }]}>{statusLabel}</Text>
+              <ChevronDown size={16} color={theme.text.secondary} />
+            </View>
+          </TouchableOpacity>
+          {isStatusMenuOpen && (
+            <View style={[styles.statusDropdown, { borderTopColor: theme.border.light }]}>
+              {COLLECTION_STATUSES.filter(status => status.id !== 'all').map(status => {
+                const isActive = itemStatus === status.id;
+                return (
+                  <TouchableOpacity
+                    key={status.id}
+                    style={styles.statusDropdownItem}
+                    onPress={() => {
+                      haptics.selection();
+                      setOpenStatusMenuId(null);
+                      if (!isActive) {
+                        updateInCollection(teaId, { status: status.id });
+                      }
+                    }}
+                    accessibilityRole="menuitem"
+                    accessibilityLabel={`Mark ${tea.name} as ${status.label}`}
+                  >
+                    <Text style={[
+                      styles.statusDropdownText,
+                      { color: isActive ? theme.accent.primary : theme.text.primary },
+                      isActive && { fontWeight: '700' },
+                    ]}>
+                      {status.label}
+                    </Text>
+                    {isActive && <Check size={16} color={theme.accent.primary} />}
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+          )}
+        </View>
       </View>
     );
   };
@@ -315,6 +333,7 @@ export const CollectionScreen = ({ navigation }) => {
 
   const handleTypeChange = (type) => {
     setTeaFilters(prev => ({ ...prev, teaType: type }));
+    setShowTeaTypeMenu(false);
   };
 
   const handleApplyFilters = (newFilters) => {
@@ -432,11 +451,54 @@ export const CollectionScreen = ({ navigation }) => {
       </View>
 
       {/* Tea Type Pills */}
-      <View style={styles.pillsContainer}>
-        <FilterPills
-          selectedType={teaFilters.teaType}
-          onSelectType={handleTypeChange}
-        />
+      <View style={[styles.typeFilterContainer, { borderColor: theme.border.light, backgroundColor: theme.background.secondary }]}>
+        <TouchableOpacity
+          style={styles.typeFilterButton}
+          onPress={() => {
+            haptics.selection();
+            setShowTeaTypeMenu(prev => !prev);
+          }}
+          activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel={`Tea type filter: ${teaTypes.find(type => type.id === teaFilters.teaType)?.label || 'All'}`}
+          accessibilityState={{ expanded: showTeaTypeMenu }}
+        >
+          <Text style={[styles.typeFilterLabel, { color: theme.text.tertiary }]}>Tea Type</Text>
+          <View style={styles.typeFilterValue}>
+            <Text style={[styles.typeFilterText, { color: theme.text.primary }]}>
+              {teaTypes.find(type => type.id === teaFilters.teaType)?.label || 'All'}
+            </Text>
+            <ChevronDown size={16} color={theme.text.secondary} />
+          </View>
+        </TouchableOpacity>
+        {showTeaTypeMenu && (
+          <View style={[styles.typeDropdown, { borderTopColor: theme.border.light }]}>
+            {teaTypes.map(type => {
+              const isActive = teaFilters.teaType === type.id;
+              return (
+                <TouchableOpacity
+                  key={type.id}
+                  style={styles.typeDropdownItem}
+                  onPress={() => {
+                    haptics.selection();
+                    handleTypeChange(type.id);
+                  }}
+                  accessibilityRole="menuitem"
+                  accessibilityLabel={`Show ${type.label} teas`}
+                >
+                  <Text style={[
+                    styles.typeDropdownText,
+                    { color: isActive ? theme.accent.primary : theme.text.primary },
+                    isActive && { fontWeight: '700' },
+                  ]}>
+                    {type.label}
+                  </Text>
+                  {isActive && <Check size={16} color={theme.accent.primary} />}
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        )}
       </View>
 
       {/* Result count */}
@@ -534,19 +596,6 @@ const styles = StyleSheet.create({
     marginBottom: spacing.cardGap,
     position: 'relative',
   },
-  statusBadge: {
-    position: 'absolute',
-    top: 10,
-    left: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 14,
-    borderWidth: 1,
-  },
-  statusBadgeText: {
-    ...typography.caption,
-    fontWeight: '700',
-  },
   quickBrewBtn: {
     position: 'absolute',
     bottom: 12,
@@ -574,27 +623,46 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     borderRadius: 14,
   },
-  statusActions: {
+  statusSelector: {
     borderWidth: 1,
     borderTopWidth: 0,
     borderBottomLeftRadius: spacing.cardBorderRadius,
     borderBottomRightRadius: spacing.cardBorderRadius,
+    overflow: 'hidden',
   },
-  statusActionsContent: {
-    gap: 8,
-    padding: 8,
-  },
-  statusAction: {
+  statusSelectorButton: {
+    flexDirection: 'row',
     alignItems: 'center',
-    minWidth: 82,
-    paddingHorizontal: 10,
-    paddingVertical: 8,
-    borderRadius: 10,
-    borderWidth: 1,
+    justifyContent: 'space-between',
+    paddingHorizontal: 14,
+    paddingVertical: 12,
   },
-  statusActionText: {
+  statusSelectorLabel: {
     ...typography.caption,
     fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  statusSelectorValue: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  statusSelectorText: {
+    ...typography.bodySmall,
+    fontWeight: '700',
+  },
+  statusDropdown: {
+    borderTopWidth: 1,
+  },
+  statusDropdownItem: {
+    minHeight: 44,
+    paddingHorizontal: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  statusDropdownText: {
+    ...typography.bodySmall,
   },
   ratingText: {
     ...typography.caption,
@@ -667,9 +735,46 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '700',
   },
-  pillsContainer: {
-    paddingLeft: spacing.screenHorizontal,
+  typeFilterContainer: {
+    marginHorizontal: spacing.screenHorizontal,
     marginBottom: spacing.sm,
+    borderRadius: 12,
+    borderWidth: 1,
+    overflow: 'hidden',
+  },
+  typeFilterButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+  typeFilterLabel: {
+    ...typography.caption,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  typeFilterValue: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  typeFilterText: {
+    ...typography.bodySmall,
+    fontWeight: '700',
+  },
+  typeDropdown: {
+    borderTopWidth: 1,
+  },
+  typeDropdownItem: {
+    minHeight: 44,
+    paddingHorizontal: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  typeDropdownText: {
+    ...typography.bodySmall,
   },
   resultCount: {
     flexDirection: 'row',

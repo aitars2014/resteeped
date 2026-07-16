@@ -134,7 +134,7 @@ export const TeaOfTheDay = ({ teas, onPress }) => {
         <View style={styles.header}>
           <View style={styles.badge}>
             <Sparkles size={14} color={colors.text.inverse} />
-            <Text style={styles.badgeText}>Tea of the Day</Text>
+            <Text style={styles.badgeText}>Featured Tea</Text>
           </View>
           <ChevronRight size={20} color={colors.text.inverse} />
         </View>

@@ -4,6 +4,7 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import * as WebBrowser from 'expo-web-browser';
 import * as AuthSession from 'expo-auth-session';
 import * as AppleAuthentication from 'expo-apple-authentication';
+import * as Sentry from '@sentry/react-native';
 import { trackEvent, identifyUser, resetUser, AnalyticsEvents } from '../utils/analytics';
 
 WebBrowser.maybeCompleteAuthSession();
@@ -46,6 +47,22 @@ export const AuthProvider = ({ children }) => {
   const [initialized, setInitialized] = useState(false);
   const [isDevMode, setIsDevMode] = useState(false);
   const [appleAuthAvailable, setAppleAuthAvailable] = useState(false);
+
+  useEffect(() => {
+    if (!user?.id) {
+      Sentry.setUser(null);
+      return;
+    }
+
+    Sentry.setUser({
+      id: user.id,
+      email: user.email || undefined,
+      username: profile?.username || undefined,
+      data: {
+        displayName: profile?.display_name || user.user_metadata?.full_name || undefined,
+      },
+    });
+  }, [user?.id, user?.email, user?.user_metadata?.full_name, profile?.username, profile?.display_name]);
 
   useEffect(() => {
     // Check if Apple auth is available (iOS 13+)

@@ -32,11 +32,6 @@
       ],
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
-      },
-      "autolinking": {
-        "exclude": [
-          "@honeycombio/opentelemetry-react-native"
-        ]
       }
     },
     "android": {
@@ -45,12 +40,7 @@
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
-      "package": "com.anonymous.resteeped",
-      "autolinking": {
-        "exclude": [
-          "@honeycombio/opentelemetry-react-native"
-        ]
-      }
+      "package": "com.anonymous.resteeped"
     },
     "web": {
       "favicon": "./assets/favicon.png"
