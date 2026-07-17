@@ -3,43 +3,11 @@ import { AppState } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { teas as localTeas } from '../data/teas';
-import { isDisplayableTea } from '../utils/teaCatalogQuality';
+import { diversifyTeasByShop, isDisplayableTea } from '../utils/teaCatalogQuality';
 
 const CACHE_KEY = '@resteeped_teas_cache';
 const CACHE_TIMESTAMP_KEY = '@resteeped_teas_cache_ts';
 const PAGE_SIZE = 500; // Fetch in batches of 500
-
-// Interleave teas by brand for variety in default browse order
-const diversifyTeas = (teas) => {
-  if (!teas.length) return teas;
-
-  const byBrand = {};
-  teas.forEach(tea => {
-    const brand = tea.brandName || tea.companyId || 'unknown';
-    if (!byBrand[brand]) byBrand[brand] = [];
-    byBrand[brand].push(tea);
-  });
-
-  // Sort brands alphabetically for stable ordering
-  const brands = Object.keys(byBrand).sort((a, b) => a.localeCompare(b));
-
-  const result = [];
-  let hasMore = true;
-  let index = 0;
-
-  while (hasMore) {
-    hasMore = false;
-    for (const brand of brands) {
-      if (byBrand[brand].length > index) {
-        result.push(byBrand[brand][index]);
-        if (byBrand[brand].length > index + 1) hasMore = true;
-      }
-    }
-    index++;
-  }
-
-  return result;
-};
 
 // Helper to add timeout to promises
 const withTimeout = (promise, ms, fallbackError = 'Request timed out') => {
@@ -151,7 +119,7 @@ const fetchAllTeasPaginated = async () => {
 };
 
 export const useTeas = () => {
-  const [teas, setTeas] = useState(() => diversifyTeas(localTeas.filter(tea => isDisplayableTea(tea))));
+  const [teas, setTeas] = useState(() => diversifyTeasByShop(localTeas.filter(tea => isDisplayableTea(tea))));
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false); // For subtle refresh indicator
   const [error, setError] = useState(null);
@@ -165,7 +133,7 @@ export const useTeas = () => {
     const loadCache = async () => {
       const cached = await loadCachedTeas();
       if (cached && cached.length > 0) {
-        setTeas(diversifyTeas(cached.filter(tea => isDisplayableTea(tea, { requireImage: true }))));
+        setTeas(diversifyTeasByShop(cached.filter(tea => isDisplayableTea(tea, { requireImage: true }))));
         setDataSource('cache');
         // Don't set isRemoteData — we still want to fetch fresh data
         // But cache is far better than 60 local teas
@@ -186,7 +154,7 @@ export const useTeas = () => {
     setError(null);
 
     if (!isSupabaseConfigured()) {
-      setTeas(diversifyTeas(localTeas.filter(tea => isDisplayableTea(tea))));
+      setTeas(diversifyTeasByShop(localTeas.filter(tea => isDisplayableTea(tea))));
       setLoading(false);
       setRefreshing(false);
       return;
@@ -200,7 +168,7 @@ export const useTeas = () => {
         .filter(tea => isDisplayableTea(tea, { requireImage: true }));
 
       // Rank and diversify
-      const ranked = diversifyTeas(formattedTeas);
+      const ranked = diversifyTeasByShop(formattedTeas);
       setTeas(ranked);
       setIsRemoteData(true);
       setDataSource('remote');
@@ -280,7 +248,7 @@ export const useTeas = () => {
 
     switch (sortBy) {
       case 'relevance':
-        // Default order — brand-diversified, no re-sort needed
+        result = diversifyTeasByShop(result);
         break;
       case 'name':
         result.sort((a, b) => a.name.localeCompare(b.name));

@@ -968,10 +968,16 @@ function isTeaProduct(product) {
   const title = product.title.toLowerCase();
   const tags = (product.tags || []).map(t => t.toLowerCase());
   const type = product.product_type?.toLowerCase() || '';
+
+  if (!product.images?.[0]?.src) return false;
   
   // Exclude non-tea items
   const excludePatterns = [
     'gift', 'sampler', 'variety pack', 'assortment', 'discovery box',
+    'advent calendar', 'sample pack', 'sample set', 'starter kit', 'starter set',
+    'presentation box', 'petite presentation box', 'tea chest', 'tea collection',
+    'variety bag', 'event box', 'tea filters', 'paper filters', 'display rack',
+    'tea starter', 'travel kit', 'tea of the month',
     'mug', 'cup', 'teapot', 'infuser', 'accessory', 'accessories',
     'tumbler', 'glass pitcher', 'iced tea pitcher', 'tea strainer',
     'chawan', 'yunomi', 'kyusu', 'tea pot', 'tea scoop', 'chashaku',

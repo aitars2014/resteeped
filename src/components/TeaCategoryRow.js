@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { ChevronRight } from 'lucide-react-native';
 import { typography, spacing } from '../constants';
 import { useTheme } from '../context';
+import { diversifyTeasByShop } from '../utils/teaCatalogQuality';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const CARD_WIDTH = 140;
@@ -64,7 +65,7 @@ export const TeaCategoryRow = ({ title, teas, teaType, onTeaPress, onSeeAll, the
     // Only show teas with images — gradient placeholders look bad in browse rows
     const withImages = categoryTeas.filter(t => t.imageUrl);
     if (withImages.length === 0) return [];
-    return dailyRotate(withImages, teaType).slice(0, 20);
+    return diversifyTeasByShop(dailyRotate(withImages, teaType)).slice(0, 20);
   }, [teas, teaType]);
 
   if (displayTeas.length === 0) return null;
