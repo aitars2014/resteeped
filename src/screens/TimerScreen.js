@@ -29,6 +29,7 @@ import { useAuth, useTheme, useCollection } from '../context';
 import { haptics } from '../utils/haptics';
 import { getBrewingGuide, getColdBrewGuide, BREW_METHODS } from '../constants/brewingGuides';
 import { trackEvent, AnalyticsEvents } from '../utils/analytics';
+import { clearWatchTimer, syncWatchTimer } from '../lib/watchTimerSync';
 
 const { width } = Dimensions.get('window');
 
@@ -169,6 +170,7 @@ export const TimerScreen = ({ route, navigation }) => {
   const notificationIdRef = useRef(null);
   const appStateRef = useRef(AppState.currentState);
   const timerEndTimeRef = useRef(null);
+  const timerSessionIdRef = useRef(null);
   const brewCardRef = useRef(null);
 
   const hasRatedTea = (targetTeaId) => {
@@ -282,20 +284,60 @@ export const TimerScreen = ({ route, navigation }) => {
         setRemainingSeconds(0);
         setIsRunning(false);
         setIsComplete(true);
+        syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: endTime });
         haptics.success();
         Vibration.vibrate([500, 200, 500, 200, 500]);
       } else {
         setRemainingSeconds(remaining);
+        syncTimerToWatch('running', { remainingSeconds: remaining, endsAt: endTime });
       }
     }
     appStateRef.current = nextAppState;
+  };
+
+  const getTimerId = () => {
+    if (!timerSessionIdRef.current) {
+      const teaKey = teaId || tea?.id || 'quick';
+      timerSessionIdRef.current = `${teaKey}-${Date.now()}`;
+    }
+    return timerSessionIdRef.current;
+  };
+
+  const buildWatchTimerPayload = (status, overrides = {}) => {
+    const now = Date.now();
+    const duration = overrides.totalSeconds ?? totalSeconds;
+    const remaining = overrides.remainingSeconds ?? remainingSeconds;
+    const endsAt = overrides.endsAt ?? (
+      status === 'running' ? now + remaining * 1000 : timerEndTimeRef.current
+    );
+
+    return {
+      id: getTimerId(),
+      status,
+      teaId: teaId || tea?.id || null,
+      teaName: tea?.name || 'Tea timer',
+      teaType: tea?.teaType || null,
+      brewMethod,
+      infusion: multiSteepMode ? currentInfusion : null,
+      totalSeconds: duration,
+      remainingSeconds: remaining,
+      startedAt: overrides.startedAt || null,
+      pausedAt: status === 'paused' ? now : null,
+      endedAt: overrides.endedAt || (status === 'completed' ? now : null),
+      endsAt: status === 'running' ? endsAt : null,
+      temperatureF,
+    };
+  };
+
+  const syncTimerToWatch = (status, overrides = {}) => {
+    syncWatchTimer(buildWatchTimerPayload(status, overrides));
   };
   
   // Schedule notification
   const scheduleNotification = async (seconds) => {
     if (!notificationsEnabled) return;
     await cancelNotification();
-    timerEndTimeRef.current = Date.now() + (seconds * 1000);
+    timerEndTimeRef.current = timerEndTimeRef.current || Date.now() + (seconds * 1000);
     
     const teaName = tea?.name || 'Your tea';
     const infusionText = multiSteepMode ? ` (Infusion ${currentInfusion})` : '';
@@ -322,7 +364,6 @@ export const TimerScreen = ({ route, navigation }) => {
       await Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
       notificationIdRef.current = null;
     }
-    timerEndTimeRef.current = null;
   };
   
   // Reset when tea changes
@@ -342,6 +383,9 @@ export const TimerScreen = ({ route, navigation }) => {
     setCurrentInfusion(1);
     setInfusionNotes({});
     cancelNotification();
+    timerEndTimeRef.current = null;
+    clearWatchTimer(timerSessionIdRef.current);
+    timerSessionIdRef.current = null;
   }, [tea?.id]);
   
   // Timer effect
@@ -360,6 +404,7 @@ export const TimerScreen = ({ route, navigation }) => {
             haptics.success();
             Vibration.vibrate([500, 200, 500, 200, 500]);
             playCompletionSound();
+            syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: timerEndTimeRef.current || Date.now() });
             notificationIdRef.current = null;
             timerEndTimeRef.current = null;
             return 0;
@@ -493,6 +538,10 @@ export const TimerScreen = ({ route, navigation }) => {
       setIsComplete(false);
       setHasLogged(false);
       setIsRunning(true);
+      const now = Date.now();
+      const endsAt = now + totalSeconds * 1000;
+      timerEndTimeRef.current = endsAt;
+      syncTimerToWatch('running', { remainingSeconds: totalSeconds, startedAt: now, endsAt });
       trackEvent(AnalyticsEvents.BREW_STARTED, {
         tea_id: tea?.id,
         tea_name: tea?.name,
@@ -502,6 +551,10 @@ export const TimerScreen = ({ route, navigation }) => {
     } else {
       if (!isRunning) {
         // Starting timer
+        const now = Date.now();
+        const endsAt = now + remainingSeconds * 1000;
+        timerEndTimeRef.current = endsAt;
+        syncTimerToWatch('running', { startedAt: now, endsAt });
         trackEvent(AnalyticsEvents.BREW_STARTED, {
           tea_id: tea?.id,
           tea_name: tea?.name,
@@ -510,6 +563,9 @@ export const TimerScreen = ({ route, navigation }) => {
           multi_steep: multiSteepMode,
           infusion: multiSteepMode ? currentInfusion : null,
         });
+      } else {
+        syncTimerToWatch('paused');
+        timerEndTimeRef.current = null;
       }
       setIsRunning(!isRunning);
     }
@@ -522,6 +578,9 @@ export const TimerScreen = ({ route, navigation }) => {
     setIsComplete(false);
     setHasLogged(false);
     await cancelNotification();
+    timerEndTimeRef.current = null;
+    await clearWatchTimer(timerSessionIdRef.current);
+    timerSessionIdRef.current = null;
   };
   
   // Multi-steep navigation
