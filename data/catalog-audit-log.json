@@ -2,43 +2,94 @@
   {
     "brand": "Bigelow Tea",
     "status": "ok",
-    "websiteCount": 116,
-    "dbCount": 125,
+    "websiteCount": 119,
+    "dbCount": 126,
     "added": 0,
     "newTeas": []
   },
   {
     "brand": "Numi Organic Tea",
     "status": "ok",
-    "websiteCount": 23,
-    "dbCount": 55,
-    "added": 2,
-    "newTeas": [
-      "Rooibos Chai Latte Powder",
-      "Matcha Maca Latte Powder"
-    ]
+    "websiteCount": 8,
+    "dbCount": 58,
+    "added": 0,
+    "newTeas": []
   },
   {
     "brand": "Traditional Medicinals",
     "status": "ok",
-    "websiteCount": 105,
-    "dbCount": 107,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 129,
+    "dbCount": 169,
+    "added": 33,
+    "newTeas": [
+      "Organic Stress Soother™ Tension Relief Tea",
+      "Organic Weightless® Dandelion Hibiscus Tea",
+      "Organic Turmeric with Meadowsweet & Ginger Tea",
+      "Organic Throat Coat® Tea",
+      "Organic Throat Coat® Lemon Echinacea Tea",
+      "Organic Spearmint Tea",
+      "Organic Smooth Move® Tea",
+      "Organic Smooth Move® Peppermint Tea",
+      "Organic Roasted Dandelion Root Tea",
+      "Organic Raspberry Leaf Tea",
+      "Organic Peppermint Tea",
+      "Organic Nighty Night® Tea",
+      "Organic Nighty Night Extra™ Tea",
+      "Organic Nettle Leaf Tea",
+      "Organic Mother’s Milk® Tea",
+      "Organic Licorice Root Tea",
+      "Organic Lemon Ginger Tea",
+      "Organic Lemon Balm Tea",
+      "Organic Hibiscus Tea",
+      "Organic Hawthorn & Hibiscus Tea",
+      "Organic Green Tea Matcha",
+      "Organic Green Tea Lemongrass",
+      "Organic Green Tea Ginger",
+      "Organic Ginger Tea",
+      "Organic Ginger Aid® Tea",
+      "Organic Fennel Tea",
+      "Organic EveryDay Detox® Lemon Tea",
+      "Organic Echinacea Plus® Tea",
+      "Organic Echinacea Plus® Elderberry Tea",
+      "Organic Dandelion Leaf & Root Tea",
+      "Organic Chamomile Tea",
+      "Organic Belly Comfort™ Peppermint Tea",
+      "Organic Chamomile & Lavender Tea"
+    ]
   },
   {
     "brand": "Tea Forté",
     "status": "ok",
-    "websiteCount": 165,
-    "dbCount": 182,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 162,
+    "dbCount": 270,
+    "added": 19,
+    "newTeas": [
+      "Spiced Chai",
+      "Cherry Marzipan Loose Leaf Tea Canister",
+      "Event Box Blueberry Merlot Tea 40ct",
+      "Jasmine Green Loose Tea Bulk Bag",
+      "Presentation Box Warming Joy - Jester",
+      "Petite Presentation Box Jardin",
+      "Petite Presentation Box Warming Joy - Jester",
+      "Warming Joy Petite Tea Tree",
+      "Wellbeing Petite Presentation Box",
+      "Wellbeing Presentation Box",
+      "Jubilee Petite Presentation Box",
+      "Herbal Retreat Petite Presentation Box",
+      "Hydrangea by Draper James",
+      "Hydrangea by Draper James Petite Presentation Box",
+      "Hydrangea by Draper James Presentation Box",
+      "Hydrangea by Draper James Mini Petite Presentation Box",
+      "Volaré",
+      "Keepsake",
+      "Demoiselle"
+    ]
   },
   {
     "brand": "Stash Tea",
     "status": "ok",
-    "websiteCount": 82,
-    "dbCount": 73,
+    "websiteCount": 52,
+    "dbCount": 76,
     "added": 0,
     "newTeas": []
   },
@@ -46,7 +97,7 @@
     "brand": "Twinings",
     "status": "ok",
     "websiteCount": 64,
-    "dbCount": 70,
+    "dbCount": 69,
     "added": 0,
     "newTeas": []
   },
@@ -54,148 +105,245 @@
     "brand": "Celestial Seasonings",
     "status": "ok",
     "websiteCount": 88,
-    "dbCount": 86,
-    "added": 0,
-    "newTeas": []
+    "dbCount": 90,
+    "added": 3,
+    "newTeas": [
+      "Throat Soother Wellness Tea, Sweet Citrus Herb",
+      "Stomach Soother Wellness Tea with Ginger and Mint",
+      "Prebiotic Blend Wellness Tea with Hibiscus"
+    ]
   },
   {
     "brand": "Teapigs",
     "status": "ok",
     "websiteCount": 44,
-    "dbCount": 45,
+    "dbCount": 46,
     "added": 0,
     "newTeas": []
   },
   {
     "brand": "Steven Smith Teamaker",
     "status": "ok",
-    "websiteCount": 60,
-    "dbCount": 80,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 57,
+    "dbCount": 82,
+    "added": 1,
+    "newTeas": [
+      "Ode To Whiskey"
+    ]
   },
   {
     "brand": "Art of Tea",
     "status": "ok",
-    "websiteCount": 112,
-    "dbCount": 140,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 107,
+    "dbCount": 151,
+    "added": 4,
+    "newTeas": [
+      "Halo Matcha Complete Kit",
+      "Matcha Kit with Kettle",
+      "Halo Ceremonial Grade",
+      "The Jasmine Ritual"
+    ]
   },
   {
     "brand": "Crimson Lotus Tea",
     "status": "ok",
-    "websiteCount": 174,
-    "dbCount": 181,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 178,
+    "dbCount": 194,
+    "added": 14,
+    "newTeas": [
+      "2020 Lao Ban Zhang Old Tree Sheng / Raw Puerh Tea Dragon Balls",
+      "\"Wamao\" Jianshui Clay Bracelet / Fidget / Teapet",
+      "\"Crab Claw\" Jianshui Clay Bracelet / Fidget / Teapet",
+      "\"Butterfly\" Jianshui Clay Bracelet / Fidget / Teapet",
+      "\"Huli Jing\" Jianshui Clay Bracelet / Fidget / Teapet",
+      "\"Brown Dragon\" Jianshui Clay Bracelet / Fidget / Teapet",
+      "\"Black Dragon\" Jianshui Clay Bracelet / Fidget / Teapet",
+      "2022 \"Golden Minis\" Shou / Ripe Puerh Tea",
+      "2015 \"Bronze Minis\" Shou / Ripe Puerh Tea",
+      "2007 Jingmai Old Tree Purple Bud Shou / Ripe Puerh Tea - 250g Tuo Cha",
+      "2025 \"Muse\" Sheng / Raw Puerh Tea - 200g Cake",
+      "2026 \"Altered State\" Sheng / Raw Puerh Tea - 200g Cake",
+      "2026 Bulang \"Stone Lion\" Huang Pian Sheng / Raw Puerh Tea - 200g Cake",
+      "2026 Jingmai Gushu \"Black Tiger\" Yunnan Sun Dried Dian Hong Cha / Black Tea - 200g Cake"
+    ]
   },
   {
     "brand": "Yunnan Sourcing",
     "status": "ok",
-    "websiteCount": 152,
-    "dbCount": 164,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 160,
+    "dbCount": 335,
+    "added": 15,
+    "newTeas": [
+      "2016 Yunnan Sourcing \"Red Monkey\" Raw Pu-erh Tea Mini Cake",
+      "2016 Yunnan Sourcing \"Immortal Monkey\" Wild Arbor Ripe Pu-erh Tea Cake",
+      "2006 Haiwan Lao Tong Zhi Raw Pu-erh Tea Brick",
+      "2009 Yong Pin Hao \"Lan Xiang Gu Yun\" Raw Pu-erh Tea Cake",
+      "2008 Guan Zi Zai \"Stone-Pressed Yi Wu\" Wild Arbor tea",
+      "2005 Fuhai \"Special Order 7576\" Ripe Pu-erh of Menghai",
+      "2013 Menghai \"Dragon Pillar\" Premium Ripe Pu-erh Tea Cake",
+      "\"Purple Voodoo\" Purple Black Tea Cake * Spring 2018",
+      "2017 Spring Yi Shan White Tea and Camellia Flower Cake * 200 grams",
+      "Three Cranes \"Classic 0211\" Special Grade Liu Bao Tea",
+      "2023 Gao Jia Shan \"Year of the Rabbit\" Fu Brick Tea",
+      "2018 Xiaguan \"Ri Zhao Jin Shan\" Ripe Pu-erh Tea Mushroom Tuo",
+      "2026 Xiaguan \"Te Ji Tuo\" Raw Pu-erh Tea",
+      "2025 Yunnan Sourcing \"Autumn Forest Tea & Cha Hua\" Raw Pu-erh Tea Cake",
+      "Qin Zhou Nixing Clay \"Lotus\" Gaiwan by Yuan Chan Jie"
+    ]
   },
   {
     "brand": "Spirit Tea",
     "status": "ok",
-    "websiteCount": 19,
-    "dbCount": 27,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 21,
+    "dbCount": 30,
+    "added": 1,
+    "newTeas": [
+      "For Non-Looseleaf Tea, enter product into Shopify manually"
+    ]
   },
   {
     "brand": "Song Tea & Ceramics",
-    "status": "error",
-    "error": "no company id",
-    "added": 0
+    "status": "ok",
+    "websiteCount": 61,
+    "dbCount": 157,
+    "added": 0,
+    "newTeas": []
   },
   {
     "brand": "The Tea Spot",
     "status": "ok",
-    "websiteCount": 88,
-    "dbCount": 88,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 81,
+    "dbCount": 89,
+    "added": 4,
+    "newTeas": [
+      "Matcha Bowl",
+      "Candy Cane Craze",
+      "Cold Brew Sport Bottle",
+      "Bamboo Whisk"
+    ]
   },
   {
     "brand": "The Steeping Room",
     "status": "ok",
-    "websiteCount": 185,
-    "dbCount": 231,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 164,
+    "dbCount": 387,
+    "added": 10,
+    "newTeas": [
+      "2026 White2Tea Blood Moon",
+      "2026 White2Tea Moon Waffles White Tea",
+      "TSR House Chai - Original Recipe",
+      "Yamazakura Cherry Wood Tea Coaster",
+      "Whisky Barrel Smoked Black Tea from Japan",
+      "2026 Sun-Dried Yunnan Silver Needles White Tea",
+      "2026 First Kiss - Old Tree Black Tea from Vietnam",
+      "Wild Orchid Green Tea from Vietnam",
+      "Jin Ya - Golden Buds Black Tea from Yunnan",
+      "Snow Dragon Chinese Yellow Tea"
+    ]
   },
   {
     "brand": "Tea Drunk",
     "status": "ok",
-    "websiteCount": 79,
+    "websiteCount": 81,
     "dbCount": 81,
-    "added": 0,
-    "newTeas": []
+    "added": 5,
+    "newTeas": [
+      "The Aesthetics of Taste - Tea and Whiskey",
+      "Apprentice Tea Tasting Session",
+      "Whiskey Meets Tea: A Comparative Tasting Adventure",
+      "Nan Nuo Shan Zhu Lin Zhai 南糯山竹林寨",
+      "Tea Evaluation Workshops"
+    ]
   },
   {
     "brand": "Sullivan Street Tea & Spice Company",
     "status": "ok",
-    "websiteCount": 38,
-    "dbCount": 38,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 32,
+    "dbCount": 41,
+    "added": 6,
+    "newTeas": [
+      "Dragon Fruit Dream Herbal Tea",
+      "Clarity Lion's Mane Mushroom Tea",
+      "Ingenuitea 2 Gravity Tea Maker",
+      "Ceramic White Owl Tea Set",
+      "Green Tea & Jasmine Complexion Soap",
+      "Ceramic Blue Owl Tea Set"
+    ]
   },
   {
     "brand": "MEM Tea",
     "status": "ok",
-    "websiteCount": 140,
-    "dbCount": 148,
+    "websiteCount": 138,
+    "dbCount": 157,
     "added": 0,
     "newTeas": []
   },
   {
     "brand": "Premium Steap",
     "status": "ok",
-    "websiteCount": 18,
-    "dbCount": 18,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 17,
+    "dbCount": 19,
+    "added": 1,
+    "newTeas": [
+      "Reading Cat Tea Ball"
+    ]
   },
   {
     "brand": "Cuples Tea House",
     "status": "ok",
-    "websiteCount": 40,
-    "dbCount": 45,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 38,
+    "dbCount": 48,
+    "added": 3,
+    "newTeas": [
+      "ElderBerry Elixir (Wellness Tea)",
+      "Ginger Peach",
+      "Sapphire Blue Tea"
+    ]
   },
   {
     "brand": "Just Add Honey Tea Company",
     "status": "ok",
-    "websiteCount": 67,
-    "dbCount": 68,
-    "added": 0,
-    "newTeas": []
-  },
-  {
-    "brand": "Thistle & Sprig Tea Co.",
-    "status": "scrape_failed",
-    "added": 0
+    "websiteCount": 75,
+    "dbCount": 77,
+    "added": 1,
+    "newTeas": [
+      "Carnival Sips Tea"
+    ]
   },
   {
     "brand": "Uptown Tea Shop",
     "status": "ok",
-    "websiteCount": 181,
-    "dbCount": 182,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 186,
+    "dbCount": 191,
+    "added": 8,
+    "newTeas": [
+      "Hibiscus Royale Herbal Tea",
+      "High Tea, Saturday, August 15th - 2:00 p.m.",
+      "High Tea, Saturday, August 15th - 11:30 a.m.",
+      "High Tea, Saturday, July 18th - 2:00 p.m.",
+      "High Tea, Saturday, July 18th - 11:30 a.m.",
+      "Tea, Treats & Fused Glass Class - Friday, July 17th - 6 pm",
+      "Tea, Treats & Fused Glass Class - Friday, July 24th - 6 pm",
+      "Tee Bären Hot Beverage & Candy"
+    ]
   },
   {
     "brand": "New Orleans Tea Company",
     "status": "ok",
-    "websiteCount": 97,
-    "dbCount": 96,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 98,
+    "dbCount": 97,
+    "added": 9,
+    "newTeas": [
+      "French Market Peach",
+      "Big Chief Chai",
+      "Caramel Crème Brulee Pu-erh",
+      "Plum Street Spice",
+      "Bubblegum Snowball",
+      "Witches Walk",
+      "Ginger Mango Gris Gris",
+      "Fest then Rest Elderberry",
+      "Cherry Blossom Rose"
+    ]
   },
   {
     "brand": "Tandem Tea Company",
@@ -208,220 +356,609 @@
   {
     "brand": "Nashville Tea Co",
     "status": "ok",
-    "websiteCount": 35,
+    "websiteCount": 28,
     "dbCount": 35,
-    "added": 0,
-    "newTeas": []
+    "added": 5,
+    "newTeas": [
+      "Matcha Lemonade",
+      "Voice Tea Shirt",
+      "Nashville Cute-Tea Shirt",
+      "Nashville Hot-Tea Shirt",
+      "NTC Tea-Shirt"
+    ]
   },
   {
     "brand": "Milk-n-Honey Tea Company",
     "status": "ok",
     "websiteCount": 66,
     "dbCount": 66,
-    "added": 0,
-    "newTeas": []
+    "added": 3,
+    "newTeas": [
+      "Fireside Whiskey™",
+      "Rooibos",
+      "Formosa Oolong"
+    ]
   },
   {
     "brand": "Chicago Teahouse",
     "status": "ok",
-    "websiteCount": 122,
-    "dbCount": 127,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 124,
+    "dbCount": 153,
+    "added": 28,
+    "newTeas": [
+      "Monthly Chicago Teahouse Book Club-August 9",
+      "Darjeeling FTGFOP1 Happy Valley DJ1/26 First Flush 2026",
+      "Darjeeling SFTGFOP1 Victoria’s Peak DJ1/25 - First Flush 2026",
+      "Anxi Tie Guan Yin",
+      "Yunnan Curly Golden Bud Organic",
+      "Sejak",
+      "Blessing Brick",
+      "Vanilla Bean Marshmallows",
+      "Salty Caramel Marshmallows",
+      "Japan Gyokuro Kyushu Organic",
+      "Darjeeling Giddapahar AV2 - First Flush 2026",
+      "Sakura Matcha Mini Set",
+      "Blue Sakura Matcha Bowl",
+      "Woojeon South Korea",
+      "Daisy Tea Tin - 125g",
+      "Matcha Sifter",
+      "FREE 50g Lychee Tea Tin - SPECIAL",
+      "Sakura Tea Tin - 100g",
+      "Darjeeling SFTGFOP Margaret's Hope1 HS - First Flush 2026",
+      "Darjeeling Poobong - First Flush 2026",
+      "Darjeeling SFTGFOP1 Steinthal EX1/25 - First Flush 2026",
+      "Golden Black Organic",
+      "Ceramic Matcha Bowls",
+      "Passion Fruit",
+      "Nepal Shangri La First Flush Guranse",
+      "Golden Yunnan Downy Pekoe",
+      "Coconut Twist",
+      "White Peony"
+    ]
   },
   {
     "brand": "TeaLula",
     "status": "ok",
-    "websiteCount": 180,
-    "dbCount": 187,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 165,
+    "dbCount": 196,
+    "added": 3,
+    "newTeas": [
+      "Mother's Day Afternoon Tea",
+      "Happy Birthday Swee-Tea Greeting Card",
+      "Matcha"
+    ]
   },
   {
     "brand": "Eli Tea Bar",
     "status": "ok",
-    "websiteCount": 31,
-    "dbCount": 54,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 32,
+    "dbCount": 57,
+    "added": 8,
+    "newTeas": [
+      "Kamairicha Japanese Green Tea",
+      "Sunset Peach Green Tea",
+      "Limelight Green Tea",
+      "Little Miss Sunshine- Herbal Tea",
+      "Genmaicha Matcha Powder 1oz",
+      "Happy Tummy- Herbal Tea",
+      "Maruyasu Ceremonial Shiga Matcha",
+      "Roasted Hojicha"
+    ]
   },
   {
     "brand": "CommodiTeas",
     "status": "ok",
-    "websiteCount": 48,
-    "dbCount": 47,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 50,
+    "dbCount": 49,
+    "added": 3,
+    "newTeas": [
+      "CommodiTeas Tea Ball (Wholesale)",
+      "Rental chair",
+      "CommodiTeas Gold Cast Iron Tea Kettle"
+    ]
   },
   {
     "brand": "Sencha Tea Bar",
     "status": "ok",
-    "websiteCount": 49,
+    "websiteCount": 44,
     "dbCount": 49,
-    "added": 0,
-    "newTeas": []
+    "added": 3,
+    "newTeas": [
+      "TEA STARTER KIT",
+      "Ceremonial  Matcha",
+      "Perfect Tea Measuring Spoon"
+    ]
   },
   {
     "brand": "Northeast Tea House",
     "status": "ok",
-    "websiteCount": 189,
-    "dbCount": 195,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 101,
+    "dbCount": 180,
+    "added": 39,
+    "newTeas": [
+      "\"Yue Guang Bai\" Purple Tea (oz)",
+      "2013 Big Snow Mountain Cake",
+      "GABA White Tea Cake",
+      "Sun Moon Lake Black Tea (oz)",
+      "2019 Menghai Chen Xiang Cake",
+      "2022 Bu Lang Mountain Cake",
+      "2023 Big Snow Mountain Cake",
+      "Jinggu \"Chestnut Rose\" Stuffed Tea (oz)",
+      "Old Tree \"Cha Hua\" Tea Flowers (oz)",
+      "2020 Three Cranes \"Golden Flowers\" Liu Bao (oz)",
+      "Dragonwell Black (oz)",
+      "2024 Jin Chang He Cake",
+      "Goji Leaves (oz)",
+      "Himalayan Dark Pearl (oz)",
+      "Roasted Kukicha (oz)",
+      "Wakayama Hojicha (oz)",
+      "Moonlight Silver Needles Cake",
+      "2025 Dian Hong Cake",
+      "2014 Jingmai Shu Cake",
+      "Lincang High Altitude Cake",
+      "Shu Pu'er Mini Tuos Tea Single",
+      "Assorted Herb + Shu Pu'er Singles",
+      "Assorted Leaf Tea Single",
+      "Moonlight White Dragon Ball Single",
+      "Golden Buds Shu Pu'er Cake",
+      "Japanese Style Clay Gong Dao Bei/Cha Hai",
+      "Snow Themed Gaiwan",
+      "Snow Themed Cha Hai/Gong Dao Bei",
+      "Harayama Yabukita Blend Ceremonial Grade Matcha - 20g Tin",
+      "Pao Pow Pau Sheng Cake",
+      "2019 Osmanthus White Cake",
+      "Da Hong Pao",
+      "Crassicolumna Sheng",
+      "Osmanthus Black (Loose)",
+      "Bittermelon w/ Tieguanyin (Loose)",
+      "Mao Xie/Hairy Crab (Per Oz)",
+      "Masala Chai Tisane (Per Oz)",
+      "Sirena's Monthly Tea Carton",
+      "Wild Jujube Leaves Of Laoshan"
+    ]
   },
   {
     "brand": "Storehouse Tea",
     "status": "ok",
-    "websiteCount": 99,
-    "dbCount": 106,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 98,
+    "dbCount": 143,
+    "added": 11,
+    "newTeas": [
+      "Hand Crafted Matcha Bowl by Farm Dog Pottery - Ivory Sand",
+      "Hand Crafted Matcha Bowl by Farm Dog Pottery - Golden Umber",
+      "Hand Crafted Matcha Bowl by Farm Dog Pottery - Coastal Jade",
+      "Loose Leaf Tea Starter Kit",
+      "Storehouse Tea Soap",
+      "Ceramic Matcha Bowls - 50% OFF",
+      "Large Sachet Variety Box (50)",
+      "50 oz. Glass Ice Tea Pitcher",
+      "Oxford Navy Tea Shirt",
+      "Olive Green Tea Shirt",
+      "Charcoal Black Tea Shirt"
+    ]
   },
   {
     "brand": "London Tea Merchant",
     "status": "ok",
-    "websiteCount": 83,
-    "dbCount": 90,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 73,
+    "dbCount": 81,
+    "added": 7,
+    "newTeas": [
+      "Dickens Christmas Blend",
+      "Blueberry Rooibos",
+      "Tea Quotes with vintage illustration Greeting Card",
+      "Tea Quotes Greeting Card",
+      "Collector's Tin Set",
+      "Vanilla Mint Chai",
+      "Perfect Teaspoon"
+    ]
   },
   {
     "brand": "Big Heart Tea Co.",
     "status": "ok",
-    "websiteCount": 22,
-    "dbCount": 27,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 37,
+    "dbCount": 37,
+    "added": 11,
+    "newTeas": [
+      "Black Tea*",
+      "Iced Tea Sampling Kit*",
+      "Hot Tea Sampling Kit*",
+      "Cozy Tea Set*",
+      "Single Serve Display Unit*",
+      "Nice to be Nice, 12 Ways to Share and Self Care Case of 8*",
+      "Nice to be Nice*",
+      "Calm Tummy*",
+      "Calm Tummy",
+      "Green Tea",
+      "Chakra Tea Set*"
+    ]
   },
   {
     "brand": "Chado Tea",
     "status": "ok",
-    "websiteCount": 176,
-    "dbCount": 178,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 177,
+    "dbCount": 180,
+    "added": 6,
+    "newTeas": [
+      "Ceremonial Matcha",
+      "Organic Tuo Cha",
+      "Lan Xiang Jasmine",
+      "Jungpana Estate SFTGFOP-1",
+      "Risheehat Estate Organic SFTGFOP",
+      "Risheehat Super Premium Muscatel"
+    ]
   },
   {
     "brand": "Red Blossom Tea",
     "status": "ok",
-    "websiteCount": 103,
-    "dbCount": 104,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 105,
+    "dbCount": 110,
+    "added": 1,
+    "newTeas": [
+      "Fu Shou Shan, Spring 2026"
+    ]
   },
   {
     "brand": "Vital Tea Leaf",
     "status": "ok",
     "websiteCount": 14,
     "dbCount": 14,
-    "added": 0,
-    "newTeas": []
+    "added": 2,
+    "newTeas": [
+      "Handcraft Tea",
+      "Organic Mulberry Leaf"
+    ]
   },
   {
     "brand": "Perennial Tea Room",
     "status": "ok",
-    "websiteCount": 132,
-    "dbCount": 134,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 139,
+    "dbCount": 146,
+    "added": 15,
+    "newTeas": [
+      "Mango Lassi",
+      "Lemon Black",
+      "Dragonfruit Rooibos",
+      "Black Cherry",
+      "Cascade Huckleberry",
+      "Sticky Rice Shou Pink Tuocha",
+      "Silk Road Imperial Leaf Pu'erh 15ct Teabags",
+      "Barry's Gold Blend Loose 250g",
+      "Barry's Decaf Blend 80ct Bags",
+      "Barry's Gold Blend 80ct Bags",
+      "Sugimoto Ceremonial Matcha",
+      "Sugimoto Daily Matcha",
+      "Hanging Tea Spoon",
+      "Bamboo Whisk (Chasen)",
+      "Bamboo Whisk Stand"
+    ]
   },
   {
     "brand": "Floating Leaves Tea",
     "status": "ok",
-    "websiteCount": 24,
-    "dbCount": 27,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 25,
+    "dbCount": 35,
+    "added": 6,
+    "newTeas": [
+      "Wildcraft Puer & White Tea",
+      "Sanxia Mingqian Baimudan",
+      "Ruby 18",
+      "Forest Sprite High Mountain Oolong 2026 Spring",
+      "Gongfu Tea Brewing Workshop",
+      "Private Tea Class"
+    ]
   },
   {
     "brand": "Oregon Tea Traders",
     "status": "ok",
-    "websiteCount": 188,
-    "dbCount": 231,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 182,
+    "dbCount": 248,
+    "added": 6,
+    "newTeas": [
+      "Chicken Stainless Steel Bottle",
+      "Mushrooms Stainless Steel Bottle",
+      "Bee Stainless Steel Bottle",
+      "Forest Stainless Steel Bottle",
+      "Chemistry of Tea Bottle",
+      "Sully's Party Water Bottle"
+    ]
   },
   {
     "brand": "Point Loma Tea",
     "status": "ok",
-    "websiteCount": 95,
-    "dbCount": 100,
-    "added": 1,
+    "websiteCount": 101,
+    "dbCount": 148,
+    "added": 66,
     "newTeas": [
-      "Toy -  Doll Freya Fairy"
+      "Decor - Autumn Sunflower 6\"5\"",
+      "Chimes - Purr-fect Cat",
+      "Shelf Sitters - Fall Woodland Creatures",
+      "Ornament - Kisses from Heaven Crystal Snowflake",
+      "Decor -  Sweetheart Claus",
+      "Sencha - Decaffeinated Green Tea",
+      "Tea Set - White Porcelain Gongfu Tea Service Set",
+      "Chimes -  Hummingbird Heart Mini",
+      "Ornament - Rainbow Tree of Life",
+      "Ornament - Ballerina",
+      "Tea Set - Sakura Cherry Blossoms",
+      "Tea Container - Sakura Blossom 3.5oz",
+      "Tea Tray - Bamboo",
+      "Charm - Sunflower Wishes",
+      "Tea-for-One Set - Butterfly Garden",
+      "Tea For One Set - Botanical Postcard",
+      "Tea Dripper - Cha Cha \"Bouquet\" Set",
+      "Tea Maker – “Simply Hario” Glass 400ml",
+      "Jam - Apple Maple Butter",
+      "Decor - Whimsical Garden Gnome",
+      "Charcuterie Board - Life is Better at the Beach",
+      "Bookmarks -  Beautiful Dreamer",
+      "Sweet Mullein - Herbal Tea",
+      "Strawberry Sundae - Black Tea",
+      "Chili Mango - Fruit Infusion",
+      "Gaba Oolong - Oolong Tea",
+      "Clear Mind - Herbal Tea",
+      "Lavender Sunrise - Green Tea",
+      "Measuring Spoon - “Jaro” – Stainless Steel (7.5”)",
+      "Measuring Spoon - Mateo",
+      "Baron Grey - Black Tea",
+      "Renewal - Herbal",
+      "Sleep Tight - Herbal Tea",
+      "Mindful Moment - Herbal Tea",
+      "Coconut Crème - Oolong Tea",
+      "Lavender Mint - Herbal Tea",
+      "Tea Container - Shadow Cat Square 3.5 oz(100g)",
+      "Greeting Card-Cat Theme",
+      "Wild Pomegranate - Green Tea",
+      "Tea Set -  Evergreen Bamboo 32oz",
+      "Tea Set - Ume Plume Blue 26 floz",
+      "Teaset - White Marble Glazed Tea Set 22 oz",
+      "Berry White -White Tea",
+      "Greek Mountain Tea - Herbal Tea",
+      "Quiet Evening - Herbal Tea",
+      "Kukicha - Green Tea",
+      "Whiskey  Barrel - Black Tea",
+      "Teaset - Willow Grove",
+      "Tea Set - Japanese Koi Fish Kung Fu ( 8oz)",
+      "Tea Pet - Lucky Cat Zisha Purple Clay  (2.15\"H)",
+      "Tea Pet  - Lucky Bell Cat 2.25\"H",
+      "Gaiwan - Glass Tea Brewing Set",
+      "Mountain Thyme - Herbal Tea",
+      "Dragonwell -  (Long Jing)",
+      "Tea Container - Daisy 4.4oz (125g)",
+      "Tea Container - “Mystic Flower” 5.3 oz (150g)",
+      "Tea Container - Murphy Cat 3.5oz (100g)",
+      "Toy - Dolls Sunny Days",
+      "Toy - Wooden Tea Party Set – Pretend Play Tea Set Ages 3+",
+      "Tea Set - Lucky Cat",
+      "Toy -  Doll Freya Fairy",
+      "Tea Set - Strawberry Field 6 Piece Set",
+      "Tea Set - Spring Bird",
+      "Tea Kettle - Corvo Ekg Pro Electric",
+      "Tea Kettle - Stagg EKG Pro Electric",
+      "Greeting Card - 3D Postal Puzzle"
     ]
   },
   {
     "brand": "PARU Tea",
     "status": "ok",
-    "websiteCount": 56,
-    "dbCount": 70,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 67,
+    "dbCount": 75,
+    "added": 16,
+    "newTeas": [
+      "Mae Salong Beauty, PARU Reserve",
+      "Royal Oolong 17, PARU Reserve",
+      "Yoshi's Sencha (Tsuyuhikari), PARU Reserve",
+      "Yoshi's Matcha (Gokou)",
+      "Yoshi's Matcha (Yabukita)",
+      "Pride 2026 Blend: Chrysanthemum Rose",
+      "Sweet Summer: Seasonal Wagashi & Tea Pairing",
+      "Premium-Grade Matcha (Wholesale Only)",
+      "Yoku Moku, \"Cigare au Matcha\"",
+      "Fukamushi Sakura, PARU Reserve",
+      "Fukamushi Shincha, PARU Reserve",
+      "Holiday Hojicha, PARU Reserve",
+      "Fukamushi Yuzu, PARU Reserve",
+      "Thai Lemongrass",
+      "Tea Tasting at Bow Hall, PARU La Jolla",
+      "PARU x DC — \"Koi\" Deep Matcha Chocolate Bar"
+    ]
   },
   {
     "brand": "Tea & Whisk",
     "status": "ok",
-    "websiteCount": 47,
-    "dbCount": 52,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 66,
+    "dbCount": 96,
+    "added": 25,
+    "newTeas": [
+      "Wuyi Mountain Black Tea",
+      "\"Kokumi\" Japanese Handmade Matcha Bowl",
+      "2008 New Style Liu Bao Heicha",
+      "Nagasaki Houjicha Powder",
+      "Butterfly Garden Portable Travel Gongfu Tea Brewing Set",
+      "Mini Solo Moment Travel Gongfu Brewing Set",
+      "Cloud Silk Double-Sided Brocade Tea Mat (Water-Resist Edition)",
+      "Ru Kiln Fire Dragon Tea Warmer",
+      "Playful Kitty Portable Travel Tea Set (Limited Edition)",
+      "Quiet Path- Lifetime Double-wall Titanium Travel Tea Set",
+      "Hand-crafted Pink Blossom Porcelain Travel Tea Set",
+      "Glacial Silence- Rare Ice Crystallization Glaze Transformation Collection",
+      "\"Bird and Flower\" Handpainted Matcha Bowl",
+      "Handcrafted \"Tsuru\" Kyoyaki Matcha Bowl",
+      "Handcrafted \"Plum Blossom\" Kyoyaki Matcha Bowl",
+      "Handcrafted \"Sakura\" Kyoyaki Matcha Bowl",
+      "Handcrafted \"Oshidori\" Kyoyaki Matcha Bowl",
+      "\"Fine Earth\" Handcrafted Shigaraki Matcha Bowl",
+      "Golden Peacock- Ru Kiln Clay Tea Set with Embroidered Travel Bag",
+      "Blushing Spring- Japanese Handmade Shigayaki Hobin Shiboridashi",
+      "Forest Whisper- Japanese Handmade Shigayaki Hobin Shiboridashi",
+      "Orihime- Japanese Handmade Shigayaki Hobin Shiboridashi",
+      "Ru Kiln Hand-painted Complete Ceremonial Gongfu Travel Tea Set",
+      "Strawberry Rabbit Portable Gongfu Tea Set",
+      "Imperial Azure Dragon Portable Gongfu Tea Set"
+    ]
   },
   {
     "brand": "True Leaf Tea Co.",
     "status": "ok",
-    "websiteCount": 65,
-    "dbCount": 65,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 59,
+    "dbCount": 73,
+    "added": 2,
+    "newTeas": [
+      "Organic Plum Spice - 4 oz",
+      "Organic Cucumber Melon - 4 oz"
+    ]
   },
   {
     "brand": "TEAinTEXAS",
     "status": "ok",
-    "websiteCount": 22,
-    "dbCount": 22,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 24,
+    "dbCount": 24,
+    "added": 2,
+    "newTeas": [
+      "Iced Tea Panhandle Pear",
+      "Tejas Blue Chai"
+    ]
   },
   {
     "brand": "The Cultured Cup",
     "status": "ok",
-    "websiteCount": 157,
-    "dbCount": 165,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 127,
+    "dbCount": 193,
+    "added": 65,
+    "newTeas": [
+      "Earl Grey D'Or",
+      "Orange Truffle",
+      "Uji Matcha Imperial, 100 gm Bag",
+      "La Route du Temps",
+      "Matcha Bowl, Artisan - GMMB 0421",
+      "Matcha Bowl, Artisan - GMMB 0418",
+      "Matcha Bowl, Artisan - GMMB 0415",
+      "Matcha Bowl, Artisan - GMMB 0414",
+      "Matcha Bowl, Artisan - GMMB 0407",
+      "Matcha Bowl, Artisan - GMMB 0404",
+      "Matcha Bowl, Artisan - GMMB 0401",
+      "Matcha Bowl, Artisan - GMMB 0399",
+      "Gaiwan White with Gold Trim, 4 oz",
+      "Alishan Mountain Oolong",
+      "Emperor's Tribute Guzhu Zisun - (Purple Bamboo Shoot)",
+      "Matcha Bowl, Artisan - GMMB 0321",
+      "Matcha Bowl, Artisan - GMMB 0320",
+      "Matcha Bowl, Artisan - GMMB 0318",
+      "Matcha Bowl, Artisan - GMMB 0317",
+      "Nil Noir",
+      "Breakfast Earl Grey",
+      "Montagne D'Or",
+      "Black Léopard",
+      "Golden Leaf Tea Tin, Purple or Blue",
+      "Tea Tin, Satoru Washi Tin, 2-6 oz",
+      "Cold Brew Tea Carafe, Glass/Stainless",
+      "Green Garden Tea For One Set",
+      "Poppy Field Tea For One Set",
+      "Navy Trellis Tea For One Set",
+      "Gold Scroll Tea For One Set",
+      "Matcha Bowl, Artisan - GMMB 0117",
+      "Matcha Bowl, Artisan - GMMB 0116",
+      "Matcha Bowl, Artisan - GMMB 0080",
+      "Floral Fruity Elixir",
+      "Earl Grey Mallow",
+      "Sweet Zesty Lemonade",
+      "Dark Chocolate Decadence",
+      "Carré D'Or Tea Tin",
+      "Ume Cha 2026 Tea Tin",
+      "American Breakfast Tin",
+      "Sweet Shanghai Teabags",
+      "Garden Party Teabags",
+      "American Breakfast Teabags",
+      "Breakfast Earl Grey Teabags",
+      "Silver Linden Flower Teabags (Tilia Argentea)",
+      "Milky Blue Caramelo Teabags",
+      "Sencha Matcha Émeraude Teabags",
+      "American Breakfast Tea",
+      "Rouge Casablanca (Rooibos)",
+      "Rouge Ruschka",
+      "Palace Pu'er Ripe 2012",
+      "Earl Grey French Blue Teabags",
+      "Iron Goddess Toasted",
+      "Sun-Dried Molasses Peach Black",
+      "Zhengshan Xiaozhong Lychee Sweet Black",
+      "2-in-1 Tea Kettle and Tea Steeper",
+      "Corvo Water Kettle, Variable Temp,  Matte Black",
+      "Water Kettle, Variable Temp, Blue/Walnut",
+      "Water Kettle, Variable Temp, White",
+      "Bamboo Whisk",
+      "Hand Towel, Wonderland in Gold",
+      "Hand Towel, Wonderland in Red",
+      "Water Kettle, Variable Temp, Desert Rose/Maple",
+      "Water Kettle, Variable Temp, Sage Green/Maple",
+      "Tea Draining Tray, Black Ceramic + Bamboo Square Drainage"
+    ]
   },
   {
     "brand": "Rakkasan Tea Company",
     "status": "ok",
-    "websiteCount": 100,
-    "dbCount": 103,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 98,
+    "dbCount": 99,
+    "added": 7,
+    "newTeas": [
+      "Rakkasan Tea Company sticker",
+      "Rakkasan Tea logo sticker",
+      "Rakkasan Tea Company Logo Patch",
+      "While There Is Tea, There Is Hope Sticker",
+      "Make Tea Stickers",
+      "Make Tea Not War Sticker",
+      "Always Have My Tea Sticker"
+    ]
   },
   {
     "brand": "Happyness Tea & Spice Company",
     "status": "ok",
-    "websiteCount": 21,
+    "websiteCount": 19,
     "dbCount": 22,
-    "added": 0,
-    "newTeas": []
+    "added": 1,
+    "newTeas": [
+      "Evergreen Terrace - Citrus Green Tea Blend"
+    ]
   },
   {
     "brand": "Zhi Tea",
     "status": "ok",
-    "websiteCount": 82,
-    "dbCount": 154,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 80,
+    "dbCount": 158,
+    "added": 17,
+    "newTeas": [
+      "Cherry Sencha ICED TEA (Loose-leaf) 1LB",
+      "Raw Puer: Dehong Ye Sheng Wild Tree Purple Tea 2014 - LIMITED",
+      "Watermelon Lime Jalapeño ICED TEA (Loose-leaf) 1 LB",
+      "Watermelon Lime Jalapeño Iced Tea Kit",
+      "2004 Menghai 7572 Ripe Puer",
+      "Earl Grey ICED TEA (Loose-leaf) 1 LB",
+      "Matcha Bowl Ceramic  -  Any Size",
+      "TEA SET CERAMIC BLUE Round Te...",
+      "Matcha Scoop",
+      "Piña Colada ICED TEA (Loose-leaf) 1  LB",
+      "Black Currant ICED TEA (Loose-leaf) 1 LB",
+      "Pure Peach ICED TEA (Loose-leaf) 1  LB",
+      "Hibiscus Mint ICED TEA (Loose-leaf) 1  LB",
+      "Classic Black ICED TEA (Loose-leaf) 1 LB",
+      "Berry Hibiscus ICED TEA (Loose Leaf) 1 LB",
+      "Classic Black Iced Tea Kit",
+      "Cacao Chai"
+    ]
   },
   {
     "brand": "Tea Embassy",
     "status": "ok",
-    "websiteCount": 166,
-    "dbCount": 166,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 160,
+    "dbCount": 160,
+    "added": 6,
+    "newTeas": [
+      "Thanksgiving Tea Trio | 3 Teas, Teaspoon and Strainer",
+      "Breakfast Tea Trio | 3 Teas, Teaspoon and Strainer",
+      "Lights Out Tea Trio | 3 Teas, Teaspoon and Strainer",
+      "Afternoon Tea Trio | 3 Teas, Teaspoon and Strainer",
+      "Teas for the Tea Snob | 3 Teas, Teaspoon and Strainer",
+      "Mother's Bouquet"
+    ]
   },
   {
     "brand": "Buddha Teas",
@@ -434,76 +971,167 @@
   {
     "brand": "Full Leaf Tea Company",
     "status": "ok",
-    "websiteCount": 186,
-    "dbCount": 188,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 190,
+    "dbCount": 209,
+    "added": 2,
+    "newTeas": [
+      "Ceramic Tea Bag & Spoon Rest",
+      "Ceramic Gold Marbled Tea Set"
+    ]
   },
   {
     "brand": "The Boulder Tea Company",
     "status": "ok",
-    "websiteCount": 124,
-    "dbCount": 137,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 127,
+    "dbCount": 147,
+    "added": 24,
+    "newTeas": [
+      "Bamboo Pineapple - Limited Edition",
+      "Lavender Lemonade™",
+      "Organic Sacred Balance - Limited Edition",
+      "Teahouse Greeting Cards",
+      "Elderflower Citrus - Limited Edition",
+      "Mother's Day Bouquet Blend",
+      "Crescent Moon Strainer",
+      "Daisy Strainer",
+      "Sun Strainer",
+      "Sunflower Duo Spoon & Strainer",
+      "2026 Hand Rolled Spring Beauty – First Flush Darjeeling",
+      "Lapsang Souchong Black Tea - Sachets",
+      "Earl Grey Supreme Black Tea - Sachets",
+      "Dewdrop Darjeeling™ Black Tea - Sachets",
+      "Limited Edition- Irish Cream",
+      "Teardrop Wooden Pendant",
+      "Women's Tea Shirt - Camellia - Black",
+      "Women's Tea Shirt - Camellia - Navy",
+      "Palo Santo Sticks",
+      "Dewdrop Darjeeling™",
+      "Anna Weatherly Porcelain Butterfly Tea Set",
+      "Anna Weatherly Porcelain Bud Spring Tea Set",
+      "Stranahan's Barrel Aged Whiskey Black Tea",
+      "Elder Flower"
+    ]
   },
   {
     "brand": "One River Tea",
     "status": "ok",
-    "websiteCount": 157,
-    "dbCount": 179,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 172,
+    "dbCount": 203,
+    "added": 24,
+    "newTeas": [
+      "Skinny Chicken Orb",
+      "Alluvial Fields Orb",
+      "NYC Tapwater Orb",
+      "The Fool Orb",
+      "NYC Tapwater | 2026 Bangdong Gushu",
+      "Alluvial Fields",
+      "Skinny Chicken",
+      "The Fool",
+      "Firework Green",
+      "Temenos | Bada White Tea Mini",
+      "Temenos | Bada White Tea",
+      "Dafang Green",
+      "Shucheng Orchid Green",
+      "Emei Ganlu",
+      "Mongolian Storage Dark Brick",
+      "Baka Shaihong Red",
+      "China Red Dianhong",
+      "2013 Liubao Purple Bud",
+      "Hong Kong Curious: Roasted Oolongs & Aged Puer",
+      "First Pick: Xianhao Presale",
+      "First Pick: Golden Green Presale",
+      "First Pick: Biluochun Presale",
+      "First Pick: Dragonwell Presale",
+      "First Pick: Heirloom Enshi Yulu Presale"
+    ]
   },
   {
     "brand": "Jesse's Teahouse",
     "status": "ok",
-    "websiteCount": 98,
-    "dbCount": 102,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 107,
+    "dbCount": 113,
+    "added": 18,
+    "newTeas": [
+      "Pufferfish Tea Pet",
+      "2026 White Anji Spring Green Tea",
+      "2026 Premium Jasmine Pearl Green Tea",
+      "2026 Longjing (Dragonwell) Spring Green Tea",
+      "Roasted \"Iron Goddess of Mercy\" Tie Guan Yin Oolong Tea",
+      "Golden Staff Of The Monkey King Sun Wukong Tea Knife",
+      "Sister Ai’s Tea Flower Resin",
+      "Articulated Porcelain Dragon Tea Pet",
+      "Groundhog Tea Pet (Earth Box)",
+      "Ice Jade Porcelain Tea Set",
+      "Sister Ai's Qianjiazhai Mountain Gongfu Tea Set",
+      "Dry Steep “Gan Pao” Wood & Resin Tray",
+      "Duidui’s Fairness Pitcher",
+      "Year of the Dragon Blue-White and Gold Tea Set",
+      "Textured Brass Coaster Set",
+      "Blue-White Porcelain Gongfu Tea Set",
+      "Circular Metal-Insert Tea Tray",
+      "Jesse's Gongfu Tea Tray Set & Carrying Case"
+    ]
   },
   {
     "brand": "Kettl",
     "status": "ok",
-    "websiteCount": 142,
-    "dbCount": 147,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 95,
+    "dbCount": 174,
+    "added": 7,
+    "newTeas": [
+      "Asahikawa Tea Pitcher (Green) - Kazuhiko Kudō",
+      "Shizu 7132 Sencha",
+      "House Roasted Asahi Tencha Houjicha",
+      "Yabukita Kabuse Sencha",
+      "Kumamoto Blended Wakoucha Tea Bags",
+      "Ceramic Naoshi Whisk Stand",
+      "Gyokuro Tea Bags"
+    ]
   },
   {
     "brand": "TeaHaus",
     "status": "ok",
-    "websiteCount": 34,
-    "dbCount": 74,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 36,
+    "dbCount": 54,
+    "added": 6,
+    "newTeas": [
+      "Tea of the Month Club: Surprise Me!",
+      "Tea of the Month Club: Classics",
+      "Tea of the Month Club: Caffeine Free",
+      "Enlightenment",
+      "Japanese Mulberry Leaves",
+      "Indian Chai"
+    ]
   },
   {
     "brand": "TeaSource",
     "status": "ok",
-    "websiteCount": 188,
-    "dbCount": 188,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 184,
+    "dbCount": 208,
+    "added": 6,
+    "newTeas": [
+      "Rites of Spring | Green Tea",
+      "Sparrow Tongue | Green Tea",
+      "\"The Maker\" Assam 1st Flush | Black Tea",
+      "High Noon Yunnan | Black Tea",
+      "Golden Dawn | Oolong Tea",
+      "Kettle Black Hojicha | Black Tea"
+    ]
   },
   {
     "brand": "Rishi Tea",
     "status": "ok",
-    "websiteCount": 102,
-    "dbCount": 157,
-    "added": 0,
-    "newTeas": []
-  },
-  {
-    "brand": "STEAP Tea Bar",
-    "status": "scrape_failed",
-    "added": 0
+    "websiteCount": 101,
+    "dbCount": 173,
+    "added": 1,
+    "newTeas": [
+      "Xiang Gui Yin Hao Black Tea"
+    ]
   },
   {
     "brand": "Loose Leaf Tea Market",
     "status": "ok",
-    "websiteCount": 18,
+    "websiteCount": 14,
     "dbCount": 18,
     "added": 0,
     "newTeas": []
@@ -511,7 +1139,7 @@
   {
     "brand": "Hackberry Tea",
     "status": "ok",
-    "websiteCount": 94,
+    "websiteCount": 83,
     "dbCount": 94,
     "added": 0,
     "newTeas": []
@@ -519,44 +1147,386 @@
   {
     "brand": "Hugo Tea",
     "status": "ok",
-    "websiteCount": 46,
-    "dbCount": 46,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 20,
+    "dbCount": 44,
+    "added": 2,
+    "newTeas": [
+      "TEA BOARD HUGO",
+      "Masala Chai | Black Blend"
+    ]
   },
   {
     "brand": "Kilogram Tea",
     "status": "ok",
-    "websiteCount": 40,
-    "dbCount": 35,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 37,
+    "dbCount": 38,
+    "added": 1,
+    "newTeas": [
+      "Glass Tea Pitcher"
+    ]
   },
   {
     "brand": "Metolius Tea",
     "status": "ok",
-    "websiteCount": 31,
-    "dbCount": 32,
-    "added": 0,
-    "newTeas": []
+    "websiteCount": 35,
+    "dbCount": 36,
+    "added": 5,
+    "newTeas": [
+      "Cinnamon Hibiscus Iced Tea Sachets",
+      "Little Bear Iced Tea Sachets",
+      "Sweet Bee Iced Tea Sachets",
+      "Earl Grey Iced Tea Sachets",
+      "Black & Gold Iced Tea Sachets"
+    ]
   },
   {
     "brand": "DAVIDsTEA",
     "status": "ok",
-    "websiteCount": 201,
-    "dbCount": 167,
-    "added": 2,
+    "websiteCount": 190,
+    "dbCount": 392,
+    "added": 19,
     "newTeas": [
-      "Organic Cinnamon Rooibos Chai Loose Leaf Tea Bag 250 g",
-      "Organic Ashwagandha Pumpkin Tea Superfood Latte Powder"
+      "Barista Matcha",
+      "Ceremonial Matcha",
+      "Ceremonial Matcha Mini Tea Tin",
+      "Organic South African Rooibos Tea",
+      "Teal Mini Matcha Maker",
+      "Soft Pink Mini Matcha Maker",
+      "Barista Matcha Mini Tea Tin",
+      "Organic Blueberry Matcha Limited Edition Tin",
+      "Organic Vanilla Matcha Limited Edition Tin",
+      "Organic Gingerbread Matcha",
+      "Fun & Fruity Matcha Tasting Pack",
+      "Lemon Meringue Tea",
+      "Coco Mango Chai",
+      "Organic Cream of Earl Grey",
+      "London Fog Tea",
+      "Frozen Raspberry Tea Pitcher Pack",
+      "Strawberry Lemonade Tea Pitcher Pack",
+      "Just Peachy Tea Pitcher Pack",
+      "Watermelon Wave Tea Pitcher Pack"
     ]
   },
   {
     "brand": "Hemp & Tea Co",
     "status": "ok",
-    "websiteCount": 124,
-    "dbCount": 126,
+    "websiteCount": 68,
+    "dbCount": 192,
+    "added": 68,
+    "newTeas": [
+      "Berry Serenade",
+      "Red Clover Tops",
+      "Chinese Licorice Root",
+      "Licorice Root",
+      "Red Lotus Loose Leaf Herbal Tea",
+      "White Peony",
+      "Peach Cobbler White",
+      "Moonlight white",
+      "Ying de Hong",
+      "Autumn Peach Spice",
+      "Crimson Strawberry Black",
+      "Velvet Vanilla",
+      "Vanilla Oolong, 2 Oz",
+      "Ruby Citrus",
+      "Four Seasons",
+      "Fujian Orchid",
+      "Formosa Oolong",
+      "GABA Oolong",
+      "Blue Lotus Loose Leaf Herbal Tea",
+      "White Lotus Loose Leaf Botanical Herbal Tea",
+      "Love Gummy Herbal Blend",
+      "Full Spectrum Moonberry Cream Soothing Spirit Cannabis Tea",
+      "Delta 9 Moonberry Cream Soothing Spirit Cannabis Tea",
+      "Full Spectrum Papaya Horizon Soothing Spirit Cannabis Tea",
+      "Full Spectrum Elderberry Twilight Soothing Spirit Cannabis Tea",
+      "Delta 9 Elderberry Twilight Soothing Spirit Cannabis Tea",
+      "Full Spectrum Chestnut Glow Soothing Spirit Cannabis Tea",
+      "Delta 9 Chestnut Glow Soothing Spirit Cannabis Tea",
+      "Delta 9 THC Blueberry Moonlight Soothing Spirit Cannabis Tea",
+      "Full Spectrum Blueberry Moonlight Soothing Spirit Cannabis Tea",
+      "Toasted Almond Oolong, 2 Oz",
+      "Chai Unground, 2 Oz",
+      "Skullcap, 1 Oz",
+      "Shou Mei, 1 Oz",
+      "Pear White, 1 Oz",
+      "Lemongrass, 1 Oz",
+      "Mint Tea Premium THCA Flower",
+      "Secret Garden",
+      "Sky Meadow Green Tea",
+      "Mist Green Tea",
+      "Cranberry Muffin Delight",
+      "Nature's Comfort, 2 Oz",
+      "Summer Strawberry Black, 2 Oz",
+      "Apple Almond Crisp Hemp Tea Blend",
+      "Elderberry Boost Hemp Tea",
+      "Golden Delight Hemp Tea",
+      "Banana Bread Hemp Tea",
+      "Holy Basil Hemp Tea",
+      "Blooming Tea",
+      "Hibiscus Mint Hemp Tea",
+      "Maple Blueberry Compote Hemp Tea",
+      "Chai Spice, 2 Oz",
+      "Sweater Weather Maté, 2 Oz",
+      "Passion Flower, 1 Oz",
+      "Ayurvedic Delta 9 Tea - Refresh",
+      "Turmeric Spice Hemp Tea Blend",
+      "Lemon Mint Mate Hemp Tea Blend",
+      "Dragonfruit Hemp Tea Blend",
+      "Citrus Spice Hemp Tea",
+      "Watermelon Breeze Hemp Tea",
+      "Pu-erh Poe",
+      "Hazelberry Pu-erh, 2 Oz",
+      "Aged Puerh, 2 Oz",
+      "Moonlit Earl Grey",
+      "Velour Night Pu-erh",
+      "Sticky Rice Fragrance Raw Puerh Coins",
+      "Citrus Green Hemp Tea",
+      "Lemon Créme Hemp Tea Blend"
+    ]
+  },
+  {
+    "brand": "Camden Tea Company",
+    "status": "ok",
+    "websiteCount": 97,
+    "dbCount": 103,
+    "added": 2,
+    "newTeas": [
+      "Dian Mad Vanilla",
+      "Sticky Rice Puddinglong Tea"
+    ]
+  },
+  {
+    "brand": "Seven Teahouse",
+    "status": "ok",
+    "websiteCount": 40,
+    "dbCount": 47,
+    "added": 16,
+    "newTeas": [
+      "Orchid Frost Yellow Tea",
+      "Osmanthus Black Tea",
+      "Lychee Rose Black Tea",
+      "Rosewood Herbal Tea 4g",
+      "French Rose Herbal Tea",
+      "Peach Aroma Liu Bao Dark Tea",
+      "Ceremonial Matcha Duo",
+      "Seven Teahouse Magnet",
+      "Tea Advent Calendar - 12 Days Surprise Box",
+      "White Tea Collection | 5 Fruit-Infused Flavors",
+      "Imperial Dragon Well – Championship Tea Winner",
+      "Da Hong Pao (Red Robe Tea) – 50 g (1.8 oz)",
+      "Golden Peony Black Tea – 50 g (1.8 oz)",
+      "Millennia Wild Jujube Bud Herbal Tea – 50 g (1.8 oz)",
+      "Chrysanthemum Herbal Tea – 80 g (2.8 oz)",
+      "Hibiscus Herbal Tea – 80 g (2.8 oz)"
+    ]
+  },
+  {
+    "brand": "Nio Teas",
+    "status": "ok",
+    "websiteCount": 80,
+    "dbCount": 83,
+    "added": 11,
+    "newTeas": [
+      "Shincha Nohana Chiran 2026",
+      "Shincha Shizuku Chiran 2026 with Matcha Powder",
+      "Shincha Asuka Chiran 2026",
+      "Tanegashima Saemidori Shincha 2026",
+      "Yakushima Kuritawase Shincha 2026",
+      "Shincha Tanegashima Kuritawase 2026",
+      "Shincha Yakushima Yabukita 2026",
+      "Tea Advent Calendar 2025",
+      "Matcha Advent Calendar",
+      "Premium Matcha Latte Powder",
+      "Chanoka Kukicha Green Tea"
+    ]
+  },
+  {
+    "brand": "The Chinese Tea Shop",
+    "status": "ok",
+    "websiteCount": 83,
+    "dbCount": 196,
+    "added": 12,
+    "newTeas": [
+      "2005 Mengku Zheng Arbor Old Tree Pu-Erh Tea Cake, (Raw/Sheng)",
+      "2006 Six Famous Tea Mountain, Organic Ban Zhang Tea Cake, Tji Pin (Raw/Sheng)",
+      "2025 Cloud Mist Green Tea",
+      "2025 Ming Qian (Early April) Anji Bai Cha Green Tea",
+      "2003  NaKa Gushu Pu-Erh Tea Cake (Raw/Sheng)",
+      "2014 Jinya Pu-Erh Mini Tuo Cha,  (Ripe/Shou)",
+      "New 2026 Cloud Mist Green Tea",
+      "New 2026 Taiping Houkui Green Tea 太平猴魁",
+      "2026 Long Jin (Dragon Well) Green Tea",
+      "New 2026 Ming Qian (Early April) Anji Bai Cha Green Tea",
+      "New 2026 Dongting Pi Lo Chun (Bi Lo Chun) Green Tea",
+      "2007 Mengku Hao Pu-Erh Tea Cake (Raw/Sheng)"
+    ]
+  },
+  {
+    "brand": "Wight Tea Company",
+    "status": "ok",
+    "websiteCount": 42,
+    "dbCount": 46,
+    "added": 3,
+    "newTeas": [
+      "Earl Grey Caramels – Mouth Party x Wight Tea Co",
+      "Wight Tea Co Flower Logo Ashtray",
+      "The Caffeinated Collection | Caffeinated Loose Leaf Tea Sample Set"
+    ]
+  },
+  {
+    "brand": "white2tea",
+    "status": "ok",
+    "websiteCount": 142,
+    "dbCount": 827,
+    "added": 16,
+    "newTeas": [
+      "2026 Dark Peony",
+      "2026 Dark Peony Mini",
+      "2026 Lodestar",
+      "2026 Lodestar Mini",
+      "2026 Natalie",
+      "2026 Natalie Mini",
+      "2026 Horse Girl Clique",
+      "2026 Horse Girl Clique Mini",
+      "2026 Irish Supper",
+      "2026 Irish Supper Mini",
+      "2026 Siesta",
+      "2026 Siesta Mini",
+      "2026 Night Joe",
+      "2026 Night Joe Mini",
+      "2026 Flip City",
+      "2026 Flip City Mini"
+    ]
+  },
+  {
+    "brand": "What-Cha",
+    "status": "ok",
+    "websiteCount": 246,
+    "dbCount": 433,
+    "added": 9,
+    "newTeas": [
+      "2011 Menghai Dayi '7572' Ripe Puerh Cake",
+      "2006 Xiaguan 'Jia Ji' Raw Puerh Tuo Cha",
+      "2006 Xiaguan 'Jin Si' Raw Puerh Tuo Cha",
+      "2006 Xiaguan 'Xiao Fa' Ripe Puerh Tuo Cha",
+      "Japan Kagoshima 'Okumidori' Matcha",
+      "China 2015 Jingmai Gushu Maocha Puerh Tea",
+      "China Fujian Zhangping Oolong Tea Cake",
+      "India Assam Mangalam FTGFOP1 Special Clonal Black Tea",
+      "India Darjeeling 2026 First Flush Rohini 'Hand-Rolled' Black Tea"
+    ]
+  },
+  {
+    "brand": "Path of Cha",
+    "status": "ok",
+    "websiteCount": 120,
+    "dbCount": 161,
+    "added": 9,
+    "newTeas": [
+      "Award-Winning \"Jade Dew\" EnShi Yu Lu Green Tea",
+      "Mutton Fat Jade Porcelain Tea Set with Calligraphy",
+      "Bamboo Cha He, Cha Chi & Cha Zhen (Tea Holder, Spoon & Pin)",
+      "Luffa Fiber Tea Coaster",
+      "Zhou Shi Ripe Pu-erh Tea Cake, 2018 (357g)",
+      "Chaozhou Charcoal Stove and Clay Kettle (Set)",
+      "Gong Fu Travel Tea Set (Porcelain)",
+      "\"Spring Buds\" Chun Jian GuShu Raw Pu-erh Tea Cake, 2012 (357g)",
+      "\"Tree of Life\" GongFu Tea Tray (Cha Pan)"
+    ]
+  },
+  {
+    "brand": "Plum Deluxe",
+    "status": "ok",
+    "websiteCount": 183,
+    "dbCount": 312,
+    "added": 11,
+    "newTeas": [
+      "Berry Brambles",
+      "Lemon Meringue™ Tea Tin",
+      "Blueberry Muffin™ Tea Tin",
+      "Strawberry Shortcake™ Tea Tin",
+      "Lemon Meringue™ Green Tea",
+      "Blueberry Custard Creme Herbal Tea",
+      "Strawberry Shortcake™ Black Tea",
+      "Snoopy Perfect Tea Spoon",
+      "Tea Lover's Advent Calendar",
+      "Italian Wedding Cake Blend Dessert Black Tea (Caramel - Coconut - Pecan)",
+      "Caramel Brittle Puerh Tea"
+    ]
+  },
+  {
+    "brand": "Ippodo Tea",
+    "status": "ok",
+    "websiteCount": 66,
+    "dbCount": 117,
+    "added": 2,
+    "newTeas": [
+      "Porcelain Tea Set (Hasami-yaki)",
+      "Whisk Stand (Chasen-tate)"
+    ]
+  },
+  {
+    "brand": "The Fragrant Leaf",
+    "status": "ok",
+    "websiteCount": 54,
+    "dbCount": 57,
+    "added": 1,
+    "newTeas": [
+      "Li Shan High Mountain Oolong Tea (Spring Harvest)"
+    ]
+  },
+  {
+    "brand": "Yunnan Sourcing (US)",
+    "status": "ok",
+    "websiteCount": 203,
+    "dbCount": 1181,
+    "added": 25,
+    "newTeas": [
+      "2026 Yunnan Sourcing \"Gong Ting\" Certified Organic Ripe Pu-erh Tea",
+      "Wild Tree Purple Sweet Ya Bao Buds",
+      "2026 Yunnan Sourcing \"Cozy\" Certified Organic Ripe Pu-erh Tea",
+      "2026 Yunnan Sourcing \"Te Zhi\" Certified Organic Ripe Pu-erh Tea",
+      "2025 Yunnan Sourcing \"Autumn Huang Shan Gu Shu\" Old Arbor Raw Pu-erh Tea Cake",
+      "2026 Yunnan Sourcing \"Xin Ban Zhang\" Ripe Pu-erh Tea Cake",
+      "2026 Yunnan Sourcing \"Yi Bang Village\" Ripe Pu-erh Tea Cake",
+      "2026 Yunnan Sourcing \"Knight's Chamfer\" Ripe Pu-erh Tea Cake",
+      "2026 Yunnan Sourcing \"He Kai Village\" Ripe Pu-erh Tea Cake",
+      "2026 Yunnan Sourcing \"Ambigram\" Ripe Pu-erh Tea Cake",
+      "2025 Yunnan Sourcing \"Autumn Jiu Tai Po\" Old Arbor Raw Pu-erh Tea Cake",
+      "Feng Qing \"Old Plantation\" Dian Hong Black Tea",
+      "Daily Drinker Duck Shit Dan Cong Oolong Tea",
+      "2012 Rice Scent Herb & Ripe Pu-erh Tea Mini Tuo",
+      "2003 CNNP \"7262\" Ripe Pu-erh Tea Cake",
+      "Fuding Shou Mei White Tea in King Orange",
+      "2020 Three Cranes \"1815 Recipe\" Liu Bao Tea Brick",
+      "2025 Yunnan Sourcing \"Yi Wu Villages\" Raw Pu-erh Tea 7 Cake Set",
+      "Purple Lao Cha Tou Ripe Pu-erh Tea Brick",
+      "2017 \"Bamboo Aroma\" Tian Jian Hei Cha",
+      "2020 Yunnan Sourcing \"Da Qing Gu Shu\" Raw Pu-erh Tea Cake",
+      "2025 Yunnan Sourcing \"Green Label\" Wild Arbor Raw Pu-erh Tea Mini Cakes",
+      "2025 Yunnan Sourcing \"Red Label\" Wild Arbor Black Tea Mini Cakes",
+      "2025 Yunnan Sourcing \"Silver Label\" Wild Arbor White Tea Mini Cakes",
+      "Yi  Wu Mountain \"Cha Gao\" Instant Ripe Pu-erh Tea Resin"
+    ]
+  },
+  {
+    "brand": "Arbor Teas",
+    "status": "ok",
+    "websiteCount": 68,
+    "dbCount": 69,
     "added": 0,
     "newTeas": []
+  },
+  {
+    "brand": "Teabox",
+    "status": "ok",
+    "websiteCount": 98,
+    "dbCount": 100,
+    "added": 3,
+    "newTeas": [
+      "The Muscat Scotch",
+      "Instant Chai Latte Mix (Pack of 20)",
+      "Darjeeling Ruby"
+    ]
   }
 ]

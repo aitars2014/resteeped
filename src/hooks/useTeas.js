@@ -5,7 +5,7 @@ import { supabase, isSupabaseConfigured } from '../lib/supabase';
 import { teas as localTeas } from '../data/teas';
 import { diversifyTeasByShop, isDisplayableTea } from '../utils/teaCatalogQuality';
 
-const CACHE_KEY = '@resteeped_teas_cache';
+const CACHE_KEY = '@resteeped_teas_cache_v2';
 const CACHE_TIMESTAMP_KEY = '@resteeped_teas_cache_ts';
 const PAGE_SIZE = 500; // Fetch in batches of 500
 
@@ -32,6 +32,7 @@ const formatTea = (tea) => ({
   steepTimeMax: tea.steep_time_max,
   flavorNotes: tea.flavor_notes || [],
   imageUrl: tea.image_url,
+  productUrl: tea.product_url,
   pricePerOz: tea.price_per_oz,
   avgRating: tea.avg_rating,
   ratingCount: tea.rating_count,
@@ -73,9 +74,11 @@ const LIST_FIELDS = `
   name,
   brand_name,
   tea_type,
+  description,
   origin,
   flavor_notes,
   image_url,
+  product_url,
   avg_rating,
   rating_count,
   company_id,
@@ -83,23 +86,47 @@ const LIST_FIELDS = `
   tea_method
 `;
 
+const LIST_FIELDS_WITHOUT_PRODUCT_URL = LIST_FIELDS
+  .split('\n')
+  .filter(field => !field.includes('product_url'))
+  .join('\n');
+
+const isMissingProductUrlColumnError = (error) => (
+  error?.code === '42703' ||
+  String(error?.message || '').toLowerCase().includes('product_url')
+);
+
 const fetchAllTeasPaginated = async () => {
   const allData = [];
   let from = 0;
   let hasMore = true;
   const PAGE_TIMEOUT = 30000; // 30s per page
+  let listFields = LIST_FIELDS;
 
   while (hasMore) {
     const to = from + PAGE_SIZE - 1;
-    const { data, error: fetchError } = await withTimeout(
+    let { data, error: fetchError } = await withTimeout(
       supabase
         .from('teas')
-        .select(LIST_FIELDS)
+        .select(listFields)
         .order('name', { ascending: true })
         .range(from, to),
       PAGE_TIMEOUT,
       `Tea fetch timed out (page starting at ${from})`
     );
+
+    if (fetchError && listFields === LIST_FIELDS && isMissingProductUrlColumnError(fetchError)) {
+      listFields = LIST_FIELDS_WITHOUT_PRODUCT_URL;
+      ({ data, error: fetchError } = await withTimeout(
+        supabase
+          .from('teas')
+          .select(listFields)
+          .order('name', { ascending: true })
+          .range(from, to),
+        PAGE_TIMEOUT,
+        `Tea fetch timed out (page starting at ${from})`
+      ));
+    }
 
     if (fetchError) throw fetchError;
 

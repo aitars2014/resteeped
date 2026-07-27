@@ -2,20 +2,42 @@ const NON_TEA_TERMS = [
   'accessory',
   'accessories',
   'bottle',
+  'canister',
+  'cha he',
+  'chawan',
   'chashaku',
   'coaster',
   'cup',
   'cups',
+  'digital tea scale',
+  'gaiwan',
+  'infuser',
   'gift card',
+  'glass pitcher',
   'kettle',
+  'kyusu',
   'mug',
   'pitcher',
   'spoon',
   'strainer',
+  'tea canister',
+  'tea bag holder',
+  'tea bag holders',
+  'tea holder',
+  'tea holders',
+  'tea pot',
+  'tea scoop',
+  'tea storage',
+  'teapot',
+  'teabag holder',
+  'teabag holders',
+  'tin',
   'towel',
   'tray',
   'tumbler',
   'whisk',
+  'potholder',
+  'yunomi',
 ];
 
 const SET_TERMS = [
@@ -49,6 +71,7 @@ const SET_TERMS = [
   'tea filters',
   'tea starter',
   'tea set',
+  'travel kit',
   'variety bag',
   'variety pack',
 ];
@@ -80,7 +103,12 @@ export const isDisplayableTea = (tea = {}, { requireImage = false } = {}) => {
     return false;
   }
 
-  if (productUrl.includes('tea-accessories') || productUrl.includes('/teaware')) {
+  if (
+    productUrl.includes('tea-accessories') ||
+    productUrl.includes('/teaware') ||
+    productUrl.includes('/teawares') ||
+    productUrl.includes('/accessories')
+  ) {
     return false;
   }
 

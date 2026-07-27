@@ -1,0 +1,2 @@
+ALTER TABLE teas
+ADD COLUMN IF NOT EXISTS product_url TEXT;
