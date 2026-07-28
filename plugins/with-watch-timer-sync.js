@@ -57,6 +57,7 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
     session.delegate = self
     session.activate()
     apply(session.applicationContext)
+    requestCurrentTimerIfReachable(session)
   }
 
   func session(
@@ -65,6 +66,7 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
     error: Error?
   ) {
     apply(session.applicationContext)
+    requestCurrentTimerIfReachable(session)
   }
 
   func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
@@ -85,6 +87,21 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
     } else {
       apply(message)
     }
+  }
+
+  private func requestCurrentTimerIfReachable(_ session: WCSession) {
+    guard session.activationState == .activated, session.isReachable else { return }
+    session.sendMessage(
+      ["type": "resteeped.timer.request"],
+      replyHandler: { [weak self] reply in
+        if let timer = reply["timer"] as? [String: Any] {
+          self?.apply(timer)
+        } else {
+          self?.apply(reply)
+        }
+      },
+      errorHandler: nil
+    )
   }
 
   private func apply(_ payload: [String: Any]) {
@@ -256,6 +273,7 @@ const MODULE_IMPLEMENTATION = `#import "ResteepedWatchTimerModule.h"
 @interface ResteepedWatchTimerModule () <WCSessionDelegate>
 @property (nonatomic, assign) BOOL hasActivatedSession;
 @property (nonatomic, strong) NSDictionary *pendingContext;
+@property (nonatomic, strong) NSDictionary *currentContext;
 @end
 
 @implementation ResteepedWatchTimerModule
@@ -310,6 +328,8 @@ RCT_EXPORT_MODULE(ResteepedWatchTimer);
 
 - (BOOL)publishContext:(NSDictionary *)context error:(NSError **)error
 {
+  self.currentContext = context;
+
   if (![self isSessionActivated]) {
     self.pendingContext = context;
     return YES;
@@ -401,6 +421,18 @@ RCT_REMAP_METHOD(clearTimer,
     self.pendingContext = nil;
     NSError *contextError = nil;
     [self publishContext:context error:&contextError];
+  }
+}
+
+- (void)session:(WCSession *)session
+didReceiveMessage:(NSDictionary<NSString *, id> *)message
+   replyHandler:(void (^)(NSDictionary<NSString *, id> *replyMessage))replyHandler
+{
+  if ([message[@"type"] isEqualToString:@"resteeped.timer.request"]) {
+    replyHandler(@{
+      @"type": @"resteeped.timer.response",
+      @"timer": self.currentContext ?: @{},
+    });
   }
 }
 
