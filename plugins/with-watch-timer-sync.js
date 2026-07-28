@@ -255,6 +255,7 @@ const MODULE_IMPLEMENTATION = `#import "ResteepedWatchTimerModule.h"
 
 @interface ResteepedWatchTimerModule () <WCSessionDelegate>
 @property (nonatomic, assign) BOOL hasActivatedSession;
+@property (nonatomic, strong) NSDictionary *pendingContext;
 @end
 
 @implementation ResteepedWatchTimerModule
@@ -290,6 +291,49 @@ RCT_EXPORT_MODULE(ResteepedWatchTimer);
   return YES;
 }
 
+- (BOOL)isSessionActivated
+{
+  return [WCSession defaultSession].activationState == WCSessionActivationStateActivated;
+}
+
+- (NSDictionary *)sessionStatus
+{
+  WCSession *session = [WCSession defaultSession];
+  return @{
+    @"supported": @YES,
+    @"activated": @([self isSessionActivated]),
+    @"reachable": @(session.isReachable),
+    @"paired": @(session.isPaired),
+    @"watchAppInstalled": @(session.isWatchAppInstalled),
+  };
+}
+
+- (BOOL)publishContext:(NSDictionary *)context error:(NSError **)error
+{
+  if (![self isSessionActivated]) {
+    self.pendingContext = context;
+    return YES;
+  }
+
+  BOOL didUpdateContext = [[WCSession defaultSession] updateApplicationContext:context error:error];
+
+  if (didUpdateContext) {
+    [[WCSession defaultSession] transferUserInfo:@{
+      @"type": @"resteeped.timer.sync",
+      @"timer": context,
+    }];
+
+    if ([WCSession defaultSession].isReachable) {
+      [[WCSession defaultSession] sendMessage:@{
+        @"type": @"resteeped.timer.sync",
+        @"timer": context,
+      } replyHandler:nil errorHandler:nil];
+    }
+  }
+
+  return didUpdateContext;
+}
+
 RCT_REMAP_METHOD(syncTimer,
                  syncTimer:(NSDictionary *)timer
                  resolver:(RCTPromiseResolveBlock)resolve
@@ -306,31 +350,14 @@ RCT_REMAP_METHOD(syncTimer,
   context[@"updatedAt"] = @([[NSDate date] timeIntervalSince1970] * 1000);
 
   NSError *contextError = nil;
-  BOOL didUpdateContext = [[WCSession defaultSession] updateApplicationContext:context error:&contextError];
-
-  [[WCSession defaultSession] transferUserInfo:@{
-    @"type": @"resteeped.timer.sync",
-    @"timer": context,
-  }];
-
-  if ([WCSession defaultSession].isReachable) {
-    [[WCSession defaultSession] sendMessage:@{
-      @"type": @"resteeped.timer.sync",
-      @"timer": context,
-    } replyHandler:nil errorHandler:nil];
-  }
+  BOOL didUpdateContext = [self publishContext:context error:&contextError];
 
   if (!didUpdateContext && contextError != nil) {
     reject(@"watch_timer_sync_failed", contextError.localizedDescription, contextError);
     return;
   }
 
-  resolve(@{
-    @"supported": @YES,
-    @"reachable": @([WCSession defaultSession].isReachable),
-    @"paired": @([WCSession defaultSession].isPaired),
-    @"watchAppInstalled": @([WCSession defaultSession].isWatchAppInstalled),
-  });
+  resolve([self sessionStatus]);
 }
 
 RCT_REMAP_METHOD(clearTimer,
@@ -355,32 +382,26 @@ RCT_REMAP_METHOD(clearTimer,
   }
 
   NSError *contextError = nil;
-  BOOL didUpdateContext = [[WCSession defaultSession] updateApplicationContext:payload error:&contextError];
-
-  if ([WCSession defaultSession].isReachable) {
-    [[WCSession defaultSession] sendMessage:@{
-      @"type": @"resteeped.timer.clear",
-      @"timer": payload,
-    } replyHandler:nil errorHandler:nil];
-  }
+  BOOL didUpdateContext = [self publishContext:payload error:&contextError];
 
   if (!didUpdateContext && contextError != nil) {
     reject(@"watch_timer_clear_failed", contextError.localizedDescription, contextError);
     return;
   }
 
-  resolve(@{
-    @"supported": @YES,
-    @"reachable": @([WCSession defaultSession].isReachable),
-    @"paired": @([WCSession defaultSession].isPaired),
-    @"watchAppInstalled": @([WCSession defaultSession].isWatchAppInstalled),
-  });
+  resolve([self sessionStatus]);
 }
 
 #pragma mark - WCSessionDelegate
 
 - (void)session:(WCSession *)session activationDidCompleteWithState:(WCSessionActivationState)activationState error:(NSError *)error
 {
+  if (activationState == WCSessionActivationStateActivated && self.pendingContext != nil) {
+    NSDictionary *context = self.pendingContext;
+    self.pendingContext = nil;
+    NSError *contextError = nil;
+    [self publishContext:context error:&contextError];
+  }
 }
 
 - (void)sessionDidBecomeInactive:(WCSession *)session

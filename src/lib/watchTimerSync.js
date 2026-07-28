@@ -17,10 +17,17 @@ const runWatchSync = async (operation) => {
 
 export const syncWatchTimer = async (timer) => {
   if (!timer) return { available: false };
-  return runWatchSync(() => ResteepedWatchTimer.syncTimer(timer));
+  const result = await runWatchSync(() => ResteepedWatchTimer.syncTimer(timer));
+
+  if (result?.available !== false && result?.activated === false) {
+    setTimeout(() => {
+      runWatchSync(() => ResteepedWatchTimer.syncTimer(timer));
+    }, 1500);
+  }
+
+  return result;
 };
 
 export const clearWatchTimer = async (timerId) => {
   return runWatchSync(() => ResteepedWatchTimer.clearTimer(timerId || null));
 };
-
