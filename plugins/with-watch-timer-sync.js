@@ -56,8 +56,8 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
     let session = WCSession.default
     session.delegate = self
     session.activate()
-    apply(session.applicationContext)
-    requestCurrentTimerIfReachable(session)
+    apply(session.receivedApplicationContext)
+    requestCurrentTimerSoon(session)
   }
 
   func session(
@@ -65,12 +65,16 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
     activationDidCompleteWith activationState: WCSessionActivationState,
     error: Error?
   ) {
-    apply(session.applicationContext)
-    requestCurrentTimerIfReachable(session)
+    apply(session.receivedApplicationContext)
+    requestCurrentTimerSoon(session)
   }
 
   func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
     apply(applicationContext)
+  }
+
+  func sessionReachabilityDidChange(_ session: WCSession) {
+    requestCurrentTimerSoon(session)
   }
 
   func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any] = [:]) {
@@ -89,6 +93,16 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
     }
   }
 
+  private func requestCurrentTimerSoon(_ session: WCSession) {
+    requestCurrentTimerIfReachable(session)
+    for delay in [1.0, 3.0, 6.0] {
+      DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self, weak session] in
+        guard let self, let session else { return }
+        self.requestCurrentTimerIfReachable(session)
+      }
+    }
+  }
+
   private func requestCurrentTimerIfReachable(_ session: WCSession) {
     guard session.activationState == .activated, session.isReachable else { return }
     session.sendMessage(
@@ -100,7 +114,7 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
           self?.apply(reply)
         }
       },
-      errorHandler: nil
+      errorHandler: { _ in }
     )
   }
 
