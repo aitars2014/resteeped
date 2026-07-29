@@ -411,6 +411,42 @@ RCT_EXPORT_MODULE(ResteepedWatchTimer);
   [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+- (id)propertyListValueFromValue:(id)value
+{
+  if (value == nil || value == (id)[NSNull null]) {
+    return nil;
+  }
+
+  if ([value isKindOfClass:[NSDictionary class]]) {
+    return [self propertyListDictionaryFromDictionary:value];
+  }
+
+  if ([value isKindOfClass:[NSArray class]]) {
+    NSMutableArray *array = [NSMutableArray array];
+    for (id item in (NSArray *)value) {
+      id propertyListValue = [self propertyListValueFromValue:item];
+      if (propertyListValue != nil) {
+        [array addObject:propertyListValue];
+      }
+    }
+    return array;
+  }
+
+  return value;
+}
+
+- (NSDictionary *)propertyListDictionaryFromDictionary:(NSDictionary *)dictionary
+{
+  NSMutableDictionary *propertyListDictionary = [NSMutableDictionary dictionary];
+  for (id key in dictionary) {
+    id propertyListValue = [self propertyListValueFromValue:dictionary[key]];
+    if (propertyListValue != nil) {
+      propertyListDictionary[key] = propertyListValue;
+    }
+  }
+  return propertyListDictionary;
+}
+
 - (BOOL)prepareSessionWithError:(NSError **)error
 {
   if (![WCSession isSupported]) {
@@ -458,26 +494,27 @@ RCT_EXPORT_MODULE(ResteepedWatchTimer);
 
 - (BOOL)publishContext:(NSDictionary *)context error:(NSError **)error
 {
-  self.currentContext = context;
-  [self persistContext:context];
+  NSDictionary *propertyListContext = [self propertyListDictionaryFromDictionary:context];
+  self.currentContext = propertyListContext;
+  [self persistContext:propertyListContext];
 
   if (![self isSessionActivated]) {
-    self.pendingContext = context;
+    self.pendingContext = propertyListContext;
     return YES;
   }
 
-  BOOL didUpdateContext = [[WCSession defaultSession] updateApplicationContext:context error:error];
+  BOOL didUpdateContext = [[WCSession defaultSession] updateApplicationContext:propertyListContext error:error];
 
   if (didUpdateContext) {
     [[WCSession defaultSession] transferUserInfo:@{
       @"type": @"resteeped.timer.sync",
-      @"timer": context,
+      @"timer": propertyListContext,
     }];
 
     if ([WCSession defaultSession].isReachable) {
       [[WCSession defaultSession] sendMessage:@{
         @"type": @"resteeped.timer.sync",
-        @"timer": context,
+        @"timer": propertyListContext,
       } replyHandler:nil errorHandler:nil];
     }
   }
