@@ -5,7 +5,7 @@ const path = require('path');
 
 const WATCH_TARGET_NAME = 'ResteepedWatch';
 const WATCH_BUNDLE_ID = 'com.resteeped.app.watchkitapp';
-const WATCH_ICON_SOURCE = 'assets/icon.png';
+const WATCH_ICON_SOURCE = 'assets/ios-icons/Default.png';
 
 const WATCH_ICON_IMAGES = [
   { size: '24x24', role: 'notificationCenter', subtype: '38mm', scale: '2x', pixels: 48 },
@@ -29,6 +29,7 @@ const MODULE_HEADER = `#import <React/RCTBridgeModule.h>
 `;
 
 const WATCH_APP_SWIFT = `import SwiftUI
+import UserNotifications
 import WatchConnectivity
 
 struct TeaTimer: Codable, Equatable {
@@ -57,9 +58,11 @@ struct WatchDiagnostics: Equatable {
 final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
   @Published var timer: TeaTimer?
   @Published var diagnostics = WatchDiagnostics()
+  private var scheduledNotificationId: String?
 
   override init() {
     super.init()
+    requestNotificationAuthorization()
     activateSession()
   }
 
@@ -186,6 +189,7 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
     guard !payload.isEmpty else { return }
 
     if (payload["status"] as? String) == "cleared" {
+      cancelTimerNotification()
       DispatchQueue.main.async {
         self.timer = nil
       }
@@ -201,11 +205,54 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
       return
     }
 
+    syncTimerNotification(for: decoded)
+
     DispatchQueue.main.async {
       self.timer = decoded
       self.diagnostics.lastEvent = "timer shown"
       self.diagnostics.lastError = nil
     }
+  }
+
+  private func requestNotificationAuthorization() {
+    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
+  }
+
+  private func syncTimerNotification(for timer: TeaTimer) {
+    guard timer.status == "running", let endsAt = timer.endsAt else {
+      cancelTimerNotification()
+      return
+    }
+
+    let fireDate = Date(timeIntervalSince1970: endsAt / 1000)
+    let secondsUntilFire = fireDate.timeIntervalSinceNow
+    guard secondsUntilFire > 1 else {
+      cancelTimerNotification()
+      return
+    }
+
+    let notificationId = "resteeped.timer." + (timer.id ?? "active")
+    if scheduledNotificationId == notificationId {
+      UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationId])
+    } else {
+      cancelTimerNotification()
+    }
+
+    let content = UNMutableNotificationContent()
+    content.title = "Tea is ready"
+    content.body = timer.teaName + " is done steeping."
+    content.sound = .default
+
+    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: secondsUntilFire, repeats: false)
+    let request = UNNotificationRequest(identifier: notificationId, content: content, trigger: trigger)
+    scheduledNotificationId = notificationId
+    UNUserNotificationCenter.current().add(request)
+  }
+
+  private func cancelTimerNotification() {
+    guard let scheduledNotificationId else { return }
+    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [scheduledNotificationId])
+    self.scheduledNotificationId = nil
   }
 }
 
@@ -681,17 +728,64 @@ const writeWatchApp = (iosRoot) => {
 
 const resizePng = (source, destination, pixels) => {
   fs.mkdirSync(path.dirname(destination), { recursive: true });
-  childProcess.execFileSync('sips', [
-    '-s',
-    'format',
-    'png',
-    '-z',
-    String(pixels),
-    String(pixels),
-    source,
-    '--out',
-    destination,
-  ], { stdio: 'ignore' });
+
+  const scriptPath = path.join(
+    fs.mkdtempSync(path.join(require('os').tmpdir(), 'resteeped-watch-icon-')),
+    'flatten-watch-icon.swift'
+  );
+  fs.writeFileSync(scriptPath, `
+import Foundation
+import CoreGraphics
+import ImageIO
+import UniformTypeIdentifiers
+
+let source = URL(fileURLWithPath: CommandLine.arguments[1])
+let destination = URL(fileURLWithPath: CommandLine.arguments[2])
+let pixels = Int(CommandLine.arguments[3])!
+
+guard let imageSource = CGImageSourceCreateWithURL(source as CFURL, nil),
+      let image = CGImageSourceCreateImageAtIndex(imageSource, 0, nil) else {
+  fatalError("Unable to load source icon")
+}
+
+let colorSpace = CGColorSpaceCreateDeviceRGB()
+guard let context = CGContext(
+  data: nil,
+  width: pixels,
+  height: pixels,
+  bitsPerComponent: 8,
+  bytesPerRow: pixels * 4,
+  space: colorSpace,
+  bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue
+) else {
+  fatalError("Unable to create context")
+}
+
+let rect = CGRect(x: 0, y: 0, width: pixels, height: pixels)
+context.setFillColor(CGColor(red: 0.1529, green: 0.2784, blue: 0.0980, alpha: 1))
+context.fill(rect)
+context.interpolationQuality = CGInterpolationQuality.high
+context.draw(image, in: rect)
+
+guard let outputImage = context.makeImage(),
+      let destinationRef = CGImageDestinationCreateWithURL(
+        destination as CFURL,
+        UTType.png.identifier as CFString,
+        1,
+        nil
+      ) else {
+  fatalError("Unable to create output")
+}
+
+CGImageDestinationAddImage(destinationRef, outputImage, nil)
+if !CGImageDestinationFinalize(destinationRef) {
+  fatalError("Unable to write output")
+}
+`);
+
+  childProcess.execFileSync('swift', [scriptPath, source, destination, String(pixels)], {
+    stdio: 'ignore',
+  });
 };
 
 const writeWatchAppIcons = (projectRoot, iosRoot) => {
