@@ -24,6 +24,7 @@ const WATCH_ICON_IMAGES = [
 const MODULE_HEADER = `#import <React/RCTBridgeModule.h>
 
 @interface ResteepedWatchTimerModule : NSObject <RCTBridgeModule>
++ (void)bootstrap;
 @end
 `;
 
@@ -370,6 +371,9 @@ const WATCH_INFO_PLIST = `<?xml version="1.0" encoding="UTF-8"?>
 const MODULE_IMPLEMENTATION = `#import "ResteepedWatchTimerModule.h"
 #import <WatchConnectivity/WatchConnectivity.h>
 
+static NSString * const ResteepedWatchTimerContextDefaultsKey = @"ResteepedWatchTimerCurrentContext";
+static ResteepedWatchTimerModule *ResteepedWatchTimerBootstrapModule = nil;
+
 @interface ResteepedWatchTimerModule () <WCSessionDelegate>
 @property (nonatomic, assign) BOOL hasActivatedSession;
 @property (nonatomic, strong) NSDictionary *pendingContext;
@@ -380,9 +384,31 @@ const MODULE_IMPLEMENTATION = `#import "ResteepedWatchTimerModule.h"
 
 RCT_EXPORT_MODULE(ResteepedWatchTimer);
 
++ (void)bootstrap
+{
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    ResteepedWatchTimerBootstrapModule = [ResteepedWatchTimerModule new];
+    NSError *error = nil;
+    [ResteepedWatchTimerBootstrapModule prepareSessionWithError:&error];
+  });
+}
+
 + (BOOL)requiresMainQueueSetup
 {
   return NO;
+}
+
+- (NSDictionary *)persistedContext
+{
+  NSDictionary *context = [[NSUserDefaults standardUserDefaults] dictionaryForKey:ResteepedWatchTimerContextDefaultsKey];
+  return context ?: @{};
+}
+
+- (void)persistContext:(NSDictionary *)context
+{
+  [[NSUserDefaults standardUserDefaults] setObject:context forKey:ResteepedWatchTimerContextDefaultsKey];
+  [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (BOOL)prepareSessionWithError:(NSError **)error
@@ -394,6 +420,10 @@ RCT_EXPORT_MODULE(ResteepedWatchTimer);
                                userInfo:@{NSLocalizedDescriptionKey: @"WatchConnectivity is not supported on this device."}];
     }
     return NO;
+  }
+
+  if (self.currentContext == nil) {
+    self.currentContext = [self persistedContext];
   }
 
   WCSession *session = [WCSession defaultSession];
@@ -429,6 +459,7 @@ RCT_EXPORT_MODULE(ResteepedWatchTimer);
 - (BOOL)publishContext:(NSDictionary *)context error:(NSError **)error
 {
   self.currentContext = context;
+  [self persistContext:context];
 
   if (![self isSessionActivated]) {
     self.pendingContext = context;
@@ -542,9 +573,10 @@ didReceiveMessage:(NSDictionary<NSString *, id> *)message
    replyHandler:(void (^)(NSDictionary<NSString *, id> *replyMessage))replyHandler
 {
   if ([message[@"type"] isEqualToString:@"resteeped.timer.request"]) {
+    NSDictionary *context = self.currentContext ?: [self persistedContext];
     replyHandler(@{
       @"type": @"resteeped.timer.response",
-      @"timer": self.currentContext ?: @{},
+      @"timer": context ?: @{},
     });
   }
 }
@@ -566,6 +598,41 @@ const writeWatchTimerModule = (iosRoot) => {
   fs.mkdirSync(appRoot, { recursive: true });
   fs.writeFileSync(path.join(appRoot, 'ResteepedWatchTimerModule.h'), MODULE_HEADER);
   fs.writeFileSync(path.join(appRoot, 'ResteepedWatchTimerModule.m'), MODULE_IMPLEMENTATION);
+};
+
+const upsertLine = (contents, line) => {
+  if (contents.includes(line)) {
+    return contents;
+  }
+  return `${contents.trimEnd()}\n${line}\n`;
+};
+
+const patchBridgingHeader = (iosRoot) => {
+  const headerPath = path.join(iosRoot, 'Resteeped', 'Resteeped-Bridging-Header.h');
+  if (!fs.existsSync(headerPath)) {
+    return;
+  }
+  const contents = fs.readFileSync(headerPath, 'utf8');
+  fs.writeFileSync(headerPath, upsertLine(contents, '#import "ResteepedWatchTimerModule.h"'));
+};
+
+const patchAppDelegate = (iosRoot) => {
+  const appDelegatePath = path.join(iosRoot, 'Resteeped', 'AppDelegate.swift');
+  if (!fs.existsSync(appDelegatePath)) {
+    return;
+  }
+  const contents = fs.readFileSync(appDelegatePath, 'utf8');
+  const bootstrapLine = '    ResteepedWatchTimerModule.bootstrap()';
+  if (contents.includes(bootstrapLine)) {
+    return;
+  }
+  fs.writeFileSync(
+    appDelegatePath,
+    contents.replace(
+      '    bindReactNativeFactory(factory)\n',
+      `    bindReactNativeFactory(factory)\n${bootstrapLine}\n`
+    )
+  );
 };
 
 const writeWatchApp = (iosRoot) => {
@@ -799,6 +866,8 @@ const withWatchTimerSync = (config) => {
         modConfig.modRequest.projectRoot,
         modConfig.modRequest.platformProjectRoot
       );
+      patchBridgingHeader(modConfig.modRequest.platformProjectRoot);
+      patchAppDelegate(modConfig.modRequest.platformProjectRoot);
       return modConfig;
     },
   ]);
