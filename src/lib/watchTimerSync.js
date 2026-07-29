@@ -31,3 +31,7 @@ export const syncWatchTimer = async (timer) => {
 export const clearWatchTimer = async (timerId) => {
   return runWatchSync(() => ResteepedWatchTimer.clearTimer(timerId || null));
 };
+
+export const getWatchTimerStatus = async () => {
+  return runWatchSync(() => ResteepedWatchTimer.getStatus());
+};
