@@ -8,6 +8,37 @@ import { diversifyTeasByShop, isDisplayableTea } from '../utils/teaCatalogQualit
 const CACHE_KEY = '@resteeped_teas_cache_v2';
 const CACHE_TIMESTAMP_KEY = '@resteeped_teas_cache_ts';
 const PAGE_SIZE = 500; // Fetch in batches of 500
+const CACHE_MAX_AGE_MS = 7 * 24 * 60 * 60 * 1000;
+const INITIAL_TEAS = diversifyTeasByShop(localTeas.filter(tea => isDisplayableTea(tea)));
+
+let catalogState = {
+  teas: INITIAL_TEAS,
+  isRemoteData: false,
+  dataSource: 'local',
+  timestamp: null,
+};
+let cacheLoadPromise = null;
+let fetchPromise = null;
+const catalogListeners = new Set();
+
+const notifyCatalogListeners = () => {
+  catalogListeners.forEach(listener => listener(catalogState));
+};
+
+const setCatalogState = (nextState) => {
+  catalogState = { ...catalogState, ...nextState };
+  notifyCatalogListeners();
+};
+
+const subscribeToCatalog = (listener) => {
+  catalogListeners.add(listener);
+  return () => catalogListeners.delete(listener);
+};
+
+const isCatalogFresh = () => {
+  if (!catalogState.timestamp) return false;
+  return Date.now() - catalogState.timestamp < CACHE_MAX_AGE_MS;
+};
 
 // Helper to add timeout to promises
 const withTimeout = (promise, ms, fallbackError = 'Request timed out') => {
@@ -45,11 +76,15 @@ const formatTea = (tea) => ({
 
 const loadCachedTeas = async () => {
   try {
-    const cached = await AsyncStorage.getItem(CACHE_KEY);
+    const [[, cached], [, cachedAt]] = await AsyncStorage.multiGet([CACHE_KEY, CACHE_TIMESTAMP_KEY]);
     if (cached) {
       const parsed = JSON.parse(cached);
       if (Array.isArray(parsed) && parsed.length > 0) {
-        return parsed;
+        const timestamp = Number(cachedAt);
+        return {
+          teas: parsed,
+          timestamp: Number.isFinite(timestamp) ? timestamp : null,
+        };
       }
     }
   } catch (err) {
@@ -58,10 +93,31 @@ const loadCachedTeas = async () => {
   return null;
 };
 
-const saveTeasToCache = async (teas) => {
+const loadCachedCatalog = async () => {
+  if (cacheLoadPromise) return cacheLoadPromise;
+
+  cacheLoadPromise = (async () => {
+    const cached = await loadCachedTeas();
+    if (cached?.teas?.length > 0) {
+      setCatalogState({
+        teas: diversifyTeasByShop(cached.teas.filter(tea => isDisplayableTea(tea, { requireImage: true }))),
+        dataSource: 'cache',
+        isRemoteData: false,
+        timestamp: cached.timestamp,
+      });
+    }
+    return cached;
+  })().finally(() => {
+    cacheLoadPromise = null;
+  });
+
+  return cacheLoadPromise;
+};
+
+const saveTeasToCache = async (teas, timestamp = Date.now()) => {
   try {
     await AsyncStorage.setItem(CACHE_KEY, JSON.stringify(teas));
-    await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, Date.now().toString());
+    await AsyncStorage.setItem(CACHE_TIMESTAMP_KEY, timestamp.toString());
   } catch (err) {
     console.warn('Failed to save tea cache:', err?.message);
   }
@@ -146,33 +202,57 @@ const fetchAllTeasPaginated = async () => {
 };
 
 export const useTeas = () => {
-  const [teas, setTeas] = useState(() => diversifyTeasByShop(localTeas.filter(tea => isDisplayableTea(tea))));
+  const [catalog, setCatalog] = useState(catalogState);
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false); // For subtle refresh indicator
   const [error, setError] = useState(null);
-  const [isRemoteData, setIsRemoteData] = useState(false);
-  const [dataSource, setDataSource] = useState('local'); // 'local' | 'cache' | 'remote'
+  const teas = catalog.teas;
+  const isRemoteData = catalog.isRemoteData;
+  const dataSource = catalog.dataSource; // 'local' | 'cache' | 'remote'
+
+  useEffect(() => subscribeToCatalog(setCatalog), []);
 
   // Load cached data on mount (before Supabase fetch)
   useEffect(() => {
     if (!isSupabaseConfigured()) return;
 
-    const loadCache = async () => {
-      const cached = await loadCachedTeas();
-      if (cached && cached.length > 0) {
-        setTeas(diversifyTeasByShop(cached.filter(tea => isDisplayableTea(tea, { requireImage: true }))));
-        setDataSource('cache');
-        // Don't set isRemoteData — we still want to fetch fresh data
-        // But cache is far better than 60 local teas
+    let cancelled = false;
+    const hydrateCatalog = async () => {
+      if (catalogState.dataSource === 'local') {
+        await loadCachedCatalog();
+      }
+
+      if (!cancelled && !isCatalogFresh()) {
+        fetchTeas({ silent: true });
       }
     };
-    loadCache();
+
+    hydrateCatalog();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const fetchTeas = useCallback(async ({ isRefresh = false, silent = false } = {}) => {
+  const fetchTeas = useCallback(async ({ isRefresh = false, silent = false, force = false } = {}) => {
+    if (!force && isCatalogFresh()) {
+      return catalogState;
+    }
+
+    if (fetchPromise) {
+      if (!silent && isRefresh) setRefreshing(true);
+      if (!silent && !isRefresh) setLoading(true);
+      try {
+        return await fetchPromise;
+      } finally {
+        if (!silent) {
+          setLoading(false);
+          setRefreshing(false);
+        }
+      }
+    }
+
     if (silent) {
-      // Don't show any loading state — content already visible
-      setRefreshing(true);
+      // Don't show any loading state — content already visible.
     } else if (isRefresh) {
       setRefreshing(true);
     } else {
@@ -181,33 +261,49 @@ export const useTeas = () => {
     setError(null);
 
     if (!isSupabaseConfigured()) {
-      setTeas(diversifyTeasByShop(localTeas.filter(tea => isDisplayableTea(tea))));
+      setCatalogState({
+        teas: INITIAL_TEAS,
+        dataSource: 'local',
+        isRemoteData: false,
+        timestamp: null,
+      });
       setLoading(false);
       setRefreshing(false);
-      return;
+      return catalogState;
     }
 
     try {
-      const data = await fetchAllTeasPaginated();
+      fetchPromise = (async () => {
+        const data = await fetchAllTeasPaginated();
 
-      const formattedTeas = data
-        .map(formatTea)
-        .filter(tea => isDisplayableTea(tea, { requireImage: true }));
+        const formattedTeas = data
+          .map(formatTea)
+          .filter(tea => isDisplayableTea(tea, { requireImage: true }));
 
-      // Rank and diversify
-      const ranked = diversifyTeasByShop(formattedTeas);
-      setTeas(ranked);
-      setIsRemoteData(true);
-      setDataSource('remote');
+        // Rank and diversify
+        const ranked = diversifyTeasByShop(formattedTeas);
+        const timestamp = Date.now();
+        setCatalogState({
+          teas: ranked,
+          isRemoteData: true,
+          dataSource: 'remote',
+          timestamp,
+        });
 
-      // Cache for next time
-      await saveTeasToCache(formattedTeas);
+        // Cache for next time
+        await saveTeasToCache(formattedTeas, timestamp);
+        return catalogState;
+      })();
+
+      return await fetchPromise;
     } catch (err) {
       console.error('Error fetching teas:', err?.message || err);
       setError(err?.message || 'Unknown fetch error');
       // Keep whatever we have (cache or local)
-      setIsRemoteData(false);
+      setCatalogState({ isRemoteData: false });
+      return catalogState;
     } finally {
+      fetchPromise = null;
       setLoading(false);
       setRefreshing(false);
     }
@@ -218,16 +314,11 @@ export const useTeas = () => {
     isRemoteRef.current = isRemoteData;
   }, [isRemoteData]);
 
-  // Initial fetch — silent since we already show local/cached data
-  useEffect(() => {
-    fetchTeas({ silent: true });
-  }, [fetchTeas]);
-
-  // Re-fetch when app comes back to foreground if still on local/cached data
+  // Re-fetch when app comes back to foreground only after the cache gets stale.
   useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
-      if (nextAppState === 'active' && !isRemoteRef.current) {
-        fetchTeas({ isRefresh: true });
+      if (nextAppState === 'active' && !isRemoteRef.current && !isCatalogFresh()) {
+        fetchTeas({ silent: true });
       }
     });
     return () => subscription?.remove();
@@ -324,7 +415,7 @@ export const useTeas = () => {
     error,
     isRemoteData,
     dataSource, // 'local' | 'cache' | 'remote'
-    refreshTeas: () => fetchTeas({ isRefresh: true }),
+    refreshTeas: () => fetchTeas({ isRefresh: true, force: true }),
     searchTeas,
     filterTeas,
     getTeaById,

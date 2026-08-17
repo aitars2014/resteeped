@@ -9,11 +9,13 @@ import {
   TouchableOpacity,
   RefreshControl,
   Animated,
+  ActivityIndicator,
+  Image,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
-import { Bookmark, Plus, SlidersHorizontal, Share2, ChevronDown, Check } from 'lucide-react-native';
-import { typography, spacing } from '../constants';
-import { TeaCard, Button, FilterModal, SearchBar, ShareableCollectionCard } from '../components';
+import { Bookmark, Plus, SlidersHorizontal, Share2, ChevronDown, Check, Coffee } from 'lucide-react-native';
+import { typography, spacing, getPlaceholderImage } from '../constants';
+import { Button, FilterModal, SearchBar, ShareableCollectionCard, TeaTypeBadge } from '../components';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useBrewHistory } from '../hooks';
 import { getBrewingGuide } from '../constants/brewingGuides';
@@ -21,9 +23,23 @@ import { haptics } from '../utils/haptics';
 import { COLLECTION_STATUSES, COLLECTION_STATUS_LABELS } from '../utils/tasteProfile';
 import { teaTypes } from '../data/teas';
 
+const COLLECTION_SORT_OPTIONS = [
+  { id: 'recently_added', label: 'Recently added' },
+  { id: 'recently_steeped', label: 'Recently steeped' },
+  { id: 'frequently_steeped', label: 'Frequently steeped' },
+  { id: 'name', label: 'Name (A-Z)' },
+];
+
+const formatShortDate = (value) => {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+};
+
 export const CollectionScreen = ({ navigation }) => {
   const { theme } = useTheme();
-  const { user } = useAuth();
+  const { user, initialized: authInitialized, loading: authLoading } = useAuth();
   const { collection, loading, refreshCollection, updateInCollection } = useCollection();
   const { isPremium, canAddToCollection, getRemainingFreeSlots, FREE_TIER_LIMITS } = useSubscription();
   const [filter, setFilter] = useState('all');
@@ -31,18 +47,35 @@ export const CollectionScreen = ({ navigation }) => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [openStatusMenuId, setOpenStatusMenuId] = useState(null);
   const [showTeaTypeMenu, setShowTeaTypeMenu] = useState(false);
+  const [showSortMenu, setShowSortMenu] = useState(false);
   const [teaFilters, setTeaFilters] = useState({
     teaType: 'all',
     company: 'all',
     minRating: 'all',
     teaMethod: 'all',
-    sortBy: 'relevance',
+    sortBy: 'recently_added',
   });
   
   const collectionCardRef = useRef();
-  const { logBrewSession } = useBrewHistory();
+  const { logBrewSession, brewSessions } = useBrewHistory();
   const [brewingTeaId, setBrewingTeaId] = useState(null);
   const brewFeedbackOpacity = useRef(new Animated.Value(0)).current;
+  const isAuthResolving = authLoading || !authInitialized;
+
+  const brewStatsByTeaId = useMemo(() => {
+    const stats = {};
+    brewSessions.forEach(session => {
+      if (!session.tea_id) return;
+      const teaId = String(session.tea_id);
+      const brewedAt = session.created_at ? new Date(session.created_at).getTime() : 0;
+      if (!stats[teaId]) {
+        stats[teaId] = { count: 0, lastSteepedAt: 0 };
+      }
+      stats[teaId].count += 1;
+      stats[teaId].lastSteepedAt = Math.max(stats[teaId].lastSteepedAt, brewedAt || 0);
+    });
+    return stats;
+  }, [brewSessions]);
 
   const handleQuickBrew = useCallback(async (tea, teaId) => {
     if (brewingTeaId) return; // debounce
@@ -136,32 +169,52 @@ export const CollectionScreen = ({ navigation }) => {
 
     // Sort
     switch (teaFilters.sortBy) {
-      case 'rating':
+      case 'recently_steeped':
         result.sort((a, b) => {
-          const rA = a.user_rating || a.tea?.avgRating || a.tea?.avg_rating || 0;
-          const rB = b.user_rating || b.tea?.avgRating || b.tea?.avg_rating || 0;
-          return rB - rA;
+          const teaIdA = String(a.tea?.id || a.tea_id || '');
+          const teaIdB = String(b.tea?.id || b.tea_id || '');
+          const lastA = brewStatsByTeaId[teaIdA]?.lastSteepedAt || 0;
+          const lastB = brewStatsByTeaId[teaIdB]?.lastSteepedAt || 0;
+          if (lastB !== lastA) return lastB - lastA;
+          return new Date(b.added_at || b.created_at || 0) - new Date(a.added_at || a.created_at || 0);
+        });
+        break;
+      case 'frequently_steeped':
+        result.sort((a, b) => {
+          const teaIdA = String(a.tea?.id || a.tea_id || '');
+          const teaIdB = String(b.tea?.id || b.tea_id || '');
+          const statsA = brewStatsByTeaId[teaIdA] || {};
+          const statsB = brewStatsByTeaId[teaIdB] || {};
+          if ((statsB.count || 0) !== (statsA.count || 0)) {
+            return (statsB.count || 0) - (statsA.count || 0);
+          }
+          return (statsB.lastSteepedAt || 0) - (statsA.lastSteepedAt || 0);
         });
         break;
       case 'name':
         result.sort((a, b) => (a.tea?.name || '').localeCompare(b.tea?.name || ''));
         break;
-      case 'newest':
-        result.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
+      case 'recently_added':
+        result.sort((a, b) => new Date(b.added_at || b.created_at || 0) - new Date(a.added_at || a.created_at || 0));
         break;
       default:
         break;
     }
 
     return result;
-  }, [collection, filter, teaFilters, searchQuery]);
+  }, [collection, filter, teaFilters, searchQuery, brewStatsByTeaId]);
   
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
       <View style={styles.emptyIconContainer} accessibilityElementsHidden={true}>
         <Bookmark size={64} color={theme.text.secondary} />
       </View>
-      {!user ? (
+      {isAuthResolving || loading ? (
+        <>
+          <ActivityIndicator size="small" color={theme.accent.primary} style={styles.emptySpinner} />
+          <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>Loading your teas...</Text>
+        </>
+      ) : !user ? (
         <>
           <Text style={[styles.emptyTitle, { color: theme.text.primary }]}>Sign in to track your teas</Text>
           <Text style={[styles.emptySubtitle, { color: theme.text.secondary }]}>
@@ -217,52 +270,94 @@ export const CollectionScreen = ({ navigation }) => {
     const itemStatus = item.status || 'want_to_try';
     const statusLabel = COLLECTION_STATUS_LABELS[item.status || 'want_to_try'] || 'Saved';
     const isStatusMenuOpen = openStatusMenuId === teaId;
+    const teaStats = brewStatsByTeaId[String(teaId)] || {};
+    const brewCount = teaStats.count || 0;
+    const lastSteepedLabel = formatShortDate(teaStats.lastSteepedAt);
+    const addedLabel = formatShortDate(item.added_at || item.created_at);
+    const brandName = tea.brandName || tea.brand_name || 'Unknown shop';
+    const imageSource = tea.imageUrl || tea.image_url
+      ? { uri: tea.imageUrl || tea.image_url }
+      : getPlaceholderImage(tea.teaType || tea.tea_type);
 
     return (
-      <View style={styles.teaItem}>
-        <TeaCard 
-          tea={tea} 
-          onPress={() => navigation.navigate('TeaDetail', { tea })}
-          hideRating={!item.user_rating}
-        />
-        {item.user_rating && (
-          <View style={[styles.ratingBadge, { backgroundColor: theme.accent.primary }]}>
-            <Text style={[styles.ratingText, { color: theme.text.inverse }]}>★ {item.user_rating.toFixed(1)}</Text>
-          </View>
-        )}
-        {/* Quick Brew button */}
+      <View style={[styles.teaItem, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
         <TouchableOpacity
-          style={[styles.quickBrewBtn, { backgroundColor: theme.background.secondary, borderColor: theme.border.default }]}
-          onPress={() => handleQuickBrew(tea, teaId)}
-          activeOpacity={0.7}
-          accessibilityLabel={`Quick brew ${tea.name}`}
-          accessibilityHint="Log a brew session with default steep parameters"
+          style={styles.teaRow}
+          onPress={() => navigation.navigate('TeaDetail', { tea })}
+          activeOpacity={0.82}
+          accessibilityRole="button"
+          accessibilityLabel={`${tea.name} by ${brandName}. Status: ${statusLabel}. ${brewCount} steep${brewCount === 1 ? '' : 's'}.`}
+          accessibilityHint="Double tap to view tea details"
         >
-          <Text style={styles.quickBrewIcon}>{isJustBrewed ? '✓' : '☕'}</Text>
-          <Text style={[styles.quickBrewLabel, { color: isJustBrewed ? theme.accent.primary : theme.text.secondary }]}>
-            {isJustBrewed ? 'Logged!' : 'Brew'}
-          </Text>
-        </TouchableOpacity>
-        <View style={[styles.statusSelector, { backgroundColor: theme.background.primary, borderColor: theme.border.light }]}>
-          <TouchableOpacity
-            style={styles.statusSelectorButton}
-            onPress={() => {
-              haptics.selection();
-              setOpenStatusMenuId(prev => prev === teaId ? null : teaId);
-            }}
-            activeOpacity={0.7}
-            accessibilityRole="button"
-            accessibilityLabel={`Status: ${statusLabel}. Change status`}
-            accessibilityState={{ expanded: isStatusMenuOpen }}
-          >
-            <Text style={[styles.statusSelectorLabel, { color: theme.text.tertiary }]}>Status</Text>
-            <View style={styles.statusSelectorValue}>
-              <Text style={[styles.statusSelectorText, { color: theme.text.primary }]}>{statusLabel}</Text>
-              <ChevronDown size={16} color={theme.text.secondary} />
+          <Image source={imageSource} style={styles.teaImage} />
+          <View style={styles.teaContent}>
+            <Text style={[styles.teaBrand, { color: theme.text.tertiary }]} numberOfLines={1}>
+              {brandName.toUpperCase()}
+            </Text>
+            <Text style={[styles.teaName, { color: theme.text.primary }]} numberOfLines={2}>
+              {tea.name}
+            </Text>
+            <View style={styles.teaMetaRow}>
+              <TeaTypeBadge teaType={tea.teaType || tea.tea_type} size="tiny" />
+              {item.user_rating ? (
+                <View style={[styles.ratingPill, { backgroundColor: theme.accent.primary + '18' }]}>
+                  <Text style={[styles.ratingText, { color: theme.accent.primary }]}>
+                    {item.user_rating.toFixed(1)}
+                  </Text>
+                </View>
+              ) : null}
             </View>
-          </TouchableOpacity>
-          {isStatusMenuOpen && (
-            <View style={[styles.statusDropdown, { borderTopColor: theme.border.light }]}>
+            <Text style={[styles.teaStatsText, { color: theme.text.secondary }]} numberOfLines={1}>
+              {[
+                addedLabel ? `Added ${addedLabel}` : null,
+                brewCount > 0 ? `${brewCount} steep${brewCount === 1 ? '' : 's'}` : 'Not steeped yet',
+                lastSteepedLabel ? `Last ${lastSteepedLabel}` : null,
+              ].filter(Boolean).join(' • ')}
+            </Text>
+          </View>
+          <View style={styles.teaActions}>
+            <TouchableOpacity
+              style={[styles.quickBrewBtn, { backgroundColor: theme.background.primary, borderColor: theme.border.light }]}
+              onPress={(event) => {
+                event.stopPropagation();
+                handleQuickBrew(tea, teaId);
+              }}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={`Quick brew ${tea.name}`}
+              accessibilityHint="Log a brew session with default steep parameters"
+            >
+              {isJustBrewed ? (
+                <Check size={16} color={theme.accent.primary} />
+              ) : (
+                <Coffee size={16} color={theme.text.secondary} />
+              )}
+              <Text style={[styles.quickBrewLabel, { color: isJustBrewed ? theme.accent.primary : theme.text.secondary }]}>
+                {isJustBrewed ? 'Logged' : 'Brew'}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.statusChip, { backgroundColor: theme.background.primary, borderColor: theme.border.light }]}
+              onPress={(event) => {
+                event.stopPropagation();
+                haptics.selection();
+                setOpenStatusMenuId(prev => prev === teaId ? null : teaId);
+              }}
+              activeOpacity={0.7}
+              accessibilityRole="button"
+              accessibilityLabel={`Status: ${statusLabel}. Change status`}
+              accessibilityState={{ expanded: isStatusMenuOpen }}
+            >
+              <Text style={[styles.statusChipText, { color: theme.text.primary }]} numberOfLines={1}>
+                {statusLabel}
+              </Text>
+              <ChevronDown size={14} color={theme.text.secondary} />
+            </TouchableOpacity>
+          </View>
+        </TouchableOpacity>
+        {isStatusMenuOpen && (
+          <View style={[styles.statusSelector, { borderTopColor: theme.border.light }]}>
+            <View style={styles.statusDropdown}>
               {COLLECTION_STATUSES.filter(status => status.id !== 'all').map(status => {
                 const isActive = itemStatus === status.id;
                 return (
@@ -291,8 +386,8 @@ export const CollectionScreen = ({ navigation }) => {
                 );
               })}
             </View>
-          )}
-        </View>
+          </View>
+        )}
       </View>
     );
   };
@@ -330,6 +425,7 @@ export const CollectionScreen = ({ navigation }) => {
     teaFilters.minRating !== 'all',
     teaFilters.teaMethod !== 'all',
   ].filter(Boolean).length;
+  const selectedSortOption = COLLECTION_SORT_OPTIONS.find(option => option.id === teaFilters.sortBy) || COLLECTION_SORT_OPTIONS[0];
 
   const handleTypeChange = (type) => {
     setTeaFilters(prev => ({ ...prev, teaType: type }));
@@ -342,7 +438,13 @@ export const CollectionScreen = ({ navigation }) => {
 
   const clearAllFilters = () => {
     setSearchQuery('');
-    setTeaFilters({ teaType: 'all', company: 'all', minRating: 'all', teaMethod: 'all', sortBy: 'relevance' });
+    setTeaFilters({ teaType: 'all', company: 'all', minRating: 'all', teaMethod: 'all', sortBy: 'recently_added' });
+  };
+
+  const handleSortChange = (sortBy) => {
+    haptics.selection();
+    setTeaFilters(prev => ({ ...prev, sortBy }));
+    setShowSortMenu(false);
   };
 
   return (
@@ -450,6 +552,53 @@ export const CollectionScreen = ({ navigation }) => {
         </TouchableOpacity>
       </View>
 
+      {/* Sort */}
+      <View style={[styles.sortContainer, { borderColor: theme.border.light, backgroundColor: theme.background.secondary }]}>
+        <TouchableOpacity
+          style={styles.sortButton}
+          onPress={() => {
+            haptics.selection();
+            setShowSortMenu(prev => !prev);
+            setShowTeaTypeMenu(false);
+          }}
+          activeOpacity={0.7}
+          accessibilityRole="button"
+          accessibilityLabel={`Sort by ${selectedSortOption.label}`}
+          accessibilityState={{ expanded: showSortMenu }}
+        >
+          <Text style={[styles.sortLabel, { color: theme.text.tertiary }]}>Sort</Text>
+          <View style={styles.sortValue}>
+            <Text style={[styles.sortText, { color: theme.text.primary }]}>{selectedSortOption.label}</Text>
+            <ChevronDown size={16} color={theme.text.secondary} />
+          </View>
+        </TouchableOpacity>
+        {showSortMenu && (
+          <View style={[styles.sortDropdown, { borderTopColor: theme.border.light }]}>
+            {COLLECTION_SORT_OPTIONS.map(option => {
+              const isActive = teaFilters.sortBy === option.id;
+              return (
+                <TouchableOpacity
+                  key={option.id}
+                  style={styles.sortDropdownItem}
+                  onPress={() => handleSortChange(option.id)}
+                  accessibilityRole="menuitem"
+                  accessibilityLabel={`Sort by ${option.label}`}
+                >
+                  <Text style={[
+                    styles.sortDropdownText,
+                    { color: isActive ? theme.accent.primary : theme.text.primary },
+                    isActive && { fontWeight: '700' },
+                  ]}>
+                    {option.label}
+                  </Text>
+                  {isActive && <Check size={16} color={theme.accent.primary} />}
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        )}
+      </View>
+
       {/* Tea Type Pills */}
       <View style={[styles.typeFilterContainer, { borderColor: theme.border.light, backgroundColor: theme.background.secondary }]}>
         <TouchableOpacity
@@ -457,6 +606,7 @@ export const CollectionScreen = ({ navigation }) => {
           onPress={() => {
             haptics.selection();
             setShowTeaTypeMenu(prev => !prev);
+            setShowSortMenu(false);
           }}
           activeOpacity={0.7}
           accessibilityRole="button"
@@ -536,6 +686,7 @@ export const CollectionScreen = ({ navigation }) => {
         onClose={() => setShowFilterModal(false)}
         filters={teaFilters}
         onApplyFilters={handleApplyFilters}
+        sortOptions={COLLECTION_SORT_OPTIONS}
       />
       {/* Hidden shareable card for capture */}
       <View style={{ position: 'absolute', left: -9999, top: -9999 }}>
@@ -589,84 +740,118 @@ const styles = StyleSheet.create({
   },
   listContent: {
     paddingHorizontal: spacing.screenHorizontal,
-    paddingTop: spacing.sm,
+    paddingTop: spacing.xs,
     paddingBottom: 120,
   },
   teaItem: {
-    marginBottom: spacing.cardGap,
-    position: 'relative',
+    marginBottom: spacing.sm,
+    borderRadius: 10,
+    borderWidth: 1,
+    overflow: 'hidden',
   },
-  quickBrewBtn: {
-    position: 'absolute',
-    bottom: 12,
-    right: 12,
+  teaRow: {
+    minHeight: 104,
+    padding: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 14,
+    gap: 10,
+  },
+  teaImage: {
+    width: 72,
+    height: 72,
+    borderRadius: 8,
+    resizeMode: 'cover',
+  },
+  teaContent: {
+    flex: 1,
+    minWidth: 0,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+  },
+  teaBrand: {
+    ...typography.caption,
+    fontWeight: '700',
+    letterSpacing: 0.6,
+    marginBottom: 1,
+  },
+  teaName: {
+    ...typography.headingSmall,
+    fontSize: 16,
+    lineHeight: 20,
+    marginBottom: 5,
+  },
+  teaMetaRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 4,
+  },
+  teaStatsText: {
+    ...typography.caption,
+  },
+  teaActions: {
+    width: 74,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+    gap: 6,
+  },
+  quickBrewBtn: {
+    minHeight: 32,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 8,
+    borderRadius: 8,
     borderWidth: 1,
     gap: 4,
   },
-  quickBrewIcon: {
-    fontSize: 13,
-  },
   quickBrewLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-  },
-  ratingBadge: {
-    position: 'absolute',
-    top: 10,
-    right: 10,
-    paddingHorizontal: 10,
-    paddingVertical: 5,
-    borderRadius: 14,
-  },
-  statusSelector: {
-    borderWidth: 1,
-    borderTopWidth: 0,
-    borderBottomLeftRadius: spacing.cardBorderRadius,
-    borderBottomRightRadius: spacing.cardBorderRadius,
-    overflow: 'hidden',
-  },
-  statusSelectorButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-  },
-  statusSelectorLabel: {
     ...typography.caption,
     fontWeight: '700',
-    textTransform: 'uppercase',
   },
-  statusSelectorValue: {
+  statusChip: {
+    minHeight: 32,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 7,
+    borderRadius: 8,
+    borderWidth: 1,
+    gap: 2,
+  },
+  statusChipText: {
+    ...typography.caption,
+    fontWeight: '700',
+    flexShrink: 1,
+  },
+  ratingPill: {
+    paddingHorizontal: 7,
+    paddingVertical: 2,
+    borderRadius: 8,
+  },
+  statusSelector: {
+    borderTopWidth: 1,
+  },
+  statusDropdown: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    padding: 8,
+    gap: 6,
+  },
+  statusDropdownItem: {
+    minHeight: 34,
+    paddingHorizontal: 10,
+    borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
   },
-  statusSelectorText: {
-    ...typography.bodySmall,
-    fontWeight: '700',
-  },
-  statusDropdown: {
-    borderTopWidth: 1,
-  },
-  statusDropdownItem: {
-    minHeight: 44,
-    paddingHorizontal: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   statusDropdownText: {
-    ...typography.bodySmall,
+    ...typography.caption,
   },
   ratingText: {
     ...typography.caption,
-    fontWeight: '600',
+    fontWeight: '700',
   },
   emptyState: {
     flex: 1,
@@ -677,6 +862,9 @@ const styles = StyleSheet.create({
   emptyIconContainer: {
     marginBottom: spacing.lg,
     opacity: 0.5,
+  },
+  emptySpinner: {
+    marginBottom: spacing.sm,
   },
   emptyTitle: {
     ...typography.headingMedium,
@@ -734,6 +922,47 @@ const styles = StyleSheet.create({
   filterBadgeText: {
     fontSize: 11,
     fontWeight: '700',
+  },
+  sortContainer: {
+    marginHorizontal: spacing.screenHorizontal,
+    marginBottom: spacing.sm,
+    borderRadius: 12,
+    borderWidth: 1,
+    overflow: 'hidden',
+  },
+  sortButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+  },
+  sortLabel: {
+    ...typography.caption,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+  },
+  sortValue: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  sortText: {
+    ...typography.bodySmall,
+    fontWeight: '700',
+  },
+  sortDropdown: {
+    borderTopWidth: 1,
+  },
+  sortDropdownItem: {
+    minHeight: 44,
+    paddingHorizontal: 14,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  sortDropdownText: {
+    ...typography.bodySmall,
   },
   typeFilterContainer: {
     marginHorizontal: spacing.screenHorizontal,

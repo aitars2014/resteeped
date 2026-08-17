@@ -44,16 +44,18 @@ export const FilterModal = ({
   visible, 
   onClose, 
   filters, 
-  onApplyFilters 
+  onApplyFilters,
+  sortOptions = SORT_OPTIONS,
 }) => {
   const { theme, getTeaTypeColor } = useTheme();
   const { companies } = useCompanies();
+  const defaultSortBy = sortOptions[0]?.id || 'relevance';
   
   const [localFilters, setLocalFilters] = useState({
     teaType: 'all',
     company: 'all',
     teaMethod: 'all',
-    sortBy: 'relevance',
+    sortBy: defaultSortBy,
     ...filters,
   });
   const [showAllBrands, setShowAllBrands] = useState(false);
@@ -64,7 +66,7 @@ export const FilterModal = ({
         teaType: 'all',
         company: 'all',
         teaMethod: 'all',
-        sortBy: 'relevance',
+        sortBy: defaultSortBy,
         ...filters,
       });
       setShowAllBrands(false);
@@ -81,7 +83,7 @@ export const FilterModal = ({
       teaType: 'all',
       company: 'all',
       teaMethod: 'all',
-      sortBy: 'relevance',
+      sortBy: defaultSortBy,
     });
   };
 
@@ -275,7 +277,7 @@ export const FilterModal = ({
             <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
               <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Sort By</Text>
               <View style={styles.optionsList}>
-                {SORT_OPTIONS.map(option => 
+                {sortOptions.map(option =>
                   renderOption(
                     option.id, 
                     option.label, 
