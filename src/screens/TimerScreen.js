@@ -173,6 +173,26 @@ export const TimerScreen = ({ route, navigation }) => {
   const timerSessionIdRef = useRef(null);
   const brewCardRef = useRef(null);
 
+  const ensureNotificationsEnabled = async () => {
+    try {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+
+      const enabled = finalStatus === 'granted';
+      setNotificationsEnabled(enabled);
+      return enabled;
+    } catch (error) {
+      console.log('Error checking notification permissions:', error);
+      setNotificationsEnabled(false);
+      return false;
+    }
+  };
+
   const hasRatedTea = (targetTeaId) => {
     if (!targetTeaId) return false;
     return (getCollectionItem(targetTeaId)?.user_rating || 0) > 0;
@@ -250,19 +270,7 @@ export const TimerScreen = ({ route, navigation }) => {
   
   // Request notification permissions on mount
   useEffect(() => {
-    const requestPermissions = async () => {
-      const { status: existingStatus } = await Notifications.getPermissionsAsync();
-      let finalStatus = existingStatus;
-      
-      if (existingStatus !== 'granted') {
-        const { status } = await Notifications.requestPermissionsAsync();
-        finalStatus = status;
-      }
-      
-      setNotificationsEnabled(finalStatus === 'granted');
-    };
-    
-    requestPermissions();
+    ensureNotificationsEnabled();
     
     // Listen for app state changes to handle background timer
     const subscription = AppState.addEventListener('change', handleAppStateChange);
@@ -284,12 +292,21 @@ export const TimerScreen = ({ route, navigation }) => {
         setRemainingSeconds(0);
         setIsRunning(false);
         setIsComplete(true);
-        syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: endTime });
+        syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: endTime, notifyOnWatch: false });
         haptics.success();
         Vibration.vibrate([500, 200, 500, 200, 500]);
       } else {
         setRemainingSeconds(remaining);
-        syncTimerToWatch('running', { remainingSeconds: remaining, endsAt: endTime });
+        syncTimerToWatch('running', { remainingSeconds: remaining, endsAt: endTime, notifyOnWatch: true });
+      }
+    } else if (
+      nextAppState.match(/inactive|background/) &&
+      timerEndTimeRef.current
+    ) {
+      const endTime = timerEndTimeRef.current;
+      const remaining = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
+      if (remaining > 0) {
+        syncTimerToWatch('running', { remainingSeconds: remaining, endsAt: endTime, notifyOnWatch: false });
       }
     }
     appStateRef.current = nextAppState;
@@ -325,6 +342,7 @@ export const TimerScreen = ({ route, navigation }) => {
       pausedAt: status === 'paused' ? now : null,
       endedAt: overrides.endedAt || (status === 'completed' ? now : null),
       endsAt: status === 'running' ? endsAt : null,
+      notifyOnWatch: status === 'running' && Platform.OS === 'ios' && (overrides.notifyOnWatch ?? appStateRef.current === 'active'),
       temperatureF,
     };
   };
@@ -335,30 +353,35 @@ export const TimerScreen = ({ route, navigation }) => {
   
   // Schedule notification
   const scheduleNotification = async (seconds) => {
-    if (!notificationsEnabled) return;
+    const enabled = notificationsEnabled || await ensureNotificationsEnabled();
+    if (!enabled) return;
     await cancelNotification();
     timerEndTimeRef.current = timerEndTimeRef.current || Date.now() + (seconds * 1000);
     
     const teaName = tea?.name || 'Your tea';
     const infusionText = multiSteepMode ? ` (Infusion ${currentInfusion})` : '';
     
-    const id = await Notifications.scheduleNotificationAsync({
-      content: {
-        title: "🍵 It's tea time!",
-        body: `${teaName}${infusionText} is ready to enjoy.`,
-        sound: true,
-        priority: Notifications.AndroidNotificationPriority.HIGH,
-      },
-      trigger: {
-        type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-        seconds: Math.max(1, seconds),
-        repeats: false,
-      },
-    });
-    
-    notificationIdRef.current = id;
+    try {
+      const id = await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "🍵 It's tea time!",
+          body: `${teaName}${infusionText} is ready to enjoy.`,
+          sound: true,
+          priority: Notifications.AndroidNotificationPriority.HIGH,
+        },
+        trigger: {
+          type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+          seconds: Math.max(1, seconds),
+          repeats: false,
+        },
+      });
+
+      notificationIdRef.current = id;
+    } catch (error) {
+      console.log('Error scheduling timer notification:', error);
+    }
   };
-  
+
   const cancelNotification = async () => {
     if (notificationIdRef.current) {
       await Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
@@ -391,9 +414,7 @@ export const TimerScreen = ({ route, navigation }) => {
   // Timer effect
   useEffect(() => {
     if (isRunning && remainingSeconds > 0) {
-      if (notificationsEnabled) {
-        scheduleNotification(remainingSeconds);
-      }
+      scheduleNotification(remainingSeconds);
       
       intervalRef.current = setInterval(() => {
         setRemainingSeconds(prev => {
@@ -404,7 +425,7 @@ export const TimerScreen = ({ route, navigation }) => {
             haptics.success();
             Vibration.vibrate([500, 200, 500, 200, 500]);
             playCompletionSound();
-            syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: timerEndTimeRef.current || Date.now() });
+            syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: timerEndTimeRef.current || Date.now(), notifyOnWatch: false });
             notificationIdRef.current = null;
             timerEndTimeRef.current = null;
             return 0;
@@ -422,6 +443,12 @@ export const TimerScreen = ({ route, navigation }) => {
       }
     };
   }, [isRunning]);
+
+  useEffect(() => {
+    if (isRunning && remainingSeconds > 0 && notificationsEnabled && !notificationIdRef.current) {
+      scheduleNotification(remainingSeconds);
+    }
+  }, [notificationsEnabled, isRunning]);
   
   // Log brew session when complete
   useEffect(() => {
@@ -541,7 +568,7 @@ export const TimerScreen = ({ route, navigation }) => {
       const now = Date.now();
       const endsAt = now + totalSeconds * 1000;
       timerEndTimeRef.current = endsAt;
-      syncTimerToWatch('running', { remainingSeconds: totalSeconds, startedAt: now, endsAt });
+      syncTimerToWatch('running', { remainingSeconds: totalSeconds, startedAt: now, endsAt, notifyOnWatch: true });
       trackEvent(AnalyticsEvents.BREW_STARTED, {
         tea_id: tea?.id,
         tea_name: tea?.name,
@@ -554,7 +581,7 @@ export const TimerScreen = ({ route, navigation }) => {
         const now = Date.now();
         const endsAt = now + remainingSeconds * 1000;
         timerEndTimeRef.current = endsAt;
-        syncTimerToWatch('running', { startedAt: now, endsAt });
+        syncTimerToWatch('running', { startedAt: now, endsAt, notifyOnWatch: true });
         trackEvent(AnalyticsEvents.BREW_STARTED, {
           tea_id: tea?.id,
           tea_name: tea?.name,
@@ -564,7 +591,7 @@ export const TimerScreen = ({ route, navigation }) => {
           infusion: multiSteepMode ? currentInfusion : null,
         });
       } else {
-        syncTimerToWatch('paused');
+        syncTimerToWatch('paused', { notifyOnWatch: false });
         timerEndTimeRef.current = null;
       }
       setIsRunning(!isRunning);

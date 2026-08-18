@@ -91,10 +91,11 @@ export const FilterModal = ({
     setLocalFilters(prev => ({ ...prev, [key]: value }));
   };
 
-  const activeFilterCount = [
+  const activeControlCount = [
     localFilters.teaType !== 'all',
     localFilters.company !== 'all',
     localFilters.teaMethod !== 'all',
+    localFilters.sortBy !== defaultSortBy,
   ].filter(Boolean).length;
 
   const renderOption = (id, label, selectedId, onSelect, showCheck = true) => {
@@ -176,7 +177,7 @@ export const FilterModal = ({
             <TouchableOpacity onPress={onClose} style={styles.closeButton}>
               <X size={24} color={theme.text.primary} />
             </TouchableOpacity>
-            <Text style={[styles.title, { color: theme.text.primary }]}>Filters</Text>
+            <Text style={[styles.title, { color: theme.text.primary }]}>Filter & Sort</Text>
             <TouchableOpacity onPress={handleReset}>
               <Text style={[styles.resetText, { color: theme.accent.primary }]}>Reset</Text>
             </TouchableOpacity>
@@ -186,6 +187,21 @@ export const FilterModal = ({
             style={styles.content}
             showsVerticalScrollIndicator={false}
           >
+            {/* Sort By */}
+            <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
+              <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Sort By</Text>
+              <View style={styles.optionsList}>
+                {sortOptions.map(option =>
+                  renderOption(
+                    option.id,
+                    option.label,
+                    localFilters.sortBy,
+                    (v) => updateFilter('sortBy', v)
+                  )
+                )}
+              </View>
+            </View>
+
             {/* Tea Type */}
             <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
               <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Tea Type</Text>
@@ -273,21 +289,6 @@ export const FilterModal = ({
               </View>
             </View>
 
-            {/* Sort By */}
-            <View style={[styles.section, { borderBottomColor: theme.border.light }]}>
-              <Text style={[styles.sectionTitle, { color: theme.text.secondary }]}>Sort By</Text>
-              <View style={styles.optionsList}>
-                {sortOptions.map(option =>
-                  renderOption(
-                    option.id, 
-                    option.label, 
-                    localFilters.sortBy,
-                    (v) => updateFilter('sortBy', v)
-                  )
-                )}
-              </View>
-            </View>
-
             <View style={{ height: 100 }} />
           </ScrollView>
 
@@ -297,9 +298,9 @@ export const FilterModal = ({
             borderTopColor: theme.border.light,
           }]}>
             <Button
-              title={activeFilterCount > 0 
-                ? `Apply Filters (${activeFilterCount})` 
-                : 'Apply Filters'}
+              title={activeControlCount > 0
+                ? `Apply (${activeControlCount})`
+                : 'Apply'}
               onPress={handleApply}
               variant="primary"
             />

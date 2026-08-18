@@ -46,8 +46,6 @@ export const CollectionScreen = ({ navigation }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [openStatusMenuId, setOpenStatusMenuId] = useState(null);
-  const [showTeaTypeMenu, setShowTeaTypeMenu] = useState(false);
-  const [showSortMenu, setShowSortMenu] = useState(false);
   const [teaFilters, setTeaFilters] = useState({
     teaType: 'all',
     company: 'all',
@@ -426,11 +424,9 @@ export const CollectionScreen = ({ navigation }) => {
     teaFilters.teaMethod !== 'all',
   ].filter(Boolean).length;
   const selectedSortOption = COLLECTION_SORT_OPTIONS.find(option => option.id === teaFilters.sortBy) || COLLECTION_SORT_OPTIONS[0];
-
-  const handleTypeChange = (type) => {
-    setTeaFilters(prev => ({ ...prev, teaType: type }));
-    setShowTeaTypeMenu(false);
-  };
+  const selectedTeaType = teaTypes.find(type => type.id === teaFilters.teaType);
+  const hasCustomSort = teaFilters.sortBy !== 'recently_added';
+  const activeRefinementCount = activeFilterCount + (hasCustomSort ? 1 : 0);
 
   const handleApplyFilters = (newFilters) => {
     setTeaFilters(newFilters);
@@ -439,12 +435,6 @@ export const CollectionScreen = ({ navigation }) => {
   const clearAllFilters = () => {
     setSearchQuery('');
     setTeaFilters({ teaType: 'all', company: 'all', minRating: 'all', teaMethod: 'all', sortBy: 'recently_added' });
-  };
-
-  const handleSortChange = (sortBy) => {
-    haptics.selection();
-    setTeaFilters(prev => ({ ...prev, sortBy }));
-    setShowSortMenu(false);
   };
 
   return (
@@ -534,122 +524,72 @@ export const CollectionScreen = ({ navigation }) => {
           style={[
             styles.filterButton,
             {
-              backgroundColor: activeFilterCount > 0 ? theme.accent.primary : theme.background.secondary,
-              borderColor: activeFilterCount > 0 ? theme.accent.primary : theme.border.light,
+              backgroundColor: activeRefinementCount > 0 ? theme.accent.primary : theme.background.secondary,
+              borderColor: activeRefinementCount > 0 ? theme.accent.primary : theme.border.light,
             }
           ]}
           onPress={() => { haptics.light(); setShowFilterModal(true); }}
+          accessibilityRole="button"
+          accessibilityLabel="Open filters and sort"
         >
           <SlidersHorizontal
             size={20}
-            color={activeFilterCount > 0 ? theme.text.inverse : theme.text.primary}
+            color={activeRefinementCount > 0 ? theme.text.inverse : theme.text.primary}
           />
-          {activeFilterCount > 0 && (
+          {activeRefinementCount > 0 && (
             <View style={[styles.filterBadge, { backgroundColor: theme.status.error }]}>
-              <Text style={[styles.filterBadgeText, { color: theme.text.inverse }]}>{activeFilterCount}</Text>
+              <Text style={[styles.filterBadgeText, { color: theme.text.inverse }]}>{activeRefinementCount}</Text>
             </View>
           )}
         </TouchableOpacity>
       </View>
 
-      {/* Sort */}
-      <View style={[styles.sortContainer, { borderColor: theme.border.light, backgroundColor: theme.background.secondary }]}>
-        <TouchableOpacity
-          style={styles.sortButton}
-          onPress={() => {
-            haptics.selection();
-            setShowSortMenu(prev => !prev);
-            setShowTeaTypeMenu(false);
-          }}
-          activeOpacity={0.7}
-          accessibilityRole="button"
-          accessibilityLabel={`Sort by ${selectedSortOption.label}`}
-          accessibilityState={{ expanded: showSortMenu }}
+      {activeRefinementCount > 0 && (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.activeRefinements}
         >
-          <Text style={[styles.sortLabel, { color: theme.text.tertiary }]}>Sort</Text>
-          <View style={styles.sortValue}>
-            <Text style={[styles.sortText, { color: theme.text.primary }]}>{selectedSortOption.label}</Text>
-            <ChevronDown size={16} color={theme.text.secondary} />
-          </View>
-        </TouchableOpacity>
-        {showSortMenu && (
-          <View style={[styles.sortDropdown, { borderTopColor: theme.border.light }]}>
-            {COLLECTION_SORT_OPTIONS.map(option => {
-              const isActive = teaFilters.sortBy === option.id;
-              return (
-                <TouchableOpacity
-                  key={option.id}
-                  style={styles.sortDropdownItem}
-                  onPress={() => handleSortChange(option.id)}
-                  accessibilityRole="menuitem"
-                  accessibilityLabel={`Sort by ${option.label}`}
-                >
-                  <Text style={[
-                    styles.sortDropdownText,
-                    { color: isActive ? theme.accent.primary : theme.text.primary },
-                    isActive && { fontWeight: '700' },
-                  ]}>
-                    {option.label}
-                  </Text>
-                  {isActive && <Check size={16} color={theme.accent.primary} />}
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        )}
-      </View>
-
-      {/* Tea Type Pills */}
-      <View style={[styles.typeFilterContainer, { borderColor: theme.border.light, backgroundColor: theme.background.secondary }]}>
-        <TouchableOpacity
-          style={styles.typeFilterButton}
-          onPress={() => {
-            haptics.selection();
-            setShowTeaTypeMenu(prev => !prev);
-            setShowSortMenu(false);
-          }}
-          activeOpacity={0.7}
-          accessibilityRole="button"
-          accessibilityLabel={`Tea type filter: ${teaTypes.find(type => type.id === teaFilters.teaType)?.label || 'All'}`}
-          accessibilityState={{ expanded: showTeaTypeMenu }}
-        >
-          <Text style={[styles.typeFilterLabel, { color: theme.text.tertiary }]}>Tea Type</Text>
-          <View style={styles.typeFilterValue}>
-            <Text style={[styles.typeFilterText, { color: theme.text.primary }]}>
-              {teaTypes.find(type => type.id === teaFilters.teaType)?.label || 'All'}
-            </Text>
-            <ChevronDown size={16} color={theme.text.secondary} />
-          </View>
-        </TouchableOpacity>
-        {showTeaTypeMenu && (
-          <View style={[styles.typeDropdown, { borderTopColor: theme.border.light }]}>
-            {teaTypes.map(type => {
-              const isActive = teaFilters.teaType === type.id;
-              return (
-                <TouchableOpacity
-                  key={type.id}
-                  style={styles.typeDropdownItem}
-                  onPress={() => {
-                    haptics.selection();
-                    handleTypeChange(type.id);
-                  }}
-                  accessibilityRole="menuitem"
-                  accessibilityLabel={`Show ${type.label} teas`}
-                >
-                  <Text style={[
-                    styles.typeDropdownText,
-                    { color: isActive ? theme.accent.primary : theme.text.primary },
-                    isActive && { fontWeight: '700' },
-                  ]}>
-                    {type.label}
-                  </Text>
-                  {isActive && <Check size={16} color={theme.accent.primary} />}
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        )}
-      </View>
+          {hasCustomSort && (
+            <View style={[styles.refinementChip, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
+              <Text style={[styles.refinementText, { color: theme.text.primary }]} numberOfLines={1}>
+                {selectedSortOption.label}
+              </Text>
+            </View>
+          )}
+          {teaFilters.teaType !== 'all' && (
+            <View style={[styles.refinementChip, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
+              <Text style={[styles.refinementText, { color: theme.text.primary }]} numberOfLines={1}>
+                {selectedTeaType?.label || 'Tea type'}
+              </Text>
+            </View>
+          )}
+          {teaFilters.company !== 'all' && (
+            <View style={[styles.refinementChip, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
+              <Text style={[styles.refinementText, { color: theme.text.primary }]} numberOfLines={1}>
+                Brand
+              </Text>
+            </View>
+          )}
+          {teaFilters.minRating !== 'all' && (
+            <View style={[styles.refinementChip, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
+              <Text style={[styles.refinementText, { color: theme.text.primary }]} numberOfLines={1}>
+                {teaFilters.minRating}+ rating
+              </Text>
+            </View>
+          )}
+          {teaFilters.teaMethod !== 'all' && (
+            <View style={[styles.refinementChip, { backgroundColor: theme.background.secondary, borderColor: theme.border.light }]}>
+              <Text style={[styles.refinementText, { color: theme.text.primary }]} numberOfLines={1}>
+                Tea method
+              </Text>
+            </View>
+          )}
+          <TouchableOpacity onPress={clearAllFilters} style={styles.clearRefinementsButton}>
+            <Text style={[styles.clearFiltersText, { color: theme.accent.primary }]}>Clear</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      )}
 
       {/* Result count */}
       {(searchQuery || activeFilterCount > 0) && (
@@ -923,87 +863,30 @@ const styles = StyleSheet.create({
     fontSize: 11,
     fontWeight: '700',
   },
-  sortContainer: {
-    marginHorizontal: spacing.screenHorizontal,
-    marginBottom: spacing.sm,
-    borderRadius: 12,
-    borderWidth: 1,
-    overflow: 'hidden',
+  activeRefinements: {
+    paddingHorizontal: spacing.screenHorizontal,
+    paddingBottom: spacing.sm,
+    gap: 8,
   },
-  sortButton: {
+  refinementChip: {
+    height: 32,
+    maxWidth: 180,
+    paddingHorizontal: 10,
+    borderRadius: 16,
+    borderWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 14,
-    paddingVertical: 12,
   },
-  sortLabel: {
+  refinementText: {
     ...typography.caption,
     fontWeight: '700',
-    textTransform: 'uppercase',
   },
-  sortValue: {
+  clearRefinementsButton: {
+    height: 32,
+    paddingHorizontal: 8,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
-  },
-  sortText: {
-    ...typography.bodySmall,
-    fontWeight: '700',
-  },
-  sortDropdown: {
-    borderTopWidth: 1,
-  },
-  sortDropdownItem: {
-    minHeight: 44,
-    paddingHorizontal: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  sortDropdownText: {
-    ...typography.bodySmall,
-  },
-  typeFilterContainer: {
-    marginHorizontal: spacing.screenHorizontal,
-    marginBottom: spacing.sm,
-    borderRadius: 12,
-    borderWidth: 1,
-    overflow: 'hidden',
-  },
-  typeFilterButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: 14,
-    paddingVertical: 12,
-  },
-  typeFilterLabel: {
-    ...typography.caption,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-  },
-  typeFilterValue: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  typeFilterText: {
-    ...typography.bodySmall,
-    fontWeight: '700',
-  },
-  typeDropdown: {
-    borderTopWidth: 1,
-  },
-  typeDropdownItem: {
-    minHeight: 44,
-    paddingHorizontal: 14,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  typeDropdownText: {
-    ...typography.bodySmall,
+    justifyContent: 'center',
   },
   resultCount: {
     flexDirection: 'row',
