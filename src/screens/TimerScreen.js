@@ -292,12 +292,12 @@ export const TimerScreen = ({ route, navigation }) => {
         setRemainingSeconds(0);
         setIsRunning(false);
         setIsComplete(true);
-        syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: endTime, notifyOnWatch: false });
+        syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: endTime });
         haptics.success();
         Vibration.vibrate([500, 200, 500, 200, 500]);
       } else {
         setRemainingSeconds(remaining);
-        syncTimerToWatch('running', { remainingSeconds: remaining, endsAt: endTime, notifyOnWatch: true });
+        syncTimerToWatch('running', { remainingSeconds: remaining, endsAt: endTime });
       }
     } else if (
       nextAppState.match(/inactive|background/) &&
@@ -306,7 +306,7 @@ export const TimerScreen = ({ route, navigation }) => {
       const endTime = timerEndTimeRef.current;
       const remaining = Math.max(0, Math.ceil((endTime - Date.now()) / 1000));
       if (remaining > 0) {
-        syncTimerToWatch('running', { remainingSeconds: remaining, endsAt: endTime, notifyOnWatch: false });
+        syncTimerToWatch('running', { remainingSeconds: remaining, endsAt: endTime });
       }
     }
     appStateRef.current = nextAppState;
@@ -342,7 +342,6 @@ export const TimerScreen = ({ route, navigation }) => {
       pausedAt: status === 'paused' ? now : null,
       endedAt: overrides.endedAt || (status === 'completed' ? now : null),
       endsAt: status === 'running' ? endsAt : null,
-      notifyOnWatch: status === 'running' && Platform.OS === 'ios' && (overrides.notifyOnWatch ?? appStateRef.current === 'active'),
       temperatureF,
     };
   };
@@ -425,7 +424,7 @@ export const TimerScreen = ({ route, navigation }) => {
             haptics.success();
             Vibration.vibrate([500, 200, 500, 200, 500]);
             playCompletionSound();
-            syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: timerEndTimeRef.current || Date.now(), notifyOnWatch: false });
+            syncTimerToWatch('completed', { remainingSeconds: 0, endedAt: timerEndTimeRef.current || Date.now() });
             notificationIdRef.current = null;
             timerEndTimeRef.current = null;
             return 0;
@@ -568,7 +567,7 @@ export const TimerScreen = ({ route, navigation }) => {
       const now = Date.now();
       const endsAt = now + totalSeconds * 1000;
       timerEndTimeRef.current = endsAt;
-      syncTimerToWatch('running', { remainingSeconds: totalSeconds, startedAt: now, endsAt, notifyOnWatch: true });
+      syncTimerToWatch('running', { remainingSeconds: totalSeconds, startedAt: now, endsAt });
       trackEvent(AnalyticsEvents.BREW_STARTED, {
         tea_id: tea?.id,
         tea_name: tea?.name,
@@ -581,7 +580,7 @@ export const TimerScreen = ({ route, navigation }) => {
         const now = Date.now();
         const endsAt = now + remainingSeconds * 1000;
         timerEndTimeRef.current = endsAt;
-        syncTimerToWatch('running', { startedAt: now, endsAt, notifyOnWatch: true });
+        syncTimerToWatch('running', { startedAt: now, endsAt });
         trackEvent(AnalyticsEvents.BREW_STARTED, {
           tea_id: tea?.id,
           tea_name: tea?.name,
@@ -591,7 +590,7 @@ export const TimerScreen = ({ route, navigation }) => {
           infusion: multiSteepMode ? currentInfusion : null,
         });
       } else {
-        syncTimerToWatch('paused', { notifyOnWatch: false });
+        syncTimerToWatch('paused');
         timerEndTimeRef.current = null;
       }
       setIsRunning(!isRunning);

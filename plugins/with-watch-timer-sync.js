@@ -29,7 +29,6 @@ const MODULE_HEADER = `#import <React/RCTBridgeModule.h>
 `;
 
 const WATCH_APP_SWIFT = `import SwiftUI
-import UserNotifications
 import WatchConnectivity
 
 struct TeaTimer: Codable, Equatable {
@@ -42,8 +41,6 @@ struct TeaTimer: Codable, Equatable {
   let totalSeconds: Int?
   let remainingSeconds: Int?
   let endsAt: Double?
-  let endedAt: Double?
-  let notifyOnWatch: Bool?
   let updatedAt: Double?
 }
 
@@ -60,11 +57,9 @@ struct WatchDiagnostics: Equatable {
 final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
   @Published var timer: TeaTimer?
   @Published var diagnostics = WatchDiagnostics()
-  private var scheduledNotificationId: String?
 
   override init() {
     super.init()
-    requestNotificationAuthorization()
     activateSession()
   }
 
@@ -191,7 +186,6 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
     guard !payload.isEmpty else { return }
 
     if (payload["status"] as? String) == "cleared" {
-      cancelTimerNotification()
       DispatchQueue.main.async {
         self.timer = nil
       }
@@ -207,54 +201,11 @@ final class WatchTimerStore: NSObject, ObservableObject, WCSessionDelegate {
       return
     }
 
-    syncTimerNotification(for: decoded)
-
     DispatchQueue.main.async {
       self.timer = decoded
       self.diagnostics.lastEvent = "timer shown"
       self.diagnostics.lastError = nil
     }
-  }
-
-  private func requestNotificationAuthorization() {
-    UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound]) { _, _ in }
-  }
-
-  private func syncTimerNotification(for timer: TeaTimer) {
-    guard timer.status == "running", timer.notifyOnWatch == true, let endsAt = timer.endsAt else {
-      cancelTimerNotification()
-      return
-    }
-
-    let fireDate = Date(timeIntervalSince1970: endsAt / 1000)
-    let secondsUntilFire = fireDate.timeIntervalSinceNow
-    guard secondsUntilFire > 1 else {
-      cancelTimerNotification()
-      return
-    }
-
-    let notificationId = "resteeped.timer." + (timer.id ?? "active")
-    if scheduledNotificationId == notificationId {
-      UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [notificationId])
-    } else {
-      cancelTimerNotification()
-    }
-
-    let content = UNMutableNotificationContent()
-    content.title = "Tea is ready"
-    content.body = timer.teaName + " is done steeping."
-    content.sound = .default
-
-    let trigger = UNTimeIntervalNotificationTrigger(timeInterval: secondsUntilFire, repeats: false)
-    let request = UNNotificationRequest(identifier: notificationId, content: content, trigger: trigger)
-    scheduledNotificationId = notificationId
-    UNUserNotificationCenter.current().add(request)
-  }
-
-  private func cancelTimerNotification() {
-    guard let scheduledNotificationId else { return }
-    UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [scheduledNotificationId])
-    self.scheduledNotificationId = nil
   }
 }
 
