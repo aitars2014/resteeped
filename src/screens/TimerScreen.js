@@ -168,6 +168,7 @@ export const TimerScreen = ({ route, navigation }) => {
   
   const intervalRef = useRef(null);
   const notificationIdRef = useRef(null);
+  const notificationSchedulingRef = useRef(null);
   const appStateRef = useRef(AppState.currentState);
   const timerEndTimeRef = useRef(null);
   const timerSessionIdRef = useRef(null);
@@ -352,38 +353,63 @@ export const TimerScreen = ({ route, navigation }) => {
   
   // Schedule notification
   const scheduleNotification = async (seconds) => {
-    const enabled = notificationsEnabled || await ensureNotificationsEnabled();
-    if (!enabled) return;
-    await cancelNotification();
-    timerEndTimeRef.current = timerEndTimeRef.current || Date.now() + (seconds * 1000);
-    
-    const teaName = tea?.name || 'Your tea';
-    const infusionText = multiSteepMode ? ` (Infusion ${currentInfusion})` : '';
-    
-    try {
-      const id = await Notifications.scheduleNotificationAsync({
-        content: {
-          title: "🍵 It's tea time!",
-          body: `${teaName}${infusionText} is ready to enjoy.`,
-          sound: true,
-          priority: Notifications.AndroidNotificationPriority.HIGH,
-        },
-        trigger: {
-          type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
-          seconds: Math.max(1, seconds),
-          repeats: false,
-        },
-      });
+    if (notificationSchedulingRef.current) {
+      return notificationSchedulingRef.current;
+    }
 
-      notificationIdRef.current = id;
-    } catch (error) {
-      console.log('Error scheduling timer notification:', error);
+    notificationSchedulingRef.current = (async () => {
+      const enabled = notificationsEnabled || await ensureNotificationsEnabled();
+      if (!enabled) return null;
+      await cancelNotification();
+      timerEndTimeRef.current = timerEndTimeRef.current || Date.now() + (seconds * 1000);
+
+      const teaName = tea?.name || 'Your tea';
+      const infusionText = multiSteepMode ? ` (Infusion ${currentInfusion})` : '';
+
+      try {
+        const id = await Notifications.scheduleNotificationAsync({
+          content: {
+            title: "🍵 It's tea time!",
+            body: `${teaName}${infusionText} is ready to enjoy.`,
+            sound: true,
+            priority: Notifications.AndroidNotificationPriority.HIGH,
+            data: {
+              type: 'brew_timer',
+              timerId: getTimerId(),
+            },
+          },
+          trigger: {
+            type: Notifications.SchedulableTriggerInputTypes.TIME_INTERVAL,
+            seconds: Math.max(1, seconds),
+            repeats: false,
+          },
+        });
+
+        notificationIdRef.current = id;
+        return id;
+      } catch (error) {
+        console.log('Error scheduling timer notification:', error);
+        return null;
+      }
+    })();
+
+    try {
+      return await notificationSchedulingRef.current;
+    } finally {
+      notificationSchedulingRef.current = null;
     }
   };
 
   const cancelNotification = async () => {
-    if (notificationIdRef.current) {
-      await Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
+    try {
+      // Timer notifications are the only scheduled local notifications in the app.
+      // Clearing all prevents orphaned duplicate timer alerts from earlier races.
+      await Notifications.cancelAllScheduledNotificationsAsync();
+    } catch (error) {
+      if (notificationIdRef.current) {
+        await Notifications.cancelScheduledNotificationAsync(notificationIdRef.current);
+      }
+    } finally {
       notificationIdRef.current = null;
     }
   };
@@ -443,12 +469,6 @@ export const TimerScreen = ({ route, navigation }) => {
     };
   }, [isRunning]);
 
-  useEffect(() => {
-    if (isRunning && remainingSeconds > 0 && notificationsEnabled && !notificationIdRef.current) {
-      scheduleNotification(remainingSeconds);
-    }
-  }, [notificationsEnabled, isRunning]);
-  
   // Log brew session when complete
   useEffect(() => {
     if (isComplete && !hasLogged) {
