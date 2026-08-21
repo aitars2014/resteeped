@@ -8,7 +8,6 @@ import {
   ScrollView,
   TouchableOpacity,
   RefreshControl,
-  Animated,
   ActivityIndicator,
   Image,
 } from 'react-native';
@@ -18,7 +17,6 @@ import { typography, spacing, getPlaceholderImage } from '../constants';
 import { Button, FilterModal, SearchBar, ShareableCollectionCard, TeaTypeBadge } from '../components';
 import { useAuth, useCollection, useTheme, useSubscription } from '../context';
 import { useBrewHistory } from '../hooks';
-import { getBrewingGuide } from '../constants/brewingGuides';
 import { haptics } from '../utils/haptics';
 import { COLLECTION_STATUSES, COLLECTION_STATUS_LABELS } from '../utils/tasteProfile';
 import { teaTypes } from '../data/teas';
@@ -55,9 +53,7 @@ export const CollectionScreen = ({ navigation }) => {
   });
   
   const collectionCardRef = useRef();
-  const { logBrewSession, brewSessions } = useBrewHistory();
-  const [brewingTeaId, setBrewingTeaId] = useState(null);
-  const brewFeedbackOpacity = useRef(new Animated.Value(0)).current;
+  const { brewSessions } = useBrewHistory();
   const isAuthResolving = authLoading || !authInitialized;
 
   const brewStatsByTeaId = useMemo(() => {
@@ -75,26 +71,13 @@ export const CollectionScreen = ({ navigation }) => {
     return stats;
   }, [brewSessions]);
 
-  const handleQuickBrew = useCallback(async (tea, teaId) => {
-    if (brewingTeaId) return; // debounce
-    setBrewingTeaId(teaId);
-    haptics.success();
-    const guide = getBrewingGuide(tea.teaType || tea.tea_type || 'black', tea);
-    const steepSecs = Math.round(((guide.steepTime.min + guide.steepTime.max) / 2) * 60);
-    const tempF = guide.waterTemp?.fahrenheit || null;
-    await logBrewSession({
-      teaId,
-      steepTimeSeconds: steepSecs,
-      temperatureF: tempF,
-      teaData: tea,
+  const handleSteepTea = useCallback((tea) => {
+    haptics.selection();
+    navigation.navigate('Timer', {
+      screen: 'TimerHome',
+      params: { tea },
     });
-    // Flash feedback
-    Animated.sequence([
-      Animated.timing(brewFeedbackOpacity, { toValue: 1, duration: 150, useNativeDriver: true }),
-      Animated.delay(900),
-      Animated.timing(brewFeedbackOpacity, { toValue: 0, duration: 300, useNativeDriver: true }),
-    ]).start(() => setBrewingTeaId(null));
-  }, [brewingTeaId, logBrewSession, brewFeedbackOpacity]);
+  }, [navigation]);
 
   // Re-fetch collection whenever this screen gains focus
   useFocusEffect(
@@ -253,6 +236,7 @@ export const CollectionScreen = ({ navigation }) => {
     // Normalize snake_case DB fields to camelCase app format
     const tea = {
       ...rawTea,
+      id: rawTea.id || item.tea_id,
       brandName: rawTea.brandName || rawTea.brand_name,
       teaType: rawTea.teaType || rawTea.tea_type,
       avgRating: rawTea.avgRating || rawTea.avg_rating,
@@ -264,7 +248,6 @@ export const CollectionScreen = ({ navigation }) => {
     };
     
     const teaId = item.tea?.id || item.tea_id;
-    const isJustBrewed = brewingTeaId === teaId;
     const itemStatus = item.status || 'want_to_try';
     const statusLabel = COLLECTION_STATUS_LABELS[item.status || 'want_to_try'] || 'Saved';
     const isStatusMenuOpen = openStatusMenuId === teaId;
@@ -318,20 +301,16 @@ export const CollectionScreen = ({ navigation }) => {
               style={[styles.quickBrewBtn, { backgroundColor: theme.background.primary, borderColor: theme.border.light }]}
               onPress={(event) => {
                 event.stopPropagation();
-                handleQuickBrew(tea, teaId);
+                handleSteepTea(tea);
               }}
               activeOpacity={0.7}
               accessibilityRole="button"
-              accessibilityLabel={`Quick brew ${tea.name}`}
-              accessibilityHint="Log a brew session with default steep parameters"
+              accessibilityLabel={`Steep ${tea.name}`}
+              accessibilityHint="Open the tea timer with your saved steeping settings"
             >
-              {isJustBrewed ? (
-                <Check size={16} color={theme.accent.primary} />
-              ) : (
-                <Coffee size={16} color={theme.text.secondary} />
-              )}
-              <Text style={[styles.quickBrewLabel, { color: isJustBrewed ? theme.accent.primary : theme.text.secondary }]}>
-                {isJustBrewed ? 'Logged' : 'Brew'}
+              <Coffee size={16} color={theme.text.secondary} />
+              <Text style={[styles.quickBrewLabel, { color: theme.text.secondary }]}>
+                Steep
               </Text>
             </TouchableOpacity>
             <TouchableOpacity
